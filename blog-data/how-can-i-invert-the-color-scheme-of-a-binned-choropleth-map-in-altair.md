@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-invert-the-color-scheme-of-a-binned-choropleth-map-in-altair"
 ---
 
-, let's tackle this color inversion issue with Altair choropleth maps. I’ve definitely been down this road before, particularly when dealing with visualizations that needed to adhere to specific client branding guidelines or to effectively highlight different aspects of a dataset. It’s not always as straightforward as one might initially hope, but it's certainly achievable with a little understanding of Altair's encoding and scale mechanisms.
+, color inversion issue with Altair choropleth maps. I’ve definitely been down this road before, particularly when dealing with visualizations that needed to adhere to specific client branding guidelines or to effectively highlight different aspects of a dataset. It’s not always as straightforward as one might initially hope, but it's certainly achievable with a little understanding of Altair's encoding and scale mechanisms.
 
 The core challenge, as I see it, isn’t about fundamentally altering how Altair handles colors, but rather about manipulating the _mapping_ between data values and the color palette we're using. When we talk about inverting a color scheme, what we usually mean is swapping the order of colors within the chosen scale. Rather than starting with the lightest color for the smallest values and proceeding to the darkest for larger values, we want to reverse that.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-similarity-functions-with-words-not-in-my-vocabulary"
 ---
 
-, let's tackle this one. I’ve definitely seen this challenge play out in a number of projects over the years. The scenario of having to compute similarity between words, some of which your system hasn't encountered before, is surprisingly common, especially when dealing with user-generated text or rapidly evolving vocabularies. It's not a showstopper, though. There are several well-established techniques we can leverage to get around this limitation.
+, one. I’ve definitely seen this challenge play out in a number of projects over the years. The scenario of having to compute similarity between words, some of which your system hasn't encountered before, is surprisingly common, especially when dealing with user-generated text or rapidly evolving vocabularies. It's not a showstopper, though. There are several well-established techniques we can leverage to get around this limitation.
 
 The core problem, of course, stems from how we typically represent words in computational systems. If you're using a traditional vocabulary-based approach, such as one-hot encoding or even a simple integer index, an 'out-of-vocabulary' (oov) word simply doesn't have a vector representation. Therefore, a similarity computation becomes undefined. We need to move beyond this direct mapping approach and explore methods that offer more flexibility.
 

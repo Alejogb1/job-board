@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "do-wsgi-servers-interact-with-devices-outside-the-local-network"
 ---
 
-, let's tackle this one. Thinking back to the early 2010s, when I was knee-deep in scaling a SaaS platform using a somewhat fragile WSGI setup, this question brings back some memories. We definitely had our share of networking quirks to iron out. The straightforward answer to "do WSGI servers interact with devices outside the local network?" is technically, _indirectly, and not usually by design_. Let me unpack that.
+, one. Thinking back to the early 2010s, when I was knee-deep in scaling a SaaS platform using a somewhat fragile WSGI setup, this question brings back some memories. We definitely had our share of networking quirks to iron out. The straightforward answer to "do WSGI servers interact with devices outside the local network?" is technically, _indirectly, and not usually by design_. Let me unpack that.
 
 A web server gateway interface (WSGI) server, in its core function, sits firmly within the application layer of the network stack. Think of it as the intermediary that facilitates communication between a web server (like Apache or Nginx, in proxy mode or otherwise) and a Python web application (like Django, Flask or similar). It receives requests from the web server, structures them into a format Python can process, invokes the application logic, and then relays the response back to the web server for delivery to the client. This dance typically happens within the confines of the server’s operating system environment, quite often on a single machine, which may or may not be connected to a wider network.
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-permission-denied-error-when-accessing-the-rails-console"
 ---
 
-Let's tackle this. I've seen this exact scenario play out more times than I care to count, and it's rarely as straightforward as a simple "oops, forgot to sudo" moment. The "permission denied" error when trying to access the rails console is often a symptom of deeper underlying issues with your environment's setup, especially when you’re working with multiple projects or using containerization.
+. I've seen this exact scenario play out more times than I care to count, and it's rarely as straightforward as a simple "oops, forgot to sudo" moment. The "permission denied" error when trying to access the rails console is often a symptom of deeper underlying issues with your environment's setup, especially when you’re working with multiple projects or using containerization.
 
 Often, the immediate suspect that jumps to mind is, as mentioned, forgetting to use `sudo` or not having the correct user privileges. But let's be realistic. As seasoned developers, we’re usually past that initial stage of making those novice mistakes. Instead, let’s delve into the more nuanced, system-level causes and the practical troubleshooting steps that we can use.
 
-First, we need to distinguish between *file system permissions* and *process permissions*. A "permission denied" error generally points to a lack of necessary permissions to access or execute a resource. Specifically, this often boils down to three main categories: user ownership, file mode flags, and process context.
+First, we need to distinguish between _file system permissions_ and _process permissions_. A "permission denied" error generally points to a lack of necessary permissions to access or execute a resource. Specifically, this often boils down to three main categories: user ownership, file mode flags, and process context.
 
 In my experience, dealing with docker and docker-compose is a very likely culprit. Let's say, some time ago, I was working on a project involving a complex microservices architecture. We used docker-compose to handle local development, and we had a setup that required the web service to interact directly with certain files that were not within the application’s directory. The first time we ran into this issue, the “permission denied” wasn’t from the shell failing to run the `rails console` command, but rather it was within the application's container failing to write to a shared volume.
 
@@ -65,6 +65,7 @@ sudo chown -R $USER:$USER my_rails_app
 cd my_rails_app
 ./bin/rails console # Should now be ok.
 ```
+
 The `-R` flag ensures the ownership change happens recursively.
 
 These scenarios address the common file system permissions. But sometimes, it's not just the files themselves. I’ve encountered complex scenarios where the issue was related to how the application was invoked, specifically within containerized environments. I once faced a similar issue with a specific container orchestration setup where the container’s user was different from the user owning the shared volumes. Here's how to investigate this in your own setup.
@@ -91,7 +92,7 @@ In this instance, running the container will give the same type of "permission d
 To address this, one strategy is to define the user and permissions correctly when starting the container, which typically involves matching the user id (uid) and group id (gid) of the container with the user outside of the container. Here's an adjusted `docker-compose.yml` configuration which shows that.
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   web:
     build: .

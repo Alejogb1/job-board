@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-nlp-in-python-identify-and-highlight-similar-text-within-a-document"
 ---
 
-Let's tackle this. It’s a common problem, and I've definitely seen my share of headaches trying to solve it efficiently, especially when dealing with large document sets. The core challenge, as I understand it, is to pinpoint instances of textual similarity *within* a single document, not across multiple documents. This differs from typical similarity searches, which are often geared towards comparing one text against a corpus.
+. It’s a common problem, and I've definitely seen my share of headaches trying to solve it efficiently, especially when dealing with large document sets. The core challenge, as I understand it, is to pinpoint instances of textual similarity _within_ a single document, not across multiple documents. This differs from typical similarity searches, which are often geared towards comparing one text against a corpus.
 
 From my experience, this kind of analysis crops up frequently in scenarios like identifying repeated sections in lengthy reports or spotting potential plagiarism in submitted works. The approach I’ve found to be most effective involves a combination of preprocessing, vectorization, and similarity calculation, all powered by the robust NLP capabilities of Python. Let's break it down.
 
@@ -56,6 +56,7 @@ tfidf_matrix, vectorizer = vectorize_text(text_segments)
 print(f"Shape of TF-IDF matrix: {tfidf_matrix.shape}")
 
 ```
+
 This code performs basic text preprocessing such as lowercasing, removing punctuation, removing stop words, and lemmatization. Then, we use `TfidfVectorizer` to convert the processed segments into a TF-IDF matrix. The output will show the shape of the matrix, which corresponds to the number of segments and the number of unique terms across those segments.
 
 Now that we have our vectorized text, let's calculate the cosine similarity scores. Here's how:
@@ -86,6 +87,7 @@ for i, j, score in similar_pairs:
 This code calculates the cosine similarity between all possible pairs of text segments using the TF-IDF matrix from our previous code. It then prints the indices of any pairs that score over a given similarity threshold. You may need to adjust this threshold depending on the kind of text and the granularity of similarity you are interested in.
 
 Finally, to really highlight similar segments, we could create a function that returns the actual text segments that are similar:
+
 ```python
 
 def highlight_similar_text(text_segments, similar_pairs):
@@ -104,6 +106,7 @@ highlighted_text = highlight_similar_text(text_segments, similar_pairs)
 print(highlighted_text)
 
 ```
+
 This code takes as input the text segments as a list of strings, along with our list of segment pairs and their scores, and returns a formatted output displaying the similar segments with their score.
 
 It's worth mentioning that other vectorization techniques, such as word embeddings (word2vec, GloVe, or even more advanced models like transformers) could be used instead of TF-IDF and may lead to improved accuracy, but they come with added complexity. The choice really depends on the nature and size of your data, and how critical it is to identify similarity.

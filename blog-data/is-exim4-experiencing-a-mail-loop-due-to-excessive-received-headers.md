@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-exim4-experiencing-a-mail-loop-due-to-excessive-received-headers"
 ---
 
-Let's tackle this intriguing situation with exim4 mail loops and excessive "received" headers. It's a problem I’ve seen surface more than once in my time, and it's rarely straightforward to pinpoint. The short answer is: yes, an excessive buildup of "received" headers *can* absolutely cause a mail loop, but it's usually a symptom of a larger configuration or infrastructure issue, not the root cause itself.
+intriguing situation with exim4 mail loops and excessive "received" headers. It's a problem I’ve seen surface more than once in my time, and it's rarely straightforward to pinpoint. The short answer is: yes, an excessive buildup of "received" headers _can_ absolutely cause a mail loop, but it's usually a symptom of a larger configuration or infrastructure issue, not the root cause itself.
 
 The "received" header, for those who might not be intimately familiar, is an essential part of the email delivery process. It acts as a breadcrumb trail, logging each hop an email takes between mail servers. Each mail server that handles the message adds its own "received" header, which includes details like the hostname, IP address, protocol used (e.g., esmtp), and timestamps. This information is invaluable for debugging routing problems and verifying mail authenticity. However, if an email finds itself bouncing back and forth between servers, each iteration adds another "received" header, and this accumulation can, in certain circumstances, lead to problems, ultimately resulting in a mail loop.
 
@@ -31,6 +31,7 @@ And let's assume the custom routes file looks like this:
 custom_forward: 192.168.1.100
 default_smtp:
 ```
+
 This example demonstrates that if a message is destined for example.com, it gets routed to 192.168.1.100 via SMTP. If the server at 192.168.1.100 is misconfigured to forward the message back to the original server without delivering to a mailbox, a loop could be initiated. The original server would accept the forwarded message and resend it, accumulating “received” headers each time. The `transport_filter` is there to dynamically look up a route based on the target domain. This is a very common scenario that, if misconfigured, can lead to problems.
 
 Now, let's consider a second example where the exim configuration may have problematic redirects related to a local alias.
@@ -43,6 +44,7 @@ local_user:
    user = mail
    group = mail
 ```
+
 And the alias configured like this:
 
 ```

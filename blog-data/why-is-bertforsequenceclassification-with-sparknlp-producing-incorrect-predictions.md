@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-bertforsequenceclassification-with-sparknlp-producing-incorrect-predictions"
 ---
 
-, let's tackle this. I've spent a fair bit of time in the trenches with sequence classification using both transformers and SparkNLP, so I've seen my share of quirks, including this specific scenario you're describing – incorrect predictions from `BertForSequenceClassification` with SparkNLP. It’s often not a straightforward 'it’s broken' kind of issue; rather, it's typically a convergence of several factors. I recall a particular project involving sentiment analysis of customer reviews, where I initially faced precisely this problem. The model looked perfect on paper, but the output was, shall we say, less than optimal.
+, . I've spent a fair bit of time in the trenches with sequence classification using both transformers and SparkNLP, so I've seen my share of quirks, including this specific scenario you're describing – incorrect predictions from `BertForSequenceClassification` with SparkNLP. It’s often not a straightforward 'it’s broken' kind of issue; rather, it's typically a convergence of several factors. I recall a particular project involving sentiment analysis of customer reviews, where I initially faced precisely this problem. The model looked perfect on paper, but the output was, shall we say, less than optimal.
 
 First, let's break down the common culprits. When `BertForSequenceClassification` paired with SparkNLP yields unexpected results, the likely causes cluster around data, pipeline configuration, and subtle nuances in pre-processing. It's rarely a bug within the core frameworks themselves.
 

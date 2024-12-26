@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-python-be-used-to-animate-bubble-maps"
 ---
 
-, let's tackle this one. Animated bubble maps, eh? I recall a project back in my geospatial analysis days where we needed to visualize urban migration patterns over time; a static map just wouldn't cut it. Python, thankfully, has a rich ecosystem that made that feasible. It's more than possible, and I've found that focusing on a few core libraries makes the process relatively straightforward.
+, one. Animated bubble maps, eh? I recall a project back in my geospatial analysis days where we needed to visualize urban migration patterns over time; a static map just wouldn't cut it. Python, thankfully, has a rich ecosystem that made that feasible. It's more than possible, and I've found that focusing on a few core libraries makes the process relatively straightforward.
 
 The general approach involves three primary phases: data preparation, map rendering, and animation. Each has its own nuances, of course, but let’s unpack them.
 

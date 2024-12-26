@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-swift-asyncawait-not-waiting-for-tasks-to-complete"
 ---
 
-Right then, let's tackle this asynchronous conundrum. I’ve seen this specific issue pop up more often than it should, and it usually stems from a handful of specific causes when using Swift's async/await. My experiences, particularly in developing high-concurrency networking components, have taught me that it's less about async/await being broken, and more about how we're leveraging its mechanics. So, let's break down why your tasks might seem to be running away rather than patiently waiting for completion.
+Right then, asynchronous conundrum. I’ve seen this specific issue pop up more often than it should, and it usually stems from a handful of specific causes when using Swift's async/await. My experiences, particularly in developing high-concurrency networking components, have taught me that it's less about async/await being broken, and more about how we're leveraging its mechanics. So, let's break down why your tasks might seem to be running away rather than patiently waiting for completion.
 
-First and foremost, the core idea behind async/await in Swift, or in any modern language implementing it for that matter, is *structured concurrency*. We’re not dealing with threads directly anymore. Instead, we’re defining tasks that are executed by the underlying concurrency system. The problem emerges when the structured nature isn’t fully understood and incorporated into the code. What happens is that you *launch* an asynchronous operation, but you don't *await* its result within a scope where that result matters, or you do it incorrectly.
+First and foremost, the core idea behind async/await in Swift, or in any modern language implementing it for that matter, is _structured concurrency_. We’re not dealing with threads directly anymore. Instead, we’re defining tasks that are executed by the underlying concurrency system. The problem emerges when the structured nature isn’t fully understood and incorporated into the code. What happens is that you _launch_ an asynchronous operation, but you don't _await_ its result within a scope where that result matters, or you do it incorrectly.
 
 A common scenario I've witnessed is when a function using `async` keyword doesn't properly convey its asynchronous nature up the call stack. Think of a simple fetching function:
 
@@ -24,7 +24,7 @@ func processData() {
 }
 ```
 
-In this example, `fetchData` correctly declares itself as `async throws`, and it utilizes `await` to wait for the network operation. However, `processData` completely ignores the asynchronous nature of `fetchData`. It calls it as if it were a synchronous function. The `result` variable does not hold the actual data; it holds a `Task` object (although that is hidden from you). Consequently, the program continues executing immediately to the print statement, likely resulting in a nonsensical output or even a runtime error later on when you try to unpack an absent value. This is classic *fire-and-forget,* not structured concurrency.
+In this example, `fetchData` correctly declares itself as `async throws`, and it utilizes `await` to wait for the network operation. However, `processData` completely ignores the asynchronous nature of `fetchData`. It calls it as if it were a synchronous function. The `result` variable does not hold the actual data; it holds a `Task` object (although that is hidden from you). Consequently, the program continues executing immediately to the print statement, likely resulting in a nonsensical output or even a runtime error later on when you try to unpack an absent value. This is classic _fire-and-forget,_ not structured concurrency.
 
 The fix, naturally, is to propagate the `async` nature up the call stack:
 
@@ -69,7 +69,7 @@ func fetchMultipleData(from urls: [URL]) async throws -> [Data] {
 }
 ```
 
-This attempt uses a `for` loop, launching individual `Task` instances for each url. Critically, the `fetchMultipleData` function returns the `results` array *immediately* after launching all the individual tasks. It does *not* wait for the tasks to complete; hence the returned array is either empty or only partially filled, a classic race condition problem. This is incorrect and dangerous.
+This attempt uses a `for` loop, launching individual `Task` instances for each url. Critically, the `fetchMultipleData` function returns the `results` array _immediately_ after launching all the individual tasks. It does _not_ wait for the tasks to complete; hence the returned array is either empty or only partially filled, a classic race condition problem. This is incorrect and dangerous.
 
 To handle this properly, you need to use `withThrowingTaskGroup` (or `withTaskGroup` if errors aren't a concern). These constructs allow the parent function to suspend until all child tasks complete, providing proper synchronization:
 
@@ -90,9 +90,9 @@ func fetchMultipleData(from urls: [URL]) async throws -> [Data] {
 }
 ```
 
-Now, inside the `withThrowingTaskGroup` closure, the code adds each fetch operation as a task. Critically, the parent function suspends at the `for try await data in group` loop until each of those tasks returns its result. This ensures all data is collected before the function returns. It’s critical to note the difference: here, the parent function *waits* for all child tasks before it moves forward. This is how we ensure proper synchronization and get the desired outcome.
+Now, inside the `withThrowingTaskGroup` closure, the code adds each fetch operation as a task. Critically, the parent function suspends at the `for try await data in group` loop until each of those tasks returns its result. This ensures all data is collected before the function returns. It’s critical to note the difference: here, the parent function _waits_ for all child tasks before it moves forward. This is how we ensure proper synchronization and get the desired outcome.
 
-Finally, a less obvious, but sometimes impactful cause of this issue could be the improper use of actors. Actors provide mutual exclusion for concurrent access to their state. However, if you are not correctly using async functions or awaiting inside actor methods, or if you are blocking an actor thread, the actor can create situations that *seem* like tasks are not completing. Here's a very basic example that can mislead:
+Finally, a less obvious, but sometimes impactful cause of this issue could be the improper use of actors. Actors provide mutual exclusion for concurrent access to their state. However, if you are not correctly using async functions or awaiting inside actor methods, or if you are blocking an actor thread, the actor can create situations that _seem_ like tasks are not completing. Here's a very basic example that can mislead:
 
 ```swift
 actor DataStore {
@@ -110,8 +110,8 @@ actor DataStore {
 }
 ```
 
-While seemingly correct, the `getData` method uses `await` *within the actor’s isolated context*, blocking the actor's internal serial queue. If other tasks depend on that actor's methods to complete, this can cause deadlocks and perceived non-completion. The actor method *must* use await to handle asynchrony, but the work happening inside the actor itself should be done serially to avoid these issues. This can be fixed by separating the fetching logic from the actor, or by using proper techniques like task groups within the actor to manage more complex operations. The takeaway here is to deeply understand the actor's internal concurrency model to prevent potential issues, and keep asynchronous tasks external to the actor unless specific synchronous behavior is required.
+While seemingly correct, the `getData` method uses `await` _within the actor’s isolated context_, blocking the actor's internal serial queue. If other tasks depend on that actor's methods to complete, this can cause deadlocks and perceived non-completion. The actor method _must_ use await to handle asynchrony, but the work happening inside the actor itself should be done serially to avoid these issues. This can be fixed by separating the fetching logic from the actor, or by using proper techniques like task groups within the actor to manage more complex operations. The takeaway here is to deeply understand the actor's internal concurrency model to prevent potential issues, and keep asynchronous tasks external to the actor unless specific synchronous behavior is required.
 
 In summary, the issue of async/await not waiting is almost always a direct consequence of misunderstanding how structured concurrency is intended to work, and specifically: improperly propagating the asynchronous nature of functions, incorrectly using task groups, or creating deadlocks with actors.
 
-To delve deeper into this, I highly recommend reading *Concurrency Programming on iOS* by Apple, found in their developer documentation; the official WWDC videos on the topic, particularly any from the last few years, as they often discuss new developments with async/await; and for a more academic view, *Principles of Concurrent and Distributed Programming* by M. Ben-Ari. These sources will solidify your understanding of structured concurrency and equip you with the knowledge to troubleshoot these types of issues more effectively. Remember, mastering async/await isn’t just about adding keywords; it’s about embracing the underlying programming model it provides.
+To delve deeper into this, I highly recommend reading _Concurrency Programming on iOS_ by Apple, found in their developer documentation; the official WWDC videos on the topic, particularly any from the last few years, as they often discuss new developments with async/await; and for a more academic view, _Principles of Concurrent and Distributed Programming_ by M. Ben-Ari. These sources will solidify your understanding of structured concurrency and equip you with the knowledge to troubleshoot these types of issues more effectively. Remember, mastering async/await isn’t just about adding keywords; it’s about embracing the underlying programming model it provides.

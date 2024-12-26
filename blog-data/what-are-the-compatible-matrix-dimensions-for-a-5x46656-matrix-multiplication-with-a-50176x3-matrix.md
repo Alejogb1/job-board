@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-compatible-matrix-dimensions-for-a-5x46656-matrix-multiplication-with-a-50176x3-matrix"
 ---
 
-Let's tackle this matrix multiplication dimension compatibility problem; it's something I've seen trip up even experienced folks. My background includes a fair share of optimization work with high-dimensional data, so I've dealt with these issues firsthand, often under very tight deadlines.
+matrix multiplication dimension compatibility problem; it's something I've seen trip up even experienced folks. My background includes a fair share of optimization work with high-dimensional data, so I've dealt with these issues firsthand, often under very tight deadlines.
 
 , so the core of the problem here revolves around a fundamental rule in linear algebra: for two matrices, A and B, to be compatible for multiplication (forming AB), the number of _columns_ in matrix A must be equal to the number of _rows_ in matrix B. Let’s dive into your specifics. You’ve presented a 5x46656 matrix intended to be multiplied by a 50176x3 matrix.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-nan-output-from-my-tensorflow-keras-model"
 ---
 
-, let's tackle this `nan` output issue you're experiencing with your TensorFlow Keras model. It's a frustrating problem, and I've certainly spent my share of late nights debugging similar situations. It's not uncommon, especially when dealing with complex networks and datasets. Typically, `nan`s propagate when numerical instability creeps into your calculations. Let's break down the common culprits and how to address them, drawing from my experience dealing with similar problems in a large-scale recommender system back in '18, where precision was absolutely critical to avoid showing users completely irrelevant suggestions, which was, in fact, a business impacting event.
+, `nan` output issue you're experiencing with your TensorFlow Keras model. It's a frustrating problem, and I've certainly spent my share of late nights debugging similar situations. It's not uncommon, especially when dealing with complex networks and datasets. Typically, `nan`s propagate when numerical instability creeps into your calculations. Let's break down the common culprits and how to address them, drawing from my experience dealing with similar problems in a large-scale recommender system back in '18, where precision was absolutely critical to avoid showing users completely irrelevant suggestions, which was, in fact, a business impacting event.
 
 The root of the problem usually boils down to one or more of these issues: vanishing or exploding gradients, numerical overflow or underflow, incorrect data preprocessing, or issues within custom layers or loss functions. Let’s explore each of these in detail, along with specific code examples to clarify potential solutions.
 
@@ -95,7 +95,8 @@ If you have implemented custom layers or loss functions, these can be sources of
   - **Use Symbolic Debugging:** Utilize TensorFlow’s eager execution mode to step through your custom code and identify numerical issues.
 
 Here is an example of a custom loss function that can lead to numerical instability:
-```python
+
+````python
 import tensorflow as tf
 def bad_custom_loss(y_true, y_pred): # the problem here is that y_pred can have values equal to zero or very close to zero # which can lead to nan values due to division by zero
 return tf.reduce_mean(tf.math.divide(y_true, y_pred))
@@ -115,3 +116,4 @@ return tf.reduce_mean(tf.math.divide(y_true, y_pred))
 In general, I’ve found that the debugging process for `nan`s can be iterative. Start by addressing the most common issues like gradient problems and data preprocessing, moving onto more specific ones as needed. I recommend looking into resources such as the original paper "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift" by Sergey Ioffe and Christian Szegedy, to understand more on batch normalization and its effect on vanishing and exploding gradients. Also, "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville offers a thorough theoretical background that would improve your overall understanding of this topic.
 
 Remember, a systematic approach and patience are key. Good luck, and let me know if any of these steps get you closer to resolving the issue.
+````

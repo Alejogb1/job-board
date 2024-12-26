@@ -4,17 +4,18 @@ date: "2024-12-23"
 id: "what-phrases-are-used-in-the-better-specs-example"
 ---
 
-, let's tackle this. It's a valid query, and it highlights a critical aspect of writing effective software specifications: understanding the language we use and its implications. I’ve spent years working through complex systems, and the language we adopt in specs has always been a cornerstone of smooth collaboration and successful deployments.
+, . It's a valid query, and it highlights a critical aspect of writing effective software specifications: understanding the language we use and its implications. I’ve spent years working through complex systems, and the language we adopt in specs has always been a cornerstone of smooth collaboration and successful deployments.
 
 From what I've observed, the so-called "Better Specs" approach usually doesn't involve inventing entirely new language; rather, it refines how we use existing phrases and structures. It's about clarity, precision, and avoiding ambiguity. You won't find magic bullet phrases, but rather a collection of conventions, combined thoughtfully to create something much more useful. Let’s consider some of the common categories and then I'll dive into some examples.
 
 First, you will see an emphasis on _active_ voice. Instead of “the data will be processed,” we often state, “the system shall process the data.” The active voice places the action more clearly, and it also makes it easier to assign the action to an explicit entity, removing a lot of guesswork down the line.
 
 Second, there’s the use of modal verbs. _Shall_, _should_, _may_, and _will_ are incredibly important. Each signifies a different level of requirement:
-* **Shall:** Indicates a mandatory requirement. “The system *shall* authenticate the user.”
-* **Should:** Indicates a recommendation, a best practice. “The system _should_ log all failed authentication attempts.”
-* **May:** Indicates optionality. “The system *may* provide a summary report.”
-* **Will:** Indicates a declaration or promise. "The system _will_ be deployed to a staging environment.”
+
+- **Shall:** Indicates a mandatory requirement. “The system _shall_ authenticate the user.”
+- **Should:** Indicates a recommendation, a best practice. “The system _should_ log all failed authentication attempts.”
+- **May:** Indicates optionality. “The system _may_ provide a summary report.”
+- **Will:** Indicates a declaration or promise. "The system _will_ be deployed to a staging environment.”
 
 Third, we have conditional statements, which use “if,” “when,” “then,” or “where.” These delineate specific conditions or triggers that initiate specific actions or outcomes.
 

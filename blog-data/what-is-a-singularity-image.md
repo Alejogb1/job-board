@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "what-is-a-singularity-image"
 ---
 
-Let's tackle this from the perspective of someone who's seen their fair share of image processing headaches. A "singularity image," isn’t exactly a formal, universally defined term in the same way as, say, a jpeg or a png. Instead, it usually refers to an image that causes significant problems or outright failures within an image processing system, often due to specific content or characteristics. Think of it as an edge case – that unexpected input that pushes your algorithm to its breaking point.
+from the perspective of someone who's seen their fair share of image processing headaches. A "singularity image," isn’t exactly a formal, universally defined term in the same way as, say, a jpeg or a png. Instead, it usually refers to an image that causes significant problems or outright failures within an image processing system, often due to specific content or characteristics. Think of it as an edge case – that unexpected input that pushes your algorithm to its breaking point.
 
 I've encountered these types of images several times during my career, usually when working on large-scale processing pipelines. One instance involved a system designed to automatically identify objects in satellite imagery. Everything worked reasonably well, until we got a batch containing images with large swathes of nearly uniform color. Turns out, these uniform areas, specifically when coupled with minute differences in pixel values, created artifacts that the edge detection algorithms interpreted as large numbers of false objects. The system, designed to highlight differences, essentially exploded in terms of processing time, creating a backlog and rendering the object identification essentially useless. This was, in a sense, a singularity image: not that it was literally a mathematical singularity, but rather, an image that brought the system to a standstill.
 
-The core of the issue often isn’t necessarily about the image looking ‘weird’ to the human eye; it is about how the image’s properties interact with the *specific* image processing operations being applied. Let's explore several ways that a singularity image can manifest:
+The core of the issue often isn’t necessarily about the image looking ‘weird’ to the human eye; it is about how the image’s properties interact with the _specific_ image processing operations being applied. Let's explore several ways that a singularity image can manifest:
 
 1.  **Saturation and Clipping:** Consider a scenario where you’re processing images that come from a high dynamic range (hdr) sensor. Initially, you are working with a narrow range of lighting, the algorithms behave well. When a picture contains large over- or under-exposed regions – maybe direct sunlight glinting off a metallic object, or deep shadows where all pixel values are near zero - many standard operations, like histogram equalization or contrast stretching, will produce severe clipping. This may lead to regions that become completely uniform (all white or black) or exaggerated artifacts. The system is not failing technically, but the visual outcome will be essentially useless.
 
@@ -76,7 +76,7 @@ plt.show()
 
 3.  **Pathological Patterns in Compression:** Sometimes the problems arise not from the image content directly, but how that content interacts with compression algorithms. A complex pattern, particularly when aliased or close to the block boundaries used by a codec like jpeg, can cause compression artifacts that are extremely hard to remove, or that lead to very poor compression ratios. These artifacts can, in turn, trigger unexpected results in subsequent processing steps, becoming a de facto singularity for your system. It’s crucial to consider how your image processing will interact with compressed data, not just raw pixel data.
 
-   Here’s a simplified illustration where we compress then decompress with a strong loss:
+Here’s a simplified illustration where we compress then decompress with a strong loss:
 
 ```python
 import numpy as np
@@ -105,7 +105,7 @@ plt.title('Compressed Checkerboard')
 plt.show()
 ```
 
-   In this case, the image has a very regular pattern which is difficult to compress and creates visible compression artifacts around the squares after the compression/decompression cycle, highlighting how even relatively simple patterns can be problematic.
+In this case, the image has a very regular pattern which is difficult to compress and creates visible compression artifacts around the squares after the compression/decompression cycle, highlighting how even relatively simple patterns can be problematic.
 
 From this overview and examples, you can see that a "singularity image" is not just one specific type of image. Instead, it is better understood as any image that reveals the limitations of a particular image processing pipeline, causing it to produce incorrect results, consume excessive resources, or even crash. It often comes down to the properties of the image interacting poorly with a specific processing operation.
 

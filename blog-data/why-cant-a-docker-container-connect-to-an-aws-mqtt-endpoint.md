@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-docker-container-connect-to-an-aws-mqtt-endpoint"
 ---
 
-Let's tackle this. I’ve encountered this scenario more times than I care to count, and it usually boils down to a few specific culprits. The fact that your Docker container isn’t connecting to your AWS MQTT endpoint is frustrating, but resolvable. It’s almost never an issue with Docker itself, but rather with the networking and security configurations involved. Let’s break down the common points of failure, and then I’ll share some practical examples with code snippets.
+. I’ve encountered this scenario more times than I care to count, and it usually boils down to a few specific culprits. The fact that your Docker container isn’t connecting to your AWS MQTT endpoint is frustrating, but resolvable. It’s almost never an issue with Docker itself, but rather with the networking and security configurations involved. Let’s break down the common points of failure, and then I’ll share some practical examples with code snippets.
 
 First off, we need to consider that a Docker container, by default, exists within its own isolated network. This means it doesn't inherently have access to external resources like your AWS IoT endpoint. Think of it as a miniature virtual machine operating in its own little bubble. This bubble needs a pathway out, and that’s where the first set of issues usually occur. I’ve spent entire afternoons tracking down issues in these layers; it's a rite of passage for anyone working with containerized systems and cloud infrastructure.
 
@@ -36,7 +36,7 @@ Let’s illustrate the above with some examples:
 
 **Example 1: Host Networking:**
 
-Assuming you’re using a Python MQTT client, here’s how you might set it up *with host networking enabled* assuming you already have your certs available on the host.
+Assuming you’re using a Python MQTT client, here’s how you might set it up _with host networking enabled_ assuming you already have your certs available on the host.
 
 ```python
 # python_mqtt_client.py (inside the docker image)
@@ -98,6 +98,7 @@ The python code will remain virtually identical to the previous example. Instead
 ```bash
 docker run -d -p 8883:8883 -v /path/on/host/certs:/path/to/your --name my-mqtt-client your_docker_image_name
 ```
+
 **Example 3: User-Defined Network**
 
 Using the same client code from above, first create a docker network:
@@ -120,8 +121,8 @@ When troubleshooting, I generally start with a structured approach. Begin by run
 
 **Recommended Resources:**
 
-1.  *“Docker Deep Dive”* by Nigel Poulton: Excellent for understanding Docker's internal workings, including networking.
+1.  _“Docker Deep Dive”_ by Nigel Poulton: Excellent for understanding Docker's internal workings, including networking.
 2.  AWS documentation for IoT Core: Always your primary source for AWS specific information on configuration, and debugging.
-3.  *“Understanding Network Hacks”* by Andrew Hoffman: A good general networking guide that will aid in your troubleshooting skills, especially with more complex custom network configurations.
+3.  _“Understanding Network Hacks”_ by Andrew Hoffman: A good general networking guide that will aid in your troubleshooting skills, especially with more complex custom network configurations.
 
 In conclusion, connecting a Docker container to an AWS MQTT endpoint involves addressing network connectivity, security group rules, and proper TLS/SSL configuration. By methodically addressing each potential point of failure, you'll find a solution that allows your containers to communicate effectively and securely with AWS IoT Core. Remember to test each layer of the setup to avoid cascading errors. The goal is to understand what is going on at each layer, so you can quickly pinpoint the source of the problem. Good luck.

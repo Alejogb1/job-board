@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-correct-time-format-for-golang-jwtstandardclaims"
 ---
 
-, let's tackle this one. It's a common sticking point, and I've certainly spent my share of late nights debugging subtle timezone issues lurking within jwt claims. The core of the problem lies not within the `jwt.StandardClaims` struct itself, but in how the underlying time fields are managed and serialized by the `go-jwt/jwt` library when you're working with json. The short answer is: **`jwt.StandardClaims` expects time values to be represented as numeric timestamps (Unix epoch seconds), usually as integers, and should be expressed in UTC**. Not strings, not formatted time outputs, and definitely not local times.
+, one. It's a common sticking point, and I've certainly spent my share of late nights debugging subtle timezone issues lurking within jwt claims. The core of the problem lies not within the `jwt.StandardClaims` struct itself, but in how the underlying time fields are managed and serialized by the `go-jwt/jwt` library when you're working with json. The short answer is: **`jwt.StandardClaims` expects time values to be represented as numeric timestamps (Unix epoch seconds), usually as integers, and should be expressed in UTC**. Not strings, not formatted time outputs, and definitely not local times.
 
 Let’s break this down and explore the details, drawing on a previous project involving a microservices architecture, where inconsistent time representations in tokens almost brought the entire thing crashing down.
 

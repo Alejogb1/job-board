@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-a-matrix-multiplication-error-with-incompatible-shapes-28x28-and-784x128"
 ---
 
-, let's tackle this matrix multiplication head-scratcher. I've seen this particular error surface more times than I care to recall, often during the early stages of model prototyping or when integrating different data sources. You’re attempting a dot product between a matrix with dimensions 28x28 and one with dimensions 784x128, and that's where the incompatibility arises.
+, matrix multiplication head-scratcher. I've seen this particular error surface more times than I care to recall, often during the early stages of model prototyping or when integrating different data sources. You’re attempting a dot product between a matrix with dimensions 28x28 and one with dimensions 784x128, and that's where the incompatibility arises.
 
 The fundamental rule of matrix multiplication is that the inner dimensions must match. In other words, for matrices _A_ (m x n) and _B_ (p x q), the multiplication _A_ _ B_ is only defined if _n = p_. The resulting matrix will have dimensions m x q. When this rule is broken, you’re thrown an error which, in your case, indicates an incompatible shape conflict.
 

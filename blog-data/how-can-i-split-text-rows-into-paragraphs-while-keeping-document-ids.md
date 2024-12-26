@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-split-text-rows-into-paragraphs-while-keeping-document-ids"
 ---
 
-Let's tackle this one. I've been down this road myself, more times than i'd care to remember, often in situations where we were processing massive document archives, and needing to maintain context across different processing stages. The challenge of splitting text into paragraphs while preserving document identifiers isn't just about the mechanics of string manipulation; it's also about ensuring the integrity of your data pipeline and the relevance of subsequent analyses.
+one. I've been down this road myself, more times than i'd care to remember, often in situations where we were processing massive document archives, and needing to maintain context across different processing stages. The challenge of splitting text into paragraphs while preserving document identifiers isn't just about the mechanics of string manipulation; it's also about ensuring the integrity of your data pipeline and the relevance of subsequent analyses.
 
 The core problem, as i see it, is two-fold: first, identifying paragraph boundaries reliably, which is not as trivial as it sounds; and second, associating each newly created paragraph with the original document id. Let's assume, for clarity, that we are working with a data structure where each document is a record containing a ‘document_id’ and ‘text’ field. Here’s how I would typically approach this, incorporating lessons learned the hard way.
 
@@ -33,7 +33,7 @@ def split_text_to_paragraphs(document):
 
     # Split into paragraphs using regex for newline and empty line pattern
     paragraphs = re.split(r'\n+\s*\n?', normalized_text)
-    
+
     # Filter empty paragraphs and return a list of dictionaries with document_id
     return [
         {'document_id': document_id, 'text': paragraph.strip()}
@@ -71,19 +71,19 @@ def split_dataframe_paragraphs(df, text_column='text', id_column='document_id'):
     Returns:
         pd.DataFrame: A DataFrame where each row is a paragraph with document ID.
     """
-    
+
     def _split_text(row):
        # Normalize whitespace
        normalized_text = re.sub(r'\s+', ' ', row[text_column]).strip()
        # Split into paragraphs
        paragraphs = re.split(r'\n+\s*\n?', normalized_text)
-       
+
        return [
            {'document_id': row[id_column], 'text': paragraph.strip()}
            for paragraph in paragraphs if paragraph.strip()
            ]
-    
-    
+
+
     exploded_list = df.apply(_split_text, axis=1)
     flattened_list = [paragraph for sublist in exploded_list for paragraph in sublist]
     return pd.DataFrame(flattened_list)

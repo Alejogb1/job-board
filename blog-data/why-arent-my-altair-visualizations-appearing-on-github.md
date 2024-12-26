@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-my-altair-visualizations-appearing-on-github"
 ---
 
-Let's tackle this issue, shall we? It's a scenario I've encountered a few times, often leading to a bit of head-scratching until the root cause is identified. Seeing Altair charts not rendering on GitHub is frustrating, particularly when you’ve diligently crafted intricate visuals, but fear not, there are specific reasons behind this. The core problem boils down to the fact that GitHub Pages doesn't natively render interactive JavaScript visualizations, which Altair leverages under the hood. You’re essentially running into a security and rendering compatibility challenge. Let me break this down based on my experience.
+issue, shall we? It's a scenario I've encountered a few times, often leading to a bit of head-scratching until the root cause is identified. Seeing Altair charts not rendering on GitHub is frustrating, particularly when you’ve diligently crafted intricate visuals, but fear not, there are specific reasons behind this. The core problem boils down to the fact that GitHub Pages doesn't natively render interactive JavaScript visualizations, which Altair leverages under the hood. You’re essentially running into a security and rendering compatibility challenge. Let me break this down based on my experience.
 
 Back in my days at ‘Synapse Analytics,’ we had a reporting pipeline that relied heavily on data visualizations. We used Altair for its elegance and expressiveness. When we started deploying our reports to internal GitHub pages, we experienced this exact problem: blank spaces where beautifully rendered charts should have been. Turns out the fundamental issue was that GitHub pages primarily serves static content, and Altair charts, being fundamentally javascript-driven, require specific steps to be displayed correctly. It’s not a simple upload and forget scenario.
 
@@ -40,18 +40,17 @@ The `print(chart_json)` statement would return a long string representing your c
 ```html
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Altair Visualization on GitHub Pages</title>
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-</head>
-<body>
-
+  </head>
+  <body>
     <div id="vis"></div>
 
     <script>
-        const spec = JSON.parse(
+      const spec = JSON.parse(
         `
         {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -71,15 +70,16 @@ The `print(chart_json)` statement would return a long string representing your c
             "y": {"field": "y", "type": "quantitative"}
           }
         }
-        `);
+        `
+      );
 
-        vegaEmbed('#vis', spec);
+      vegaEmbed("#vis", spec);
     </script>
-</body>
+  </body>
 </html>
 ```
 
-In this HTML snippet, notice the CDN links we are pulling in: these are JavaScript libraries necessary for Vega and Vega-Lite to render our visualization. Also notice, in the  `spec` variable, the JSON that was printed in the python snippet. This is what defines the chart. Finally, notice the call to `vegaEmbed('#vis', spec)`. This code locates the div element with id ‘vis’ and renders the chart based on the provided specification. This approach, while initially more work, is effective as it allows you to have your visualizations rendered on github pages.
+In this HTML snippet, notice the CDN links we are pulling in: these are JavaScript libraries necessary for Vega and Vega-Lite to render our visualization. Also notice, in the `spec` variable, the JSON that was printed in the python snippet. This is what defines the chart. Finally, notice the call to `vegaEmbed('#vis', spec)`. This code locates the div element with id ‘vis’ and renders the chart based on the provided specification. This approach, while initially more work, is effective as it allows you to have your visualizations rendered on github pages.
 
 Another approach, particularly suitable if you're using Jupyter Notebooks, involves saving the visualizations as standalone HTML files. This process makes your visualizations self-contained, so you don’t need to inject the json specification yourself. In this workflow, we generate the `chart.save()` function instead of `chart.to_json()`. This will create a fully rendered html document that can be added to GitHub pages without issue.
 

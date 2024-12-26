@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-error-bars-to-an-altchart-with-binned-x-axis-values"
 ---
 
-Let's tackle this. It's a frequent requirement when visualizing aggregated data, and while `altair` provides excellent tools, working with binned data for error bar representation needs a specific approach. I've personally encountered this many times, typically when dealing with sensor data or simulation results, where you're often summarizing distributions within discrete intervals. We’re essentially looking to show the uncertainty or variability of a dataset within these pre-defined bins, and Altair, being a declarative library, handles this via transformation and layering.
+. It's a frequent requirement when visualizing aggregated data, and while `altair` provides excellent tools, working with binned data for error bar representation needs a specific approach. I've personally encountered this many times, typically when dealing with sensor data or simulation results, where you're often summarizing distributions within discrete intervals. We’re essentially looking to show the uncertainty or variability of a dataset within these pre-defined bins, and Altair, being a declarative library, handles this via transformation and layering.
 
 The crux of it lies in two parts: first, preprocessing the data to compute the necessary statistics (mean, standard deviation, or whatever error metric you choose), and second, utilizing Altair’s `mark_errorbar` functionality correctly, layering it onto the base chart. Let's break down the process.
 
@@ -51,7 +51,7 @@ chart = bars + error_bars
 chart.display()
 ```
 
-Notice that we defined the main bar chart and the error bars using the *same base chart*. This allows Altair to align them on the same x-axis seamlessly. The `mark_errorbar` uses `extent='stdev'` which specifies that the upper and lower bounds will be calculated as ±1 standard deviation from the mean, based on the `std` column. `alt.YError('std:Q')` tells the error bar to use this computed standard deviation as the length of the error bars.
+Notice that we defined the main bar chart and the error bars using the _same base chart_. This allows Altair to align them on the same x-axis seamlessly. The `mark_errorbar` uses `extent='stdev'` which specifies that the upper and lower bounds will be calculated as ±1 standard deviation from the mean, based on the `std` column. `alt.YError('std:Q')` tells the error bar to use this computed standard deviation as the length of the error bars.
 
 Sometimes, you might want to visualize confidence intervals instead of standard deviation. This requires a slightly different statistical calculation. If, for instance, you wanted to represent 95% confidence intervals, you would compute the standard error and the margin of error:
 

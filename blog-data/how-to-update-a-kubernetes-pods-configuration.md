@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-update-a-kubernetes-pods-configuration"
 ---
 
-, let's tackle this one. It's a common scenario, and I've seen more than my share of hiccups when dealing with Kubernetes pod updates. It's not as straightforward as, say, updating a configuration file on a single server, and it requires understanding the underlying mechanisms of Kubernetes. So, let me walk you through how I’ve approached this in the past, focusing on practical methods and avoiding common pitfalls.
+, one. It's a common scenario, and I've seen more than my share of hiccups when dealing with Kubernetes pod updates. It's not as straightforward as, say, updating a configuration file on a single server, and it requires understanding the underlying mechanisms of Kubernetes. So, let me walk you through how I’ve approached this in the past, focusing on practical methods and avoiding common pitfalls.
 
 First, it's crucial to understand that pods themselves are considered immutable. Directly modifying a running pod is generally discouraged, and Kubernetes is designed to operate by replacing pods rather than modifying them in place. Think of a pod as a static object rather than a dynamic one. It's defined by its manifest, and when you want to change something within that manifest, you're creating a new representation of that pod. This approach provides better consistency, reproducibility, and helps Kubernetes handle failures and rolling updates smoothly.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-measure-the-similarity-of-two-words-to-identify-duplicates"
 ---
 
-, let's tackle this head-on. Measuring word similarity for duplicate detection is something I've spent a fair bit of time on, particularly during a project involving large-scale text data cleanup a few years back. We were ingesting documents from various sources, and the sheer volume meant manual checking for duplicates was a non-starter. This led us down the path of exploring various similarity metrics, and the experience underscored how critical choosing the right approach can be.
+, head-on. Measuring word similarity for duplicate detection is something I've spent a fair bit of time on, particularly during a project involving large-scale text data cleanup a few years back. We were ingesting documents from various sources, and the sheer volume meant manual checking for duplicates was a non-starter. This led us down the path of exploring various similarity metrics, and the experience underscored how critical choosing the right approach can be.
 
 At its core, the challenge isn’t just about identical strings; it’s often about identifying semantically similar words or strings that might appear differently due to minor typos, abbreviations, or different casing. Therefore, a straightforward string comparison won't suffice. You need a more nuanced method that understands that ‘colour’ and ‘color’, or 'apple' and 'apples’ are essentially the same for most practical purposes in this context.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-initiate-saml-20-authentication-in-an-aspnet-web-forms-application-using-sustainsys"
 ---
 
-, let's tackle this one. I've spent a fair amount of time dealing with federated authentication, specifically SAML 2.0, and the intricacies of hooking it up in various .net environments. It's not always a walk in the park, particularly in older Web Forms apps where things can get a little… bespoke. We'll focus on doing this using the sustainsys library, as it's my go-to for saml in .net. It's robust and handles a lot of the heavy lifting. Let’s break down the process, covering the key steps, and then I'll walk through a few code snippets.
+, one. I've spent a fair amount of time dealing with federated authentication, specifically SAML 2.0, and the intricacies of hooking it up in various .net environments. It's not always a walk in the park, particularly in older Web Forms apps where things can get a little… bespoke. We'll focus on doing this using the sustainsys library, as it's my go-to for saml in .net. It's robust and handles a lot of the heavy lifting. Let’s break down the process, covering the key steps, and then I'll walk through a few code snippets.
 
 Essentially, initiating a saml 2.0 authentication flow with sustainsys involves a couple of fundamental actions: redirecting the user to the identity provider (idp), and then subsequently handling the assertion response when they are sent back. The whole process starts with the user clicking 'login' or accessing a protected resource, at which point your application, acting as the service provider (sp), needs to send an authentication request to the idp. Sustainsys simplifies this by providing a clear api for doing just that.
 

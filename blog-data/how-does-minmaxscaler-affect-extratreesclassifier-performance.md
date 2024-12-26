@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-minmaxscaler-affect-extratreesclassifier-performance"
 ---
 
-, let's tackle this one. The interplay between `MinMaxScaler` and `ExtraTreesClassifier` performance is something I’ve grappled with quite a bit in the past, particularly during a project involving high-dimensional sensor data. It's not as straightforward as saying "it always improves" or "it always harms"; the effect is highly contextual. Let's break down what’s going on under the hood.
+, one. The interplay between `MinMaxScaler` and `ExtraTreesClassifier` performance is something I’ve grappled with quite a bit in the past, particularly during a project involving high-dimensional sensor data. It's not as straightforward as saying "it always improves" or "it always harms"; the effect is highly contextual. Let's break down what’s going on under the hood.
 
 At its core, `MinMaxScaler` transforms data by scaling each feature to a given range, typically between zero and one. The formula used is quite simple: `x_scaled = (x - x_min) / (x_max - x_min)`. This process essentially squeezes all data points within each feature into this defined range. On the other hand, `ExtraTreesClassifier`, which falls under the ensemble learning umbrella, operates by constructing multiple decision trees on randomly selected subsets of features and samples. These individual trees are then aggregated to reach a final prediction.
 

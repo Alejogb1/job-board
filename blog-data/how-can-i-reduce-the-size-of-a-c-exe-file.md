@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reduce-the-size-of-a-c-exe-file"
 ---
 
-Let's tackle this one; the quest to shrink .exe sizes is a perennial favorite, and I’ve spent more hours than I care to count optimizing binaries over the years. The perceived bloat of compiled executables can often be quite jarring, especially coming from leaner languages, but with a systematic approach, considerable reductions are indeed achievable in C#.
+one; the quest to shrink .exe sizes is a perennial favorite, and I’ve spent more hours than I care to count optimizing binaries over the years. The perceived bloat of compiled executables can often be quite jarring, especially coming from leaner languages, but with a systematic approach, considerable reductions are indeed achievable in C#.
 
 The size of a .net executable, in essence, is determined by several core components. We're not just talking about your meticulously crafted code here; rather, we’re dealing with metadata, intermediate language (il), framework dependencies, and any embedded resources. All of these can contribute significantly to the final file size, and each can be trimmed, albeit through different methods.
 
@@ -12,11 +12,11 @@ One of the initial culprits and often the largest, is unnecessary dependency bag
 
 **Publishing Options: Trim and Self-Contained Deployment**
 
-The first, and often most effective step, is to examine the *publish* process. If you’re using dotnet cli, we want to move beyond the default debug build. We need to carefully consider the *publish* configuration. You'll be using the `dotnet publish` command, and the options you specify here will be critical.
+The first, and often most effective step, is to examine the _publish_ process. If you’re using dotnet cli, we want to move beyond the default debug build. We need to carefully consider the _publish_ configuration. You'll be using the `dotnet publish` command, and the options you specify here will be critical.
 
-Instead of relying on a framework-dependent deployment (where the target machine needs the .net framework installed), a significant reduction can be achieved with *self-contained deployment* (SCD). In SCD, all necessary framework components are bundled into your executable. Now, this may seem counterintuitive, initially seeming like an *increase* in size but the benefit here is *trimming*. Specifically, we want the *Trimmed* option.
+Instead of relying on a framework-dependent deployment (where the target machine needs the .net framework installed), a significant reduction can be achieved with _self-contained deployment_ (SCD). In SCD, all necessary framework components are bundled into your executable. Now, this may seem counterintuitive, initially seeming like an _increase_ in size but the benefit here is _trimming_. Specifically, we want the _Trimmed_ option.
 
-By adding `<PublishTrimmed>true</PublishTrimmed>` to your .csproj file within a `PropertyGroup`, you can tell the publish process to perform an *illinker* step. This illinker examines the actual usage of classes and methods within your application and removes the rest. This often yields substantial size savings. The trade-off is slightly increased build time as this extra step occurs. However, I've consistently found the output to be considerably smaller.
+By adding `<PublishTrimmed>true</PublishTrimmed>` to your .csproj file within a `PropertyGroup`, you can tell the publish process to perform an _illinker_ step. This illinker examines the actual usage of classes and methods within your application and removes the rest. This often yields substantial size savings. The trade-off is slightly increased build time as this extra step occurs. However, I've consistently found the output to be considerably smaller.
 
 Here is an example, where we modify the .csproj:
 
@@ -42,7 +42,7 @@ Here, the `<SelfContained>true</SelfContained>` ensures the framework is bundled
 
 **Assembly Linking and Native AOT**
 
-Beyond the trimmer, you can also look towards *native aot* compilation. This option compiles your code directly to machine code ahead-of-time, rather than il, completely removing the .net runtime and greatly reducing the size of required files. This provides the smallest possible executable in .net, but is a more involved process. It also introduces limitations in terms of code usage such as reflection and dynamic loading.
+Beyond the trimmer, you can also look towards _native aot_ compilation. This option compiles your code directly to machine code ahead-of-time, rather than il, completely removing the .net runtime and greatly reducing the size of required files. This provides the smallest possible executable in .net, but is a more involved process. It also introduces limitations in terms of code usage such as reflection and dynamic loading.
 
 The main benefit here isn't the binary size of your primary executable per-se; its more so that no framework dlls need to be included in the application.
 
@@ -98,7 +98,7 @@ While not a huge saving, especially with modern compression algorithms, this dem
 
 **Recommendations for Further Study**
 
-For deeper understanding, I highly recommend diving into the official .net documentation on publishing and deployment. Specifically, I recommend the ".net deployment documentation", found easily through a quick web search. This is a crucial source and provides the fundamental concepts needed to achieve optimal binary size. Also, look into the documentation on the *illinker*.
+For deeper understanding, I highly recommend diving into the official .net documentation on publishing and deployment. Specifically, I recommend the ".net deployment documentation", found easily through a quick web search. This is a crucial source and provides the fundamental concepts needed to achieve optimal binary size. Also, look into the documentation on the _illinker_.
 
 Additionally, "C# 10 in a Nutshell" by Joseph Albahari is an excellent reference that gives considerable background on underlying aspects of the compiler and runtime, including the concepts mentioned here. Finally, some research on general executable trimming techniques, and the inner workings of the PE file format can illuminate the deeper aspects of executable size.
 

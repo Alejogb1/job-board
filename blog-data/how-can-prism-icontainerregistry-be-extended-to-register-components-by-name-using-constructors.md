@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-prism-icontainerregistry-be-extended-to-register-components-by-name-using-constructors"
 ---
 
-Let's tackle this. It's a scenario I’ve definitely encountered a few times, particularly when migrating older systems to a more modular design. The core issue revolves around Prism's `IContainerRegistry`, which provides a powerful way to register types for dependency injection, but it sometimes requires a bit more customization than its default offerings. Specifically, when you want to register components not just by their abstract type but also by a name *and* you want to have constructor injection respected, it's where the standard `Register` and `RegisterForNavigation` methods fall a bit short. Let's break down how we can address this.
+. It's a scenario I’ve definitely encountered a few times, particularly when migrating older systems to a more modular design. The core issue revolves around Prism's `IContainerRegistry`, which provides a powerful way to register types for dependency injection, but it sometimes requires a bit more customization than its default offerings. Specifically, when you want to register components not just by their abstract type but also by a name _and_ you want to have constructor injection respected, it's where the standard `Register` and `RegisterForNavigation` methods fall a bit short. Let's break down how we can address this.
 
 My initial run-in with this problem was when modernizing a legacy order processing system. We had various `OrderProcessor` implementations, each handling different order types (e.g., "WebOrderProcessor", "PhoneOrderProcessor"). Simply registering them by interface (`IOrderProcessor`) wasn't sufficient, as the application needed to resolve the correct one based on, say, an order source identifier. This called for name-based registration. We didn’t want to resort to giant `if/else` blocks or switch statements, and obviously, we wanted the benefit of DI for those processors. So, we looked to extend the `IContainerRegistry`.
 
@@ -109,7 +109,7 @@ public class App : PrismApplication
 }
 ```
 
-Now, `WebOrderProcessor` and `PhoneOrderProcessor` are registered against the `IOrderProcessor` abstract type with the names "Web" and "Phone" respectively. Crucially, their constructors requiring an `ILogger` will have their dependencies injected automatically. This addresses the core of the question: *named registrations with constructor injection*.
+Now, `WebOrderProcessor` and `PhoneOrderProcessor` are registered against the `IOrderProcessor` abstract type with the names "Web" and "Phone" respectively. Crucially, their constructors requiring an `ILogger` will have their dependencies injected automatically. This addresses the core of the question: _named registrations with constructor injection_.
 
 Finally, to resolve these components, you can use Unity’s built-in resolution mechanisms via an IUnityContainer instance, which will be present in the application container through the `IContainerProvider` in prism. Here is an example of how to resolve by name:
 
@@ -141,7 +141,7 @@ Here, within an `OrderService`, we can retrieve a concrete `IOrderProcessor` by 
 
 For further exploration into these types of advanced container behaviors, I'd highly recommend the following resources:
 
-1.  **"Dependency Injection in .NET" by Mark Seemann:** A comprehensive deep dive into dependency injection principles, patterns, and implementations. It goes far beyond just the basics, helping you understand the *why* as well as the *how*.
+1.  **"Dependency Injection in .NET" by Mark Seemann:** A comprehensive deep dive into dependency injection principles, patterns, and implementations. It goes far beyond just the basics, helping you understand the _why_ as well as the _how_.
 2.  **The Unity Documentation:** (https://unitycontainer.org) Directly consulting the documentation for the Unity container is always helpful. Look specifically at sections regarding named registrations and resolving dependencies. It offers the most authoritative information about the container itself.
 3.  **"Patterns of Enterprise Application Architecture" by Martin Fowler:** While not specifically DI focused, this book provides excellent context on the design patterns and techniques you might employ in systems that benefit from DI, helping make the right architectural decisions.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-containerlayer-added-to-containerimage"
 ---
 
-, let's tackle this one. It's a question that often pops up when people are getting deeper into container technologies, and it's definitely a point of confusion. I recall a project, back in my early days dealing with microservices, where this precise issue caused a bit of a head-scratching moment. We were building a complex image layering system, and the difference between a container image and a container layer became very relevant, very fast. The short answer is: a container layer _is_ part of a container image, but it isn’t a one-to-one addition like adding blocks to a structure. It's more about how those layers are organized within the overall image structure.
+, one. It's a question that often pops up when people are getting deeper into container technologies, and it's definitely a point of confusion. I recall a project, back in my early days dealing with microservices, where this precise issue caused a bit of a head-scratching moment. We were building a complex image layering system, and the difference between a container image and a container layer became very relevant, very fast. The short answer is: a container layer _is_ part of a container image, but it isn’t a one-to-one addition like adding blocks to a structure. It's more about how those layers are organized within the overall image structure.
 
 Let me unpack that a bit more thoroughly.
 

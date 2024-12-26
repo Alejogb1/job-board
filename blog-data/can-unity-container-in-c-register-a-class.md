@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-unity-container-in-c-register-a-class"
 ---
 
-Let's tackle this one. I've spent a fair share of time architecting applications, and dependency injection with Unity, particularly in C#, is something I’ve encountered quite frequently. The short answer is, yes, absolutely, Unity can register classes, but the details are where things get interesting. It’s not just about simple registration; there’s a spectrum of possibilities that dictate how the container manages dependencies, lifetime, and abstraction.
+one. I've spent a fair share of time architecting applications, and dependency injection with Unity, particularly in C#, is something I’ve encountered quite frequently. The short answer is, yes, absolutely, Unity can register classes, but the details are where things get interesting. It’s not just about simple registration; there’s a spectrum of possibilities that dictate how the container manages dependencies, lifetime, and abstraction.
 
 Early in my career, I recall a large enterprise application we were developing. We initially took a very manual dependency management approach, which, as you can probably guess, quickly devolved into a chaotic mess of tightly coupled components. Moving to a dependency injection (DI) container like Unity was transformational for us. It streamlined our architecture and improved the testability significantly.
 
@@ -84,9 +84,9 @@ Now, anytime a class requests an `ILogger` as a dependency, Unity will provide a
 
 You’ll notice the `ContainerControlledLifetimeManager` included above, which dictates how instances are created and their lifetimes managed. Unity provides other lifetime managers. Some include:
 
-*   **TransientLifetimeManager:** Creates a new instance each time the dependency is resolved.
-*   **HierarchicalLifetimeManager:** Shares an instance within the scope of its current container hierarchy.
-*   **PerResolveLifetimeManager:** Creates a new instance per call to the resolve method of the container, and all of its dependencies.
+- **TransientLifetimeManager:** Creates a new instance each time the dependency is resolved.
+- **HierarchicalLifetimeManager:** Shares an instance within the scope of its current container hierarchy.
+- **PerResolveLifetimeManager:** Creates a new instance per call to the resolve method of the container, and all of its dependencies.
 
 The choice of lifetime manager is crucial for avoiding memory leaks and ensuring your objects behave as expected. If no lifetime manager is defined, by default unity will use a transient manager, which creates new instances for each resolve.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-a-yarn-install-error-for-the-substrate-front-end-template"
 ---
 
-, let's tackle this yarn install issue with the Substrate front-end template. It's a familiar scenario, and I've definitely been down that road a few times. Often, these errors boil down to a few common culprits, and tracking them down effectively relies on understanding how yarn manages dependencies and what can disrupt that process.
+, yarn install issue with the Substrate front-end template. It's a familiar scenario, and I've definitely been down that road a few times. Often, these errors boil down to a few common culprits, and tracking them down effectively relies on understanding how yarn manages dependencies and what can disrupt that process.
 
 Specifically with the Substrate front-end, it tends to be a complex dependency graph, especially with the various polkadot.js libraries involved. I recall a particular project a few years back, where we were rapidly iterating on a new substrate-based dapp. We ran into repeated yarn install failures, seemingly at random, and it became quite frustrating. The key wasn't just looking at the immediate error message but understanding the bigger picture.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-set-a-ui-elements-accessibility-level"
 ---
 
-, let's tackle this. I’ve certainly spent my fair share of hours fine-tuning accessibility, and setting the proper level for ui elements is a foundational aspect. It's not just about ticking a box; it’s about crafting an experience that genuinely works for everyone, regardless of their abilities. So, how do you actually go about doing it? It’s more nuanced than simply marking something as “accessible” or “not accessible.”
+, . I’ve certainly spent my fair share of hours fine-tuning accessibility, and setting the proper level for ui elements is a foundational aspect. It's not just about ticking a box; it’s about crafting an experience that genuinely works for everyone, regardless of their abilities. So, how do you actually go about doing it? It’s more nuanced than simply marking something as “accessible” or “not accessible.”
 
 Fundamentally, setting an accessibility level means providing sufficient semantic information about a ui element for assistive technologies, like screen readers, to correctly interpret and convey its purpose and state. This involves a multi-layered approach, touching on aspects from basic html attributes to intricate aria roles and states. I recall one particularly challenging project years back, where we had to retrofit a complex web application initially developed without accessibility considerations. The sheer amount of rework highlighted how crucial it is to incorporate accessibility from the outset, not as an afterthought.
 

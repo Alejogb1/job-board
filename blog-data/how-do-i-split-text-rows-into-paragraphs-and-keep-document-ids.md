@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-split-text-rows-into-paragraphs-and-keep-document-ids"
 ---
 
-Let's tackle this. The scenario you've presented, splitting text rows into paragraphs while preserving document ids, is something I've encountered numerous times in my work, especially with processing large datasets of textual information. It's a common challenge when you're dealing with documents stored in a format where each row might contain multiple paragraphs, and each row is tied to a specific document. The core issue lies in effectively parsing the text, identifying paragraph boundaries, and then associating each resulting paragraph with its original document id.
+. The scenario you've presented, splitting text rows into paragraphs while preserving document ids, is something I've encountered numerous times in my work, especially with processing large datasets of textual information. It's a common challenge when you're dealing with documents stored in a format where each row might contain multiple paragraphs, and each row is tied to a specific document. The core issue lies in effectively parsing the text, identifying paragraph boundaries, and then associating each resulting paragraph with its original document id.
 
 My experience has taught me that there isn't a single perfect solution; the 'best' approach often depends on the consistency of your data. For instance, I once worked on a project involving legal documents where paragraphs were primarily separated by two newline characters (`\n\n`), which made things relatively straightforward. However, I've also dealt with datasets where paragraph delimiters were less consistent—perhaps a mix of newline characters, single newlines preceded by specific punctuation, or sometimes even just spacing conventions.
 
@@ -160,8 +160,8 @@ In all of these examples, the output is a new DataFrame where each row contains 
 
 For further learning, I highly recommend diving deeper into the following:
 
-*   **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** This is a solid foundation for anyone working with text data using Python and the nltk library, it covers core NLP concepts and is exceptionally practical.
-*   **"Regular Expressions Cookbook" by Jan Goyvaerts and Steven Levithan:** This book is my go-to resource for all things regex; it's incredibly helpful when you are working with complex patterns.
-*   **The pandas library documentation:** Explore the pandas library documentation thoroughly. The features, data manipulation capabilities, and the wealth of utilities offered within the library are essential for working with structured data in Python.
+- **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** This is a solid foundation for anyone working with text data using Python and the nltk library, it covers core NLP concepts and is exceptionally practical.
+- **"Regular Expressions Cookbook" by Jan Goyvaerts and Steven Levithan:** This book is my go-to resource for all things regex; it's incredibly helpful when you are working with complex patterns.
+- **The pandas library documentation:** Explore the pandas library documentation thoroughly. The features, data manipulation capabilities, and the wealth of utilities offered within the library are essential for working with structured data in Python.
 
 In closing, while splitting text rows into paragraphs might seem simple at first glance, in practice it often involves careful consideration of your data’s structure and consistency. These examples should give you a robust starting point and provide a pathway for handling more complex scenarios. The key is to approach each dataset methodically, testing your approach and continually adjusting based on your findings. This is very typical of the workflow I've always found to work best.

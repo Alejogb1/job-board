@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-rendering-the-airflow-variable-prevexecutiondatesuccess-result-in-an-attributeerror"
 ---
 
-, let's tackle this `prev_execution_date_success` issue with Airflow. It's a classic gotcha, and I recall debugging this exact problem on a rather hectic weekend many moons ago during a system migration. It's not as straightforward as it might seem initially, and the error message can be misleading if you don’t know what's happening under the hood. The core issue stems from how Jinja templating and Airflow's execution context interact.
+, `prev_execution_date_success` issue with Airflow. It's a classic gotcha, and I recall debugging this exact problem on a rather hectic weekend many moons ago during a system migration. It's not as straightforward as it might seem initially, and the error message can be misleading if you don’t know what's happening under the hood. The core issue stems from how Jinja templating and Airflow's execution context interact.
 
 The `prev_execution_date_success` variable, or any variable using the `execution_date` context in a similar manner, isn't always available when a task is being rendered. Specifically, it’s most likely causing an `AttributeError` during the _parsing_ or _rendering_ phase of the DAG, _before_ the task actually gets to the execution phase where that attribute could exist.
 
@@ -123,7 +123,7 @@ with DAG(
     init_task >> task_b
 ```
 
-In this third example, the `my_dependent_function` _requires_ a previous execution. By adding a `DummyOperator` as an initial task, and setting the `trigger_rule` to `one_success`, the subsequent task (task_b) will _only_ ever run when there is a previous, _successful_ execution of `task_b`. This eliminates the error, as the variable has to exist (due to the one_success rule), and you can therefore perform any logic that you might need.
+In this third example, the `my_dependent_function` _requires_ a previous execution. By adding a `DummyOperator` as an initial task, and setting the `trigger_rule` to `one_success`, the subsequent task (task*b) will \_only* ever run when there is a previous, _successful_ execution of `task_b`. This eliminates the error, as the variable has to exist (due to the one_success rule), and you can therefore perform any logic that you might need.
 
 **Recommendations for Further Learning**
 

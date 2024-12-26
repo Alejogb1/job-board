@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-a-rails-7-system-test-error-caused-by-a-model-callback"
 ---
 
-Let's tackle this. It’s funny, just yesterday I was helping a colleague debug a seemingly identical issue with a rather complex order processing system. He was tearing his hair out over what appeared to be an intermittent system test failure, and it all stemmed from a subtle, yet crucial interaction between model callbacks and the testing environment. The issue at hand, as I understand it, is that your Rails 7 system tests are failing due to an unanticipated side-effect from a model callback. This usually points to a timing or state-dependency issue, and getting to the bottom of it requires a systematic approach. Let's break down how you can effectively diagnose and resolve this.
+. It’s funny, just yesterday I was helping a colleague debug a seemingly identical issue with a rather complex order processing system. He was tearing his hair out over what appeared to be an intermittent system test failure, and it all stemmed from a subtle, yet crucial interaction between model callbacks and the testing environment. The issue at hand, as I understand it, is that your Rails 7 system tests are failing due to an unanticipated side-effect from a model callback. This usually points to a timing or state-dependency issue, and getting to the bottom of it requires a systematic approach. Let's break down how you can effectively diagnose and resolve this.
 
 The problem isn’t usually the callback itself, but rather the environment in which it executes during testing. System tests, by their nature, mimic user interactions and thus invoke a full slice of your application, including database writes and often asynchronous processes. Callbacks, particularly `after_create`, `after_update`, and `after_commit` varieties, are typically where these types of issues originate in testing contexts. They might be interacting with external services, writing to the database in ways that interfere with test assertions, or even triggering background jobs before the test has a chance to make proper expectations.
 
@@ -26,6 +26,7 @@ end
 ```
 
 Here's how you could manage it in a test:
+
 ```ruby
 # test/system/orders_test.rb
 require "application_system_test_case"
@@ -140,6 +141,6 @@ end
 
 The key takeaway here is to always be mindful of the order of operations and how callbacks interact with your test expectations, especially when side effects are involved.
 
-For diving deeper into testing and debugging Rails applications, I'd recommend checking out *“Agile Web Development with Rails 7”* for a general understanding of Rails principles, and *“Testing Rails”* by Noel Rappin, which is a classic book for best practices in testing Rails applications, including effective techniques for dealing with callbacks and background jobs. Additionally, I found the 'Working with Active Record Callbacks' section of the official Rails documentation very helpful. Also, exploring test frameworks like Rspec or Minitest's features (especially mocking and stubbing) are important if you aren't already using them.
+For diving deeper into testing and debugging Rails applications, I'd recommend checking out _“Agile Web Development with Rails 7”_ for a general understanding of Rails principles, and _“Testing Rails”_ by Noel Rappin, which is a classic book for best practices in testing Rails applications, including effective techniques for dealing with callbacks and background jobs. Additionally, I found the 'Working with Active Record Callbacks' section of the official Rails documentation very helpful. Also, exploring test frameworks like Rspec or Minitest's features (especially mocking and stubbing) are important if you aren't already using them.
 
 Debugging these kinds of problems is often about methodical investigation and a deep understanding of your system’s behavior. I have often spent hours debugging similar issues and hope this detailed breakdown is useful to you. Feel free to ask if you have any more questions.

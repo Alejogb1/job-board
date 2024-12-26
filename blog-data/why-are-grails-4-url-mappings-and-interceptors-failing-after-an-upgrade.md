@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-grails-4-url-mappings-and-interceptors-failing-after-an-upgrade"
 ---
 
-Let's tackle this one. Ah, the joys of upgrading a legacy grails application, especially when seemingly straightforward components like url mappings and interceptors decide to throw a curveball. I remember vividly, back in my days maintaining a large e-commerce platform, migrating from grails 3 to 4 presented a similar challenge. Everything seemed fine on the surface during initial testing, but suddenly, parts of the application that relied heavily on url patterns and interceptor functionality just… stopped working as expected. It’s a situation that can leave you scratching your head for a while, and it usually boils down to a few common culprits. Let me explain what I've observed and how we fixed it back then.
+one. Ah, the joys of upgrading a legacy grails application, especially when seemingly straightforward components like url mappings and interceptors decide to throw a curveball. I remember vividly, back in my days maintaining a large e-commerce platform, migrating from grails 3 to 4 presented a similar challenge. Everything seemed fine on the surface during initial testing, but suddenly, parts of the application that relied heavily on url patterns and interceptor functionality just… stopped working as expected. It’s a situation that can leave you scratching your head for a while, and it usually boils down to a few common culprits. Let me explain what I've observed and how we fixed it back then.
 
 Firstly, the core change affecting url mappings and interceptors post-grails 4 upgrade typically revolves around the underlying Spring Boot infrastructure and the move from `UrlMappings.groovy` to more idiomatic configuration approaches. Grails 4 embraces Spring Boot's conventions more tightly, which translates into subtle, but crucial, differences in how these components are handled. Before, you could often get away with implicit configuration based on naming conventions, but post-upgrade, explicit configurations often become mandatory. Specifically, the way Grails 4 interprets the `UrlMappings.groovy` file has become more strict. What worked before as implicit wildcard matching may now require explicit declarations or adjustments in the `grails-app/conf/application.yml` or `grails-app/conf/application.properties` (depending on your configuration preference). This is something I noticed immediately in my e-commerce project; certain mappings that relied on implicit regex patterns were just silently failing.
 
@@ -27,7 +27,7 @@ class UrlMappings {
 
 This was fairly implicit, and under older Grails versions the admin mapping `"/admin/**"` worked fairly liberally often matching anything that started with `/admin`.
 
-After migrating to Grails 4, this might not match as widely as expected because the semantics of "**" might have changed slightly. You might need to adjust the mapping slightly to explicitly use regex as follows or utilize spring mvc pattern matching which can be configured via `application.yml`
+After migrating to Grails 4, this might not match as widely as expected because the semantics of "\*\*" might have changed slightly. You might need to adjust the mapping slightly to explicitly use regex as follows or utilize spring mvc pattern matching which can be configured via `application.yml`
 
 ```groovy
 class UrlMappings {
@@ -77,6 +77,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
 }
 ```
+
 You would also need a corresponding configuration to register this interceptor. For example, inside a java class that is configured as a configuration class in grails using @Configuration or @GrailsConfiguration annotation:
 
 ```java
@@ -100,15 +101,15 @@ public class WebConfig implements WebMvcConfigurer {
 
 ```
 
-**Scenario 3:  Configuration Adjustments**
+**Scenario 3: Configuration Adjustments**
 
-Sometimes, these issues are not directly in your code. It could be the underlying configuration properties for grails framework that has changed. The `application.yml` or `application.properties` is where grails configuration is managed. In grails 3, it may have been acceptable to have minimal configuration with default behaviours; however, grails 4 expects certain configurations to be in place. Let's imagine a common issue, where the base URL was implicitly determined and worked for older grails applications. In Grails 4, explicitly setting the `grails.server.servlet.context-path` can sometimes help resolve odd issues with URL matching if context paths are involved.  The following is an example of explicitly settings this.
+Sometimes, these issues are not directly in your code. It could be the underlying configuration properties for grails framework that has changed. The `application.yml` or `application.properties` is where grails configuration is managed. In grails 3, it may have been acceptable to have minimal configuration with default behaviours; however, grails 4 expects certain configurations to be in place. Let's imagine a common issue, where the base URL was implicitly determined and worked for older grails applications. In Grails 4, explicitly setting the `grails.server.servlet.context-path` can sometimes help resolve odd issues with URL matching if context paths are involved. The following is an example of explicitly settings this.
 
 ```yaml
 grails:
-    server:
-        servlet:
-            context-path: /my-app
+  server:
+    servlet:
+      context-path: /my-app
 ```
 
 Debugging these issues often requires a systematic approach. I’ve found that reviewing the grails upgrade notes for changes in url mapping conventions and spring mvc integration is essential. The Grails documentation on url mappings and interceptors is also a must-read, focusing particularly on the Spring MVC integration. For deeper understanding of web application configuration in Spring environment, I would recommend ‘Spring in Action’ by Craig Walls as it provides an in-depth perspective on the underlying Spring Boot mechanisms. Also, to understand Spring MVC architecture for implementing handler interceptors ‘Pro Spring MVC’ by Marten Deinum and Colin Yates will prove to be a very valuable resource.

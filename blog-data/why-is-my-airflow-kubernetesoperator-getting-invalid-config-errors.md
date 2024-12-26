@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-airflow-kubernetesoperator-getting-invalid-config-errors"
 ---
 
-, let's tackle this Airflow KubernetesOperator invalid config error – it's a familiar beast, and I've certainly danced with it more times than I care to remember over the years. It usually isn't a singular, obvious issue, but rather a confluence of several potential culprits. Let's dissect this systematically.
+, Airflow KubernetesOperator invalid config error – it's a familiar beast, and I've certainly danced with it more times than I care to remember over the years. It usually isn't a singular, obvious issue, but rather a confluence of several potential culprits. Let's dissect this systematically.
 
 Often, these errors stem from a discrepancy between the configuration you’re feeding the `KubernetesOperator` and what the Kubernetes API expects. The critical aspect here is that the operator doesn’t directly interpret your configuration, it serializes it into a Kubernetes manifest (often yaml), which then gets sent to the Kubernetes API. Consequently, validation happens at _two_ levels: within Airflow during operator instantiation and by the Kubernetes API itself upon attempted resource creation. The first step, therefore, is always figuring out at which point the error originates.
 

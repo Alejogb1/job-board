@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-change-the-font-size-of-axes-labels-in-ggpairs"
 ---
 
-Let's tackle this font size issue with `ggpairs`. I’ve run into this myself on numerous occasions, specifically when crafting large correlation matrices where the default labels become unreadable. It’s a common problem, and while `ggpairs` is fantastically powerful for exploratory data analysis, it sometimes falls a little short on granular formatting. The key here is understanding how `ggpairs` structures its output and then using the appropriate methods for manipulating the underlying ggplot2 objects.
+font size issue with `ggpairs`. I’ve run into this myself on numerous occasions, specifically when crafting large correlation matrices where the default labels become unreadable. It’s a common problem, and while `ggpairs` is fantastically powerful for exploratory data analysis, it sometimes falls a little short on granular formatting. The key here is understanding how `ggpairs` structures its output and then using the appropriate methods for manipulating the underlying ggplot2 objects.
 
 When you use `ggpairs`, it creates a grid of plots. Each of these plots is individually a `ggplot2` object. The axis labels we want to modify are part of these individual subplots. Therefore, instead of directly altering `ggpairs`' parameters (which don't offer direct font size control for axis labels), we have to reach into its internal structure, access these `ggplot2` objects, and then modify their themes. We're essentially doing post-processing on the output of `ggpairs`.
 

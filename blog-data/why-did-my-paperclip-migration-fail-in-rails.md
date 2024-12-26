@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-my-paperclip-migration-fail-in-rails"
 ---
 
-, let's tackle this paperclip migration mishap. Been there, done that, got the t-shirt, and probably debugged it for several hours past midnight. It's a classic scenario in the rails world, where an seemingly innocent file upload feature turns into a database schema headache. The failure usually boils down to a few common culprits, and I've definitely tripped over them myself more than once.
+, paperclip migration mishap. Been there, done that, got the t-shirt, and probably debugged it for several hours past midnight. It's a classic scenario in the rails world, where an seemingly innocent file upload feature turns into a database schema headache. The failure usually boils down to a few common culprits, and I've definitely tripped over them myself more than once.
 
 First off, let's clarify that paperclip, while a convenient gem, fundamentally relies on database columns to store metadata about your file uploads, like file names, content types, and file sizes. These columns get created and updated by migrations. When your migration fails, it's almost always one of these related database operations going sideways. Now, I’ve seen three primary reasons for such failures in my projects, and I’ll try to explain each with some practical context.
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-use-a-user-method-in-a-pipeline"
 ---
 
-Let's tackle this. I’ve seen this scenario come up more than a few times, especially in contexts where complex data transformations are needed in a systematic fashion. The key here isn’t just about using *a* user method, but understanding *how* to seamlessly integrate that custom logic within a broader pipeline, often involving various stages of data manipulation or processing. Think of pipelines like a carefully choreographed dance; each step needs to work in harmony with the others. User-defined methods, in this context, represent your unique choreography steps, needing to slot in without causing a disruption.
+. I’ve seen this scenario come up more than a few times, especially in contexts where complex data transformations are needed in a systematic fashion. The key here isn’t just about using _a_ user method, but understanding _how_ to seamlessly integrate that custom logic within a broader pipeline, often involving various stages of data manipulation or processing. Think of pipelines like a carefully choreographed dance; each step needs to work in harmony with the others. User-defined methods, in this context, represent your unique choreography steps, needing to slot in without causing a disruption.
 
 The fundamental challenge often revolves around keeping these custom methods modular, testable, and easily integrated into different pipelines. Let’s break down the strategies I've found most effective, with a look at some code snippets that will hopefully solidify these concepts.
 
-Generally, when I'm constructing these pipelines, I'm aiming for something that is: *reusable*, *maintainable*, and *testable*. Embedding user-defined logic directly within a pipeline, especially without a careful design, can lead to tangled, hard-to-debug code. Instead, we're going to use a functional programming approach where we treat user methods as transformations that can be plugged into a sequential flow of operations. It's a technique that promotes clarity and modularity.
+Generally, when I'm constructing these pipelines, I'm aiming for something that is: _reusable_, _maintainable_, and _testable_. Embedding user-defined logic directly within a pipeline, especially without a careful design, can lead to tangled, hard-to-debug code. Instead, we're going to use a functional programming approach where we treat user methods as transformations that can be plugged into a sequential flow of operations. It's a technique that promotes clarity and modularity.
 
 Let's consider a scenario, one I remember from a project involving analyzing user behavior. We were extracting user interaction data from a database, then we needed to do a series of transformations on it before feeding it into a machine-learning model. The transformation required converting timestamps to a specific timezone, performing some data cleaning, and then generating a series of aggregate features.
 
@@ -23,10 +23,12 @@ def clean_string(input_string):
     return input_string.strip().lower()
 
 ```
+
 This function operates solely on the input string and doesn’t modify any external state. It's simple, testable, and predictable. Now, how to get it into a pipeline?
 
 A common pipeline construction uses a series of transformations applied sequentially. Python libraries like pandas offer ways to compose pipelines efficiently.
 Consider a simple pipeline implementation in Python using pandas, showcasing how our `clean_string` method might be used. We will perform the cleaning on a single column within the dataframe:
+
 ```python
 import pandas as pd
 
@@ -51,6 +53,7 @@ def simple_stemmer(word):
     return word
 
 ```
+
 Now, let’s see how that’s integrated into a text processing pipeline that tokenizes text before applying the `simple_stemmer`:
 
 ```python
@@ -93,7 +96,7 @@ print (formatted_times)
 
 ```
 
-Here, the user-defined `format_timestamp` function is applied to each element in the `timestamps` list using the `map` function, generating a new list containing formatted timestamps.  This functional approach is incredibly powerful for transformations that can be applied to each element of a collection. It's clear, concise, and very much in the spirit of modular pipeline design.
+Here, the user-defined `format_timestamp` function is applied to each element in the `timestamps` list using the `map` function, generating a new list containing formatted timestamps. This functional approach is incredibly powerful for transformations that can be applied to each element of a collection. It's clear, concise, and very much in the spirit of modular pipeline design.
 
 To really nail down these concepts, I highly recommend diving deeper into literature on functional programming principles and pipeline architectures. "Structure and Interpretation of Computer Programs" by Abelson and Sussman is an excellent, albeit challenging, starting point for functional programming, while “Data Pipelines Pocket Reference” by James Densmore is a very practical book for understanding how to build data pipelines effectively. As well, exploring the documentation for pandas (especially the `apply` method) and similar data processing frameworks will provide a clearer insight into the tools and techniques available for integrating user-defined functions effectively into pipeline constructs.
 

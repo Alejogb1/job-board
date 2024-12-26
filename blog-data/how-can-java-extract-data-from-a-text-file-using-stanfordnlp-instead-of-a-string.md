@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-java-extract-data-from-a-text-file-using-stanfordnlp-instead-of-a-string"
 ---
 
-Let's tackle this. I've personally seen this issue crop up more times than I can count, especially in early-stage natural language processing projects. The common trap is to immediately load the entire text file as a single, monolithic string and then feed it to StanfordNLP. That’s understandable, but it's not often the best approach, especially when dealing with larger files or when wanting a more granular level of control over the data processing. Instead of just directly using a string, we can (and often *should*) leverage java's input stream capabilities to work directly from the text file itself. This approach is more memory-efficient, and allows us to manage data flow more effectively.
+. I've personally seen this issue crop up more times than I can count, especially in early-stage natural language processing projects. The common trap is to immediately load the entire text file as a single, monolithic string and then feed it to StanfordNLP. That’s understandable, but it's not often the best approach, especially when dealing with larger files or when wanting a more granular level of control over the data processing. Instead of just directly using a string, we can (and often _should_) leverage java's input stream capabilities to work directly from the text file itself. This approach is more memory-efficient, and allows us to manage data flow more effectively.
 
-The core idea is to use a `Reader` object, which is part of Java's standard io library, in combination with Stanford CoreNLP’s text processing facilities. StanfordNLP doesn’t *require* a string; it’s perfectly happy to process input streams. Here’s a breakdown of how I usually handle this, combining both `BufferedReader` and the `Document` class available in stanfordnlp, using the latest CoreNLP library, as the older one might not have all the stream-processing options:
+The core idea is to use a `Reader` object, which is part of Java's standard io library, in combination with Stanford CoreNLP’s text processing facilities. StanfordNLP doesn’t _require_ a string; it’s perfectly happy to process input streams. Here’s a breakdown of how I usually handle this, combining both `BufferedReader` and the `Document` class available in stanfordnlp, using the latest CoreNLP library, as the older one might not have all the stream-processing options:
 
 **The Core Concepts**
 
@@ -118,6 +118,7 @@ public class LineByLineProcessing {
   }
 }
 ```
+
 In the above code we read a line at a time and pass a string to the `Annotation` object, skipping the `Document` object this time around since each line is a self-contained annotation already. The crucial part is using `bufferedReader.readLine()` to process one sentence per line, preventing us from loading everything at once. `Document` is not ideal in this case.
 
 **Handling Custom Annotators**
@@ -132,7 +133,7 @@ import edu.stanford.nlp.util.CoreMap;
 import java.util.*;
 
 public class CustomExtractor implements Annotator {
-    
+
     @Override
     public void annotate(Annotation annotation){
          for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
@@ -164,7 +165,7 @@ public class CustomExtractor implements Annotator {
                 new Requirement(CustomAnnotation.class.getName())
         )));
     }
-    
+
     public static class CustomAnnotation implements CoreAnnotation<String> {
         @Override
         public Class<String> getType() {
@@ -226,10 +227,11 @@ public class CustomAnnotatorExample {
 }
 
 ```
+
 This example adds a custom annotation that tags the word as "special" if it starts with "A," but the logic can be something more complex. This demonstrates how you can chain custom logic with Stanford CoreNLP's default tools while also leveraging stream processing of files.
 
 **Recommended Resources:**
 
-For a deeper understanding of Java IO, I'd suggest *Effective Java* by Joshua Bloch, specifically the sections on resource management with try-with-resources and buffered input streams. To dive deeper into the nitty-gritty of Stanford CoreNLP, refer to the official documentation. The *Natural Language Processing with Python* book (colloquially known as *NLTK book*) by Steven Bird, Ewan Klein, and Edward Loper can offer valuable conceptual insights as well.  Stanford also publishes academic papers on their implementation (e.g., "The Stanford CoreNLP Natural Language Processing Toolkit"). Studying these papers can offer further depth for specific tasks.
+For a deeper understanding of Java IO, I'd suggest _Effective Java_ by Joshua Bloch, specifically the sections on resource management with try-with-resources and buffered input streams. To dive deeper into the nitty-gritty of Stanford CoreNLP, refer to the official documentation. The _Natural Language Processing with Python_ book (colloquially known as _NLTK book_) by Steven Bird, Ewan Klein, and Edward Loper can offer valuable conceptual insights as well. Stanford also publishes academic papers on their implementation (e.g., "The Stanford CoreNLP Natural Language Processing Toolkit"). Studying these papers can offer further depth for specific tasks.
 
 By using a stream-based approach, we can process textual data using StanfordNLP much more effectively and efficiently than by solely relying on strings and loading everything into memory. I’ve found this to be crucial in various applications, and I hope it helps you navigate similar challenges.

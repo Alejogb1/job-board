@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-wait-10-seconds-for-an-element-with-a-specific-id-using-selenium-in-python"
 ---
 
-Let's tackle this one; it’s a common scenario in web automation, and I've definitely been in situations where timing is everything. I remember a particularly tricky project a few years back where we were scraping a dynamic dashboard—the elements would appear, disappear, and sometimes get lazy-loaded, which made predictable wait times almost impossible. Thankfully, Selenium has good tools to handle this.
+one; it’s a common scenario in web automation, and I've definitely been in situations where timing is everything. I remember a particularly tricky project a few years back where we were scraping a dynamic dashboard—the elements would appear, disappear, and sometimes get lazy-loaded, which made predictable wait times almost impossible. Thankfully, Selenium has good tools to handle this.
 
 The core challenge is not simply introducing a pause; it’s about intelligently waiting until a specific element, identified by its id, is present in the Document Object Model (DOM). We can’t just `time.sleep(10)`—that’s brittle and inefficient. What if the element shows up in 3 seconds? We’ve wasted 7. Or, worse, what if it takes 12 seconds? We'll get an `NoSuchElementException` error, and our test fails. Instead, we need explicit waits.
 
@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
 Here, the `WebDriverWait` is instantiated with the driver and a maximum timeout period. The `until()` method continuously checks the condition passed to it, defined through an expected condition using `presence_of_element_located`. This particular condition verifies that an element identified with the specified `By.ID` is present in the dom. This will return the element if found; otherwise a `TimeoutException` will be raised if the element was not found within the specified timeout window, a key consideration to avoid the scenario where the test just hangs indefinitely.
 
-Now, let’s say we need to wait for an element to be both present *and* visible before interacting with it. Here’s a modified example:
+Now, let’s say we need to wait for an element to be both present _and_ visible before interacting with it. Here’s a modified example:
 
 ```python
 from selenium import webdriver
@@ -104,6 +104,7 @@ if __name__ == '__main__':
     finally:
         driver.quit()
 ```
+
 Here, we've used `visibility_of_element_located`, which checks not just for presence in the DOM, but for element being displayed and visible on the page – which is usually required before performing any action, like clicking or typing. It ensures that you don't attempt to interact with elements hidden via css or still undergoing transitions.
 
 Finally, let's consider the case where the element's ID is generated dynamically. While not ideal for stable testing, it sometimes happens. In such cases you might rely on a relative xpath query or other locator strategy that can deal with these situations. Here’s an example, assuming that some parent element has a fixed ID:

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-rails-csv-export-function-return-no-route-matches"
 ---
 
-, let's tackle this “no route matches” issue when attempting to export CSV data from a Rails application. It's a frustrating error, and I've personally spent more than one evening chasing my tail around it, often due to some subtle configuration oversight. I'll share some of the common culprits and how to resolve them, based on my experience.
+, “no route matches” issue when attempting to export CSV data from a Rails application. It's a frustrating error, and I've personally spent more than one evening chasing my tail around it, often due to some subtle configuration oversight. I'll share some of the common culprits and how to resolve them, based on my experience.
 
 The core of the problem, typically, isn’t the _CSV generation_ code itself, but how the request is being routed within the Rails application. The "no route matches" error specifically indicates that Rails' routing system cannot find a predefined rule that matches the incoming request, and the most common mistake is that we’re expecting our request to match an existing route it was never set up to handle. The fundamental misunderstanding lies in expecting the `format: :csv` parameter to _magically_ transform an existing HTML-focused route.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-docker-containers-be-saved-and-loaded"
 ---
 
-Let's tackle this from a practical standpoint, because abstract theory only gets you so far. Over my years building infrastructure, I've frequently needed to move container images around outside of the typical registry workflow. Think isolated environments, air-gapped networks, or even just the need for a quick, local backup. So, how do we save and load docker containers, effectively? The key lies in understanding that a docker container, when paused, stopped, or even running, isn't the object we want to save—it's the *image* that we're targeting.
+from a practical standpoint, because abstract theory only gets you so far. Over my years building infrastructure, I've frequently needed to move container images around outside of the typical registry workflow. Think isolated environments, air-gapped networks, or even just the need for a quick, local backup. So, how do we save and load docker containers, effectively? The key lies in understanding that a docker container, when paused, stopped, or even running, isn't the object we want to save—it's the _image_ that we're targeting.
 
 Essentially, docker images can be treated as compressed archives. This means we can serialize them to a file and then reconstitute them elsewhere. This entire process boils down to two primary commands: `docker save` for creating the archive, and `docker load` for importing it back into the docker environment.
 
@@ -30,6 +30,7 @@ docker save my-api-image:latest my-db-image:latest my-frontend-image:latest -o m
 # Later, loading the multi-image archive
 docker load -i my-multi-app.tar
 ```
+
 Notice how each image within that archive retains its tag. This is critical when you have image-dependent configurations within docker-compose or similar orchestration systems. The `docker load` command will automatically recreate the tagged images when importing.
 
 Now, let’s explore a more advanced approach that involves saving an entire docker history. Sometimes you may want to trace back the history of an image, for auditing purposes or to examine previous configurations. While the typical `docker save` command only saves the current image, it’s possible to achieve this by using docker’s build caching capabilities and some file system manipulation. I encountered this issue when investigating the root cause of an unexpected change in a production build and needed a way to retrace the steps. Although there isn't a direct command to save the full image build history to a single file, you could leverage docker’s build cache to create an archive that contains the necessary layers to achieve this effect. This involves more manual steps, so I’ll outline the concept instead of providing a simple command snippet:

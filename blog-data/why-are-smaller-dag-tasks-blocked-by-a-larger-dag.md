@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-smaller-dag-tasks-blocked-by-a-larger-dag"
 ---
 
-, let's tackle this one. The issue of smaller directed acyclic graph (DAG) tasks being blocked by larger ones is something I’ve certainly encountered more than a few times in my career, particularly during the early days of scaling out some complex data pipelines. It's not always immediately obvious why this happens, so let's break it down into the underlying mechanisms.
+, one. The issue of smaller directed acyclic graph (DAG) tasks being blocked by larger ones is something I’ve certainly encountered more than a few times in my career, particularly during the early days of scaling out some complex data pipelines. It's not always immediately obvious why this happens, so let's break it down into the underlying mechanisms.
 
 Fundamentally, the problem boils down to resource contention and task scheduling within your chosen orchestration system. A DAG, in essence, represents a series of tasks with defined dependencies. Smaller tasks, while seemingly less computationally intensive, can get held up because they're often sharing the same execution environment as those larger tasks. Think of it like a shared highway: even if smaller cars want to go somewhere quickly, they are at the mercy of traffic jams caused by larger trucks.
 

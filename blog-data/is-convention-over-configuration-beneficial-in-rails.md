@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-convention-over-configuration-beneficial-in-rails"
 ---
 
-, let's tackle this one. It’s a classic debate, and I’ve definitely been on both sides of the fence over the years, especially given my experience back at Cyberdyne Systems where we shifted a major legacy application to Rails. The core of your question, is convention over configuration _beneficial_ in Rails, isn’t a simple yes or no. It’s more of a “it depends, but generally, yes” sort of situation.
+, one. It’s a classic debate, and I’ve definitely been on both sides of the fence over the years, especially given my experience back at Cyberdyne Systems where we shifted a major legacy application to Rails. The core of your question, is convention over configuration _beneficial_ in Rails, isn’t a simple yes or no. It’s more of a “it depends, but generally, yes” sort of situation.
 
 Let’s break down why that is. At its heart, convention over configuration (CoC) is a design paradigm that aims to reduce the number of decisions a developer needs to make by establishing sensible defaults and pre-defined structures. This means, instead of explicitly specifying _how_ to do something every single time, the framework assumes a specific way, and you, as the developer, only need to deviate when absolutely necessary. Rails, as you know, is a poster child for this approach. It dictates how models are organized, how views are rendered, and how routes are mapped to controllers.
 

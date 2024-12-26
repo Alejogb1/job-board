@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-fail2ban-be-configured-for-a-new-ssh-port"
 ---
 
-, let's tackle this one. I've spent my fair share of evenings troubleshooting rogue access attempts, so configuring fail2ban for a non-standard ssh port is a process I'm quite familiar with. It's more than just changing a single line; it involves understanding how fail2ban operates and adapting its configurations to correctly identify and block malicious actors targeting your specific setup.
+, one. I've spent my fair share of evenings troubleshooting rogue access attempts, so configuring fail2ban for a non-standard ssh port is a process I'm quite familiar with. It's more than just changing a single line; it involves understanding how fail2ban operates and adapting its configurations to correctly identify and block malicious actors targeting your specific setup.
 
 The core challenge when deviating from the standard port 22 is that fail2ban, by default, is set up to monitor logs that primarily reflect activity on this particular port. If you've moved ssh to, say, port 2222, fail2ban's default filters and jail configurations will remain fixated on port 22, effectively blind to attacks on your actual active port. The beauty of fail2ban, however, is its flexibility, allowing you to adapt it to this kind of change.
 
@@ -24,6 +24,7 @@ failregex = ^%(__prefix_line)sFailed password for (invalid user )?(?P<user>\S+) 
             ^%(__prefix_line)sreverse mapping checking getaddrinfo for .* \[<HOST>\] failed - POSSIBLE BREAK-IN ATTEMPT!\s*$
 ignoreregex =
 ```
+
 This filter definition works on sshd logs with `Failed password`, `disconnect` due to failed attempts or `invalid user` attempts which are quite common, and it should function regardless of the ssh port used because it doesn't explicitly specify one. If it doesn’t detect attacks for your specific log format, you may have to analyze the logs with `grep` and adjust the failregex accordingly. If the new log contains port information, we may have to add the following line after `<HOST>`:
 `^%(__prefix_line)sFailed password for (invalid user )?(?P<user>\S+) from <HOST> port <PORT>\s*$`
 
@@ -61,6 +62,7 @@ After making the changes, you need to restart fail2ban for the configurations to
 `sudo systemctl restart fail2ban`.
 
 Now that you have the basics covered, let's get a bit more practical. Imagine a scenario from one of my previous projects. I was securing a database server that had ssh access restricted to a non-standard port, say, 2222, like the example mentioned. In this instance, the initial filter provided by the operating system didn't adequately capture all failed login attempts, partly due to some variation in the log format. So, I had to modify the failregex as follows, to account for failed login attempts that included the port explicitly:
+
 ```
 [Definition]
 failregex = ^%(__prefix_line)sFailed password for (invalid user )?(?P<user>\S+) from <HOST> port \d+\s*$
@@ -69,6 +71,7 @@ failregex = ^%(__prefix_line)sFailed password for (invalid user )?(?P<user>\S+) 
             ^%(__prefix_line)sreverse mapping checking getaddrinfo for .* \[<HOST>\] failed - POSSIBLE BREAK-IN ATTEMPT!\s*$
 ignoreregex =
 ```
+
 This made sure that failed login attempts on port 2222, explicitly, were being picked up.
 
 One thing to be aware of is the log level of your sshd configuration. Make sure the logging level is detailed enough so that fail2ban can pick up the log data. Typically, setting the level in `/etc/ssh/sshd_config` to `LogLevel VERBOSE` or `LogLevel DEBUG` is enough for capturing the events.

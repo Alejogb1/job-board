@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-pass-opkwargs-to-an-airflow-taskflow-dag-and-task"
 ---
 
-Let's tackle this. I've certainly seen my fair share of Airflow DAGs evolve from simple orchestrations to complex beasts, and the need to dynamically parameterize tasks, often through `op_kwargs`, is a classic scenario. It's a question that comes up often, and while the core concept is straightforward, the nuances can trip up even experienced users. We're talking about passing dictionary parameters to tasks defined in a TaskFlow (decorator-based) DAG, and ensuring that these parameters are correctly received and utilized. I've seen firsthand how crucial this is for creating reusable and maintainable workflows.
+. I've certainly seen my fair share of Airflow DAGs evolve from simple orchestrations to complex beasts, and the need to dynamically parameterize tasks, often through `op_kwargs`, is a classic scenario. It's a question that comes up often, and while the core concept is straightforward, the nuances can trip up even experienced users. We're talking about passing dictionary parameters to tasks defined in a TaskFlow (decorator-based) DAG, and ensuring that these parameters are correctly received and utilized. I've seen firsthand how crucial this is for creating reusable and maintainable workflows.
 
 Let's break this down, piece by piece. The essence of `op_kwargs` lies in its ability to inject runtime-specific data into task execution. Think of it as a bridge between the DAG's scheduling logic and the individual task's processing requirements. This is different from using default arguments within your task definition, as `op_kwargs` allow you to modify behavior on a per-task-instance basis. We need to consider two primary use cases: passing parameters at the DAG level for all tasks and, more frequently, passing them on a per-task level.
 
@@ -35,7 +35,7 @@ def my_dynamic_dag():
 my_dynamic_dag()
 ```
 
-In this first example, you can see that I'm defining a single task function, `process_data`, which takes the `task_id` and `data_type` as parameters. Here, we're using the `.bind()` method to pass these specific parameters, which is in essence a TaskFlow way to pass parameters. Underneath the hood, Airflow is doing the parameter injection to pass arguments to the Python callable. The key is that I am *not* providing these values at the DAG level. The values are passed directly to specific task instances (`process_task_a`, `process_task_b`), allowing for distinct execution contexts for these two runs of the same function.
+In this first example, you can see that I'm defining a single task function, `process_data`, which takes the `task_id` and `data_type` as parameters. Here, we're using the `.bind()` method to pass these specific parameters, which is in essence a TaskFlow way to pass parameters. Underneath the hood, Airflow is doing the parameter injection to pass arguments to the Python callable. The key is that I am _not_ providing these values at the DAG level. The values are passed directly to specific task instances (`process_task_a`, `process_task_b`), allowing for distinct execution contexts for these two runs of the same function.
 
 Next, let's look at a more complex scenario where you might generate your `op_kwargs` dynamically within the DAG, or even pull them from xcom.
 
@@ -70,6 +70,7 @@ def dynamic_kwargs_dag():
 dynamic_kwargs_dag()
 
 ```
+
 In this snippet, we retrieve parameters from Airflow variables. Then the `perform_operation` task is called multiple times with parameters unpacked from the dictionary. The most important part is using the spread operator (`**`) to "unpack" the values into the task call. The `override(task_id=f"task_{op_name}")` ensures each task has a unique id. This pattern lets you scale the DAG based on an external source of configuration. It makes the DAG much more reusable and adaptable to different sets of parameters.
 
 Finally, we'll consider a scenario where we may want to pass more complex parameters, like other functions or lambdas. This requires careful handling to ensure proper serialization. Airflow does not automatically serialize arbitrary function definitions.

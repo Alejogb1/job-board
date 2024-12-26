@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-gridsearchcv-be-used-to-optimize-for-recall-of-the-positive-class"
 ---
 
-Let's tackle this – optimizing for recall using `GridSearchCV`, a scenario I've encountered countless times, particularly in contexts like anomaly detection and medical diagnostics, where the cost of a false negative is substantially higher than a false positive. It's not just about getting the model "right," it's about getting it *strategically* right for your specific needs.
+– optimizing for recall using `GridSearchCV`, a scenario I've encountered countless times, particularly in contexts like anomaly detection and medical diagnostics, where the cost of a false negative is substantially higher than a false positive. It's not just about getting the model "right," it's about getting it _strategically_ right for your specific needs.
 
 The core idea is that `GridSearchCV` by default optimizes for the estimator's `score` method, which is usually accuracy for classifiers. However, we want to maximize the ability to identify positive cases, and recall is the metric that directly addresses that. We can't just tell `GridSearchCV` to use recall without some setup; we need to carefully define the metric and tell it which class we are targeting.
 
@@ -168,6 +168,6 @@ print(f"Recall on test set: {test_recall}")
 
 Here, besides using our custom recall scorer, we have also introduced `n_jobs=-1` to parallelize training (if your computational resources allow) and `StratifiedKFold` for a better cross-validation strategy with imbalanced data. Remember that each fold should maintain the class distribution of the original data.
 
-For further in-depth study on model evaluation and optimization in classification tasks, I recommend looking into the works of Provost & Fawcett, specifically "Data Science for Business: What you need to know about data mining and data-analytic thinking" for a practical grounding, and Hastie, Tibshirani, & Friedman’s "The Elements of Statistical Learning" for more rigorous mathematical treatment. For an even more specific look at imbalanced data, look at *Learning from Imbalanced Data Sets*, edited by He & Garcia. These resources should give you a solid foundation.
+For further in-depth study on model evaluation and optimization in classification tasks, I recommend looking into the works of Provost & Fawcett, specifically "Data Science for Business: What you need to know about data mining and data-analytic thinking" for a practical grounding, and Hastie, Tibshirani, & Friedman’s "The Elements of Statistical Learning" for more rigorous mathematical treatment. For an even more specific look at imbalanced data, look at _Learning from Imbalanced Data Sets_, edited by He & Garcia. These resources should give you a solid foundation.
 
-In essence, optimizing for recall with `GridSearchCV` is a matter of telling it what, *specifically*, you want to optimize. It's not just about throwing parameters at the wall, but carefully tailoring the evaluation to your business problem’s requirements. This approach, informed by practical experience, allows for robust and contextually relevant models.
+In essence, optimizing for recall with `GridSearchCV` is a matter of telling it what, _specifically_, you want to optimize. It's not just about throwing parameters at the wall, but carefully tailoring the evaluation to your business problem’s requirements. This approach, informed by practical experience, allows for robust and contextually relevant models.

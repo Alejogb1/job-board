@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-subdomaindomaincom-be-accessed-as-domaincomsubdomain-without-a-redirect"
 ---
 
-, let's tackle this interesting challenge. It's a common scenario, and frankly, it's something I've spent a fair bit of time configuring across various projects over the years. Accessing `subdomain.domain.com` as `domain.com/subdomain` without resorting to a redirect is entirely feasible, and it primarily revolves around clever server configurations, typically with a reverse proxy. It's not about magical tricks, but rather about understanding how requests are routed and processed at the server level.
+, interesting challenge. It's a common scenario, and frankly, it's something I've spent a fair bit of time configuring across various projects over the years. Accessing `subdomain.domain.com` as `domain.com/subdomain` without resorting to a redirect is entirely feasible, and it primarily revolves around clever server configurations, typically with a reverse proxy. It's not about magical tricks, but rather about understanding how requests are routed and processed at the server level.
 
 The core issue stems from how web servers and browsers interpret URLs. `subdomain.domain.com` is interpreted as a request for a specific host within the domain, while `domain.com/subdomain` is interpreted as a resource path within the root domain. To make them effectively interchangeable for the user, we need the server to interpret the path in `domain.com/subdomain` and forward that request to the server that would traditionally handle `subdomain.domain.com`. Let's break down how to do this in practice.
 

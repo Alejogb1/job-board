@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-update-parameters-when-using-torchnndataparallel"
 ---
 
-, let's tackle this parameter update issue when using `torch.nn.DataParallel`. I remember facing this exact problem during a large-scale image classification project a few years back – it can be a real head-scratcher if you're not intimately familiar with how `DataParallel` actually operates under the hood. It's not about some hidden bug, but rather a fundamental aspect of how `DataParallel` distributes your model and manages gradient updates.
+, parameter update issue when using `torch.nn.DataParallel`. I remember facing this exact problem during a large-scale image classification project a few years back – it can be a real head-scratcher if you're not intimately familiar with how `DataParallel` actually operates under the hood. It's not about some hidden bug, but rather a fundamental aspect of how `DataParallel` distributes your model and manages gradient updates.
 
 The core issue stems from the way `DataParallel` handles model replication and gradient accumulation across multiple gpus. When you wrap your model with `torch.nn.DataParallel`, you're essentially creating a _master copy_ of the model on your primary gpu (gpu:0), and then _replicas_ of this model are distributed to the other gpus you've specified. During the forward pass, input data is scattered across these gpus, processed independently, and the results are gathered back to the master gpu. However, the important part to understand here is this: each replica computes its own gradients, _independently_. These gradients are then gathered on the master gpu.
 

@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "what-is-the-dot-product-of-two-3x4-matrices"
 ---
 
-Let's tackle this. It’s a question that, on the surface, might seem straightforward, yet quickly reveals a common misunderstanding in matrix operations. I recall a project years ago, involving image transformations, where a similar conceptual error almost derailed the entire process. The core problem wasn’t the computation itself, but rather the application of an operation where it wasn’t defined.
+. It’s a question that, on the surface, might seem straightforward, yet quickly reveals a common misunderstanding in matrix operations. I recall a project years ago, involving image transformations, where a similar conceptual error almost derailed the entire process. The core problem wasn’t the computation itself, but rather the application of an operation where it wasn’t defined.
 
 The "dot product," as it’s commonly understood and implemented in linear algebra, specifically applies to vectors of the same dimension. When we start talking about matrices, the situation is different. The term often used is 'matrix multiplication,' which should not be confused with the element-wise multiplication that might be intuitively thought of.
 
-So, to be completely precise: *the dot product, in the way it's defined for vectors, is not directly applicable to two 3x4 matrices.* We cannot perform a standard dot product operation between them. The size mismatch alone makes it impossible under the traditional definition. However, that doesn’t mean we can’t perform any multiplication operation on these matrices.
+So, to be completely precise: _the dot product, in the way it's defined for vectors, is not directly applicable to two 3x4 matrices._ We cannot perform a standard dot product operation between them. The size mismatch alone makes it impossible under the traditional definition. However, that doesn’t mean we can’t perform any multiplication operation on these matrices.
 
-Instead, what we likely want or need is the *matrix multiplication operation*, where the number of columns of the first matrix must be equal to the number of rows of the second matrix. This allows for a valid matrix product to exist. Specifically, if we have matrix *A* of size *m x n* and matrix *B* of size *n x p*, then we can compute matrix product *A* \* *B*, which results in a matrix of size *m x p*.
+Instead, what we likely want or need is the _matrix multiplication operation_, where the number of columns of the first matrix must be equal to the number of rows of the second matrix. This allows for a valid matrix product to exist. Specifically, if we have matrix _A_ of size _m x n_ and matrix _B_ of size _n x p_, then we can compute matrix product _A_ \* _B_, which results in a matrix of size _m x p_.
 
-In the case of two 3x4 matrices *A* and *B*, matrix multiplication *A* \* *B* isn't defined; rather, to multiply them, the second matrix *B* needs to be a 4xN matrix for the multiplication *A* \* *B* to be defined. This means you'd be unable to take an dot product between two 3x4 matrices.
+In the case of two 3x4 matrices _A_ and _B_, matrix multiplication _A_ \* _B_ isn't defined; rather, to multiply them, the second matrix _B_ needs to be a 4xN matrix for the multiplication _A_ \* _B_ to be defined. This means you'd be unable to take an dot product between two 3x4 matrices.
 
 Let's illustrate this with a few code snippets in Python, using the NumPy library because of its strong support for array and matrix operations. First, I will demonstrate the error that will occur if we attempt a dot product:
 
@@ -76,11 +76,11 @@ When working with matrix operations, it's very important to grasp the dimensiona
 
 If you're diving deeper into linear algebra, I'd highly recommend these resources:
 
-*   **"Linear Algebra and Its Applications" by Gilbert Strang:** This is a foundational text that provides a comprehensive view of linear algebra, including matrix operations and vector spaces, with clear explanations and plenty of examples.
+- **"Linear Algebra and Its Applications" by Gilbert Strang:** This is a foundational text that provides a comprehensive view of linear algebra, including matrix operations and vector spaces, with clear explanations and plenty of examples.
 
-*   **"Matrix Computations" by Gene H. Golub and Charles F. Van Loan:** This is a more advanced text but covers the numerical aspects of matrix computations, making it very useful for those who want to understand how these operations are implemented in practice. It's quite rigorous and detailed.
+- **"Matrix Computations" by Gene H. Golub and Charles F. Van Loan:** This is a more advanced text but covers the numerical aspects of matrix computations, making it very useful for those who want to understand how these operations are implemented in practice. It's quite rigorous and detailed.
 
-*   **"Introduction to Linear Algebra" by Gilbert Strang:** While "Linear Algebra and Its Applications" is a comprehensive text, "Introduction to Linear Algebra" is more approachable for a first-time student, providing a less abstract approach.
+- **"Introduction to Linear Algebra" by Gilbert Strang:** While "Linear Algebra and Its Applications" is a comprehensive text, "Introduction to Linear Algebra" is more approachable for a first-time student, providing a less abstract approach.
 
 These books provide solid foundations and should clear any confusion about what operations can be done with matrices of various shapes.
 

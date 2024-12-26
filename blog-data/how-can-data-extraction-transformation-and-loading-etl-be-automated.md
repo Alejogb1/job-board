@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-data-extraction-transformation-and-loading-etl-be-automated"
 ---
 
-, let's tackle this one. Automating etl, or data extraction, transformation, and loading, is something I've spent a significant chunk of my career refining. Back in my days working on a large-scale e-commerce platform, we had this daily ritual of manually triggering etl jobs. It was tedious, error-prone, and definitely not scalable. We quickly realized that automation wasn't just a luxury; it was a necessity for staying afloat. I think what makes it tricky is the inherent complexity of etl pipelines themselves, but breaking it down systematically makes the problem much more manageable.
+, one. Automating etl, or data extraction, transformation, and loading, is something I've spent a significant chunk of my career refining. Back in my days working on a large-scale e-commerce platform, we had this daily ritual of manually triggering etl jobs. It was tedious, error-prone, and definitely not scalable. We quickly realized that automation wasn't just a luxury; it was a necessity for staying afloat. I think what makes it tricky is the inherent complexity of etl pipelines themselves, but breaking it down systematically makes the problem much more manageable.
 
 The core of etl automation involves shifting from manual, script-based operations to orchestrated, scheduled workflows. I've found that this usually involves leveraging several key components: a robust scheduler, a reliable workflow engine, and well-defined data schemas. Instead of running scripts by hand or relying on cron jobs (which I’ve seen go south more often than I care to remember), we need a more sophisticated approach.
 

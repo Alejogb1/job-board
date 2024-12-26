@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cross-origin-frame-access-be-enabled"
 ---
 
-Let's tackle this head-on, shall we? Cross-origin frame access, a familiar pain point for many web developers, presents a fascinating challenge rooted in browser security. It’s something I’ve grappled with extensively throughout my career, particularly during a phase where we were heavily reliant on iframe-based micro frontends. The key here is understanding the underlying security mechanisms that restrict this access and exploring the standardized, secure methods to circumvent those restrictions. We're not looking at bypassing security; instead, we’re aiming for controlled, explicitly allowed access.
+head-on, shall we? Cross-origin frame access, a familiar pain point for many web developers, presents a fascinating challenge rooted in browser security. It’s something I’ve grappled with extensively throughout my career, particularly during a phase where we were heavily reliant on iframe-based micro frontends. The key here is understanding the underlying security mechanisms that restrict this access and exploring the standardized, secure methods to circumvent those restrictions. We're not looking at bypassing security; instead, we’re aiming for controlled, explicitly allowed access.
 
 At its core, the browser enforces the same-origin policy to prevent malicious scripts on one domain from accessing data or manipulating documents hosted on another. This protection is essential to maintain data integrity and protect users from various web exploits. If you've ever seen an error related to 'cross-origin request blocked' or similar, you've encountered the same-origin policy in action. It dictates that script access is only permitted between documents (including iframes) sharing the same origin, defined by the protocol (http, https), host (domain name or ip address), and port number. Deviations in any of these components are considered a different origin, and access will be blocked by default.
 
@@ -53,7 +53,7 @@ A crucial piece to notice here is the verification of the `event.origin` on the 
 
 `document.domain` allows you to relax the same-origin policy by setting the domain for both the parent and the iframe to the same value. This works only if they share the same top-level domain and merely differ in their subdomains. For example, if the parent is on `parent.example.com` and the iframe on `iframe.example.com`, both can set `document.domain = 'example.com'` to allow direct access between their documents.
 
-However, this approach comes with caveats. The primary drawback is security concerns. Once the `document.domain` is set, all subdomains become mutually accessible, which creates potential attack vectors and a broader attack surface. You're not simply allowing communication between two known origins; you're opening it up to *all* subdomains. I would strongly advise to consider carefully if you have any other subdomains and if it's truly worth it before proceeding with this method.
+However, this approach comes with caveats. The primary drawback is security concerns. Once the `document.domain` is set, all subdomains become mutually accessible, which creates potential attack vectors and a broader attack surface. You're not simply allowing communication between two known origins; you're opening it up to _all_ subdomains. I would strongly advise to consider carefully if you have any other subdomains and if it's truly worth it before proceeding with this method.
 
 Here is a working example, but remember to evaluate if you should actually implement this:
 
@@ -75,8 +75,8 @@ And here’s how the iframe would set document.domain to the shared base domain:
 ```javascript
 // iframe.html (hosted on iframe.example.com)
 <script>
-    document.domain = "example.com";
-    const someIframeVariable = "Hello from the iframe!";
+  document.domain = "example.com"; const someIframeVariable = "Hello from the
+  iframe!";
 </script>
 ```
 

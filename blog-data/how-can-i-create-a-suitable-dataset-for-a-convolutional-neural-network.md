@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-create-a-suitable-dataset-for-a-convolutional-neural-network"
 ---
 
-Let's tackle this one. I remember back in '18, when I was working on an aerial image classification project, the dataset preparation consumed more time than the actual model training. It’s a classic issue, and it's important to get it right. The effectiveness of any convolutional neural network (CNN) hinges significantly on the quality and suitability of the dataset it’s trained on. It's not just about volume; it’s about the information contained within and how well it’s organized.
+one. I remember back in '18, when I was working on an aerial image classification project, the dataset preparation consumed more time than the actual model training. It’s a classic issue, and it's important to get it right. The effectiveness of any convolutional neural network (CNN) hinges significantly on the quality and suitability of the dataset it’s trained on. It's not just about volume; it’s about the information contained within and how well it’s organized.
 
-First off, let's acknowledge that "suitable" is a context-dependent term. What works well for satellite imagery might be completely inadequate for, say, medical imaging or natural language processing (though technically, you *can* use a CNN for NLP, that’s another topic). For the sake of this discussion, we'll assume you're dealing with a fairly standard image classification or object detection task, where CNNs are most commonly applied.
+First off, let's acknowledge that "suitable" is a context-dependent term. What works well for satellite imagery might be completely inadequate for, say, medical imaging or natural language processing (though technically, you _can_ use a CNN for NLP, that’s another topic). For the sake of this discussion, we'll assume you're dealing with a fairly standard image classification or object detection task, where CNNs are most commonly applied.
 
 Building a strong dataset isn't just about collecting random images; it's a methodical process involving several key steps: data acquisition, cleaning, annotation, augmentation, and finally, organization. Each step is crucial, and overlooking any of them can degrade the model’s performance.
 
@@ -50,6 +50,7 @@ def preprocess_images(image_dir, target_size=(256, 256)):
 image_dir = "path/to/your/images"  # Replace with your directory
 preprocess_images(image_dir)
 ```
+
 This python code iterates through all the specified image directory, resizing every image to a target size and ensuring all the images are in RGB, saving them in PNG format. Error handling is included to capture issues during processing.
 
 **Example 2: Data Augmentation using Keras**
@@ -99,6 +100,7 @@ This code takes the original image and uses parameters for rotation, shifting, s
 
 **Example 3: Data Splitting into Training, Validation, and Testing Sets**
 This code organises the images into train, validation and test directories.
+
 ```python
 import os
 import shutil
@@ -140,8 +142,9 @@ split_dataset(image_dir, train_dir, val_dir, test_dir)
 This code randomly shuffles all the available images and splits them into training, validation and test directories based on the splitting ratio. The function makes sure to create these directories if they do not exist.
 
 For more in-depth knowledge, I recommend exploring these resources:
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book is an essential textbook on deep learning, covering the theoretical foundations and practical aspects. The chapters on data preprocessing are very helpful.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This practical book provides a hands-on guide to implementing machine learning projects, including detailed sections on data preparation and augmentation using Keras.
-*  **Research papers on data augmentation techniques:** Look for papers that explore advanced augmentation methods like Mixup, CutMix, and others, particularly those that are effective for convolutional neural networks. They can help you understand the latest best practices and techniques to incorporate into your data preparation pipeline.
+
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book is an essential textbook on deep learning, covering the theoretical foundations and practical aspects. The chapters on data preprocessing are very helpful.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This practical book provides a hands-on guide to implementing machine learning projects, including detailed sections on data preparation and augmentation using Keras.
+- **Research papers on data augmentation techniques:** Look for papers that explore advanced augmentation methods like Mixup, CutMix, and others, particularly those that are effective for convolutional neural networks. They can help you understand the latest best practices and techniques to incorporate into your data preparation pipeline.
 
 Remember, a robust dataset is the cornerstone of a successful CNN model. A data-centric approach, focusing on meticulously crafted datasets, will often result in more significant improvements than fine-tuning the model’s architecture. The details of dataset creation are often overlooked, and these details make all the difference in practice.

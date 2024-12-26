@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-insert-a-transformed-librsvg-vector-image-into-a-cairo-svg-document"
 ---
 
-Let's tackle this one. I recall back in the early days of a project dealing with dynamic report generation, we faced a similar challenge: efficiently embedding dynamically generated raster graphics, often derived from complex librsvg renders, directly into the core of a Cairo-based SVG document. We weren't just slapping bitmaps on; we needed a method that maintained vector-like scalability as much as possible. The initial attempts, well, they weren't pretty.
+one. I recall back in the early days of a project dealing with dynamic report generation, we faced a similar challenge: efficiently embedding dynamically generated raster graphics, often derived from complex librsvg renders, directly into the core of a Cairo-based SVG document. We weren't just slapping bitmaps on; we needed a method that maintained vector-like scalability as much as possible. The initial attempts, well, they weren't pretty.
 
 The core problem here is that librsvg outputs a raster image – a pixel grid – not vector instructions that Cairo can directly interpret. Cairo's svg backend primarily works with vector data: paths, shapes, text, etc. So, naively dropping the raw raster data (like a png image) into the svg context is possible, but it leads to a loss of the vector properties, which is often undesirable. What we aim for is a solution that lets us leverage Cairo's svg capabilities while integrating the raster image in a way that retains some flexibility, particularly around scaling.
 
@@ -95,6 +95,7 @@ if __name__ == '__main__':
   embed_raster_as_svg_image_element("output2.svg", example_librsvg_svg_data, 250, 250)
 
 ```
+
 Here, instead of drawing onto a surface, we are manually constructing the `<image>` element, including the raster data as a base64 encoded string. This gives you explicit control over the attributes associated with the `<image>` tag, useful if you need more sophisticated svg manipulations. This is more akin to working with a document as text rather than a drawing context. Note that the svg document must be opened in append mode here to avoid overwriting the cairo surface header info, as Cairo writes its header first on the first flush to the file.
 
 While the above examples cover most common use cases, you might be dealing with a situation where the rasterization by librsvg is not desirable, and you want to directly interpret the paths in the librsvg output and draw them with Cairo. While not directly converting between raster and vector data, this approach could be an option if the librsvg data contains just vector paths. This can be a fairly complex and potentially fragile operation if the svg from librsvg is overly complex, as parsing and translation of all svg elements can be very detailed. A very simple example using a hypothetical function that extracts paths might look like this (this assumes the existance of a function to convert svg path data to cairo paths, which you would need to implement depending on your exact svg data):

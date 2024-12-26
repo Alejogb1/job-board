@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-domain-driven-design-relate-to-microservices-architecture"
 ---
 
-Let's tackle this head-on. From my experience, particularly during that messy migration project back in '18 where we transitioned a monolithic e-commerce platform, the connection between domain-driven design (ddd) and microservices is less about a strict requirement and more about a deeply symbiotic relationship. They are, in essence, natural companions, each reinforcing the other's strengths.
+head-on. From my experience, particularly during that messy migration project back in '18 where we transitioned a monolithic e-commerce platform, the connection between domain-driven design (ddd) and microservices is less about a strict requirement and more about a deeply symbiotic relationship. They are, in essence, natural companions, each reinforcing the other's strengths.
 
 At its core, ddd is about understanding and modeling the business domain. It's about capturing the complexity of the business in our software. Instead of thinking about data structures first, or database schemas, we focus on the concepts, activities, and rules that govern the business itself. We do this through a variety of techniques, such as identifying bounded contexts, defining ubiquitous language, and creating domain models that reflect the actual business processes. Now, this is crucial, because without this deep understanding, you risk creating microservices that mirror organizational silos rather than functional capabilities, leading to integration nightmares and duplicated logic. Believe me, I’ve lived through that pain.
 

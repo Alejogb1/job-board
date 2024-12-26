@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-does-tensorflow-2-keras-model-training-only-process-one-batch-of-data"
 ---
 
-Right then, let's tackle this. I’ve seen this tripping up newcomers—and even some seasoned folks—more times than I care to count. The observation that a TensorFlow 2 Keras model appears to only process one batch during training, while perplexing, usually stems from a misunderstanding of how data loading, batching, and training loops interact. It’s not that the model *only* processes one batch; it's usually a problem with the configuration of the data pipeline or the way training is being initiated. My experience has shown me it typically boils down to either incorrect iteration practices, issues with your dataset object, or subtle errors in how you’ve configured your data source, and sometimes a misinterpretation of what the training process looks like during early debugging.
+Right then, . I’ve seen this tripping up newcomers—and even some seasoned folks—more times than I care to count. The observation that a TensorFlow 2 Keras model appears to only process one batch during training, while perplexing, usually stems from a misunderstanding of how data loading, batching, and training loops interact. It’s not that the model _only_ processes one batch; it's usually a problem with the configuration of the data pipeline or the way training is being initiated. My experience has shown me it typically boils down to either incorrect iteration practices, issues with your dataset object, or subtle errors in how you’ve configured your data source, and sometimes a misinterpretation of what the training process looks like during early debugging.
 
-Let's begin by dissecting what usually *should* happen during training. In a standard training scenario, a dataset is broken down into batches. Each batch represents a small subset of your total data, and the model's weights are updated based on the error calculated from this batch. This update process repeats for numerous batches, typically spanning the entire dataset multiple times, which we refer to as epochs. The training loop manages this iteration, feeding a new batch of data to the model during every cycle. If your model seems to train on only one batch, it suggests this iterative process is failing somewhere along the line.
+Let's begin by dissecting what usually _should_ happen during training. In a standard training scenario, a dataset is broken down into batches. Each batch represents a small subset of your total data, and the model's weights are updated based on the error calculated from this batch. This update process repeats for numerous batches, typically spanning the entire dataset multiple times, which we refer to as epochs. The training loop manages this iteration, feeding a new batch of data to the model during every cycle. If your model seems to train on only one batch, it suggests this iterative process is failing somewhere along the line.
 
 A common culprit is improperly configured data iterators. When dealing with large datasets, it's best to avoid loading the entire dataset into memory. We leverage data generators or TensorFlow's `tf.data.Dataset` API to load data in batches, on demand. Issues arise when these generators or datasets are not properly configured to cycle through the complete dataset.
 
-For example, if you mistakenly initialize a data generator or `tf.data.Dataset` object, and then repeatedly pull *from the same iterator* inside a loop, you may end up processing the same batch over and over without realizing it. The training loop would run without raising any explicit error but fail to cycle through the entire training dataset, hence the appearance of processing just one batch.
+For example, if you mistakenly initialize a data generator or `tf.data.Dataset` object, and then repeatedly pull _from the same iterator_ inside a loop, you may end up processing the same batch over and over without realizing it. The training loop would run without raising any explicit error but fail to cycle through the entire training dataset, hence the appearance of processing just one batch.
 
 Let’s illustrate with a problematic example using Python’s generator function; it’s a deliberately flawed approach to data handling and a common error I've seen:
 
@@ -47,7 +47,7 @@ for epoch in range(5):
     print(f"Epoch {epoch+1} completed (but using the same data).")
 ```
 
-In this incorrect snippet, the generator `flawed_data_generator` yields batches, but the training loop only uses the first generated batch within the loop during the first epoch. It is important to recognize that we don't create a *new* iterator for each epoch. The iterator is a stateful object, so each call to `next(data_gen)` continues from the previous stopping point. The loop should cycle through all of the available data, not the same data. The result is that only the first batch is ever used.
+In this incorrect snippet, the generator `flawed_data_generator` yields batches, but the training loop only uses the first generated batch within the loop during the first epoch. It is important to recognize that we don't create a _new_ iterator for each epoch. The iterator is a stateful object, so each call to `next(data_gen)` continues from the previous stopping point. The loop should cycle through all of the available data, not the same data. The result is that only the first batch is ever used.
 
 Let me show you a corrected example that leverages a new iterator in each training epoch:
 
@@ -84,7 +84,7 @@ for epoch in range(num_epochs):
     print(f"Epoch {epoch+1} completed.")
 ```
 
-Here, the `corrected_data_generator` is invoked *within each epoch*, effectively creating a new generator object at the beginning of each pass through the full dataset. This ensures that the training loop iterates through all batches in the data. You’ll see a very different result where the model does, in fact, appear to progress through all batches of your dataset.
+Here, the `corrected_data_generator` is invoked _within each epoch_, effectively creating a new generator object at the beginning of each pass through the full dataset. This ensures that the training loop iterates through all batches in the data. You’ll see a very different result where the model does, in fact, appear to progress through all batches of your dataset.
 
 A better approach, however, particularly for larger data, involves using `tf.data.Dataset`, because it is specifically designed for these kind of problems. Let me illustrate:
 

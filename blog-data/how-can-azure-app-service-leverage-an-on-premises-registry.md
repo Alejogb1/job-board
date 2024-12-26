@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-azure-app-service-leverage-an-on-premises-registry"
 ---
 
-, let's tackle this one. I've seen this scenario pop up more times than I can count, and it often involves a careful balancing act between cloud agility and established on-premises infrastructure. The short answer is, yes, Azure App Service can absolutely leverage an on-premises registry for container image deployments. The longer answer, of course, delves into the 'how' and the potential pitfalls.
+, one. I've seen this scenario pop up more times than I can count, and it often involves a careful balancing act between cloud agility and established on-premises infrastructure. The short answer is, yes, Azure App Service can absolutely leverage an on-premises registry for container image deployments. The longer answer, of course, delves into the 'how' and the potential pitfalls.
 
 My experience with this mostly comes from migrating legacy applications to a hybrid cloud architecture for a large financial institution. They had a very strict policy on not hosting sensitive container images in public registries. It's a fairly common requirement and often necessitates a customized approach.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-omitting-applygradient-affect-tf2-model-predictions-during-training"
 ---
 
-Let's tackle this one; it's a query that brings back a specific project from a few years ago where we were experimenting with custom training loops in tensorflow 2. That particular scenario forced a deep dive into the gradients API. The short answer to your question is a resounding yes: omitting `apply_gradients` *absolutely* affects the model's prediction behavior during training. It's not a subtle effect, either; it essentially grinds the model's learning process to a halt.
+one; it's a query that brings back a specific project from a few years ago where we were experimenting with custom training loops in tensorflow 2. That particular scenario forced a deep dive into the gradients API. The short answer to your question is a resounding yes: omitting `apply_gradients` _absolutely_ affects the model's prediction behavior during training. It's not a subtle effect, either; it essentially grinds the model's learning process to a halt.
 
 When you're performing gradient descent, which is fundamental to training neural networks, you go through a sequence of steps: forward pass, loss calculation, gradient calculation, and finally, parameter update. The `apply_gradients` step is where the calculated gradients are actually used to adjust the trainable parameters within your model. Without it, those carefully computed gradients, representing the direction and magnitude to tweak your parameters for improved performance, are simply discarded. Think of it like having a detailed map to your destination, but then choosing to stay put instead of using it to navigate.
 
@@ -85,6 +85,7 @@ for epoch in range(epochs):
     if (epoch + 1) % 10 == 0:
       print(f'Epoch: {epoch+1}, Loss: {loss.numpy():.4f}')
 ```
+
 When you run the second code snippet, you'll see that the loss value does not meaningfully decrease, and the model fails to learn. The model does not update its trainable parameters, rendering it ineffective.
 
 Let’s illustrate the effect in another way by logging the trainable variables of a single layer, focusing on one specific parameter:
@@ -158,6 +159,7 @@ for i, val in enumerate(first_layer_parameter_history_no_apply):
     if (i + 1) % 10 == 0:
         print(f'Epoch {i+1}: {val}')
 ```
+
 This snippet logs a single weight from the first dense layer for both with and without `apply_gradients` to show how parameters change over training. You’ll find that without `apply_gradients`, the parameter barely changes after each epoch, further demonstrating how learning cannot occur. This reinforces that the lack of parameter update stops the model from learning.
 
 For a deeper understanding of the mathematical underpinnings of gradient descent and its implementation, I would recommend going through "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It's considered a foundational text for anyone working in the field. For a closer look at the tensorflow-specific API, including custom training loops and gradient manipulation, the official Tensorflow documentation is the first place to look, and also, the book “Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron provides excellent practical guidance. These resources together should solidify your understanding of the core training process.

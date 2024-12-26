@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-securely-call-a-contract-function-eg-afoo-from-another-contracts-msgsender"
 ---
 
-Let's tackle this directly, shall we? I've seen this particular issue crop up more times than i care to count, often during those late-night debugging sessions. The core challenge here isn't so much about *how* to call a function from another contract, but rather ensuring that call happens securely, especially when considering `msg.sender`. It's a vital part of the security model in EVM-based environments. We’re aiming for a robust and reliable system where contracts interact predictably and without unexpected permissions escalations.
+directly, shall we? I've seen this particular issue crop up more times than i care to count, often during those late-night debugging sessions. The core challenge here isn't so much about _how_ to call a function from another contract, but rather ensuring that call happens securely, especially when considering `msg.sender`. It's a vital part of the security model in EVM-based environments. We’re aiming for a robust and reliable system where contracts interact predictably and without unexpected permissions escalations.
 
 Essentially, you're asking how a contract ‘b’ can reliably call a function ‘foo’ on contract ‘a’ while preserving the intended identity represented by `msg.sender` of contract 'b'. We need to avoid accidentally granting 'a' undue permissions or allowing it to make calls with unintended senders. In simpler terms, ‘a’ must know it was indeed ‘b’ who called the function, and not some other intermediary or malicious actor.
 
-The straightforward approach, calling `a.foo()` directly, while functional, doesn't always cut it. Here's why: when 'b' calls 'a', inside the function 'foo', `msg.sender` will actually be the address of contract 'b', *not* the original entity that initiated the transaction. This might seem obvious but can lead to subtle security issues if not carefully managed. The main problem surfaces if function 'foo' in 'a' utilizes `msg.sender` for authorization logic. For instance, if 'foo' were designed to transfer tokens to `msg.sender`, ‘b’ would be receiving those tokens instead of the intended original caller of 'b'. We need techniques to preserve the true origin of the call.
+The straightforward approach, calling `a.foo()` directly, while functional, doesn't always cut it. Here's why: when 'b' calls 'a', inside the function 'foo', `msg.sender` will actually be the address of contract 'b', _not_ the original entity that initiated the transaction. This might seem obvious but can lead to subtle security issues if not carefully managed. The main problem surfaces if function 'foo' in 'a' utilizes `msg.sender` for authorization logic. For instance, if 'foo' were designed to transfer tokens to `msg.sender`, ‘b’ would be receiving those tokens instead of the intended original caller of 'b'. We need techniques to preserve the true origin of the call.
 
 There are several strategies to address this, each with its own use case and tradeoffs. One method is to explicitly pass the originating address. This pattern is often seen in implementations that require detailed permission control.
 
@@ -40,9 +40,9 @@ contract ContractB {
 }
 ```
 
-In this simplistic approach, the `callFooFromB` in contract `b` takes the _originalCaller address and passes it along to 'a's function 'foo'. Inside `foo`, you have `_originalCaller` which stores the address of the first contract to trigger the call chain (in essence, the user’s address). The `lastCaller` is merely storing the given address to illustrate the concept and can be used to establish the call chain later. While it's simple, this approach assumes the user's address can be reliably obtained and passed. This can become very cumbersome and error-prone in complex scenarios with many levels of contract calls.
+In this simplistic approach, the `callFooFromB` in contract `b` takes the \_originalCaller address and passes it along to 'a's function 'foo'. Inside `foo`, you have `_originalCaller` which stores the address of the first contract to trigger the call chain (in essence, the user’s address). The `lastCaller` is merely storing the given address to illustrate the concept and can be used to establish the call chain later. While it's simple, this approach assumes the user's address can be reliably obtained and passed. This can become very cumbersome and error-prone in complex scenarios with many levels of contract calls.
 
-A more robust pattern involves using the `tx.origin` global variable. This variable holds the address that *initiated* the transaction, no matter how deep the call stack. However, using `tx.origin` comes with its own set of security implications, primarily that it can be susceptible to phishing attacks if used to authenticate user identity within the smart contract logic (e.g., a malicious contract impersonating a user). Let's look at a modified example:
+A more robust pattern involves using the `tx.origin` global variable. This variable holds the address that _initiated_ the transaction, no matter how deep the call stack. However, using `tx.origin` comes with its own set of security implications, primarily that it can be susceptible to phishing attacks if used to authenticate user identity within the smart contract logic (e.g., a malicious contract impersonating a user). Let's look at a modified example:
 
 ```solidity
 // Contract A
@@ -113,6 +113,7 @@ contract ContractB {
 
 }
 ```
+
 In this more practical example, contract ‘a’ implements a basic `AccessControl` system using openzeppelin’s contracts library, and grants the `CALLER_ROLE` to authorized callers. Initially the deployer of contract ‘a’ is set to the `DEFAULT_ADMIN_ROLE`. From there, a user (or a contract) with the admin role can grant the `CALLER_ROLE` to the contract `b`, which is now able to successfully call the `foo` function. This method decouples the direct user address, granting granular control over what calls can be made by each contract interacting with contract ‘a’. This pattern is also easily auditable, and avoids the pitfalls associated with `tx.origin`.
 
 Important note, when it comes to securing cross-contract calls, careful consideration is paramount, and often implementing multiple security layers is recommended. I would encourage you to review the following:

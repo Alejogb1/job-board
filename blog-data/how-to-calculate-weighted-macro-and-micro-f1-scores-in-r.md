@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-calculate-weighted-macro-and-micro-f1-scores-in-r"
 ---
 
-Let's tackle this, shall we? I recall a particularly challenging project back in my fintech days, where we were building a sophisticated fraud detection system. We had highly imbalanced datasets, and using a standard F1-score just wasn't cutting it. That's when we needed to dive deep into weighted F1-scores, and I spent a considerable amount of time figuring out the nuances in R. So, let's break this down methodically, because the devil is definitely in the details here.
+, shall we? I recall a particularly challenging project back in my fintech days, where we were building a sophisticated fraud detection system. We had highly imbalanced datasets, and using a standard F1-score just wasn't cutting it. That's when we needed to dive deep into weighted F1-scores, and I spent a considerable amount of time figuring out the nuances in R. So, let's break this down methodically, because the devil is definitely in the details here.
 
 First off, when talking about F1-scores, we need to understand that we're essentially balancing precision and recall. The regular F1-score does this for a binary classification problem effectively, or even for multi-class in the macro-averaged form when we treat each class equally. However, when our data is imbalanced, this simple averaging can be misleading, as it could give disproportionate weight to the better performing classes and obscure the problems in the rarer classes, a scenario we faced often with fraud cases where genuine transactions greatly outnumber the fraudulent ones. Weighted macro and micro F1-scores address this head-on.
 
-The *macro-averaged* F1 score calculates the F1-score for each class individually, and *then* computes the arithmetic mean of these scores, either with or without weights to each class. The *micro-averaged* F1 score, on the other hand, aggregates the true positives (TP), false positives (FP), and false negatives (FN) across all classes *before* calculating the F1-score. This difference is crucial. Micro averaging gives equal weight to each instance, not each class, which is particularly advantageous in imbalanced scenarios where some classes have far more instances than others. Weighted macro averaging allows us to assign importance to classes based on how many samples each class has or perhaps even based on a subjective scale we set ourselves.
+The _macro-averaged_ F1 score calculates the F1-score for each class individually, and _then_ computes the arithmetic mean of these scores, either with or without weights to each class. The _micro-averaged_ F1 score, on the other hand, aggregates the true positives (TP), false positives (FP), and false negatives (FN) across all classes _before_ calculating the F1-score. This difference is crucial. Micro averaging gives equal weight to each instance, not each class, which is particularly advantageous in imbalanced scenarios where some classes have far more instances than others. Weighted macro averaging allows us to assign importance to classes based on how many samples each class has or perhaps even based on a subjective scale we set ourselves.
 
 Let’s look at code. Initially, let’s construct a simple scenario and the calculations step-by-step, without directly using existing R packages. This helps to illustrate the underlying mathematics and the difference between these approaches.
 
@@ -53,9 +53,11 @@ micro_f1 <- 2* (micro_precision * micro_recall)/ (micro_precision + micro_recall
 print(paste("Micro-averaged F1:", micro_f1))
 
 ```
+
 This snippet provides a hands-on calculation example and shows that micro-averaging involves aggregating the values and computing a single value from the total aggregated TP, FP and FN. The unweighted macro-averaged F1 is the mean of per class f1 score, while weighted macro-averaged F1 gives more weight to classes that have more instances.
 
 Now, we can transition to using R packages that offer these functions. Let's use the `caret` package, a popular choice for this kind of task. I've found its flexibility invaluable over the years.
+
 ```r
 # Install and load necessary libraries if not installed
 # install.packages(c("caret", "e1071"))
@@ -125,8 +127,8 @@ This final example shows how `mltools` can help compute macro, micro and weighte
 
 When you're delving into this, I would recommend spending some time with:
 
-1.  *Pattern Recognition and Machine Learning* by Christopher Bishop. It’s a classic text that lays the groundwork for understanding these concepts, particularly the mathematical underpinnings.
-2.  *The Elements of Statistical Learning* by Hastie, Tibshirani, and Friedman. While a more advanced text, it provides further insights into classification and performance metrics.
+1.  _Pattern Recognition and Machine Learning_ by Christopher Bishop. It’s a classic text that lays the groundwork for understanding these concepts, particularly the mathematical underpinnings.
+2.  _The Elements of Statistical Learning_ by Hastie, Tibshirani, and Friedman. While a more advanced text, it provides further insights into classification and performance metrics.
 3.  The documentation for both the `caret` and `mltools` packages in R. Both are well documented and provide specific usage examples that clarify any confusion.
 
 In conclusion, understanding how to calculate weighted macro and micro F1-scores is critical when dealing with imbalanced data or situations where different classes have varying degrees of importance. While initially seeming complex, when broken down into steps and demonstrated with code examples as we have done here, these concepts become much more manageable. It is not just knowing the code, but understanding the mathematical reasoning and implication of the scores on our model performance that is important. That way, you will avoid the pitfalls of focusing solely on metrics that are inadequate. Remember always to look at metrics that fit the specific task at hand, and never just blindly use one or the other metric. This principle has served me very well throughout my experience in this field.

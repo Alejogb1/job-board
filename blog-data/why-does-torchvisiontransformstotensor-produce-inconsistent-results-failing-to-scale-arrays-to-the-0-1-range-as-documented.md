@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-torchvisiontransformstotensor-produce-inconsistent-results-failing-to-scale-arrays-to-the-0-1-range-as-documented"
 ---
 
-, let's tackle this one. I've actually been down this road with `torchvision.transforms.ToTensor` a few times, and it’s definitely not as straightforward as the documentation might initially suggest. The core of the issue, as I’ve observed in several projects, doesn't lie in some inherent flaw in `ToTensor` itself, but rather in how we often perceive and feed data into it.
+, one. I've actually been down this road with `torchvision.transforms.ToTensor` a few times, and it’s definitely not as straightforward as the documentation might initially suggest. The core of the issue, as I’ve observed in several projects, doesn't lie in some inherent flaw in `ToTensor` itself, but rather in how we often perceive and feed data into it.
 
 The expectation, reasonably, is that `ToTensor` will consistently scale any input array to the [0, 1] range when converting to a tensor. This stems from the common understanding that image data, especially RGB images, are typically represented by pixel values ranging from 0 to 255 (for 8-bit images). However, `ToTensor` doesn’t impose any normalization or scaling of pixel values per se, which is a key point many miss. It does perform a _type conversion_ to float and then adjust the dimension order from `[H, W, C]` to `[C, H, W]`, which is the standard format for PyTorch tensors.
 

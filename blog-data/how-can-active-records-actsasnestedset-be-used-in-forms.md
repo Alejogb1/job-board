@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-active-records-actsasnestedset-be-used-in-forms"
 ---
 
-Let's tackle this interesting challenge of integrating `acts_as_nested_set` into forms. It's a scenario I've encountered numerous times in my career, particularly when dealing with hierarchical data like categories, organizational charts, or complex menu structures. We often think of model data as being represented linearly in forms, but nested sets require a different approach. The core issue revolves around the fact that nested sets store hierarchy implicitly using `lft` and `rgt` attributes, rather than through explicit parent-child relationships that are more intuitive for direct manipulation via forms. This means that a standard select box, directly populated with categories, doesn't give the control needed to create the right nesting structure. So, we need to leverage existing relationships to build an interface that feels natural to the user.
+interesting challenge of integrating `acts_as_nested_set` into forms. It's a scenario I've encountered numerous times in my career, particularly when dealing with hierarchical data like categories, organizational charts, or complex menu structures. We often think of model data as being represented linearly in forms, but nested sets require a different approach. The core issue revolves around the fact that nested sets store hierarchy implicitly using `lft` and `rgt` attributes, rather than through explicit parent-child relationships that are more intuitive for direct manipulation via forms. This means that a standard select box, directly populated with categories, doesn't give the control needed to create the right nesting structure. So, we need to leverage existing relationships to build an interface that feels natural to the user.
 
-I recall a project for a content management system years ago where we had to manage thousands of articles organized into a dynamic category tree. It became clear very quickly that simply allowing users to directly manipulate `lft` and `rgt` was a recipe for disaster. Instead, we focused on presenting an interface that allowed them to define *where* in the hierarchy they wanted a category to sit, and then letting the `acts_as_nested_set` gem handle the intricate database updates.
+I recall a project for a content management system years ago where we had to manage thousands of articles organized into a dynamic category tree. It became clear very quickly that simply allowing users to directly manipulate `lft` and `rgt` was a recipe for disaster. Instead, we focused on presenting an interface that allowed them to define _where_ in the hierarchy they wanted a category to sit, and then letting the `acts_as_nested_set` gem handle the intricate database updates.
 
 The key to this integration lies in understanding how we can leverage the provided `acts_as_nested_set` methods in the model to maintain the integrity of the tree and using those methods appropriately to build a functional form. Primarily, we are going to be concerned with creating, editing, and moving nodes in a meaningful way.
 
@@ -20,7 +20,7 @@ end
 
 **Scenario 1: Creating a New Category**
 
-Creating a new category usually involves allowing the user to select a *parent* category. We present this as a select element of some kind within the form. When submitted, we use the `append_child` method to insert the new category correctly.
+Creating a new category usually involves allowing the user to select a _parent_ category. We present this as a select element of some kind within the form. When submitted, we use the `append_child` method to insert the new category correctly.
 
 Here's the view component:
 
@@ -115,7 +115,7 @@ We’re using `move_to` to change the category's position in the tree. The `reje
 
 **Scenario 3: Rendering a Nested Select Box**
 
-Finally, it’s useful to be able to render a nested select box with appropriate indentation to show the hierarchical structure. While this is not for *manipulation*, it's often useful for *displaying* the structure in other parts of the application.
+Finally, it’s useful to be able to render a nested select box with appropriate indentation to show the hierarchical structure. While this is not for _manipulation_, it's often useful for _displaying_ the structure in other parts of the application.
 
 Here is the helper function in your controller or helper:
 

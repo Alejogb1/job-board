@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-a-model-with-multiple-inputs-utilize-a-dataset-containing-multiple-tensors-per-item"
 ---
 
-Let's tackle this one; it’s a situation I’ve certainly encountered more than once during various machine learning projects. Getting a model to efficiently handle multiple tensors per data item is crucial, especially when dealing with modalities like images alongside text or time-series data with multiple sensor readings. The trick lies in crafting the model architecture and data pipeline to properly interpret each tensor, ensuring each contributes meaningfully to the final prediction.
+one; it’s a situation I’ve certainly encountered more than once during various machine learning projects. Getting a model to efficiently handle multiple tensors per data item is crucial, especially when dealing with modalities like images alongside text or time-series data with multiple sensor readings. The trick lies in crafting the model architecture and data pipeline to properly interpret each tensor, ensuring each contributes meaningfully to the final prediction.
 
-In my experience, particularly during a past project involving multimodal sensor fusion for predictive maintenance, we wrestled (oops, sorry, *tackled*) the challenge of integrating data from pressure, vibration, and thermal sensors, each recorded as a time-series tensor, alongside image data from thermal cameras. This required a careful blend of feature engineering, specialized model layers, and data handling techniques. So, let's delve into some practical approaches and code examples.
+In my experience, particularly during a past project involving multimodal sensor fusion for predictive maintenance, we wrestled (oops, sorry, _tackled_) the challenge of integrating data from pressure, vibration, and thermal sensors, each recorded as a time-series tensor, alongside image data from thermal cameras. This required a careful blend of feature engineering, specialized model layers, and data handling techniques. So, let's delve into some practical approaches and code examples.
 
 Essentially, handling multiple tensors per data item involves two primary tasks: correctly structuring your data pipeline for loading and batching, and designing a neural network architecture that effectively processes this multi-input data.
 

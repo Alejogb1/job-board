@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-imagedatasetfromdirectory-with-labels-from-a-csv-file"
 ---
 
-Let's tackle this head-on. The challenge of aligning image data with labels stored separately in a CSV is a common hurdle, and it's something I've encountered countless times in my projects, particularly when dealing with custom datasets. The `image_dataset_from_directory` function in TensorFlow, while convenient, primarily works with a directory structure where labels are inferred from folder names. That won’t work for us. So, we need a different approach. Instead of relying on directory-based inference, we'll construct our dataset explicitly, using the data provided by our CSV file.
+head-on. The challenge of aligning image data with labels stored separately in a CSV is a common hurdle, and it's something I've encountered countless times in my projects, particularly when dealing with custom datasets. The `image_dataset_from_directory` function in TensorFlow, while convenient, primarily works with a directory structure where labels are inferred from folder names. That won’t work for us. So, we need a different approach. Instead of relying on directory-based inference, we'll construct our dataset explicitly, using the data provided by our CSV file.
 
 First, let's talk about the high-level strategy. The crux of the issue is that `image_dataset_from_directory` is built to map directory paths to labels. Our labels are in a CSV, and our images are, presumably, in some kind of folder hierarchy. Therefore, we’re essentially going to manually build a dataset from file paths and their corresponding labels using tensorflow's `tf.data.Dataset` API directly. We’ll achieve this in three primary steps:
 
@@ -59,7 +59,7 @@ In the above code, the crucial step is handling file paths correctly. In my expe
 
 **2. Dataset creation:**
 
-Now that we've extracted our paths and labels, we can construct a `tf.data.Dataset`.  We'll be using `tf.data.Dataset.from_tensor_slices` which builds a dataset from tuples of path and label lists.
+Now that we've extracted our paths and labels, we can construct a `tf.data.Dataset`. We'll be using `tf.data.Dataset.from_tensor_slices` which builds a dataset from tuples of path and label lists.
 
 ```python
 def create_dataset(image_paths, labels):
@@ -79,7 +79,7 @@ This step is foundational. We are building the dataset at this stage but we have
 
 **3. Image loading and preprocessing:**
 
-We’ll now create a loading and preprocessing function that will be passed to `dataset.map()`.  Here we will read our images and perform any required preprocessing, such as resizing or rescaling. This is a critical performance step because, rather than loading everything into memory at the start, it will be executed only when data is requested, significantly reducing memory footprint.
+We’ll now create a loading and preprocessing function that will be passed to `dataset.map()`. Here we will read our images and perform any required preprocessing, such as resizing or rescaling. This is a critical performance step because, rather than loading everything into memory at the start, it will be executed only when data is requested, significantly reducing memory footprint.
 
 ```python
 IMG_WIDTH = 224
@@ -113,14 +113,14 @@ We’ve effectively pieced together a complete workflow, where data from a CSV f
 
 **Recommended Resources:**
 
-*   **TensorFlow Documentation:** The official TensorFlow documentation is essential for detailed information on the `tf.data` API and image processing functionalities. Specifically, review the documentation for `tf.data.Dataset`, `tf.io`, and `tf.image`.
-*   **"Deep Learning with Python" by François Chollet:** This is an excellent resource that covers the basics and advanced concepts of deep learning with Keras and TensorFlow.
-*   **“Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron:** This book provides a more practical hands-on approach to building machine learning and deep learning models with Keras and TensorFlow.
-*   **"Programming TensorFlow" by Ian Goodfellow, et al.:** A more technical reference, this is useful if you want a deeper understanding of the internals of TensorFlow.
+- **TensorFlow Documentation:** The official TensorFlow documentation is essential for detailed information on the `tf.data` API and image processing functionalities. Specifically, review the documentation for `tf.data.Dataset`, `tf.io`, and `tf.image`.
+- **"Deep Learning with Python" by François Chollet:** This is an excellent resource that covers the basics and advanced concepts of deep learning with Keras and TensorFlow.
+- **“Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron:** This book provides a more practical hands-on approach to building machine learning and deep learning models with Keras and TensorFlow.
+- **"Programming TensorFlow" by Ian Goodfellow, et al.:** A more technical reference, this is useful if you want a deeper understanding of the internals of TensorFlow.
 
 **Important considerations:**
 
-*   **Error Handling:** Consider adding error handling to your file path validation, and for any potential issues with image loading or decoding.
-*   **Preprocessing choices:** Image preprocessing is highly problem dependent, so you may need to explore other preprocessing steps (e.g. data augmentation).
+- **Error Handling:** Consider adding error handling to your file path validation, and for any potential issues with image loading or decoding.
+- **Preprocessing choices:** Image preprocessing is highly problem dependent, so you may need to explore other preprocessing steps (e.g. data augmentation).
 
 In summary, bypassing the directory structure and using a CSV file with `tf.data` gives you fine-grained control, flexibility, and robust handling of datasets. This approach allows me, and you, to effectively train models with more complex or atypical data setups, as I've seen in many real-world projects. The three code snippets above, combined with proper study of the suggested resources, should give you a working framework for your project.

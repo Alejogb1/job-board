@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-are-all-sagemaker-model-quality-monitor-metrics-zero-despite-a-functioning-confusion-matrix"
 ---
 
-Let's tackle this particular head-scratcher. I've been down this road before, specifically during an early project where we were deploying a computer vision model for defect detection on an automated assembly line. We meticulously crafted the model, deployed it using SageMaker, and eagerly watched our monitor dashboards. To our dismay, while the confusion matrix populated beautifully, all those Model Quality Monitor (mqm) metrics sat stubbornly at zero. It's a frustrating situation, and typically it boils down to how the data intended for the monitor is structured and understood.
+particular head-scratcher. I've been down this road before, specifically during an early project where we were deploying a computer vision model for defect detection on an automated assembly line. We meticulously crafted the model, deployed it using SageMaker, and eagerly watched our monitor dashboards. To our dismay, while the confusion matrix populated beautifully, all those Model Quality Monitor (mqm) metrics sat stubbornly at zero. It's a frustrating situation, and typically it boils down to how the data intended for the monitor is structured and understood.
 
 The confusion matrix, in essence, tracks the raw counts of predicted vs. actual outcomes – true positives, false positives, true negatives, and false negatives. These counts form the foundation for calculated metrics like precision, recall, and f1-score. The issue arises when the mqm doesn't recognize these labels or the way they’re presented as data for metric calculations. Think of it as a communication gap between what your model produces and what the monitor expects to receive.
 
-The core problem frequently lies with the *payload* data format that is being sent to the endpoint for the monitoring process. The monitor expects the payload to adhere to a very specific structure including:
+The core problem frequently lies with the _payload_ data format that is being sent to the endpoint for the monitoring process. The monitor expects the payload to adhere to a very specific structure including:
 
 1.  **Data:** This represents the input features that you sent to the model.
 2.  **Prediction:** The model's output, which ideally includes probability values or the predicted class label.
@@ -113,6 +113,7 @@ data_to_monitor = {"data": request_data["features"],
                    "prediction": response["prediction"],
                    "ground_truth": response["ground_truth"]}
 ```
+
 In this case, no matter what we do with the request or response, the data won't match the monitor's expectations. The fix here is straightforward, we need to rename the keys:
 
 ```pseudocode

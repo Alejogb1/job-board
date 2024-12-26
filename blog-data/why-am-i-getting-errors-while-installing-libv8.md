@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-errors-while-installing-libv8"
 ---
 
-Let's tackle this, then. It's never pleasant when libv8 throws a tantrum during installation, and I've definitely spent my fair share of time staring at cryptic error messages related to it. The issue isn’t usually a single, solitary problem; it’s more of a convergence of factors interacting in a less than harmonious way. Based on my experiences, and particularly during a project involving server-side JavaScript rendering back in the mid-2010s, libv8 installation woes often stem from a few common culprits. We need to look at the build environment, version mismatches, and resource constraints carefully.
+, then. It's never pleasant when libv8 throws a tantrum during installation, and I've definitely spent my fair share of time staring at cryptic error messages related to it. The issue isn’t usually a single, solitary problem; it’s more of a convergence of factors interacting in a less than harmonious way. Based on my experiences, and particularly during a project involving server-side JavaScript rendering back in the mid-2010s, libv8 installation woes often stem from a few common culprits. We need to look at the build environment, version mismatches, and resource constraints carefully.
 
 First, let’s consider the build environment. Libv8 is a c++ library, and therefore, building it requires a full toolchain, which includes a c++ compiler like g++ or clang, make, and often python (for build scripting). Problems typically arise when these components are either missing, outdated, or improperly configured. For instance, during that old server-side project, we were targeting an embedded linux system. It had a stripped-down version of gcc that wasn't compatible with some of the compiler flags libv8 needed. The error messages weren’t explicit; they were simply cryptic complaints about missing symbols during linking, leading me down a rabbit hole that ended with a compiler upgrade. This highlighted the importance of checking system requirements, as documented within libv8’s build instructions—usually found in its readme file or within release notes of the specific version you're targeting.
 
@@ -51,10 +51,10 @@ The error message explicitly tells us the mismatch. The solution revolves around
 
 ```json
 {
- "dependencies": {
-  "libv8": "7.4.288",
-  "node-pre-gyp": "0.17.0"
- }
+  "dependencies": {
+    "libv8": "7.4.288",
+    "node-pre-gyp": "0.17.0"
+  }
 }
 ```
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-ui-of-google-chrome-displayed-during-cucumber-tests-running-in-wsl2"
 ---
 
-, let's tackle this issue of why Chrome's UI doesn’t materialize when running Cucumber tests within WSL2. I’ve seen this head-scratcher pop up more than a few times in my career, and it stems from a core discrepancy between how graphical applications are handled in a standard Linux environment versus within the Windows Subsystem for Linux.
+, issue of why Chrome's UI doesn’t materialize when running Cucumber tests within WSL2. I’ve seen this head-scratcher pop up more than a few times in my career, and it stems from a core discrepancy between how graphical applications are handled in a standard Linux environment versus within the Windows Subsystem for Linux.
 
 The fundamental problem here is that WSL2, unlike WSL1, operates using a lightweight virtual machine. This virtualized environment isolates the Linux kernel and its processes from the Windows host, which has implications for graphical applications. When your Cucumber tests, often executed in a headless fashion, try to launch Chrome, they are doing so _within_ the WSL2 VM. The challenge is that this VM doesn't inherently have access to the Windows display server or any other mechanism for rendering graphical output. Instead, it expects an X server to be running _within_ the Linux environment itself.
 

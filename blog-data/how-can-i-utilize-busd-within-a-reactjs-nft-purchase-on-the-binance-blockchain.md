@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-utilize-busd-within-a-reactjs-nft-purchase-on-the-binance-blockchain"
 ---
 
-Let's tackle this from a practical standpoint, drawing on my own experiences building a few blockchain-integrated applications. Handling BUSD, a stablecoin pegged to the US dollar, within a React.js application for an NFT purchase on Binance Smart Chain (now BNB chain) involves a few core steps: contract interaction, user wallet integration, and transaction handling. Let's break it down into manageable pieces and cover the details.
+from a practical standpoint, drawing on my own experiences building a few blockchain-integrated applications. Handling BUSD, a stablecoin pegged to the US dollar, within a React.js application for an NFT purchase on Binance Smart Chain (now BNB chain) involves a few core steps: contract interaction, user wallet integration, and transaction handling. Let's break it down into manageable pieces and cover the details.
 
 First, forget for a moment that this is an nft purchase; conceptually, it's just a transfer of tokens with the added complexity of calling a smart contract function that mints the NFT after payment is received. The fundamental mechanics remain the same as any other token exchange. We are not directly dealing with fiat money, but a crypto stablecoin that represents fiat on the blockchain. The key is working with the underlying smart contract and the web3 library, which allows your application to interact with the blockchain itself.
 
@@ -17,12 +17,12 @@ Next, you need the BUSD contract address. The official one for the BNB Chain is 
 Now, let's dive into some code. Assuming you've set up a basic React app, here's a snippet to demonstrate how to obtain your user's BUSD balance.
 
 ```javascript
-import { ethers } from 'ethers';
+import { ethers } from "ethers";
 
-const busdAddress = '0xe9e7cea3dedca5984780bafc599bd69add087d56';
+const busdAddress = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
 const abi = [
-    "function balanceOf(address) view returns (uint256)",
-    "function decimals() view returns (uint8)"
+  "function balanceOf(address) view returns (uint256)",
+  "function decimals() view returns (uint8)",
 ];
 
 async function fetchBusdBalance(provider, userAddress) {
@@ -36,13 +36,12 @@ async function fetchBusdBalance(provider, userAddress) {
     const decimals = await contract.decimals();
     return ethers.formatUnits(balance, decimals);
   } catch (error) {
-     console.error("Failed to fetch BUSD balance:", error);
-     return 0;
+    console.error("Failed to fetch BUSD balance:", error);
+    return 0;
   }
 }
 
 export default fetchBusdBalance;
-
 ```
 
 This function takes an ethers provider and the user's wallet address as input and uses the BUSD smart contract’s `balanceOf` method to retrieve the BUSD balance. It also fetches the number of decimals used by the BUSD contract and then returns the formatted balance as a string. Note, how this `fetchBusdBalance` function is exported and used in your React component. This demonstrates a clear separation of concerns.
@@ -50,17 +49,17 @@ This function takes an ethers provider and the user's wallet address as input an
 Now, let's tackle the actual purchase. This involves interacting with the NFT contract. Suppose your NFT contract has a `mint` function, that accepts a payment in BUSD to mint the NFT. Here's what that might look like:
 
 ```javascript
-import { ethers } from 'ethers';
+import { ethers } from "ethers";
 
-const busdAddress = '0xe9e7cea3dedca5984780bafc599bd69add087d56';
-const nftContractAddress = 'YOUR_NFT_CONTRACT_ADDRESS'; // REPLACE WITH YOUR CONTRACT ADDRESS
+const busdAddress = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
+const nftContractAddress = "YOUR_NFT_CONTRACT_ADDRESS"; // REPLACE WITH YOUR CONTRACT ADDRESS
 const nftContractAbi = [
-    "function mint() payable", // Assumes payment in BUSD
-    "function approve(address spender, uint256 amount) external returns (bool)",
-  "function allowance(address owner, address spender) external view returns (uint256)"
+  "function mint() payable", // Assumes payment in BUSD
+  "function approve(address spender, uint256 amount) external returns (bool)",
+  "function allowance(address owner, address spender) external view returns (uint256)",
 ];
 const busdAbi = [
-  "function approve(address spender, uint256 amount) external returns (bool)"
+  "function approve(address spender, uint256 amount) external returns (bool)",
 ];
 
 async function purchaseNFT(provider, userAddress, priceInBusd) {
@@ -68,26 +67,39 @@ async function purchaseNFT(provider, userAddress, priceInBusd) {
     console.error("Provider or user address not available.");
     return;
   }
-    try {
-        const busdContract = new ethers.Contract(busdAddress, busdAbi, provider.getSigner());
-        const nftContract = new ethers.Contract(nftContractAddress, nftContractAbi, provider.getSigner());
-        const priceInWei = ethers.parseUnits(priceInBusd.toString(), 18);
+  try {
+    const busdContract = new ethers.Contract(
+      busdAddress,
+      busdAbi,
+      provider.getSigner()
+    );
+    const nftContract = new ethers.Contract(
+      nftContractAddress,
+      nftContractAbi,
+      provider.getSigner()
+    );
+    const priceInWei = ethers.parseUnits(priceInBusd.toString(), 18);
 
-        // First, check allowance.
-        const currentAllowance = await busdContract.allowance(userAddress, nftContractAddress);
-      if(currentAllowance.lt(priceInWei)) {
-        console.log("Approving BUSD spend for the contract...");
-            const approvalTx = await busdContract.approve(nftContractAddress, priceInWei);
-            await approvalTx.wait();
-          }
-        console.log("Attempting to mint NFT.");
-        const mintTx = await nftContract.mint();
-        await mintTx.wait();
-        console.log("NFT Minted!");
-
-    } catch (error) {
-        console.error("Failed to purchase NFT:", error);
+    // First, check allowance.
+    const currentAllowance = await busdContract.allowance(
+      userAddress,
+      nftContractAddress
+    );
+    if (currentAllowance.lt(priceInWei)) {
+      console.log("Approving BUSD spend for the contract...");
+      const approvalTx = await busdContract.approve(
+        nftContractAddress,
+        priceInWei
+      );
+      await approvalTx.wait();
     }
+    console.log("Attempting to mint NFT.");
+    const mintTx = await nftContract.mint();
+    await mintTx.wait();
+    console.log("NFT Minted!");
+  } catch (error) {
+    console.error("Failed to purchase NFT:", error);
+  }
 }
 
 export default purchaseNFT;
@@ -98,60 +110,61 @@ This code snippet illustrates a key point: you must approve the NFT contract to 
 Finally, let's integrate this into a React component:
 
 ```jsx
-import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
-import fetchBusdBalance from './fetchBusdBalance';
-import purchaseNFT from './purchaseNFT';
-
+import React, { useState, useEffect } from "react";
+import { ethers } from "ethers";
+import fetchBusdBalance from "./fetchBusdBalance";
+import purchaseNFT from "./purchaseNFT";
 
 function NFTComponent() {
-    const [busdBalance, setBusdBalance] = useState('0');
-    const [userAddress, setUserAddress] = useState('');
-    const [provider, setProvider] = useState(null);
-    const priceInBusd = 10;
-
-
-    useEffect(() => {
-        const setupWeb3 = async () => {
-            if (window.ethereum) {
-                const prov = new ethers.BrowserProvider(window.ethereum);
-              setProvider(prov);
-
-              const signer = await prov.getSigner();
-              const addr = await signer.getAddress();
-              setUserAddress(addr);
-
-              const balance = await fetchBusdBalance(prov,addr);
-              setBusdBalance(balance)
-                } else {
-                console.error("No Ethereum provider found. Please install MetaMask or other compatible wallets.");
-                }
-          }
-
-      setupWeb3();
-
-    }, []);
+  const [busdBalance, setBusdBalance] = useState("0");
+  const [userAddress, setUserAddress] = useState("");
+  const [provider, setProvider] = useState(null);
+  const priceInBusd = 10;
 
   useEffect(() => {
-    if(provider && userAddress){
-      fetchBusdBalance(provider, userAddress).then((balance)=> setBusdBalance(balance))
-    }
+    const setupWeb3 = async () => {
+      if (window.ethereum) {
+        const prov = new ethers.BrowserProvider(window.ethereum);
+        setProvider(prov);
 
-  },[provider, userAddress])
+        const signer = await prov.getSigner();
+        const addr = await signer.getAddress();
+        setUserAddress(addr);
+
+        const balance = await fetchBusdBalance(prov, addr);
+        setBusdBalance(balance);
+      } else {
+        console.error(
+          "No Ethereum provider found. Please install MetaMask or other compatible wallets."
+        );
+      }
+    };
+
+    setupWeb3();
+  }, []);
+
+  useEffect(() => {
+    if (provider && userAddress) {
+      fetchBusdBalance(provider, userAddress).then((balance) =>
+        setBusdBalance(balance)
+      );
+    }
+  }, [provider, userAddress]);
 
   const handlePurchase = async () => {
-      if(provider && userAddress) {
-        await purchaseNFT(provider, userAddress, priceInBusd);
-      }
-
+    if (provider && userAddress) {
+      await purchaseNFT(provider, userAddress, priceInBusd);
+    }
   };
 
-    return (
-        <div>
-            <p>Your BUSD Balance: {busdBalance}</p>
-            <button onClick={handlePurchase} disabled={!provider}>Purchase NFT for {priceInBusd} BUSD</button>
-        </div>
-    );
+  return (
+    <div>
+      <p>Your BUSD Balance: {busdBalance}</p>
+      <button onClick={handlePurchase} disabled={!provider}>
+        Purchase NFT for {priceInBusd} BUSD
+      </button>
+    </div>
+  );
 }
 
 export default NFTComponent;

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-render-chinesearabic-chars-in-python-with-cairo"
 ---
 
-Right, let's tackle this one. I remember dealing with a similar font rendering challenge a few years back when I was working on a multilingual report generator for a global client. The intricacies of displaying characters from scripts like Chinese and Arabic, especially when using a graphics library like Cairo in Python, can indeed be...well, let’s call it ‘involved.’ It’s not merely about printing text; it's about ensuring those characters are correctly shaped, sized, and oriented, which brings us to several interconnected areas.
+Right, one. I remember dealing with a similar font rendering challenge a few years back when I was working on a multilingual report generator for a global client. The intricacies of displaying characters from scripts like Chinese and Arabic, especially when using a graphics library like Cairo in Python, can indeed be...well, let’s call it ‘involved.’ It’s not merely about printing text; it's about ensuring those characters are correctly shaped, sized, and oriented, which brings us to several interconnected areas.
 
 The first thing to understand is that Cairo, being a low-level graphics library, doesn’t inherently handle the complexities of complex text layouts. It works with glyphs, which are the visual representations of characters. But getting those glyphs correctly, especially when it involves different writing directions (left-to-right vs. right-to-left) or combining characters, requires external assistance. This assistance primarily comes from pango, a sophisticated text layout engine, which luckily interfaces rather nicely with Cairo.
 

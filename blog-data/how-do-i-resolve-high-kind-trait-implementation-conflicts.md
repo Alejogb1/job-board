@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-resolve-high-kind-trait-implementation-conflicts"
 ---
 
-Let's tackle this. Having navigated a few hairy implementations myself, specifically with large type hierarchies and extensive kind traits, I can confidently say that kind trait conflicts are more common than most developers would prefer. They typically emerge when the structure of your codebase, specifically around generics and associated types, becomes more intricate than anticipated. What seems like an innocent extension of a system, can inadvertently create multiple implementations for the same kind trait, which the compiler, reasonably, refuses to accept. This usually occurs when dealing with generic types that overlap in the type system, making it ambiguous which implementation to pick at compile-time.
+. Having navigated a few hairy implementations myself, specifically with large type hierarchies and extensive kind traits, I can confidently say that kind trait conflicts are more common than most developers would prefer. They typically emerge when the structure of your codebase, specifically around generics and associated types, becomes more intricate than anticipated. What seems like an innocent extension of a system, can inadvertently create multiple implementations for the same kind trait, which the compiler, reasonably, refuses to accept. This usually occurs when dealing with generic types that overlap in the type system, making it ambiguous which implementation to pick at compile-time.
 
 The crux of resolving these conflicts hinges on precision – precisely specifying the types involved or restructuring the type system to make distinct implementations obvious to the compiler. Let's break it down into a few approaches, incorporating examples that mirror situations I’ve personally encountered.
 
-Firstly, understand that the core issue is *ambiguity*. The compiler needs to uniquely identify which trait implementation to use for a given type at a given context. When multiple implementations seem viable based on the compiler's type inference mechanisms, a conflict arises. This means your types, specifically type parameters and associated types within the implementation, are not specific enough for the compiler to differentiate between potential candidates.
+Firstly, understand that the core issue is _ambiguity_. The compiler needs to uniquely identify which trait implementation to use for a given type at a given context. When multiple implementations seem viable based on the compiler's type inference mechanisms, a conflict arises. This means your types, specifically type parameters and associated types within the implementation, are not specific enough for the compiler to differentiate between potential candidates.
 
-One of the most effective solutions involves adding explicit trait bounds or leveraging *specialization*. Specialization is a more advanced technique, and its implementation and suitability may depend on the specific language (many modern languages support some level of it), but it can certainly be a powerful tool when available. Let's start with trait bounds. Suppose we’re working with a custom data structure and a printer trait:
+One of the most effective solutions involves adding explicit trait bounds or leveraging _specialization_. Specialization is a more advanced technique, and its implementation and suitability may depend on the specific language (many modern languages support some level of it), but it can certainly be a powerful tool when available. Let's start with trait bounds. Suppose we’re working with a custom data structure and a printer trait:
 
 ```rust
 trait Printable {
@@ -222,6 +222,7 @@ function main() {
 
 main()
 ```
+
 This works well and is type safe. However, if we add an implementation for `MyData` with a different type of reader and writer, the typescript compiler will produce a compilation error:
 
 ```typescript

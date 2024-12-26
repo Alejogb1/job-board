@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-extract-key-value-pairs-from-complex-json-objects-using-jq-and-map"
 ---
 
-Let's tackle this, shall we? I've certainly spent my fair share of evenings navigating deeply nested json structures, so I can relate to the need for precision when pulling out specific data points. Using `jq` alongside `map` is an effective way to achieve that, and it’s something that’s saved me countless hours over the years. I remember one project where we were receiving real-time sensor data streams encoded in json, and the structure was… well, let's just say *unconventional*. `jq` became my close companion then.
+, shall we? I've certainly spent my fair share of evenings navigating deeply nested json structures, so I can relate to the need for precision when pulling out specific data points. Using `jq` alongside `map` is an effective way to achieve that, and it’s something that’s saved me countless hours over the years. I remember one project where we were receiving real-time sensor data streams encoded in json, and the structure was… well, let's just say _unconventional_. `jq` became my close companion then.
 
-The crux of the matter lies in understanding how `jq` operates as a filter and how `map` enables us to apply transformations across arrays. You’re essentially crafting a mini-program to describe *what* data you want, rather than *how* to find it. It’s a declarative approach, which makes it very powerful for json processing.
+The crux of the matter lies in understanding how `jq` operates as a filter and how `map` enables us to apply transformations across arrays. You’re essentially crafting a mini-program to describe _what_ data you want, rather than _how_ to find it. It’s a declarative approach, which makes it very powerful for json processing.
 
 At its heart, `jq` treats everything as a filter. A simple `.` means "the current input." You can then chain filters using `|` (the pipe), allowing you to funnel your data through a series of transformations. The `map` function, when applied to an array, takes a filter and applies it to every element within that array, constructing a new array from the results.
 
@@ -33,11 +33,7 @@ jq 'map(.email)' input.json
 This will output:
 
 ```json
-[
-  "alice@example.com",
-  "bob@example.com",
-  "charlie@example.com"
-]
+["alice@example.com", "bob@example.com", "charlie@example.com"]
 ```
 
 What's happening? `map(.email)` is applied to the array. The filter `.email` is used on each object. The result is a new array comprised solely of those email values. This is the most straightforward use case.
@@ -81,7 +77,7 @@ Here's the output:
 ]
 ```
 
-This command first selects the `readings` array. Then, `map` applies the filter `{sensor: .sensor_id, temp: .temperature}` to each object within that array. This filter constructs a *new* object with the keys `sensor` and `temp`, pulling the corresponding values from the existing object with `.sensor_id` and `.temperature`, respectively. This demonstrates not just extraction, but also how to restructure the output. This was particularly helpful when migrating data between different systems that had their own unique data formats.
+This command first selects the `readings` array. Then, `map` applies the filter `{sensor: .sensor_id, temp: .temperature}` to each object within that array. This filter constructs a _new_ object with the keys `sensor` and `temp`, pulling the corresponding values from the existing object with `.sensor_id` and `.temperature`, respectively. This demonstrates not just extraction, but also how to restructure the output. This was particularly helpful when migrating data between different systems that had their own unique data formats.
 
 **Example 3: Handling nested objects within arrays**
 

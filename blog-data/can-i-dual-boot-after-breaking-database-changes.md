@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "can-i-dual-boot-after-breaking-database-changes"
 ---
 
-Right then, let's tackle this. You're staring at a database, possibly after a less-than-smooth update, and the thought of booting into an old configuration is swirling around. Been there, done that—more times than I'd care to remember. And, specifically to the question: yes, dual booting *after* experiencing database-related issues is possible, but it’s crucial to understand the complexities and what you're actually trying to achieve. It's not merely flipping a switch; it involves understanding the layers involved in your boot process, the state of your data, and the configurations that define your operating environment.
+Right then, . You're staring at a database, possibly after a less-than-smooth update, and the thought of booting into an old configuration is swirling around. Been there, done that—more times than I'd care to remember. And, specifically to the question: yes, dual booting _after_ experiencing database-related issues is possible, but it’s crucial to understand the complexities and what you're actually trying to achieve. It's not merely flipping a switch; it involves understanding the layers involved in your boot process, the state of your data, and the configurations that define your operating environment.
 
-First off, when you say "breaking database changes," it covers a pretty broad spectrum. Did you modify schema? Migrate data incorrectly? Implement code changes dependent on a newer, now problematic, database state? These details matter significantly because they affect the rollback strategy. Simply dual booting won't inherently fix any data inconsistencies, and it’s imperative we understand that distinction. It might provide a way to *test* a recovery, or *operate* from an older environment while recovery efforts are underway, but it's not a magic bullet.
+First off, when you say "breaking database changes," it covers a pretty broad spectrum. Did you modify schema? Migrate data incorrectly? Implement code changes dependent on a newer, now problematic, database state? These details matter significantly because they affect the rollback strategy. Simply dual booting won't inherently fix any data inconsistencies, and it’s imperative we understand that distinction. It might provide a way to _test_ a recovery, or _operate_ from an older environment while recovery efforts are underway, but it's not a magic bullet.
 
 From past encounters with similar problems, I can break this down a bit further into some practical steps and considerations. The core idea is to have your old, working environment, often in the form of a snapshot of your system from before the problematic database changes, accessible as a boot option. This frequently involves having an alternative partition or a virtual machine image set up with an older operating system and database state that you can boot into if you need to quickly revert to a stable setup.
 
@@ -16,7 +16,7 @@ Now, here’s the crucial part: how to effectively do this. The method depends l
 
 If you're using Linux and you’ve wisely implemented LVM, this process is relatively straightforward. LVM allows you to take snapshots of your logical volumes, including the one housing your database and your root filesystem.
 
-*Before* implementing critical changes, taking an LVM snapshot is a smart pre-emptive move. Here's a snippet of how it would look:
+_Before_ implementing critical changes, taking an LVM snapshot is a smart pre-emptive move. Here's a snippet of how it would look:
 
 ```bash
 # Create an LVM snapshot of the logical volume
@@ -95,6 +95,6 @@ As I mentioned earlier, dual-booting in these scenarios is not going to fix data
 
 - **Understand your Bootloaders:** If you’re using Grub, ensure that you have a proper grasp of how to manage boot options. The bootloader configuration is your key to dual booting, and messing with the incorrect entries can lead to problems.
 
-- **Resources:** For a deeper understanding, look at *Operating System Concepts* by Silberschatz, Galvin, and Gagne for details on operating system and boot processes. To get better at using LVM, I’d recommend researching documentation for `lvm2` and experimenting with it in a safe test environment. For database backups, refer to vendor specific documentation such as MySQL or Postgresql documentation which is available on their official sites. Also, familiarize yourself with specific virtual machine toolings, like the Virtualbox documentation.
+- **Resources:** For a deeper understanding, look at _Operating System Concepts_ by Silberschatz, Galvin, and Gagne for details on operating system and boot processes. To get better at using LVM, I’d recommend researching documentation for `lvm2` and experimenting with it in a safe test environment. For database backups, refer to vendor specific documentation such as MySQL or Postgresql documentation which is available on their official sites. Also, familiarize yourself with specific virtual machine toolings, like the Virtualbox documentation.
 
 Finally, to reiterate: dual booting after bad database changes is possible and can be a useful tool for mitigating downtime, but it is not a substitute for good data management practices and proper testing before implementation. Consider it as part of a larger, well-planned disaster recovery strategy. Remember to take things slowly, always have backups, and never experiment on production systems directly. That’s where many of us have had some of our worst days.

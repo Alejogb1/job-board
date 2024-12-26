@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-a-required-field-to-a-microservice-bounded-context-when-the-data-resides-in-a-separate-bounded-context"
 ---
 
-, let's tackle this one. I remember a particularly tricky project a few years back, where we had a similar situation. We were building an e-commerce platform, and our 'order processing' microservice required customer address information, which was actually managed by our 'user management' service. The initial design had them loosely coupled, which worked fine… until we needed to add mandatory address fields for compliance. It exposed some interesting challenges, and frankly, it’s a common issue when moving towards microservice architectures. The key, as always, is to approach it systematically, focusing on both technical implementation and domain considerations.
+, one. I remember a particularly tricky project a few years back, where we had a similar situation. We were building an e-commerce platform, and our 'order processing' microservice required customer address information, which was actually managed by our 'user management' service. The initial design had them loosely coupled, which worked fine… until we needed to add mandatory address fields for compliance. It exposed some interesting challenges, and frankly, it’s a common issue when moving towards microservice architectures. The key, as always, is to approach it systematically, focusing on both technical implementation and domain considerations.
 
 The problem, at its core, is a data dependency across bounded contexts. Bounded contexts, in Domain-Driven Design, are meant to be relatively autonomous, each owning its data and logic. This promotes modularity and reduces the blast radius of changes. However, when a required field is needed by one context but owned by another, direct access breaks the principle of bounded context isolation.
 
@@ -18,7 +18,7 @@ Here are the approaches that I’ve found most effective, categorized by common 
 
 This is generally my go-to when data ownership is paramount. Instead of a direct request, the order processing service reacts to events published by the user management service.
 
-- **The flow:** When a user updates their address in the user management service, an event (e.g., "user_address_updated") is published onto a message broker. The order processing service subscribes to these events. Upon receiving such an event, it can update its local data store (or cache) with the relevant address information. If an order request comes in requiring the address, the order service checks its _local store first_, not making any direct query to the user service.
+- **The flow:** When a user updates their address in the user management service, an event (e.g., "user*address_updated") is published onto a message broker. The order processing service subscribes to these events. Upon receiving such an event, it can update its local data store (or cache) with the relevant address information. If an order request comes in requiring the address, the order service checks its \_local store first*, not making any direct query to the user service.
 
 - **Advantages:** Loose coupling, resilience (if the user service goes down, the order service can still function using cached data, potentially until data synchronization is possible), improved performance (local access to data).
 

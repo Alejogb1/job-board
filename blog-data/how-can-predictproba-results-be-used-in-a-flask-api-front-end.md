@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-predictproba-results-be-used-in-a-flask-api-front-end"
 ---
 
-, let's tackle this. I’ve seen this scenario crop up quite a bit in my past projects, particularly when transitioning machine learning models from research environments to client-facing applications. Getting those `predict_proba` outputs into a usable format within a Flask API requires a thoughtful approach, and the devil, as they say, is in the details. We're not just slapping predictions on the screen; we're building an informative and robust experience for the user.
+, . I’ve seen this scenario crop up quite a bit in my past projects, particularly when transitioning machine learning models from research environments to client-facing applications. Getting those `predict_proba` outputs into a usable format within a Flask API requires a thoughtful approach, and the devil, as they say, is in the details. We're not just slapping predictions on the screen; we're building an informative and robust experience for the user.
 
 The core idea behind `predict_proba` is that it doesn't just offer a single classification but provides probabilities for each class. This is significantly more informative than just a predicted class label. We leverage this richness in our Flask front-end to convey the model's certainty (or uncertainty) about its predictions. Instead of just telling a user “this is a cat,” we can say “there’s a 92% probability this is a cat, and an 8% probability this is a dog.” This transparency is crucial, especially for complex models.
 

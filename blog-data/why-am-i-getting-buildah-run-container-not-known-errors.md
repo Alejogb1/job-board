@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-buildah-run-container-not-known-errors"
 ---
 
-, let's tackle this "container not known" error with `buildah run`, a frustration I've certainly encountered more than a few times. It's one of those issues that can make you feel like you're staring into the abyss, especially after a long day of building and debugging. From what I've seen in the trenches of container development, there are a few common culprits behind this seemingly simple error. It’s seldom about what you think initially.
+, "container not known" error with `buildah run`, a frustration I've certainly encountered more than a few times. It's one of those issues that can make you feel like you're staring into the abyss, especially after a long day of building and debugging. From what I've seen in the trenches of container development, there are a few common culprits behind this seemingly simple error. It’s seldom about what you think initially.
 
 The core problem revolves around `buildah`'s management of container identifiers and the lifecycle of those containers. `buildah run` isn’t like `docker run` in its approach. Instead of creating a new container based on an image, `buildah run` _operates on an existing container, typically one created with `buildah from` or `buildah bud`_. This is where things can get a bit dicey. If the container identifier you’re passing to `buildah run` doesn't match an actively managed container, then you’re going to see the dreaded "container not known" error.
 

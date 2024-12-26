@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-clickable-phone-number-link-in-a-wicked-pdf-document"
 ---
 
-Let's tackle this. I remember a project back in '17, we were generating some rather complex legal documents via Wicked PDF and ran into the very same problem: making phone numbers clickable. Standard html-based links weren’t directly translating through Wicked PDF’s rendering process. It took some fiddling, but we found a reliable workaround, which I'll share here.
+. I remember a project back in '17, we were generating some rather complex legal documents via Wicked PDF and ran into the very same problem: making phone numbers clickable. Standard html-based links weren’t directly translating through Wicked PDF’s rendering process. It took some fiddling, but we found a reliable workaround, which I'll share here.
 
 The core issue stems from how Wicked PDF (which, under the hood, is typically using a webkit-based rendering engine) interprets and translates html into a PDF. Simple `<a>` tags with `href="tel:..."` often don't render the expected clickable behavior, or worse, result in the number being displayed as text and not a link at all. This happens because the PDF rendering process doesn’t always faithfully translate the interactive aspects of HTML, like the `tel:` URI scheme, directly. We have to be a little more explicit.
 
@@ -14,18 +14,19 @@ First, we ensure the phone number is formatted as a standard anchor tag with a `
 
 ```html
 <p>
-  For assistance, please call us at: <a href="tel:+15551234567">+1 (555) 123-4567</a>
+  For assistance, please call us at:
+  <a href="tel:+15551234567">+1 (555) 123-4567</a>
 </p>
 ```
 
-While this may *display* a link in the browser (or when using the rendered html), it’s unlikely to result in a functional link in the PDF by itself. Now, for the actual pdf-specific part, this is where we add some css styling. In this case, we will need to explicitly control the color of the text, to make it clear that it’s a clickable item. We also need to avoid styling that might interfere with the PDF rendering engine. For this, we’ll embed some basic styling into the page's `<head>` section. Typically, Wicked PDF picks this up. This next snippet would need to exist in your header or be added through a style tag embedded in the document:
+While this may _display_ a link in the browser (or when using the rendered html), it’s unlikely to result in a functional link in the PDF by itself. Now, for the actual pdf-specific part, this is where we add some css styling. In this case, we will need to explicitly control the color of the text, to make it clear that it’s a clickable item. We also need to avoid styling that might interfere with the PDF rendering engine. For this, we’ll embed some basic styling into the page's `<head>` section. Typically, Wicked PDF picks this up. This next snippet would need to exist in your header or be added through a style tag embedded in the document:
 
 ```html
 <style>
-a[href^="tel:"] {
-  color: blue; /* Make the link blue, a commonly understood visual cue */
-  text-decoration: underline; /* Underline for more clarity */
-}
+  a[href^="tel:"] {
+    color: blue; /* Make the link blue, a commonly understood visual cue */
+    text-decoration: underline; /* Underline for more clarity */
+  }
 </style>
 ```
 
@@ -35,12 +36,13 @@ Thus, to be absolutely certain, we need to introduce a JavaScript workaround tha
 
 ```html
 <p>
-   For assistance, please call us at:
+  For assistance, please call us at:
   <a
-   href="tel:+15551234567"
-   style="color: blue; text-decoration: underline;"
-   onclick="window.location.href='tel:+15551234567'; return false;">+1 (555) 123-4567
-   </a>
+    href="tel:+15551234567"
+    style="color: blue; text-decoration: underline;"
+    onclick="window.location.href='tel:+15551234567'; return false;"
+    >+1 (555) 123-4567
+  </a>
 </p>
 ```
 

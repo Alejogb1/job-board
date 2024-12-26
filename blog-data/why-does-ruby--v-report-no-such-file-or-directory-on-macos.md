@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-ruby--v-report-no-such-file-or-directory-on-macos"
 ---
 
-Let's tackle this peculiar "no such file or directory" error when invoking `ruby -v` on macOS. It’s a situation I've seen crop up a number of times across various systems, and the underlying cause is often more nuanced than it first appears. Usually, when a command line tool throws this error, your initial assumption of a completely missing binary file is often inaccurate.
+peculiar "no such file or directory" error when invoking `ruby -v` on macOS. It’s a situation I've seen crop up a number of times across various systems, and the underlying cause is often more nuanced than it first appears. Usually, when a command line tool throws this error, your initial assumption of a completely missing binary file is often inaccurate.
 
 The real issue is typically a mismatch, or a disconnect, between what the shell expects and what's actually available on the file system for the specific path it is attempting to execute. When we execute `ruby -v`, the shell, be it bash, zsh, or any other, first looks up the location of the executable named ‘ruby’ based on the `PATH` environment variable. This variable contains a colon-separated list of directories where executable files might reside. If the ruby executable isn't in one of those specified locations, or if the symbolic links are not appropriately pointed, the shell reports precisely "no such file or directory."
 
-It's tempting to think it's merely missing, but the problem is more that the executable the shell is *trying* to access is not what it thinks it should be. The most frequent culprit on macOS tends to be related to how Ruby is installed and managed, typically using something like rbenv, rvm, or asdf. These tools manage multiple versions of ruby, allowing developers to switch between them easily. If these are not set up correctly, or if there's a configuration conflict, the shell’s `PATH` might be pointing towards a non-existent directory, a broken symlink, or to an instance of ruby that has subsequently been removed or reorganized. It’s not that ruby is completely absent on the machine; it's that the *specific instance* the shell has been directed to use cannot be located, which is often linked back to the version management.
+It's tempting to think it's merely missing, but the problem is more that the executable the shell is _trying_ to access is not what it thinks it should be. The most frequent culprit on macOS tends to be related to how Ruby is installed and managed, typically using something like rbenv, rvm, or asdf. These tools manage multiple versions of ruby, allowing developers to switch between them easily. If these are not set up correctly, or if there's a configuration conflict, the shell’s `PATH` might be pointing towards a non-existent directory, a broken symlink, or to an instance of ruby that has subsequently been removed or reorganized. It’s not that ruby is completely absent on the machine; it's that the _specific instance_ the shell has been directed to use cannot be located, which is often linked back to the version management.
 
 Let's illustrate a few practical scenarios with some code examples:
 
@@ -39,6 +39,7 @@ which ruby
 ruby -v
 
 ```
+
 In this example, the shell believes there’s a `ruby` executable at the path specified by the `which ruby` command, but when it attempts to execute it, it finds a broken symlink that ultimately points to a location that's not present. The `which ruby` command is still successful, because the shell is locating the symlink, and not validating if the symlink path exists.
 
 **Scenario 2: Path Misconfiguration**
@@ -116,7 +117,7 @@ To resolve these issues, I would recommend:
 
 For further reading, I recommend:
 
-*   **"The Unix Programming Environment" by Brian W. Kernighan and Rob Pike:** While not ruby-specific, it’s an excellent resource to understand how the shell and path works.
-*   **The documentation for your Ruby version manager (rbenv, rvm, asdf):** The documentation is the ultimate source of truth, particularly when troubleshooting unusual issues. Make sure the setup steps are correctly followed.
+- **"The Unix Programming Environment" by Brian W. Kernighan and Rob Pike:** While not ruby-specific, it’s an excellent resource to understand how the shell and path works.
+- **The documentation for your Ruby version manager (rbenv, rvm, asdf):** The documentation is the ultimate source of truth, particularly when troubleshooting unusual issues. Make sure the setup steps are correctly followed.
 
 Ultimately, the "no such file or directory" error when invoking `ruby -v` on macOS is rarely because ruby is entirely absent. It is a symptom of something being incorrectly configured or pointing to the incorrect location, usually related to `PATH` environment, broken symbolic links, or conflicting environment configurations with your ruby version management tool. A methodical investigation of your shell setup and a review of your ruby manager setup usually reveal the root cause.

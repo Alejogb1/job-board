@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-keras-tensorflow-valueerror-during-modelfit-with-jaccardiou"
 ---
 
-, let's tackle this common pitfall. I've personally spent more than a few late nights debugging that very `ValueError` in Keras, specifically when trying to integrate Jaccard/IOU as a metric or loss function during `model.fit`. It's usually a mismatch between the expected tensor shapes and the actual ones, a frustrating issue, but one that's resolvable once you understand the underlying mechanics.
+, common pitfall. I've personally spent more than a few late nights debugging that very `ValueError` in Keras, specifically when trying to integrate Jaccard/IOU as a metric or loss function during `model.fit`. It's usually a mismatch between the expected tensor shapes and the actual ones, a frustrating issue, but one that's resolvable once you understand the underlying mechanics.
 
 The problem, fundamentally, boils down to how Keras expects its metrics and losses to interact with the model's output and the provided targets. When dealing with segmentation or similar tasks where Jaccard (or Intersection over Union, IOU) is relevant, we're often dealing with pixel-wise predictions. These predictions, alongside the target masks, need to be formatted properly so that the Jaccard calculation can proceed smoothly.
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-does-separating-domain-and-persistence-layers-using-a-repository-pattern-improve-code-organization"
 ---
 
-Let's tackle this. The question of how a repository pattern enhances code organization by decoupling domain and persistence is one I’ve encountered often enough across various projects, ranging from high-throughput data processing pipelines to seemingly straightforward web applications. It’s a pattern that consistently proves its worth when applied thoughtfully. Essentially, the repository pattern provides a crucial abstraction between your core business logic (the domain layer) and the specifics of data storage (the persistence layer). This separation promotes maintainability, testability, and allows for independent evolution of these two very different parts of your system.
+. The question of how a repository pattern enhances code organization by decoupling domain and persistence is one I’ve encountered often enough across various projects, ranging from high-throughput data processing pipelines to seemingly straightforward web applications. It’s a pattern that consistently proves its worth when applied thoughtfully. Essentially, the repository pattern provides a crucial abstraction between your core business logic (the domain layer) and the specifics of data storage (the persistence layer). This separation promotes maintainability, testability, and allows for independent evolution of these two very different parts of your system.
 
 From my experience, without this separation, you often end up with domain logic tightly coupled to database interactions, or, worse, tangled up with the specific ORM or data access technology. Think about it: if you need to swap out, say, a relational database for a document store, without a proper repository in place, you're looking at potentially rewriting huge chunks of your application. This is where the repository pattern truly shines.
 
-The key principle here is that the domain layer should not be concerned with *how* data is stored or retrieved, only *what* data is needed. The repository layer acts as an intermediary, handling all the data access details and presenting a clean, domain-specific interface. This interface typically provides methods for common operations like adding, updating, retrieving, and deleting entities, using abstractions that represent your domain objects instead of raw database records.
+The key principle here is that the domain layer should not be concerned with _how_ data is stored or retrieved, only _what_ data is needed. The repository layer acts as an intermediary, handling all the data access details and presenting a clean, domain-specific interface. This interface typically provides methods for common operations like adding, updating, retrieving, and deleting entities, using abstractions that represent your domain objects instead of raw database records.
 
 To give you a more concrete picture, consider a simple e-commerce application. Let's say we have a `Product` entity in our domain. Without a repository, our business logic (e.g., calculating discounts) might directly interact with database queries to fetch product information. This is brittle and makes it very difficult to test the business logic in isolation.
 
@@ -24,7 +24,7 @@ interface ProductRepository {
 }
 ```
 
-Notice that this interface defines operations in terms of our `Product` domain entity. It does not expose *how* those operations are implemented.
+Notice that this interface defines operations in terms of our `Product` domain entity. It does not expose _how_ those operations are implemented.
 
 Now, the persistence layer provides a concrete implementation for this interface, for example, a `JdbcProductRepository`, which uses JDBC to interact with a relational database:
 
@@ -83,7 +83,7 @@ class JdbcProductRepository implements ProductRepository {
          //This can become fairly complex depending on the criteria.
          return null; //placeholder
     }
-    
+
     @Override
     public void delete(String id){
       //Implement logic for deleting a product by id using JDBC
@@ -117,7 +117,7 @@ class ProductServiceTest {
         assertEquals(actualProduct, testProduct);
 
     }
-  
+
    @Test
     void testFindProductByCriteria(){
       ProductRepository mockRepo = mock(ProductRepository.class);
@@ -125,7 +125,7 @@ class ProductServiceTest {
       List<Product> mockProducts = Arrays.asList(testProduct);
       ProductSearchCriteria criteria = new ProductSearchCriteria();
       when(mockRepo.findByCriteria(criteria)).thenReturn(mockProducts);
-      
+
       ProductService productService = new ProductService(mockRepo);
       List<Product> actualProduct = productService.findProducts(criteria);
       assertEquals(actualProduct, mockProducts);

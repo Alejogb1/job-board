@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-contract-function-addneworg-unavailable-preventing-metamask-connection-and-data-retrieval"
 ---
 
-Let's tackle this. Ah, the familiar frustration of a contract function seemingly vanishing into thin air, particularly when MetaMask is involved. I’ve been down this rabbit hole a few times myself, so I understand the head-scratching. Typically, when a function like `addNewOrg` isn’t accessible, preventing MetaMask from properly interacting with your contract and pulling data, there's a handful of culprits, and it's rarely just one simple switch. Let me walk you through what I've seen in my own experience and how to methodically approach this kind of problem.
+. Ah, the familiar frustration of a contract function seemingly vanishing into thin air, particularly when MetaMask is involved. I’ve been down this rabbit hole a few times myself, so I understand the head-scratching. Typically, when a function like `addNewOrg` isn’t accessible, preventing MetaMask from properly interacting with your contract and pulling data, there's a handful of culprits, and it's rarely just one simple switch. Let me walk you through what I've seen in my own experience and how to methodically approach this kind of problem.
 
 First off, it's crucial to remember that smart contracts exist within the context of a blockchain environment. This means we have several layers to consider: the solidity code itself, its compilation and deployment, and how the interacting application—in this case, your MetaMask-enabled front-end—is structured. I’ve found that most problems tend to fall into one of these categories, and sometimes it's a combination of them.
 
@@ -59,6 +59,7 @@ contract OrganizationManager {
 }
 
 ```
+
 ```javascript
 // Javascript calling function
 const contract = new web3.eth.Contract(abi, contractAddress);
@@ -68,7 +69,7 @@ const contract = new web3.eth.Contract(abi, contractAddress);
 
 // Correct call, passing both string name and timestamp
 const timestamp = Math.floor(Date.now() / 1000);
-contract.methods.addNewOrg("testOrg", timestamp).send({from: account});
+contract.methods.addNewOrg("testOrg", timestamp).send({ from: account });
 ```
 
 Here, we demonstrate how a mismatch in the JavaScript calling code and the solidity contract’s expected function signature leads to issues. The solidity contract's `addNewOrg` function requires both a string name and a timestamp (uint256). If the javascript code calls the function with just a name, it will fail. It must provide the correct number of parameters of the right type.
@@ -81,9 +82,9 @@ const contractAddress = "0x1234...invalidAddress"; // INcorrect address
 const contract = new web3.eth.Contract(abi, contractAddress);
 
 // Attempt to call addNewOrg
-contract.methods.addNewOrg("anotherOrg").send({from: account});
-
+contract.methods.addNewOrg("anotherOrg").send({ from: account });
 ```
+
 In this example, the code attempts to connect to a contract using a placeholder address "0x1234…invalidAddress". Obviously, this will fail because there's no contract at this address, or it's not the contract you expect. Ensure that `contractAddress` is updated to point to your deployed instance of the contract. Always cross-reference the contract address in your code with the address returned by your deployment tool. Additionally, if you redeploy the contract, the address will change, and your frontend needs to be updated.
 
 To effectively diagnose this, I usually start with the following methodical approach:

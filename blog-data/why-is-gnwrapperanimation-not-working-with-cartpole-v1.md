@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-gnwrapperanimation-not-working-with-cartpole-v1"
 ---
 
-, let's tackle this gnwrapper.Animation and CartPole-v1 situation. I've seen this specific issue rear its head a few times, and it usually boils down to a mismatch between how `gnwrapper` expects the environment to function and how `CartPole-v1` actually operates, particularly with regards to frame rendering. It’s not an inherent flaw with either library, but more an artifact of their interaction.
+, gnwrapper.Animation and CartPole-v1 situation. I've seen this specific issue rear its head a few times, and it usually boils down to a mismatch between how `gnwrapper` expects the environment to function and how `CartPole-v1` actually operates, particularly with regards to frame rendering. It’s not an inherent flaw with either library, but more an artifact of their interaction.
 
 Specifically, the `gnwrapper.Animation` class expects a rendered frame or an image array to be returned at each step of the environment. This is generally handled internally by environments which inherently have visual representations, like those in the Atari family. `CartPole-v1`, while visually understandable to us humans, does not _naturally_ render such frames. It primarily deals with numerical state information (cart position, pole angle, etc.). Consequently, if you attempt to directly animate it with `gnwrapper` without intervention, you will likely encounter a blank animation or an error related to missing frames.
 

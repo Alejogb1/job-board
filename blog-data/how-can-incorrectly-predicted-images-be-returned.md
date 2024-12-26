@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-incorrectly-predicted-images-be-returned"
 ---
 
-Let's tackle this directly; the issue of handling misclassified images is a crucial one, especially in iterative model development. I recall a particularly challenging project involving a convolutional neural network (cnn) for medical image analysis where we absolutely had to pinpoint *why* certain images were being misclassified. It wasn’t enough to just see the aggregated metrics; we needed granular insights into the model's failings.
+directly; the issue of handling misclassified images is a crucial one, especially in iterative model development. I recall a particularly challenging project involving a convolutional neural network (cnn) for medical image analysis where we absolutely had to pinpoint _why_ certain images were being misclassified. It wasn’t enough to just see the aggregated metrics; we needed granular insights into the model's failings.
 
 The basic idea for returning these misclassified images is relatively simple: we compare the model's predictions to the ground truth labels and store the images where the predictions don't match. However, the implementation nuances can quickly become complex, especially when considering efficiency, scale, and the types of analysis you want to perform on these misclassified examples.
 
@@ -183,10 +183,10 @@ Similar to the pytorch example, this code iterates through the tf.data.Dataset. 
 
 These code snippets are starting points. You can easily expand on them to:
 
-*   **Store Prediction Probabilities:** Instead of just predicted class labels, also store the predicted probabilities for each class. This can be very useful for error analysis.
-*   **Add Metadata:** Include any relevant metadata with each image (e.g. filename, original resolution, etc.).
-*   **Visualise:** Use tools like matplotlib to quickly visualise the images.
+- **Store Prediction Probabilities:** Instead of just predicted class labels, also store the predicted probabilities for each class. This can be very useful for error analysis.
+- **Add Metadata:** Include any relevant metadata with each image (e.g. filename, original resolution, etc.).
+- **Visualise:** Use tools like matplotlib to quickly visualise the images.
 
-For further study, I would highly recommend the following resources. First, *Deep Learning* by Goodfellow, Bengio, and Courville is a phenomenal book that deeply covers all core concepts around deep learning. For more applied computer vision techniques, *Computer Vision: Algorithms and Applications* by Richard Szeliski is a great reference. Also, a good resource is *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow* by Aurélien Géron, which balances theory with practical examples.
+For further study, I would highly recommend the following resources. First, _Deep Learning_ by Goodfellow, Bengio, and Courville is a phenomenal book that deeply covers all core concepts around deep learning. For more applied computer vision techniques, _Computer Vision: Algorithms and Applications_ by Richard Szeliski is a great reference. Also, a good resource is _Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow_ by Aurélien Géron, which balances theory with practical examples.
 
 In conclusion, extracting misclassified images isn’t complicated conceptually, but it requires a clear approach when implemented in code. By using the techniques described above you can quickly identify misclassifications, and this, in turn, greatly assists with improving model accuracy, and understanding of your dataset.

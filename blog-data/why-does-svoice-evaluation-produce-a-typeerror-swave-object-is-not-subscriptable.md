@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-svoice-evaluation-produce-a-typeerror-swave-object-is-not-subscriptable"
 ---
 
-Let's tackle this TypeError you're seeing with svoice evaluation. I've bumped into this particular issue a few times myself, usually when dealing with custom audio processing pipelines or during rapid prototyping. The message “TypeError: 'SWave' object is not subscriptable” is, in essence, Python telling you that you're trying to access an object— specifically one of type `SWave` — as if it were a list or dictionary, using square brackets and an index or key, but it isn't designed to work that way. Let's break down why this is happening and, more importantly, how to fix it.
+TypeError you're seeing with svoice evaluation. I've bumped into this particular issue a few times myself, usually when dealing with custom audio processing pipelines or during rapid prototyping. The message “TypeError: 'SWave' object is not subscriptable” is, in essence, Python telling you that you're trying to access an object— specifically one of type `SWave` — as if it were a list or dictionary, using square brackets and an index or key, but it isn't designed to work that way. Let's break down why this is happening and, more importantly, how to fix it.
 
 First, consider that the `SWave` object, which I'm assuming you're encountering within an audio processing context likely from a library like `librosa` or something similar given that you're evaluating svoice—is probably designed to encapsulate audio data and its metadata as a single unit. It's not typically a sequence of individual samples directly accessible by index. Think of it as an object holding a complex structure: audio samples, sample rate, channel information, maybe even associated spectrogram data. It’s similar to having a file object, you wouldn't try to access a character within the file directly like a string using an index.
 
-The core issue stems from confusion about how the `SWave` object stores and exposes audio information. It doesn't directly behave like a traditional Python sequence. Often, instead of subscripting, you're meant to access the underlying audio data using specific methods or attributes provided by the `SWave` object. These methods would often return something like a numpy array, which *is* subscriptable.
+The core issue stems from confusion about how the `SWave` object stores and exposes audio information. It doesn't directly behave like a traditional Python sequence. Often, instead of subscripting, you're meant to access the underlying audio data using specific methods or attributes provided by the `SWave` object. These methods would often return something like a numpy array, which _is_ subscriptable.
 
 Now, let's consider a few hypothetical scenarios where this might occur and how we’d fix it, referencing specific technical approaches that have worked for me in the past.
 
@@ -48,7 +48,8 @@ if sample_at_500 is not None:
 else:
   print("Index out of range")
 ```
-Here, `wave_object.get_samples()` is a hypothetical method that retrieves the underlying audio data. The critical step is accessing the audio samples using the *correct method*. It then checks the length of the retrieved numpy array before indexing, to avoid index errors.
+
+Here, `wave_object.get_samples()` is a hypothetical method that retrieves the underlying audio data. The critical step is accessing the audio samples using the _correct method_. It then checks the length of the retrieved numpy array before indexing, to avoid index errors.
 
 **Scenario 2: Incorrectly processing data streams**
 
@@ -134,6 +135,6 @@ Here, `spectrogram_object.get_data()` returns the actual numerical representatio
 
 The fundamental issue behind a "TypeError: 'SWave' object is not subscriptable" error is the incorrect assumption about how an object is structured and accessed. It's crucial to **always consult the documentation** of the library you’re using to understand the methods and attributes available for data extraction and manipulation.
 
-While I used a fictional library named `sound_toolkit`, real-world libraries like *librosa* (see "librosa: Audio analysis in Python" by Brian McFee et al., in Proceedings of the 14th Python in Science Conference, SciPy 2015) or *PyDub* (see https://github.com/jiaaro/pydub for the documentation) have similar patterns. Also, understanding numpy arrays is critical for working with numerical audio data. You can refer to the official numpy documentation or resources like “Python for Data Analysis” by Wes McKinney for more details on handling multi-dimensional arrays effectively. Finally, if your area of focus is sound analysis and processing in Python, you’ll find “Fundamentals of Musical Acoustics” by Arthur H. Benade helpful in establishing a deeper understanding of audio processing theory.
+While I used a fictional library named `sound_toolkit`, real-world libraries like _librosa_ (see "librosa: Audio analysis in Python" by Brian McFee et al., in Proceedings of the 14th Python in Science Conference, SciPy 2015) or _PyDub_ (see https://github.com/jiaaro/pydub for the documentation) have similar patterns. Also, understanding numpy arrays is critical for working with numerical audio data. You can refer to the official numpy documentation or resources like “Python for Data Analysis” by Wes McKinney for more details on handling multi-dimensional arrays effectively. Finally, if your area of focus is sound analysis and processing in Python, you’ll find “Fundamentals of Musical Acoustics” by Arthur H. Benade helpful in establishing a deeper understanding of audio processing theory.
 
 In short, always remember that object types define how you interact with their data. When encountering this error, take a step back and examine the specific object and its API to determine the proper way to extract and manipulate the underlying information. Directly indexing an object that isn’t designed for it is a common pitfall, and proper method calls are almost always the solution.

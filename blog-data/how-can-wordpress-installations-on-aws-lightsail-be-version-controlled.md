@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-wordpress-installations-on-aws-lightsail-be-version-controlled"
 ---
 
-, let's tackle this. Version controlling WordPress installations, especially on something like AWS Lightsail, isn’t always straightforward, but it's absolutely crucial for sane development and maintenance. I’ve definitely been in the trenches with this, more times than I care to recall, often learning the hard way what _not_ to do. Early in my career, I tried manually backing up and FTP-ing changes – a process that quickly turned into a chaotic nightmare of lost work and corrupted databases. Needless to say, I adopted version control quickly.
+, . Version controlling WordPress installations, especially on something like AWS Lightsail, isn’t always straightforward, but it's absolutely crucial for sane development and maintenance. I’ve definitely been in the trenches with this, more times than I care to recall, often learning the hard way what _not_ to do. Early in my career, I tried manually backing up and FTP-ing changes – a process that quickly turned into a chaotic nightmare of lost work and corrupted databases. Needless to say, I adopted version control quickly.
 
 The core issue with WordPress lies in its multifaceted nature. It's not just code; it’s also a database and a media library. Simply throwing the `/wp-content` directory into a git repository isn't the full solution. You'll encounter challenges with database changes, uploaded images, theme customizations, and plugin updates. To truly version control a WordPress installation effectively on Lightsail, we need to manage these components separately and cohesively.
 
@@ -29,7 +29,7 @@ plugins/*/node_modules
 plugins/*/package-lock.json
 ```
 
-This setup allows you to track the code changes in your theme and plugins, but it avoids tracking node_modules, .lock files, and the massive `/uploads` directory by default. We _will_ manage the uploads directory, but not directly within the git repository.
+This setup allows you to track the code changes in your theme and plugins, but it avoids tracking node*modules, .lock files, and the massive `/uploads` directory by default. We \_will* manage the uploads directory, but not directly within the git repository.
 
 Now, let’s move on to handling database changes. Simply dumping a database into version control is problematic. Database schema changes need to be managed carefully, preferably with migrations. For this, I've found a tool called "wp-migrate-db" invaluable (available as a WordPress plugin, although there are other options). It allows you to create SQL migration files that reflect changes to the database schema. This ensures that database changes are reproducible, versioned, and can be applied on different environments easily. Remember to treat your database schema like code – changes should be incremental, tested, and versioned.
 

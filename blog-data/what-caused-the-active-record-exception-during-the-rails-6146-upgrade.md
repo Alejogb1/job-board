@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-caused-the-active-record-exception-during-the-rails-6146-upgrade"
 ---
 
-Let's tackle this issue. I've seen my share of ActiveRecord hiccups, especially during significant Rails upgrades, and 6.1.4.6 certainly had its nuances. From my experience, what you're describing regarding an ActiveRecord exception, post-upgrade, often stems from a confluence of factors related to how Rails handles database interactions and model changes across versions. It’s rarely a single, glaring culprit but more commonly a subtle shift in behavior or underlying dependency.
+issue. I've seen my share of ActiveRecord hiccups, especially during significant Rails upgrades, and 6.1.4.6 certainly had its nuances. From my experience, what you're describing regarding an ActiveRecord exception, post-upgrade, often stems from a confluence of factors related to how Rails handles database interactions and model changes across versions. It’s rarely a single, glaring culprit but more commonly a subtle shift in behavior or underlying dependency.
 
 Specifically, during that 6.1 upgrade, a few categories of issues were particularly prominent in my projects, and they often surfaced as perplexing ActiveRecord exceptions. Let's break these down:
 
@@ -49,7 +49,7 @@ The fix here involved adding a validation or handling the null association with 
 
 **2. Changes in Query Generation and Scope Behavior:**
 
-Another common culprit was changes in how ActiveRecord generates sql queries, especially with regards to complex scopes or joins.  The query building process was refined in 6.1, and while this resulted in generally improved performance, some previously working scopes could behave differently, potentially resulting in exceptions.  For instance, we discovered an issue in a reporting system, where a complex chain of scopes used `includes` with multiple associations.  After upgrading, the generated sql was not including all required tables, resulting in null pointer exceptions (and in ActiveRecord contexts that often translates to an error) when trying to access attributes of those absent associated models in the views. The issue stemmed from an implicit join expectation that was not being met. The solution involved rewriting those scopes by explicitly specifying joins, and rewriting them to improve readability and maintainability.
+Another common culprit was changes in how ActiveRecord generates sql queries, especially with regards to complex scopes or joins. The query building process was refined in 6.1, and while this resulted in generally improved performance, some previously working scopes could behave differently, potentially resulting in exceptions. For instance, we discovered an issue in a reporting system, where a complex chain of scopes used `includes` with multiple associations. After upgrading, the generated sql was not including all required tables, resulting in null pointer exceptions (and in ActiveRecord contexts that often translates to an error) when trying to access attributes of those absent associated models in the views. The issue stemmed from an implicit join expectation that was not being met. The solution involved rewriting those scopes by explicitly specifying joins, and rewriting them to improve readability and maintainability.
 
 **Code Snippet Example 2:**
 
@@ -93,6 +93,7 @@ In previous Rails versions, this might have "sort of worked" and not raised any 
 ```
 
 Depending on your dataset, `post.user.comments` might cause an error in some cases, because not all the records were included in the sql query, even though the model expected it. The proper solution here would be to use explicit joins and possibly split this into multiple scopes for better understanding of the query construction. The fix would look something like this:
+
 ```ruby
 scope :with_user_and_comments, -> {
   joins(:user).

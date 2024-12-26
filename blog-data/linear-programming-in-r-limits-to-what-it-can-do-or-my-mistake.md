@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "linear-programming-in-r-limits-to-what-it-can-do-or-my-mistake"
 ---
 
-let's tackle this linear programming in R thing I've been there done that a few times and I can tell you it's usually not R that's the problem it's usually us coding or our model being slightly off
+linear programming in R thing I've been there done that a few times and I can tell you it's usually not R that's the problem it's usually us coding or our model being slightly off
 
 So the question hints at linear programming limitations in R or user error well I'll tell you first hand back in my early days trying to optimize some supply chain stuff I swear I spent days debugging and scratching my head only to find out it was a constraint I forgot about a misplaced plus sign things that are easy to oversee and make the solver throw weird results or fail outright I remember the time I was trying to minimize transportation cost using the `lpSolve` package and the solver would just return nonsense it turned out my cost matrix was inverted I mean who does that well I did that newbie mistake
 

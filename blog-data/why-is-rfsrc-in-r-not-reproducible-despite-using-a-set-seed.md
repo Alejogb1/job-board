@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-rfsrc-in-r-not-reproducible-despite-using-a-set-seed"
 ---
 
-, let's tackle this rfsrc reproducibility conundrum. It’s something I've personally encountered on a few data science projects, and it can be surprisingly tricky to nail down. Seeing seemingly random variation when you expect a consistent output, even with a seed, is frustrating. It’s not a bug in `rfsrc` itself, as one might initially suspect; rather, it’s a confluence of how the underlying algorithms and parallelization strategies work in concert.
+, rfsrc reproducibility conundrum. It’s something I've personally encountered on a few data science projects, and it can be surprisingly tricky to nail down. Seeing seemingly random variation when you expect a consistent output, even with a seed, is frustrating. It’s not a bug in `rfsrc` itself, as one might initially suspect; rather, it’s a confluence of how the underlying algorithms and parallelization strategies work in concert.
 
 The heart of the issue lies in the fact that `rfsrc`, a powerful package for random survival forests, utilizes parallel processing by default to speed up computation. While this is fantastic for performance, it introduces non-determinism if not managed correctly. Setting a seed with `set.seed()` in R only influences the initial random number generator state for the main R process. It _doesn’t_ automatically control the random number generation within the parallel threads created by `rfsrc`. These child processes are essentially independent entities, drawing their own pseudo-random numbers, and if these are not seeded uniformly, you lose reproducibility.
 

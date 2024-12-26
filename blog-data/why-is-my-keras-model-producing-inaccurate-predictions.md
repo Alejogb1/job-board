@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-my-keras-model-producing-inaccurate-predictions"
 ---
 
-Let's tackle this. It's a classic head-scratcher when a Keras model, built with seemingly sound architecture, starts spitting out predictions that seem… well, wrong. I’ve been down this road more times than I care to count, often tracing the issue back to a deceptively simple root cause. Instead of a complex algorithm flaw, it’s usually a problem that's masked by the abstraction layer of high-level APIs.
+. It's a classic head-scratcher when a Keras model, built with seemingly sound architecture, starts spitting out predictions that seem… well, wrong. I’ve been down this road more times than I care to count, often tracing the issue back to a deceptively simple root cause. Instead of a complex algorithm flaw, it’s usually a problem that's masked by the abstraction layer of high-level APIs.
 
 So, why are you seeing these inaccurate predictions? The culprits typically fall into a few distinct categories, and it's rarely just one thing.
 
-First, and I’ve seen this far more often than I'd like to, it's the **data itself**. The quality of your training data is paramount. If your data isn't representative of the real-world data you’ll encounter during prediction, your model will simply be learning patterns that don't generalize. I remember a project where we were building a fraud detection model. We initially trained on a dataset that was *heavily* skewed toward non-fraudulent transactions – nearly 98%. The model achieved impressive accuracy… on the training set. But when it faced real-world data with a higher prevalence of fraud, it essentially failed miserably. We had to oversample the minority class and introduce synthetic fraudulent transactions to balance the dataset.
+First, and I’ve seen this far more often than I'd like to, it's the **data itself**. The quality of your training data is paramount. If your data isn't representative of the real-world data you’ll encounter during prediction, your model will simply be learning patterns that don't generalize. I remember a project where we were building a fraud detection model. We initially trained on a dataset that was _heavily_ skewed toward non-fraudulent transactions – nearly 98%. The model achieved impressive accuracy… on the training set. But when it faced real-world data with a higher prevalence of fraud, it essentially failed miserably. We had to oversample the minority class and introduce synthetic fraudulent transactions to balance the dataset.
 
 The way you prepare that data is also critical. Consider feature scaling – are your features on vastly different scales? An unscaled feature with a large magnitude can overwhelm the model, preventing other important features from effectively contributing to the learning process. We found that standardization (scaling features to have a zero mean and unit variance) drastically improved model performance in several image processing projects. Similarly, careful consideration of categorical feature encoding is necessary. One-hot encoding is suitable for many situations but may create unnecessary feature spaces for large categorical variables.
 
@@ -111,8 +111,8 @@ This snippet shows how easily you can examine various metrics within a tensorflo
 
 To deepen your understanding of these topics, I would recommend:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** A comprehensive and authoritative text covering the theoretical foundations of deep learning.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** A practical guide that provides a good balance between theory and hands-on implementation.
-*  **“Pattern Recognition and Machine Learning” by Christopher M. Bishop:** This book has more in-depth mathematical details than the previous recommendation, and can be of help if further mathematical clarity is required.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** A comprehensive and authoritative text covering the theoretical foundations of deep learning.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** A practical guide that provides a good balance between theory and hands-on implementation.
+- **“Pattern Recognition and Machine Learning” by Christopher M. Bishop:** This book has more in-depth mathematical details than the previous recommendation, and can be of help if further mathematical clarity is required.
 
 Remember that diagnosing issues with model performance is often an iterative process. You should start by carefully examining your data, consider basic data augmentation or synthetic data generation, evaluate data balancing, examine potential feature engineering/selection options, and gradually explore different model architectures and training techniques. Pay careful attention to your validation/testing strategies. This involves a structured approach, and is the key to effective deep learning development. And, of course, don't shy away from the debugging process itself; it’s often a learning opportunity in disguise.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-add-a-column-and-populate-its-values-in-a-rails-migration"
 ---
 
-, let's tackle this. Seems simple enough on the surface, adding a column and filling it with values, but it often surfaces a few nuances, especially when dealing with larger datasets or more intricate requirements in rails migrations. I've certainly been down that road enough times, and it’s crucial to handle it correctly to avoid data inconsistencies or performance headaches down the line.
+, . Seems simple enough on the surface, adding a column and filling it with values, but it often surfaces a few nuances, especially when dealing with larger datasets or more intricate requirements in rails migrations. I've certainly been down that road enough times, and it’s crucial to handle it correctly to avoid data inconsistencies or performance headaches down the line.
 
 Frankly, I remember back in the days of Rails 3.2, we had a particularly painful migration involving adding a `slug` column to a users table with a million-plus records. We initially tried a naive approach, and the deployment nearly timed out, requiring an emergency rollback. Lessons learned, and thankfully, we’ve refined the process since. The key is understanding that there are different strategies, and the best choice depends a lot on your data, scale, and desired outcome.
 
@@ -38,7 +38,7 @@ class AddSlugToUsers < ActiveRecord::Migration[7.0]
 end
 ```
 
-Here's a breakdown: We use `find_each` to process users in batches, preventing memory issues on extremely large tables. Then, `update_column` updates each row _directly at the database level_, bypassing callbacks or validations to keep things fast. It is critically important _not_ to use `user.update` here since that triggers the entire active record update lifecycle which can lead to unexpected behavior in migrations and can drastically slow down your migration. The `parameterize` method is from ActiveSupport which is part of Rails, but if you need more advanced slugging, gems like 'friendly_id' offer many options. This example assumes that the slug value can be created _solely_ from data existing on the table itself. For more complicated scenarios we need to do things a little differently.
+Here's a breakdown: We use `find_each` to process users in batches, preventing memory issues on extremely large tables. Then, `update_column` updates each row _directly at the database level_, bypassing callbacks or validations to keep things fast. It is critically important _not_ to use `user.update` here since that triggers the entire active record update lifecycle which can lead to unexpected behavior in migrations and can drastically slow down your migration. The `parameterize` method is from ActiveSupport which is part of Rails, but if you need more advanced slugging, gems like 'friendly*id' offer many options. This example assumes that the slug value can be created \_solely* from data existing on the table itself. For more complicated scenarios we need to do things a little differently.
 
 Now, let's say the slug generation or value population is not so simple, and requires more complex business logic or access to external sources, or perhaps the data volume is too high for an in-migration update. In such cases, we should prepare the data before migrating.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-query-in-rails-with-a-where-clause-containing-an-array"
 ---
 
-, let's tackle this one. I’ve definitely been down this road before, more times than I'd probably like to count. Dealing with array conditions in Rails’ `where` clauses can initially seem a bit puzzling, but it's a core skill once you’re managing real-world applications with any complexity. It’s not just about getting it to work; it's about doing it efficiently and securely, so we’ll delve into some effective techniques.
+, one. I’ve definitely been down this road before, more times than I'd probably like to count. Dealing with array conditions in Rails’ `where` clauses can initially seem a bit puzzling, but it's a core skill once you’re managing real-world applications with any complexity. It’s not just about getting it to work; it's about doing it efficiently and securely, so we’ll delve into some effective techniques.
 
 The basic premise, of course, is filtering records based on a condition that involves an array of values. Rails, through Active Record, gives us several ways to approach this, and choosing the correct method depends on the specifics of what you need to accomplish. We often encounter this when querying for records associated with a set of ids, for instance, or filtering based on a range of predefined categories. Let's go through some methods and best practices, with some code samples to make things concrete.
 

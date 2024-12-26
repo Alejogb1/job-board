@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-setup-prismjs-inside-richtextarea-rails-7"
 ---
 
-, let's tackle this prismjs in a rails rich_text_area thing. i've been down this road before, and trust me, it can get a bit fiddly if you're not careful. it's one of those things that looks straightforward on paper but then throws a few curveballs.
+, prismjs in a rails rich_text_area thing. i've been down this road before, and trust me, it can get a bit fiddly if you're not careful. it's one of those things that looks straightforward on paper but then throws a few curveballs.
 
 first, let’s talk about why this is sometimes tricky. rails’ actiontext, which powers `rich_text_area`, generates its html on the backend and then throws it into the browser. this means prismjs, which operates on the client side, needs to be aware of the code blocks created by actiontext after rails is done with it. it’s not like rendering a simple `<pre><code>` block that’s there from the start; we have to make sure prism runs _after_ actiontext does its thing.
 

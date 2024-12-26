@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-stop-the-loading-progress-in-awesomebutton-react"
 ---
 
-Right then, let's tackle this. You're looking to halt the loading progress of an `AwesomeButton` component in React. I've been down that road myself, more times than I care to count, and it’s usually tied to some asynchronous operation that didn’t quite play nice with the UI. The core issue isn’t usually the button component itself, but rather how you're managing the loading state and triggering the reset. The key is to have fine-grained control over your loading logic. It's not just about stopping, but about graceful transitions.
+Right then, . You're looking to halt the loading progress of an `AwesomeButton` component in React. I've been down that road myself, more times than I care to count, and it’s usually tied to some asynchronous operation that didn’t quite play nice with the UI. The core issue isn’t usually the button component itself, but rather how you're managing the loading state and triggering the reset. The key is to have fine-grained control over your loading logic. It's not just about stopping, but about graceful transitions.
 
 The `AwesomeButton` component, like many other UI libraries, relies heavily on state management. The "loading" or "progress" state is generally tied to a boolean or a numerical value, and toggling that usually controls the visual cues of a loading indicator or similar. When you want to stop the loading prematurely, you are essentially looking to directly manipulate this state variable.
 
@@ -15,8 +15,8 @@ The approach breaks down into these primary parts: initiating the loading state,
 Let’s dive into the first example to illustrate this. Let's assume you've got a button that sends a request to the server and you are tracking the loading state in the `loading` variable.
 
 ```jsx
-import React, { useState } from 'react';
-import AwesomeButton from 'awesome-button-react'; // Assuming this is the import path
+import React, { useState } from "react";
+import AwesomeButton from "awesome-button-react"; // Assuming this is the import path
 
 function MyButtonComponent() {
   const [loading, setLoading] = useState(false);
@@ -25,30 +25,25 @@ function MyButtonComponent() {
   const handleClick = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/data'); // Example API call
+      const response = await fetch("/api/data"); // Example API call
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
       setResult(data);
-
     } catch (error) {
-      console.error('Error during fetch:', error);
+      console.error("Error during fetch:", error);
     } finally {
-      setLoading(false);  // Crucial: Reset loading state in the finally block
+      setLoading(false); // Crucial: Reset loading state in the finally block
     }
   };
 
   return (
     <div>
-        <AwesomeButton
-            type="primary"
-            loading={loading}
-            onPress={handleClick}
-        >
-          { loading ? 'Loading...' : 'Fetch Data' }
-        </AwesomeButton>
-        {result && <p>Data received: {JSON.stringify(result)}</p>}
+      <AwesomeButton type="primary" loading={loading} onPress={handleClick}>
+        {loading ? "Loading..." : "Fetch Data"}
+      </AwesomeButton>
+      {result && <p>Data received: {JSON.stringify(result)}</p>}
     </div>
   );
 }
@@ -61,8 +56,8 @@ In this snippet, the `finally` block ensures that the loading state is set back 
 Now, let's consider a scenario with an abort signal to interrupt an ongoing request. The ability to abruptly stop an operation might be a response to a user action or other application logic.
 
 ```jsx
-import React, { useState, useRef } from 'react';
-import AwesomeButton from 'awesome-button-react'; // Assuming this is the import path
+import React, { useState, useRef } from "react";
+import AwesomeButton from "awesome-button-react"; // Assuming this is the import path
 
 function AbortableButton() {
   const [loading, setLoading] = useState(false);
@@ -74,15 +69,18 @@ function AbortableButton() {
     abortController.current = new AbortController();
 
     try {
-      const response = await fetch('/api/long-running-task', { signal: abortController.current.signal }); // Example API call
+      const response = await fetch("/api/long-running-task", {
+        signal: abortController.current.signal,
+      }); // Example API call
       if (!response.ok) {
-         throw new Error(`HTTP error! status: ${response.status}`);
-       }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       setResult(data);
     } catch (error) {
-      if (error.name !== 'AbortError') { // Only log actual errors, not aborts
-        console.error('Error during fetch:', error);
+      if (error.name !== "AbortError") {
+        // Only log actual errors, not aborts
+        console.error("Error during fetch:", error);
       }
     } finally {
       setLoading(false);
@@ -91,25 +89,22 @@ function AbortableButton() {
   };
 
   const handleAbort = () => {
-     if (abortController.current) {
+    if (abortController.current) {
       abortController.current.abort();
     }
   };
 
   return (
-      <div>
-          <AwesomeButton
-              type="primary"
-              loading={loading}
-              onPress={handleClick}
-          >
-              { loading ? 'Loading...' : 'Start Long Task' }
-          </AwesomeButton>
-          { loading && ( <AwesomeButton
-            type="secondary"
-            onPress={handleAbort}
-            >Abort</AwesomeButton>)}
-          {result && <p>Data received: {JSON.stringify(result)}</p>}
+    <div>
+      <AwesomeButton type="primary" loading={loading} onPress={handleClick}>
+        {loading ? "Loading..." : "Start Long Task"}
+      </AwesomeButton>
+      {loading && (
+        <AwesomeButton type="secondary" onPress={handleAbort}>
+          Abort
+        </AwesomeButton>
+      )}
+      {result && <p>Data received: {JSON.stringify(result)}</p>}
     </div>
   );
 }
@@ -122,49 +117,43 @@ Here, we've introduced `AbortController` to handle the interruption. If `handleA
 Finally, let’s address the edge case where the `AwesomeButton` component does not have direct support for a loading prop (or it’s malfunctioning). In such a case, we can directly control the `AwesomeButton` rendering by introducing our own state flag. We can manually disable the button when the operation is running. This ensures the user can not trigger additional network requests while loading.
 
 ```jsx
-import React, { useState, useRef } from 'react';
-import AwesomeButton from 'awesome-button-react'; // Assuming this is the import path
-
+import React, { useState, useRef } from "react";
+import AwesomeButton from "awesome-button-react"; // Assuming this is the import path
 
 function MyFallbackButton() {
-    const [loading, setLoading] = useState(false);
-    const [result, setResult] = useState(null);
-    const buttonRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const buttonRef = useRef(null);
 
-    const handleClick = async () => {
-      if(buttonRef.current.props.disabled) return;
-        setLoading(true);
-        buttonRef.current.props.disabled = true;
+  const handleClick = async () => {
+    if (buttonRef.current.props.disabled) return;
+    setLoading(true);
+    buttonRef.current.props.disabled = true;
 
-       try {
-           const response = await fetch('/api/data'); // Example API call
-           if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const data = await response.json();
-           setResult(data);
-        } catch (error) {
-           console.error('Error during fetch:', error);
-        } finally {
-            setLoading(false);
-            buttonRef.current.props.disabled = false;
-        }
-    };
+    try {
+      const response = await fetch("/api/data"); // Example API call
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setResult(data);
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    } finally {
+      setLoading(false);
+      buttonRef.current.props.disabled = false;
+    }
+  };
 
-    return (
-       <div>
-            <AwesomeButton
-                type="primary"
-                onPress={handleClick}
-                ref={buttonRef}
-            >
-                { loading ? 'Loading...' : 'Fallback Fetch Data' }
-            </AwesomeButton>
-            {result && <p>Data received: {JSON.stringify(result)}</p>}
-        </div>
-    );
+  return (
+    <div>
+      <AwesomeButton type="primary" onPress={handleClick} ref={buttonRef}>
+        {loading ? "Loading..." : "Fallback Fetch Data"}
+      </AwesomeButton>
+      {result && <p>Data received: {JSON.stringify(result)}</p>}
+    </div>
+  );
 }
-
 
 export default MyFallbackButton;
 ```

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pause-vb-program-execution-until-a-button-is-clicked"
 ---
 
-Let's tackle this. Pausing a VB application until a button click is, shall we say, a common requirement, and there are several ways to skin this particular cat. Having been in this game for a while, I've encountered this scenario more times than I care to count, often when building interactive tools where user input is a critical part of the workflow. I remember back in the early days, when we were pushing the boundaries of what was possible with VB6 and later VB.NET. We didn’t always have elegant async options, and the methods we relied on were more…direct.
+. Pausing a VB application until a button click is, shall we say, a common requirement, and there are several ways to skin this particular cat. Having been in this game for a while, I've encountered this scenario more times than I care to count, often when building interactive tools where user input is a critical part of the workflow. I remember back in the early days, when we were pushing the boundaries of what was possible with VB6 and later VB.NET. We didn’t always have elegant async options, and the methods we relied on were more…direct.
 
 The core principle here revolves around temporarily relinquishing control of the application’s main thread until the button click event occurs. This keeps the application responsive rather than freezing. One might immediately consider a simple loop with a flag, but that’s usually a bad idea. It consumes CPU resources and locks up the UI. We need a better way.
 
@@ -103,6 +103,7 @@ End Class
 '   Application.Run(form)
 'End Sub
 ```
+
 In this example, we initiate a background thread that calls the `DoSomethingInTheBackground` procedure. This procedure will call `m_waitHandle.WaitOne()`, which will pause that thread. When `btnAction` is clicked, its `click` event sets the `m_buttonClicked` flag and signals the `ManualResetEvent`, letting the background thread continue. This mechanism is useful for situations where you don’t want to tie the pause to the main UI thread or a modal form, which can be limiting in certain scenarios.
 
 Finally, let's address the modern approach using `async` and `await`. This is ideal if you are using more modern VB.NET versions. While there’s not a direct ‘pause until event’ method, you create an event-based asynchronous workflow.
@@ -157,6 +158,7 @@ End Class
 '   Application.Run(form)
 'End Sub
 ```
+
 In this `async`/`await` implementation, we create a `TaskCompletionSource`. When `WaitForButtonClick` is called, it returns a task which, when awaited, pauses the `PerformAsyncOperation` function. Once the button is clicked, `m_tcs.SetResult(True)` signals that the task is complete and allows the `async` function to resume. This structure avoids using explicit threads and keeps operations on the application's main thread, but in an asynchronous non-blocking fashion.
 
 For deeper understanding, I'd suggest consulting "Concurrency in C# Cookbook" by Stephen Cleary for the `async`/`await` patterns and "Programming Microsoft Visual Basic 2010" by Francesco Balena for a more traditional understanding of VB forms and event handling, and, for a more comprehensive look at multi-threading in .NET, "CLR via C#" by Jeffrey Richter would be invaluable. These will give you a better foundation for more complex cases involving threading and asynchronous operation.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-pytorch-cnn-loss-not-decreasing"
 ---
 
-, let's tackle this one. I’ve definitely been down that path myself, more times than I care to recall. Seeing a PyTorch convolutional neural network (cnn) loss stubbornly refuse to budge is, let's just say, a common rite of passage. It's rarely one single thing; usually it's a confluence of factors that demand methodical investigation. Based on my past projects, let me outline some of the key culprits and how I’ve approached them.
+, one. I’ve definitely been down that path myself, more times than I care to recall. Seeing a PyTorch convolutional neural network (cnn) loss stubbornly refuse to budge is, let's just say, a common rite of passage. It's rarely one single thing; usually it's a confluence of factors that demand methodical investigation. Based on my past projects, let me outline some of the key culprits and how I’ve approached them.
 
 First, it's critical to understand that "loss not decreasing" isn't a monolithic issue. It could mean that your model isn't learning anything at all, or it could mean it’s learning very slowly, or it could be learning effectively _but_ its performance isn’t reflected accurately in the loss function due to some problem with your training setup. It's imperative to differentiate.
 

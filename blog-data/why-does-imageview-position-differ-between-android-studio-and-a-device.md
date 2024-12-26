@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-imageview-position-differ-between-android-studio-and-a-device"
 ---
 
-, let's tackle this ImageView positioning discrepancy. It's one of those things that can initially feel incredibly perplexing, but it stems from a confluence of factors, none of which are actually _that_ mysterious once you unpack them. In my experience, I’ve spent far too many late nights debugging exactly this issue, and it usually boils down to a few core areas. It's not magic, it's about understanding the layout mechanisms and how different environments interpret your instructions.
+, ImageView positioning discrepancy. It's one of those things that can initially feel incredibly perplexing, but it stems from a confluence of factors, none of which are actually _that_ mysterious once you unpack them. In my experience, I’ve spent far too many late nights debugging exactly this issue, and it usually boils down to a few core areas. It's not magic, it's about understanding the layout mechanisms and how different environments interpret your instructions.
 
 The primary reason for this difference is the interplay between how Android Studio's layout editor and a real device handle screen density, layout parameters, and the inherent complexities of Android’s rendering pipeline. The editor provides a preview – a _simulation_, if you will – while the device operates on actual hardware with very specific characteristics. Let me detail the contributing factors:
 

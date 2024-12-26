@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensorflow-custom-loss-functions-utilize-manipulated-model-outputs"
 ---
 
-Let's tackle this topic from the perspective of someone who's spent quite a bit of time wrestling with the nuances of TensorFlow. I remember specifically a project involving a complex image segmentation task a few years ago, where standard loss functions simply wouldn't cut it. We needed something that penalized specific misclassifications much more severely, which meant we had to get our hands dirty with custom loss functions that directly manipulated the model's predictions. The core concept here is not simply evaluating raw predictions against ground truth, but using those predictions as a basis for further calculations before evaluating the error.
+topic from the perspective of someone who's spent quite a bit of time wrestling with the nuances of TensorFlow. I remember specifically a project involving a complex image segmentation task a few years ago, where standard loss functions simply wouldn't cut it. We needed something that penalized specific misclassifications much more severely, which meant we had to get our hands dirty with custom loss functions that directly manipulated the model's predictions. The core concept here is not simply evaluating raw predictions against ground truth, but using those predictions as a basis for further calculations before evaluating the error.
 
 Essentially, a custom loss function in TensorFlow isn't limited to just `y_true` (ground truth) and `y_pred` (the direct output from your model). You have the full power of TensorFlow operations available to you. This allows you to transform `y_pred` into a more useful intermediate representation that then gets compared to `y_true` (or a transformed version of `y_true`), and it’s this computed result that ultimately informs backpropagation. Think of it less like a simple comparison and more like a pipeline. This is particularly important when the “raw” model output doesn’t directly translate to the kind of error you want to penalize.
 
@@ -62,7 +62,7 @@ print(f"Calculated Loss: {loss_value.numpy()}")
 
 ```
 
-In this case, we’re not simply using the logits directly for cross-entropy, but first mapping predicted and true classes into a lookup that provides a weighting factor to the *standard* cross-entropy loss calculation. The `weights` matrix dictates what combinations of predicted-true classes result in higher penalties.
+In this case, we’re not simply using the logits directly for cross-entropy, but first mapping predicted and true classes into a lookup that provides a weighting factor to the _standard_ cross-entropy loss calculation. The `weights` matrix dictates what combinations of predicted-true classes result in higher penalties.
 
 **Scenario 2: Output Regularization**
 
@@ -87,7 +87,7 @@ def smoothness_loss(y_true, y_pred):
     # calculate difference in spatial neighbors (simplified)
     dx = y_pred[:, 1:, :] - y_pred[:, :-1, :] # Spatial difference across columns
     dy = y_pred[:, :, 1:] - y_pred[:, :, :-1]  # Spatial difference across rows
-    
+
     smoothness = tf.reduce_mean(tf.abs(dx)) + tf.reduce_mean(tf.abs(dy))  # absolute differences
     return smoothness
 
@@ -100,7 +100,7 @@ print(f"Calculated Smoothness Loss: {smooth_loss_value.numpy()}")
 
 ```
 
-Here, the loss does *not* use any information about ground truth `y_true`. We use the model output `y_pred` directly, calculating the sum of absolute differences in neighboring predictions. A high "smoothness_loss" indicates abrupt changes in the output map, and the backpropagation would encourage smoother spatial transitions. We *could* add a `y_true` parameter to integrate it with the usual model loss, but this example serves to show it isn’t a strict requirement. This is crucial, because the "regularization" is explicitly a property of the prediction and nothing about the ground truth.
+Here, the loss does _not_ use any information about ground truth `y_true`. We use the model output `y_pred` directly, calculating the sum of absolute differences in neighboring predictions. A high "smoothness_loss" indicates abrupt changes in the output map, and the backpropagation would encourage smoother spatial transitions. We _could_ add a `y_true` parameter to integrate it with the usual model loss, but this example serves to show it isn’t a strict requirement. This is crucial, because the "regularization" is explicitly a property of the prediction and nothing about the ground truth.
 
 **Scenario 3: Incorporating Complex Logic**
 
@@ -136,7 +136,7 @@ print(f"Calculated Sequence Ordering Loss: {sequence_loss_val.numpy()}")
 
 ```
 
-Here, our loss function calculates differences between successive elements in each sequence. Whenever those differences are *negative*, we accumulate the magnitude of the violation and then average it over the sequence. The loss therefore penalizes *negative* steps in predicted output sequences. This isn’t achievable with basic loss functions, necessitating the ability to arbitrarily transform the output `y_pred`.
+Here, our loss function calculates differences between successive elements in each sequence. Whenever those differences are _negative_, we accumulate the magnitude of the violation and then average it over the sequence. The loss therefore penalizes _negative_ steps in predicted output sequences. This isn’t achievable with basic loss functions, necessitating the ability to arbitrarily transform the output `y_pred`.
 
 **Key Takeaways**
 

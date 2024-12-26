@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-manage-airflow-dags-from-local-registry-on-kubernetes"
 ---
 
-Let's tackle this. I recall a particularly gnarly project a few years back where we scaled our data pipelines tenfold, and orchestrating those with airflow on kubernetes, using a local dag registry, became an absolute necessity. It wasn’t all smooth sailing, but we hammered out a process that worked reliably. I'll walk you through that, focusing on the core concepts and techniques.
+. I recall a particularly gnarly project a few years back where we scaled our data pipelines tenfold, and orchestrating those with airflow on kubernetes, using a local dag registry, became an absolute necessity. It wasn’t all smooth sailing, but we hammered out a process that worked reliably. I'll walk you through that, focusing on the core concepts and techniques.
 
 Managing airflow dags from a local registry on kubernetes introduces a few key challenges. First, you're dealing with the inherent dynamism of kubernetes deployments coupled with airflow's need to discover and parse dags, which are essentially python scripts. Second, keeping those dags consistent across different pods is crucial for preventing runtime errors. We don’t want different airflow workers seeing different versions of the same dag. The solution revolves around implementing a streamlined workflow for dag development, version control, and deployment.
 
@@ -31,6 +31,7 @@ project/
 ├── requirements.txt
 └── dockerfile
 ```
+
 Having a `requirements.txt` within each dag directory is crucial if specific packages are necessary for that particular dag. This enables dependency isolation. In your top level directory, `requirements.txt` would contain base airflow and its relevant providers. For example, `apache-airflow[cncf.kubernetes,postgres,google]`.
 
 **Code Example 1: Example Directory Structure and Imports:**
@@ -58,12 +59,14 @@ with DAG(
         python_callable=my_task
     )
 ```
+
 ```python
 #project/dags/dag_one/utils.py
 
 def some_helper_function():
     print("Helper function called")
 ```
+
 **Step 2: Packaging your DAGs**
 
 Once the dag development and version control are done, we need a method to package the code, so it can be consistently deployed across the cluster. I found docker containers particularly useful for this. This involves creating a docker image that contains both the airflow configuration and your DAG definitions. This container becomes the unit of deployment in Kubernetes.
@@ -88,11 +91,14 @@ ENV AIRFLOW_HOME /app
 # Copy DAGs to the DAGs folder (ensure airflow configuration points to the right location)
 COPY dags /app/dags
 ```
+
 Remember, in your airflow.cfg, the `dags_folder` configuration setting should be relative to the `/app` directory, which becomes the root of the container. For example:
+
 ```ini
 [core]
 dags_folder = /app/dags
 ```
+
 With this approach, the docker image encapsulates both the airflow environment and your DAGs, ensuring consistency across deployments.
 
 **Step 3: Deploying to Kubernetes**
@@ -117,24 +123,25 @@ spec:
         app: airflow
     spec:
       containers:
-      - name: airflow
-        image: your-registry/airflow-image:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
-        env:
-          - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
-            valueFrom:
-              secretKeyRef:
-                name: airflow-secret
-                key: sql_alchemy_conn
-          - name: AIRFLOW__CORE__EXECUTOR
-            value: KubernetesExecutor
-          - name: AIRFLOW__KUBERNETES__DAG_PROCESSOR_MANAGER_POD_TEMPLATE_FILE
-            value: "/app/kubernetes/dag-processor-pod-template.yaml"
-          - name: AIRFLOW__KUBERNETES__WORKER_POD_TEMPLATE_FILE
-            value: "/app/kubernetes/worker-pod-template.yaml"
+        - name: airflow
+          image: your-registry/airflow-image:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-secret
+                  key: sql_alchemy_conn
+            - name: AIRFLOW__CORE__EXECUTOR
+              value: KubernetesExecutor
+            - name: AIRFLOW__KUBERNETES__DAG_PROCESSOR_MANAGER_POD_TEMPLATE_FILE
+              value: "/app/kubernetes/dag-processor-pod-template.yaml"
+            - name: AIRFLOW__KUBERNETES__WORKER_POD_TEMPLATE_FILE
+              value: "/app/kubernetes/worker-pod-template.yaml"
 ```
+
 Note that this is a simplified example, you need to ensure configurations such as secrets management, resource requests, persistent volume claims for logs etc, are all handled correctly. Also ensure you have a kubernetes executor configured within the airflow.cfg for running tasks. This deployment will pull your container image and deploy it to your Kubernetes cluster.
 
 The important thing here is that the docker image contains all the dag definitions within the `/app/dags` directory as configured in our dockerfile and the airflow configuration files within the image. These dag files will be parsed by the airflow scheduler during deployment and made available within the airflow UI.
@@ -173,24 +180,25 @@ spec:
         app: airflow
     spec:
       containers:
-      - name: airflow
-        image: your-registry/airflow-image:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
-        env:
-          - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
-            valueFrom:
-              secretKeyRef:
-                name: airflow-secret
-                key: sql_alchemy_conn
-          - name: AIRFLOW__CORE__EXECUTOR
-            value: KubernetesExecutor
-          - name: AIRFLOW__KUBERNETES__DAG_PROCESSOR_MANAGER_POD_TEMPLATE_FILE
-            value: "/app/kubernetes/dag-processor-pod-template.yaml"
-          - name: AIRFLOW__KUBERNETES__WORKER_POD_TEMPLATE_FILE
-            value: "/app/kubernetes/worker-pod-template.yaml"
+        - name: airflow
+          image: your-registry/airflow-image:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-secret
+                  key: sql_alchemy_conn
+            - name: AIRFLOW__CORE__EXECUTOR
+              value: KubernetesExecutor
+            - name: AIRFLOW__KUBERNETES__DAG_PROCESSOR_MANAGER_POD_TEMPLATE_FILE
+              value: "/app/kubernetes/dag-processor-pod-template.yaml"
+            - name: AIRFLOW__KUBERNETES__WORKER_POD_TEMPLATE_FILE
+              value: "/app/kubernetes/worker-pod-template.yaml"
 ```
+
 This configuration ensures each pod running the airflow scheduler and worker has an identical environment and, more importantly, the exact same dags.
 
 **Additional Recommendations**

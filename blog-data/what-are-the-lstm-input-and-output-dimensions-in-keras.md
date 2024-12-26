@@ -4,25 +4,25 @@ date: "2024-12-23"
 id: "what-are-the-lstm-input-and-output-dimensions-in-keras"
 ---
 
-Let's tackle this one. Having spent years knee-deep in sequence modeling, i've seen my fair share of confusion around lstm dimensions in keras. It's a really critical piece of the puzzle, and getting it wrong can lead to some baffling errors, believe me. So, let's break it down practically, focusing on the input and output characteristics and avoiding the overly theoretical rabbit holes.
+one. Having spent years knee-deep in sequence modeling, i've seen my fair share of confusion around lstm dimensions in keras. It's a really critical piece of the puzzle, and getting it wrong can lead to some baffling errors, believe me. So, let's break it down practically, focusing on the input and output characteristics and avoiding the overly theoretical rabbit holes.
 
 Fundamentally, an lstm (long short-term memory) layer in keras, or any deep learning framework really, processes sequences. Think of things like time series data, natural language text, or even audio samples. These sequences have length, and each position within the sequence has associated features. This translates directly into the expected input shape and the achievable output shape.
 
-Let's start with the *input*. Keras expects lstm layers to receive a tensor with three dimensions: `(batch_size, timesteps, features)`. Here's what each of those signifies:
+Let's start with the _input_. Keras expects lstm layers to receive a tensor with three dimensions: `(batch_size, timesteps, features)`. Here's what each of those signifies:
 
-*   **`batch_size`**: This represents the number of independent sequences you're feeding to the network at a given time. When you're training a model, you generally use mini-batches, not the entire dataset at once. The `batch_size` indicates how many sequences are in each batch. During inference, this could often be just 1.
+- **`batch_size`**: This represents the number of independent sequences you're feeding to the network at a given time. When you're training a model, you generally use mini-batches, not the entire dataset at once. The `batch_size` indicates how many sequences are in each batch. During inference, this could often be just 1.
 
-*   **`timesteps`**: This is the length of your sequence. It's the number of "time" points, or positions, or tokens, in each sequence. For example, if you're working with a sentence, each word would be a timestep, or if you are looking at a time series, every point in time is another timestep. Crucially, all sequences in a batch *must* have the same length, or you will need to employ padding or truncation techniques before they hit your lstm layer.
+- **`timesteps`**: This is the length of your sequence. It's the number of "time" points, or positions, or tokens, in each sequence. For example, if you're working with a sentence, each word would be a timestep, or if you are looking at a time series, every point in time is another timestep. Crucially, all sequences in a batch _must_ have the same length, or you will need to employ padding or truncation techniques before they hit your lstm layer.
 
-*   **`features`**: This is the dimensionality of each step in your sequence. Consider this the vector size representing each timestep. If we're dealing with words, it would be the size of the word embedding vector. If it's time series data, it might be the number of sensors you're reading.
+- **`features`**: This is the dimensionality of each step in your sequence. Consider this the vector size representing each timestep. If we're dealing with words, it would be the size of the word embedding vector. If it's time series data, it might be the number of sensors you're reading.
 
 So, if you're working with sentences and using a word embedding that outputs vectors of length 100, your feature dimension would be 100. Now, if you have 30 such sentences in one training batch with a variable length, and the maximum sentence length is, say, 25 words, the input to the lstm will have a shape of `(30, 25, 100)`. You would generally pad the sentences shorter than the 25-word maximum to have all the sequences be the same length.
 
-The *output* of an lstm layer, on the other hand, is a little more nuanced, and depends on how you set up the lstm layer itself. Generally, you have two broad categories:
+The _output_ of an lstm layer, on the other hand, is a little more nuanced, and depends on how you set up the lstm layer itself. Generally, you have two broad categories:
 
-1.  **Return Sequences = False (or the default behaviour)**: This mode returns the output at the *final* timestep. Think of this as extracting a final summary or embedding for the entire sequence. The output shape in this case will be `(batch_size, lstm_units)`. `lstm_units` here is a hyperparameter representing the number of internal memory units (or hidden units) in the lstm layer.
+1.  **Return Sequences = False (or the default behaviour)**: This mode returns the output at the _final_ timestep. Think of this as extracting a final summary or embedding for the entire sequence. The output shape in this case will be `(batch_size, lstm_units)`. `lstm_units` here is a hyperparameter representing the number of internal memory units (or hidden units) in the lstm layer.
 
-2.  **Return Sequences = True**: This mode returns the output at *every* timestep. This is crucial when you're making sequence-to-sequence predictions or need information at each point in the sequence. The shape here is then `(batch_size, timesteps, lstm_units)`.
+2.  **Return Sequences = True**: This mode returns the output at _every_ timestep. This is crucial when you're making sequence-to-sequence predictions or need information at each point in the sequence. The shape here is then `(batch_size, timesteps, lstm_units)`.
 
 Let's get into some code examples. I've had to debug the shapes of various model layers countless times and these little examples might help demonstrate how this plays out in practice.
 
@@ -75,7 +75,7 @@ print(f"output shape: {output.shape}")
 # output at all timesteps is returned
 ```
 
-In this second example, we need the output from *each* timestep. This is very common in sequence-to-sequence tasks, like machine translation or named entity recognition, where a particular output is tied to a certain position in the input sequence. We use the `return_sequences=True` parameter to achieve this. The output from the lstm layer will have shape of `(16, 25, 128)` for our setup which can then be used for training the decoder of seq2seq model for example.
+In this second example, we need the output from _each_ timestep. This is very common in sequence-to-sequence tasks, like machine translation or named entity recognition, where a particular output is tied to a certain position in the input sequence. We use the `return_sequences=True` parameter to achieve this. The output from the lstm layer will have shape of `(16, 25, 128)` for our setup which can then be used for training the decoder of seq2seq model for example.
 
 **Example 3: Stacked lstm layers**
 

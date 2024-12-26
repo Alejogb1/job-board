@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-regular-expression-to-exclude-images-starting-with-v-during-an-acr-purge"
 ---
 
-, let's tackle this ACR purge challenge. It's a scenario I've bumped into a few times back when I was managing a sprawling containerized application on Azure. The situation calls for targeted pruning, and regular expressions are indeed the weapon of choice for that precision. The core concept, of course, is to _selectively_ exclude images matching a specific pattern during the cleanup. We're not just blindly nuking everything; we're carefully preserving what’s necessary.
+, ACR purge challenge. It's a scenario I've bumped into a few times back when I was managing a sprawling containerized application on Azure. The situation calls for targeted pruning, and regular expressions are indeed the weapon of choice for that precision. The core concept, of course, is to _selectively_ exclude images matching a specific pattern during the cleanup. We're not just blindly nuking everything; we're carefully preserving what’s necessary.
 
 The key here, and where a lot of people initially stumble, is that regular expressions in these contexts often interact with tooling-specific syntax and nuances. It’s not just the pure regex pattern itself that matters, but how it’s interpreted within the tool you’re using, be it the `az acr` cli or any other similar interface. In our case, it’s about excluding images. This means we need to craft a regex that accurately _identifies_ the unwanted images, and the tooling will then work to exclude them, effectively retaining anything that _doesn't_ match that pattern.
 

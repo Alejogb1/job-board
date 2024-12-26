@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-several-dependency-errors-causing-in-azure-automl-while-running-a-model"
 ---
 
-, let's tackle this dependency mess you're experiencing with azure automl. i've been down this rabbit hole more times than i care to count, and believe me, it's rarely a straightforward fix. it's like trying to assemble a complex lego set where half the pieces are from a different kit and the instructions are written in hieroglyphs.
+, dependency mess you're experiencing with azure automl. i've been down this rabbit hole more times than i care to count, and believe me, it's rarely a straightforward fix. it's like trying to assemble a complex lego set where half the pieces are from a different kit and the instructions are written in hieroglyphs.
 
 first things first, dependency errors in automl, especially on azure, usually boil down to a few common culprits. it's almost never a problem with your code specifically, assuming you’re feeding the pipeline compatible data in the first place. most of the time, it's the environment configuration. that's what i've learned from my experience. i remember back when i was working on a project predicting customer churn for a telco, we were pulling our hair out for days. we would get those error messages, a wall of red text and not a clue where it went wrong. our pipeline was perfect, at least that’s what we thought, our code, data wrangling was all on point. in the end it was because the automl environment was using some old version of `scikit-learn` that didn't play nice with the custom transformers we were using.
 

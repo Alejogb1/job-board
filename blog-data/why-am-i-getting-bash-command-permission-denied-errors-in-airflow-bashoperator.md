@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-am-i-getting-bash-command-permission-denied-errors-in-airflow-bashoperator"
 ---
 
-Let's tackle this permission denied issue head-on. It's a frustration many encounter, myself included, and usually, the culprit isn't as mysterious as it first appears. In my time orchestrating pipelines with airflow, i've seen this flavor of error pop up more often than i’d like. It typically boils down to a misalignment between how airflow executes bash commands and the permissions of the user, script, or directory involved. It's not that airflow itself is inherently flawed; it's more about understanding the environment it operates within and the commands it's asked to run.
+permission denied issue head-on. It's a frustration many encounter, myself included, and usually, the culprit isn't as mysterious as it first appears. In my time orchestrating pipelines with airflow, i've seen this flavor of error pop up more often than i’d like. It typically boils down to a misalignment between how airflow executes bash commands and the permissions of the user, script, or directory involved. It's not that airflow itself is inherently flawed; it's more about understanding the environment it operates within and the commands it's asked to run.
 
-The core issue, as the error message suggests, revolves around permissions. Think of it this way: when airflow, using the *bashoperator*, wants to execute a command, it's essentially acting on behalf of a user—usually the user under which the airflow scheduler and worker processes are running. If that user does not have execute permissions on the command itself, on the script being called, or doesn't have the needed access rights to the directory containing the script, we get a 'permission denied' error. This is a core operating system security mechanism kicking in, not a bug in airflow itself.
+The core issue, as the error message suggests, revolves around permissions. Think of it this way: when airflow, using the _bashoperator_, wants to execute a command, it's essentially acting on behalf of a user—usually the user under which the airflow scheduler and worker processes are running. If that user does not have execute permissions on the command itself, on the script being called, or doesn't have the needed access rights to the directory containing the script, we get a 'permission denied' error. This is a core operating system security mechanism kicking in, not a bug in airflow itself.
 
 Let's break this down with a few scenarios, drawing from my past encounters. First, consider a situation where you're trying to execute a simple bash script using the `bashoperator`:
 
@@ -57,6 +57,7 @@ Let’s assume the `/opt/airflow_scripts/data_processor.sh` script contains the 
 ```bash
 ./my_binary
 ```
+
 And that your directory structure is like `/opt/airflow_scripts/my_binary`.
 You might have correctly set the execute permissions for the script and the binary.
 However, if you have configured the worker to work from different location, then the relative path `./my_binary` within the script won’t resolve to the actual binary you have provided to execute. The solution is to either always specify absolute paths, or ensure that the current working directory the script is executing from allows the relative path to resolve correctly to the binary.
@@ -84,12 +85,12 @@ It is worth noting that setting `sudo` in the bash commands might not be a great
 
 Debugging permission issues can sometimes be a matter of methodical investigation. I typically check the following when faced with this error:
 
-1.  **Verify the user:** Identify which user is actually executing the bash command, as the airflow user may not be the user running the actual bash commands. Use `whoami` in your bash command within the *bashoperator* to confirm.
+1.  **Verify the user:** Identify which user is actually executing the bash command, as the airflow user may not be the user running the actual bash commands. Use `whoami` in your bash command within the _bashoperator_ to confirm.
 2.  **Check absolute paths:** Use absolute paths for your scripts and executables in bash command, as it removes any ambiguity around relative paths or the working directory of the command.
 3.  **Examine file permissions:** Use `ls -l` to verify permissions on the script, the executable and directories involved. Pay attention to both the user and group ownership, as well as the read, write, and execute bits.
 4.  **Investigate any parent directories:** Do not only check permissions on the executable or script being used, but ensure that the user running the commands also has the required permissions to traverse the parent directories leading to the executable or script being executed.
 5.  **Avoid `sudo`:** In most cases, you can avoid `sudo` by granting correct permissions to the user running the airflow worker processes, instead of escalating privileges.
 
-For a deeper dive, I strongly suggest reading the *“Advanced Programming in the Unix Environment”* by W. Richard Stevens and Stephen A. Rago. This book provides a thorough understanding of Unix file permissions and process execution. Also, *“Operating System Concepts”* by Abraham Silberschatz et al., is extremely helpful in understanding the low-level operations of the operating system and its interaction with user privileges.
+For a deeper dive, I strongly suggest reading the _“Advanced Programming in the Unix Environment”_ by W. Richard Stevens and Stephen A. Rago. This book provides a thorough understanding of Unix file permissions and process execution. Also, _“Operating System Concepts”_ by Abraham Silberschatz et al., is extremely helpful in understanding the low-level operations of the operating system and its interaction with user privileges.
 
 Finally, always test your bash commands independently outside airflow, as it's crucial to ensure they run correctly before integrating them into a DAG. This can save you considerable time debugging complex airflow issues by narrowing down the problem. Permissions issues are fundamental, and addressing them correctly in your workflows is essential to ensure stability and security. It is also essential to follow least-privilege principle while granting the permissions. It is much better and safer to grant the necessary privileges to the specific user that owns the airflow workers than escalating permissions to a higher privileged user.

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-create-a-generic-function-accepting-ranget-in-swift"
 ---
 
-Let's tackle this. I recall dealing with a similar challenge back when I was optimizing a data processing pipeline for a mapping application. The need arose to have a single function operate on various types of ranges, each containing different data types but needing similar processing logic. Getting this to work elegantly with Swift's generics and `Range<T>` requires a solid understanding of protocols and constraints.
+. I recall dealing with a similar challenge back when I was optimizing a data processing pipeline for a mapping application. The need arose to have a single function operate on various types of ranges, each containing different data types but needing similar processing logic. Getting this to work elegantly with Swift's generics and `Range<T>` requires a solid understanding of protocols and constraints.
 
 The core issue lies in the fact that `Range<T>` itself has a generic type `T`, and not all types will conform to the requirements your function might have. To create a truly generic function that operates on ranges, we need to constrain the type `T` to fulfill certain criteria. Primarily, we will often need `T` to be `Comparable` to ensure we can perform basic comparisons such as checking if a value falls within the range. Furthermore, for some functionalities, we might require the ability to step through the range.
 
@@ -54,7 +54,7 @@ let floatValues = generateValuesInRange(range: floatRange, stride: 0.5).filter{ 
 print(floatValues) // Output: [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]
 ```
 
-In the second example, we see `T` constrained by both `Strideable` *and* `Comparable`. This dual constraint lets us use methods related to comparison and advancing by a specified stride. The caveat is that float comparisons can be troublesome so we use a small workaround with `.distance(to:)` and a check within a specific tolerance. This illustrates how we can iterate through ranges in a controlled manner, a capability that's often needed when performing calculations or data transformations on sequences. It's crucial to understand the implications of floating-point precision in such cases.
+In the second example, we see `T` constrained by both `Strideable` _and_ `Comparable`. This dual constraint lets us use methods related to comparison and advancing by a specified stride. The caveat is that float comparisons can be troublesome so we use a small workaround with `.distance(to:)` and a check within a specific tolerance. This illustrates how we can iterate through ranges in a controlled manner, a capability that's often needed when performing calculations or data transformations on sequences. It's crucial to understand the implications of floating-point precision in such cases.
 
 Finally, for a practical scenario involving custom types, we might have a structure conforming to `Comparable` and potentially `Strideable`. Let's consider a simple structure that represents time, and then a function to check which times are within a particular range:
 
@@ -62,7 +62,7 @@ Finally, for a practical scenario involving custom types, we might have a struct
 struct Time: Comparable, Strideable {
     let hours: Int
     let minutes: Int
-    
+
     static func < (lhs: Time, rhs: Time) -> Bool {
         if lhs.hours != rhs.hours {
             return lhs.hours < rhs.hours
@@ -74,16 +74,16 @@ struct Time: Comparable, Strideable {
     static func == (lhs: Time, rhs: Time) -> Bool {
         return lhs.hours == rhs.hours && lhs.minutes == rhs.minutes
     }
-    
+
     func advanced(by n: Int) -> Time {
         let newMinutes = minutes + n
         let newHours = hours + newMinutes / 60
         return Time(hours: newHours, minutes: newMinutes % 60)
 
     }
-    
+
     typealias Stride = Int
-    
+
     func distance(to other: Time) -> Int {
       let minutesDifference = (other.hours - self.hours) * 60 + (other.minutes - self.minutes)
         return minutesDifference

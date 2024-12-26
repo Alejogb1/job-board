@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-keras-subclassing-apis-fit-method-return-a-valueerror"
 ---
 
-Let's tackle this one. It's a question I've encountered a few times over the years, usually when someone's first getting their hands dirty with Keras subclassing. The `ValueError` from the `fit()` method when using a custom subclassed model in Keras can be a bit perplexing initially, primarily because the subclassing api gives you so much flexibility, which, consequently, also provides many opportunities to make mistakes. I've seen it crop up most often when dealing with models that have multiple inputs or outputs, or when the data pipeline isn't playing nicely with how the model expects things to be arranged during training. Back in the day, I remember debugging one project where we were trying to combine a series of time-series inputs with some categorical features. The mismatch between the `fit()` method's expectations and our custom model's implementation was the root of the problem.
+one. It's a question I've encountered a few times over the years, usually when someone's first getting their hands dirty with Keras subclassing. The `ValueError` from the `fit()` method when using a custom subclassed model in Keras can be a bit perplexing initially, primarily because the subclassing api gives you so much flexibility, which, consequently, also provides many opportunities to make mistakes. I've seen it crop up most often when dealing with models that have multiple inputs or outputs, or when the data pipeline isn't playing nicely with how the model expects things to be arranged during training. Back in the day, I remember debugging one project where we were trying to combine a series of time-series inputs with some categorical features. The mismatch between the `fit()` method's expectations and our custom model's implementation was the root of the problem.
 
 The crux of the issue lies in how the Keras `fit()` method interacts with your custom model’s `call()` method and the associated training logic. The `fit()` method expects certain outputs from the model when you’re using training data. Specifically, it needs to be able to interpret and calculate the loss, and in order to do that, it generally expects either: a single output tensor if you're using a loss function that takes a single target tensor (like mean squared error with a single target), or it expects that the output of the model matches the number and shape of target tensors given.
 
@@ -82,6 +82,7 @@ try:
 except ValueError as e:
     print(f"ValueError encountered: {e}")
 ```
+
 Again, we have the incorrect shape in the output of the call function. This will cause the same issue as before. The solution, in this case, would again be to remove the `tf.squeeze`.
 
 **Scenario 3: Multiple Outputs**

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-dynamically-parallelize-tasks-based-on-the-number-of-dates"
 ---
 
-Let's tackle this. Dynamic task parallelism in airflow, particularly concerning a varying number of dates, is a problem I've encountered several times, and honestly, it's a common hurdle. I recall a project where we were processing daily financial market data, and the sheer volume of data shifted considerably depending on holidays and weekend effects. Hardcoding task counts was a non-starter; we needed something fluid, something that adapted. Here’s how I’ve generally approached it, moving past just simple loops to more robust solutions.
+. Dynamic task parallelism in airflow, particularly concerning a varying number of dates, is a problem I've encountered several times, and honestly, it's a common hurdle. I recall a project where we were processing daily financial market data, and the sheer volume of data shifted considerably depending on holidays and weekend effects. Hardcoding task counts was a non-starter; we needed something fluid, something that adapted. Here’s how I’ve generally approached it, moving past just simple loops to more robust solutions.
 
 Essentially, the challenge lies in generating tasks dynamically at runtime based on a data-driven input, in your case, the date ranges. Airflow's architecture leans heavily on defining DAGs statically, so we can’t just arbitrarily add tasks in the middle of a run. Instead, we need to leverage features designed to accommodate this kind of variability. We can use a combination of templating, dynamic task mapping using a concept introduced with newer airflow versions (specifically with the `task_group` and map functions) and, sometimes, custom operators when necessary.
 
@@ -58,7 +58,7 @@ import pendulum
 
 @dag(start_date=days_ago(1), schedule=None, catchup=False, tags=['example'])
 def dynamic_files_example():
-    
+
     @task
     def get_files_to_process():
         postgres_hook = PostgresHook(postgres_conn_id="your_postgres_conn_id") #replace with your connection id
@@ -124,8 +124,9 @@ def dynamic_files_group_example():
 
 dynamic_files_group_example()
 ```
+
 Here, we use the task group to logically group the tasks that need to be performed on each file prefix with a specific date. While not strictly necessary in this example (we could use the direct map function), for more complex logic inside this task group, this could be very helpful. The main point is, however, that the `expand` function is still used to process each result of the `get_date_prefixes_to_process` task, allowing the overall dag to scale dynamically.
 
-For further reading and a more comprehensive grasp of dynamic task mapping, you'll find the official Apache Airflow documentation indispensable. Specifically, look into sections relating to "dynamic task mapping" and "task groups". Also, consider delving into *Data Pipelines with Apache Airflow*, by Bas Harenslak and Julian Rutger, as they cover these advanced topics with excellent practical examples. It's a great way to build a more solid understanding of these features, avoiding any of the typical pitfalls you may experience during implementation. Another useful resource is "Designing Data-Intensive Applications" by Martin Kleppmann for developing a good basis of distributed computing and its inherent challenges. These can help frame your Airflow usage within a larger context of reliable data processing.
+For further reading and a more comprehensive grasp of dynamic task mapping, you'll find the official Apache Airflow documentation indispensable. Specifically, look into sections relating to "dynamic task mapping" and "task groups". Also, consider delving into _Data Pipelines with Apache Airflow_, by Bas Harenslak and Julian Rutger, as they cover these advanced topics with excellent practical examples. It's a great way to build a more solid understanding of these features, avoiding any of the typical pitfalls you may experience during implementation. Another useful resource is "Designing Data-Intensive Applications" by Martin Kleppmann for developing a good basis of distributed computing and its inherent challenges. These can help frame your Airflow usage within a larger context of reliable data processing.
 
 Remember, the correct approach will largely depend on the specifics of your data source, the complexity of the processing, and the overall scale you're aiming for. Start simple, test incrementally, and gradually build towards a robust and scalable solution. It’s all about understanding Airflow’s underlying mechanics and leveraging them appropriately.

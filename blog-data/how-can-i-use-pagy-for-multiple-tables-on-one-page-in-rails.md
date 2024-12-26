@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-pagy-for-multiple-tables-on-one-page-in-rails"
 ---
 
-Let's tackle this pagination challenge with multiple tables on a single rails page. I’ve seen this crop up quite a few times, especially when dealing with dashboards or reports that aggregate data from various sources. It's definitely not a one-size-fits-all solution, and it does require a bit of planning to avoid performance bottlenecks. The key is to understand how Pagy works and then tailor it to our multi-table scenario.
+pagination challenge with multiple tables on a single rails page. I’ve seen this crop up quite a few times, especially when dealing with dashboards or reports that aggregate data from various sources. It's definitely not a one-size-fits-all solution, and it does require a bit of planning to avoid performance bottlenecks. The key is to understand how Pagy works and then tailor it to our multi-table scenario.
 
 The common approach that often leads to trouble is attempting to apply a single Pagy instance to multiple ActiveRecord relations simultaneously. Pagy is designed around paginating a single collection efficiently. Trying to force it to handle several at once results in conflicts and unexpected behavior. We need separate Pagy instances for each table. It's crucial to remember that behind the scenes, Pagy is primarily calculating offset and limit clauses for your database query.
 

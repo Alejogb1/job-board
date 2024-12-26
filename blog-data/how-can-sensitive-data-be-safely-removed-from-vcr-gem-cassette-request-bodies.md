@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-sensitive-data-be-safely-removed-from-vcr-gem-cassette-request-bodies"
 ---
 
-Let's tackle this. Dealing with sensitive data in VCR (and really, any kind of request recording system) is a perennial challenge. I've spent a fair amount of time on this myself, having been burned by inadvertently committing API keys to repos in my early days – a lesson I definitely paid for. VCR, for those unfamiliar, is a gem that records and replays HTTP interactions, making testing much faster and more deterministic. However, by default, it just dumps everything, including sensitive headers, parameters, and body content. That’s not good for a number of reasons, not least of which is security.
+. Dealing with sensitive data in VCR (and really, any kind of request recording system) is a perennial challenge. I've spent a fair amount of time on this myself, having been burned by inadvertently committing API keys to repos in my early days – a lesson I definitely paid for. VCR, for those unfamiliar, is a gem that records and replays HTTP interactions, making testing much faster and more deterministic. However, by default, it just dumps everything, including sensitive headers, parameters, and body content. That’s not good for a number of reasons, not least of which is security.
 
 The core issue we face revolves around selectively removing sensitive information from the recorded requests before they're persisted to disk. It’s not enough to just redact a few obvious fields; you need a system that's robust, flexible, and, crucially, maintains the integrity of the recording so that it can be used for accurate tests later on.
 
@@ -101,11 +101,11 @@ This snippet showcases a targeted approach, applying different scrubbing techniq
 
 Important considerations:
 
-*   **Context Matters:** The level of scrubbing needed depends entirely on your specific scenario and compliance requirements. What is acceptable in a development environment might be completely unacceptable in a production-facing scenario.
-*   **Error Handling:** Always, always add appropriate error handling around your parsing and scrubbing logic. If you're working with JSON, for example, always consider that requests might not *always* be well-formed json.
-*   **Test Your Scrubbers:** Write tests for your scrubbing logic. This ensures that your filters are doing what you think they are doing. This has saved me numerous times from inadvertent data leaks.
-*   **Maintainability:** As your application evolves, your filters may need updates. A well-structured configuration can make this much easier.
-*   **Avoid the temptation to use `.to_s`** Be aware of doing a `.to_s` before scrubbing any data because sensitive data could be included within the string representation and then be persisted to disk.
+- **Context Matters:** The level of scrubbing needed depends entirely on your specific scenario and compliance requirements. What is acceptable in a development environment might be completely unacceptable in a production-facing scenario.
+- **Error Handling:** Always, always add appropriate error handling around your parsing and scrubbing logic. If you're working with JSON, for example, always consider that requests might not _always_ be well-formed json.
+- **Test Your Scrubbers:** Write tests for your scrubbing logic. This ensures that your filters are doing what you think they are doing. This has saved me numerous times from inadvertent data leaks.
+- **Maintainability:** As your application evolves, your filters may need updates. A well-structured configuration can make this much easier.
+- **Avoid the temptation to use `.to_s`** Be aware of doing a `.to_s` before scrubbing any data because sensitive data could be included within the string representation and then be persisted to disk.
 
 For further reading on robust data masking techniques and security best practices, I strongly recommend reading "Security Engineering" by Ross Anderson. For more in-depth information on web security concepts, "The Tangled Web" by Michal Zalewski (lcamtuf) provides an exhaustive view. Finally, if you are working with PII or other highly sensitive data, you need to familiarize yourself with the relevant data protection regulations that might be applicable to your geographical location.
 

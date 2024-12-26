@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-domain-be-identified-in-ddd"
 ---
 
-, let's tackle this domain identification question. It's one I’ve had to grapple with more than a few times, particularly back in the early days of moving away from monolithic applications. The shift to domain-driven design (ddd) can feel a bit nebulous at first, especially when you're used to thinking in terms of technical layers instead of business concepts. Identifying the domain isn’t a purely theoretical exercise; it's a crucial step that shapes how you structure your software.
+, domain identification question. It's one I’ve had to grapple with more than a few times, particularly back in the early days of moving away from monolithic applications. The shift to domain-driven design (ddd) can feel a bit nebulous at first, especially when you're used to thinking in terms of technical layers instead of business concepts. Identifying the domain isn’t a purely theoretical exercise; it's a crucial step that shapes how you structure your software.
 
 My experience has taught me that there's no single, magical algorithm, rather a careful, iterative process. It’s less about finding a pre-existing domain carved in stone, and more about actively _defining_ the domain through collaboration and exploration. The central idea revolves around understanding the business and its core activities—the very heart of what the organization does. We’re not building software for the sake of it; we’re building software to support the business, and therefore, we need to mirror its realities in our code.
 

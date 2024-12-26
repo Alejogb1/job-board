@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-rails-chewy-to-return-dates-instead-of-strings"
 ---
 
-Let's tackle this. I've seen this exact issue crop up a fair few times over the years, and it often boils down to how elasticsearch and chewy interpret data types, particularly dates. It's a common enough head-scratcher when you start mixing rails’ active record with the search capabilities of elasticsearch via chewy.
+. I've seen this exact issue crop up a fair few times over the years, and it often boils down to how elasticsearch and chewy interpret data types, particularly dates. It's a common enough head-scratcher when you start mixing rails’ active record with the search capabilities of elasticsearch via chewy.
 
 The core problem is that when chewy indexes your data, it often infers the data type of fields based on what it first encounters. Dates, which are stored as `date` or `datetime` objects in rails, can sometimes end up being indexed as strings in elasticsearch. This happens because elasticsearch doesn’t inherently ‘know’ the structure of your rails model when it’s first populating the index. This leads to your search results returning date fields as strings rather than their intended date or datetime objects, which makes further manipulation quite awkward in ruby.
 
@@ -78,14 +78,14 @@ This example is focused on the return value from an elasticsearch lookup but the
 In essence, the key takeaways are:
 
 1.  **Explicit Type Definitions:** Always define your date fields with `type: 'date'` in your chewy index definitions. This is non-negotiable for correct indexing.
-2. **Attribute Processing After the fact:** Be prepared to process the attributes returned from chewy to parse strings into their correct data type. This could be in your model directly, or when loading the results after a query.
+2.  **Attribute Processing After the fact:** Be prepared to process the attributes returned from chewy to parse strings into their correct data type. This could be in your model directly, or when loading the results after a query.
 
 **Important Note:** After modifying your index definitions, you must reindex your data. Otherwise, elasticsearch will still hold the old data with the incorrect type. You typically do this by running `rake chewy:reset`.
 
 For further reading, I recommend exploring:
 
-*   **Elasticsearch: The Definitive Guide** by Clinton Gormley and Zachary Tong. This provides an in-depth understanding of how elasticsearch handles data types.
-*   The official Chewy gem documentation found directly on github or rubygems. It provides excellent examples and use cases for more advanced use of the gem. Pay special attention to the sections on field definitions and attribute handling.
-*   The official elasticsearch documentation on their website specifically regarding date data types, especially concerning the various date format options, although the defaults used by chewy are more than sufficient.
+- **Elasticsearch: The Definitive Guide** by Clinton Gormley and Zachary Tong. This provides an in-depth understanding of how elasticsearch handles data types.
+- The official Chewy gem documentation found directly on github or rubygems. It provides excellent examples and use cases for more advanced use of the gem. Pay special attention to the sections on field definitions and attribute handling.
+- The official elasticsearch documentation on their website specifically regarding date data types, especially concerning the various date format options, although the defaults used by chewy are more than sufficient.
 
 Dealing with data type conversions between your application and a search index is always going to be a consideration, and by being deliberate in your index definitions and careful when processing data, you can ensure that your dates are correctly represented as you fetch them from the index. In past projects, I found that taking these small, deliberate steps saved many hours of debugging later. This is something that becomes intuitive over time with further experience with both rails and elasticsearch.

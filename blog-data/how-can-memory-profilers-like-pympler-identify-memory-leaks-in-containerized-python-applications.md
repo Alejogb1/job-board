@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-memory-profilers-like-pympler-identify-memory-leaks-in-containerized-python-applications"
 ---
 
-Let's tackle this from a slightly different angle than usual. It's not just about *identifying* leaks but understanding the mechanisms behind them in the often-complex environment of containerized python apps. I've been through this dance countless times – especially back when we were transitioning our legacy systems into kubernetes – and there were always those sneaky memory leaks that seemed to defy logic. Let's delve into how tools like pympler help us uncover these issues.
+from a slightly different angle than usual. It's not just about _identifying_ leaks but understanding the mechanisms behind them in the often-complex environment of containerized python apps. I've been through this dance countless times – especially back when we were transitioning our legacy systems into kubernetes – and there were always those sneaky memory leaks that seemed to defy logic. Let's delve into how tools like pympler help us uncover these issues.
 
 Containerization, while offering significant advantages in deployment and scalability, can also mask underlying memory problems in python applications. The inherent isolation and resource limits enforced by containers mean that a slowly growing memory leak in python, one that might have been tolerable on a dedicated server, can quickly lead to an out-of-memory error or excessive swapping, impacting performance. Memory profilers like pympler become critical allies in such scenarios.
 
-Pympler, in essence, is a python library that allows us to examine the runtime memory usage of our python objects. It doesn’t directly interact with the container environment but rather provides a detailed breakdown of the memory consumed by objects within the python interpreter’s heap. In a containerized environment, we typically run pympler *inside* the python application, often triggered by a specific signal or API call, or by instrumenting our code during development or debugging.
+Pympler, in essence, is a python library that allows us to examine the runtime memory usage of our python objects. It doesn’t directly interact with the container environment but rather provides a detailed breakdown of the memory consumed by objects within the python interpreter’s heap. In a containerized environment, we typically run pympler _inside_ the python application, often triggered by a specific signal or API call, or by instrumenting our code during development or debugging.
 
 One of the key features of pympler is its ability to track the size and number of objects of different types. This is invaluable when looking for leaks. A typical memory leak in python usually results from inadvertently keeping references to objects in a way that prevents garbage collection from reclaiming their memory. For instance, a long-lived cache that constantly accumulates data or improperly managed database connections can contribute to a memory leak. Pympler’s `asizeof` module allows us to examine the size of individual objects and their relationships to other objects, helping identify these problematic areas.
 
@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
 In this example, we collect a snapshot of all python objects in memory before and after simulating a memory allocation. This helps us observe the memory usage dynamics. This is a basic illustration; the real power comes when we integrate it more deeply, perhaps in a custom middleware or a dedicated api endpoint, giving us a clear understanding of what's happening within our application. Note the `gc.collect()` method, which I often use to force a garbage collection before taking measurements to get a more accurate picture of actual memory usage.
 
-For finding leaks *over time*, tracking is key. Let's look at a slightly more advanced example using pympler's tracker:
+For finding leaks _over time_, tracking is key. Let's look at a slightly more advanced example using pympler's tracker:
 
 ```python
 import pympler.tracker as tracker
@@ -90,7 +90,7 @@ if __name__ == '__main__':
 
 Here, the `SummaryTracker` allows us to monitor the changes in memory usage between different points in time. The `print_diff` function highlights the differences in memory usage between the last checkpoint. This helps us see which objects are created and remain between calls, indicating a potential leak if memory usage keeps growing.
 
-Lastly, to further pinpoint the location of a potential leak, it’s essential to not only know *what* is taking up memory but also *where* the objects are being created. Using a combined approach involving line-by-line profiling alongside memory analysis tools is extremely valuable, although i will not provide line-profiling examples in this response. Once we suspect an area using pympler's object size and counts, we can then go and line profile that particular portion to look for repeated allocation patterns.
+Lastly, to further pinpoint the location of a potential leak, it’s essential to not only know _what_ is taking up memory but also _where_ the objects are being created. Using a combined approach involving line-by-line profiling alongside memory analysis tools is extremely valuable, although i will not provide line-profiling examples in this response. Once we suspect an area using pympler's object size and counts, we can then go and line profile that particular portion to look for repeated allocation patterns.
 
 ```python
 import pympler.asizeof as asizeof

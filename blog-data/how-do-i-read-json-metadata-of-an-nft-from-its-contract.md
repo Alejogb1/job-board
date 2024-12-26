@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-read-json-metadata-of-an-nft-from-its-contract"
 ---
 
-Let's tackle this one; I've certainly navigated similar issues in my own work with blockchain integrations. Accessing NFT metadata directly from the contract, rather than relying on intermediary services, is often the more robust approach, especially when dealing with decentralized applications. The challenge lies in decoding the encoded data, which typically conforms to specific standards defined by the NFT contract itself.
+one; I've certainly navigated similar issues in my own work with blockchain integrations. Accessing NFT metadata directly from the contract, rather than relying on intermediary services, is often the more robust approach, especially when dealing with decentralized applications. The challenge lies in decoding the encoded data, which typically conforms to specific standards defined by the NFT contract itself.
 
 When we talk about 'JSON metadata' within the context of an NFT, we're typically referring to data stored either directly on-chain or referenced by a URI (Uniform Resource Identifier). This URI might point to an off-chain storage solution, like IPFS (InterPlanetary File System), where the actual JSON file lives. The core principle here involves understanding how the contract stores this information and then interacting with the appropriate contract functions to retrieve it.
 

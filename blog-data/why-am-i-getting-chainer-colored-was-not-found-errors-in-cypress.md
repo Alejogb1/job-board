@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-chainer-colored-was-not-found-errors-in-cypress"
 ---
 
-, let's tackle this "chainer colored was not found" error in Cypress. It's a classic, and honestly, I’ve spent more than a few late nights tracking it down myself back in my days working on large-scale frontend testing suites. It usually doesn’t mean Cypress itself is broken—more often than not, it’s about how Cypress commands are interacting with the elements on the page, or rather, _not_ interacting as expected.
+, "chainer colored was not found" error in Cypress. It's a classic, and honestly, I’ve spent more than a few late nights tracking it down myself back in my days working on large-scale frontend testing suites. It usually doesn’t mean Cypress itself is broken—more often than not, it’s about how Cypress commands are interacting with the elements on the page, or rather, _not_ interacting as expected.
 
 Essentially, this error arises when Cypress's command chaining encounters a problem because a command expects a specific element type to be returned by the _previous_ command, but the previous command either doesn’t return an element, returns an element that's not in the expected format for that next command, or fails due to an asynchronous timing issue.
 

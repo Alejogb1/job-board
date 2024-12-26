@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-ruby-on-rails-on-docker---bundler-seems-to-install-different-versions-of-gems"
 ---
 
-let's tackle this, i've definitely been down this rabbit hole before, and it's frustrating when you expect consistent gem versions and get something totally unexpected. the short answer, the reason bundler sometimes seems to install different gem versions when using ruby on rails within docker is a combination of factors, primarily related to how docker layers are built and how bundler resolves dependencies. let's break it down a bit.
+, i've definitely been down this rabbit hole before, and it's frustrating when you expect consistent gem versions and get something totally unexpected. the short answer, the reason bundler sometimes seems to install different gem versions when using ruby on rails within docker is a combination of factors, primarily related to how docker layers are built and how bundler resolves dependencies. let's break it down a bit.
 
 first, understand that docker builds images layer by layer. each command in your `dockerfile` effectively creates a new layer. when you modify your `gemfile` or `gemfile.lock`, and rebuild, docker might only rebuild layers that have been changed. this is a good thing, it's part of the power of docker, it makes builds faster when you're only tweaking small parts. however, it can lead to confusion if not handled precisely.
 
@@ -28,7 +28,7 @@ now, you decide to add a new gem to the `gemfile` , do a `bundle install` outsid
 
 another common scenario is when your `gemfile.lock` gets changed outside of docker, and you copy an older version of the lockfile to the docker context, when building the image, the old dependencies are installed inside of the docker. and then later you copy the new changed lockfile to the docker, then docker might find the difference and rebuild the layer which installs gems. however, that does not guarantee that all installed gems have the latest versions because gems could be installed previously in layers, and docker tries to be very conservative with its cache mechanism. so this can be tricky.
 
-to mitigate this, i've learned a couple of tricks over the years. the first is, always, and i mean *always* copy your `gemfile` and `gemfile.lock` in the same copy statement in the dockerfile:
+to mitigate this, i've learned a couple of tricks over the years. the first is, always, and i mean _always_ copy your `gemfile` and `gemfile.lock` in the same copy statement in the dockerfile:
 
 ```dockerfile
 from ruby:3.2
@@ -40,7 +40,7 @@ copy gemfile gemfile.lock ./
 run bundle install
 ```
 
-this ensures that if *either* file changes, docker will invalidate the cache for this layer, and it will be forced to rebuild, meaning that `bundle install` will run again. this is a fundamental fix, but it does not solve the problem of old gems installed on the base image.
+this ensures that if _either_ file changes, docker will invalidate the cache for this layer, and it will be forced to rebuild, meaning that `bundle install` will run again. this is a fundamental fix, but it does not solve the problem of old gems installed on the base image.
 
 secondly, consider cleaning your gems and your cache before install the new ones. this will ensure that there are no hidden gems that could cause issues in your system. this can be done before the `bundle install` call.
 

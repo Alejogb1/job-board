@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "is-it-possible-to-createdeploy-an-onnx-model-to-a-dedicated-sql-pool-from-a-synapse-notebook-in-azure-synapse"
 ---
 
-Let's tackle this from a somewhat nuanced perspective, shall we? The short answer is, directly deploying an ONNX model *to* a dedicated sql pool within Azure Synapse, in the way you might deploy a stored procedure, isn’t how the architecture is intended to operate. However, we can certainly achieve the *outcome* of utilizing ONNX models within your Synapse data processing workflows, and specifically leveraging a dedicated sql pool’s compute resources. I've encountered similar challenges in several prior projects, usually involving large-scale predictive modeling, and the solution invariably involves a bit of strategic integration.
+from a somewhat nuanced perspective, shall we? The short answer is, directly deploying an ONNX model _to_ a dedicated sql pool within Azure Synapse, in the way you might deploy a stored procedure, isn’t how the architecture is intended to operate. However, we can certainly achieve the _outcome_ of utilizing ONNX models within your Synapse data processing workflows, and specifically leveraging a dedicated sql pool’s compute resources. I've encountered similar challenges in several prior projects, usually involving large-scale predictive modeling, and the solution invariably involves a bit of strategic integration.
 
-The key is to understand that dedicated sql pools in Synapse are designed primarily for data storage, querying, and transformations, not for hosting and executing arbitrary machine learning models. They're optimized for columnar storage and massively parallel processing of SQL queries. Therefore, we need to approach this by thinking about *how* we can incorporate model inference within a data pipeline that is capable of utilizing a dedicated SQL pool for data retrieval and transformation.
+The key is to understand that dedicated sql pools in Synapse are designed primarily for data storage, querying, and transformations, not for hosting and executing arbitrary machine learning models. They're optimized for columnar storage and massively parallel processing of SQL queries. Therefore, we need to approach this by thinking about _how_ we can incorporate model inference within a data pipeline that is capable of utilizing a dedicated SQL pool for data retrieval and transformation.
 
 The typical approach, and the one I've successfully implemented multiple times, involves these core steps:
 
@@ -78,9 +78,10 @@ finally:
     if cnxn:
         cnxn.close()
 ```
+
 In this example, we're first establishing a connection to our dedicated SQL pool. After successfully querying the required data, we then send this in a json payload to the aml endpoint using the 'requests' library and print the results. The output would typically contain a list of predictions.
 
-**Example 2:  Batch Processing & Writing Results Back to Dedicated SQL Pool:**
+**Example 2: Batch Processing & Writing Results Back to Dedicated SQL Pool:**
 
 Following the previous example, imagine you now have those predictions and you need to associate it back with the original data and write back to the SQL pool. This will require some additional work in the notebook.
 
@@ -150,9 +151,9 @@ For production workloads, it’s often better to use Azure Data Factory for orch
 
 **Recommended Resources:**
 
-*   **"Programming Microsoft SQL Server 2019" by Leonard Lobel:** This book offers a comprehensive guide to SQL server concepts and their application, which can help significantly with optimizing your queries within a dedicated sql pool.
-*   **"Machine Learning Engineering" by Andriy Burkov:** A solid resource for practical considerations around building and deploying ML models, including topics like model serving and pipeline integration, helpful to understand the deployment aspect for AML.
-*   **Azure Synapse Analytics documentation:** The official Azure documentation is your go-to source for the latest features, best practices, and API reference. Focus specifically on documentation for dedicated sql pools and Synapse notebooks.
-*   **Azure Machine Learning documentation:** For the deployment of your ONNX models and how to create scalable and reliable inference endpoints.
+- **"Programming Microsoft SQL Server 2019" by Leonard Lobel:** This book offers a comprehensive guide to SQL server concepts and their application, which can help significantly with optimizing your queries within a dedicated sql pool.
+- **"Machine Learning Engineering" by Andriy Burkov:** A solid resource for practical considerations around building and deploying ML models, including topics like model serving and pipeline integration, helpful to understand the deployment aspect for AML.
+- **Azure Synapse Analytics documentation:** The official Azure documentation is your go-to source for the latest features, best practices, and API reference. Focus specifically on documentation for dedicated sql pools and Synapse notebooks.
+- **Azure Machine Learning documentation:** For the deployment of your ONNX models and how to create scalable and reliable inference endpoints.
 
-In summary, while you cannot directly deploy an ONNX model *into* a dedicated SQL pool, you can achieve your goal of using ONNX models by employing a combination of Synapse notebooks, other compute services like AML, and by carefully orchestrating your data pipelines. This approach provides the flexibility and scalability needed for modern data analytics workloads. This has consistently worked well in past projects of mine, offering predictable performance and efficient integration between model inference and data manipulation.
+In summary, while you cannot directly deploy an ONNX model _into_ a dedicated SQL pool, you can achieve your goal of using ONNX models by employing a combination of Synapse notebooks, other compute services like AML, and by carefully orchestrating your data pipelines. This approach provides the flexibility and scalability needed for modern data analytics workloads. This has consistently worked well in past projects of mine, offering predictable performance and efficient integration between model inference and data manipulation.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-all-n-gram-combinations-considered-in-the-analysis"
 ---
 
-, let's tackle this one. It's a question that crops up quite frequently when discussing text analysis and, in my experience, it often leads to some misconceptions. So, let’s get into the specifics of n-gram processing and whether _all_ combinations are indeed considered.
+, one. It's a question that crops up quite frequently when discussing text analysis and, in my experience, it often leads to some misconceptions. So, let’s get into the specifics of n-gram processing and whether _all_ combinations are indeed considered.
 
 In short, the answer is usually no, not all possible n-gram combinations are analyzed in practical applications. This might seem counterintuitive at first, so let’s break down why and what the common strategies are. When we talk about n-grams, we're referring to contiguous sequences of ‘n’ items (usually words) from a given text. For example, “the quick brown fox” would yield the following bigrams (n=2): "the quick", "quick brown", "brown fox”. Trigrams (n=3) would give "the quick brown", "quick brown fox". And so on. The potential number of such combinations grows exponentially with n and the length of the text, which poses serious computational challenges.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-flashnow-outputting-after-rendering"
 ---
 
-, let's tackle this flash.now conundrum. I've spent more than my fair share debugging asynchronous code in environments similar to Flash, and the fact that `flash.now` isn't immediately reflected post-render often points to a fundamental misunderstanding of how the render pipeline operates, coupled with how asynchronous operations are handled in the specific Flash environment in question. It’s less about an outright _error_ with `flash.now` itself, and more about its interaction within the context of the execution flow.
+, flash.now conundrum. I've spent more than my fair share debugging asynchronous code in environments similar to Flash, and the fact that `flash.now` isn't immediately reflected post-render often points to a fundamental misunderstanding of how the render pipeline operates, coupled with how asynchronous operations are handled in the specific Flash environment in question. It’s less about an outright _error_ with `flash.now` itself, and more about its interaction within the context of the execution flow.
 
 The core issue is typically this: `flash.now` (or its equivalent in older Flash environments) reflects the current state of the timeline. If you modify a variable or object immediately prior to checking the `flash.now` timestamp within the same single-threaded execution block (i.e., within the same frame), you will likely not see the update _after rendering_. That's because the actual rendering process and update of the display list happens _after_ your code finishes executing, not within it. You're, in essence, looking at the system time _before_ the rendering engine has actually had a chance to draw the frame and propagate changes.
 

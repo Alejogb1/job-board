@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-conditionally-include-query-parameters-in-a-redirect"
 ---
 
-Let's tackle this query parameter conundrum, shall we? It’s a scenario I've encountered more times than I care to remember, often during those "last-mile" integration pushes where seemingly simple requirements can turn into surprisingly complex challenges. The need to conditionally add query parameters to a redirect isn’t unusual; perhaps you’re tracking campaign sources, managing user states, or implementing A/B tests, and the destination url needs that extra context sometimes, but not always. You wouldn't want to build a spiderweb of redirects where every case is a discrete branch; that quickly spirals into a debugging nightmare. Instead, we aim for a streamlined approach.
+query parameter conundrum, shall we? It’s a scenario I've encountered more times than I care to remember, often during those "last-mile" integration pushes where seemingly simple requirements can turn into surprisingly complex challenges. The need to conditionally add query parameters to a redirect isn’t unusual; perhaps you’re tracking campaign sources, managing user states, or implementing A/B tests, and the destination url needs that extra context sometimes, but not always. You wouldn't want to build a spiderweb of redirects where every case is a discrete branch; that quickly spirals into a debugging nightmare. Instead, we aim for a streamlined approach.
 
 The basic mechanism for redirects, particularly in web development, is relatively straightforward. A client makes a request, and the server responds with a redirect status code (like 301, 302, 307, or 308) and the new url in the `location` header. The crux of the issue here lies in manipulating that new url, specifically its query parameters, based on conditions.
 
@@ -22,19 +22,19 @@ app = Flask(__name__)
 def handle_redirect():
     target_url = "https://example.com/target"
     ref = request.args.get('ref')
-    
+
     if ref:
         parsed_url = urlparse(target_url)
         query_params = parse_qs(parsed_url.query)
         query_params['affiliate_id'] = [ref]
-        
+
         new_query = urlencode(query_params, doseq=True) # doseq handles lists as values correctly
-        
-        new_url = urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, 
+
+        new_url = urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path,
                              parsed_url.params, new_query, parsed_url.fragment))
-        
+
         return redirect(new_url, code=302)
-    
+
     return redirect(target_url, code=302)
 
 if __name__ == '__main__':
@@ -47,19 +47,19 @@ Next, let’s consider a scenario involving client-side Javascript. Sometimes, r
 
 ```javascript
 function conditionalRedirect() {
-    const targetUrl = "https://example.com/target";
-    const params = new URLSearchParams(window.location.search);
-    const userId = params.get('user_id');
+  const targetUrl = "https://example.com/target";
+  const params = new URLSearchParams(window.location.search);
+  const userId = params.get("user_id");
 
-    let redirectUrl = targetUrl;
+  let redirectUrl = targetUrl;
 
-    if (userId) {
-       const url = new URL(targetUrl);
-       url.searchParams.append('user_profile', userId);
-       redirectUrl = url.toString();
-    }
+  if (userId) {
+    const url = new URL(targetUrl);
+    url.searchParams.append("user_profile", userId);
+    redirectUrl = url.toString();
+  }
 
-    window.location.href = redirectUrl;
+  window.location.href = redirectUrl;
 }
 
 conditionalRedirect();
@@ -78,16 +78,16 @@ exports.handler = async (event) => {
 
   if (token) {
     const url = new URL(targetUrl);
-      url.searchParams.append('auth_token', token);
+    url.searchParams.append("auth_token", token);
     redirectUrl = url.toString();
   }
 
   return {
-      statusCode: 302,
-      headers: {
-        Location: redirectUrl,
-      },
-    };
+    statusCode: 302,
+    headers: {
+      Location: redirectUrl,
+    },
+  };
 };
 ```
 

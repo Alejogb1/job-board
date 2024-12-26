@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-manage-excessive-data-for-labeling"
 ---
 
-Right then, let's tackle this challenge of excessive data for labeling. I've certainly been in that particular hot seat more times than I'd care to recount, particularly back in the days when we were building that image recognition system for, well, let’s just say an unnamed client in logistics. The sheer volume of images coming in daily was simply staggering, and it underscored the crucial need for effective strategies when dealing with massive datasets destined for labeling. We quickly realized that just throwing more people at the problem wasn't just costly, it was inefficient.
+Right then, challenge of excessive data for labeling. I've certainly been in that particular hot seat more times than I'd care to recount, particularly back in the days when we were building that image recognition system for, well, let’s just say an unnamed client in logistics. The sheer volume of images coming in daily was simply staggering, and it underscored the crucial need for effective strategies when dealing with massive datasets destined for labeling. We quickly realized that just throwing more people at the problem wasn't just costly, it was inefficient.
 
 The core issue isn't simply the amount of data. It's about how we can intelligently select the most informative data points for labeling, and then, how we can manage the process in a way that maintains data quality without requiring an army of annotators. This means going beyond a naive approach of simply labeling everything and instead, focusing on techniques that prioritize efficiency and effectiveness.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-an-attributeerror-nonetype-in-azure-ml-with-pytorch"
 ---
 
-, let's tackle this `AttributeError: 'NoneType'` issue you're encountering in Azure ML while using PyTorch. This is a classic head-scratcher, and I've certainly spent my share of late nights debugging it back when I was initially deploying models on the platform. The core issue, distilled down, is that somewhere in your code, you're attempting to access an attribute or method on a variable that has, unexpectedly, become `None`. In the context of Azure ML with PyTorch, this usually stems from a few common pitfalls related to the data loading pipeline, model definition, or the interplay between distributed training and environment configurations.
+, `AttributeError: 'NoneType'` issue you're encountering in Azure ML while using PyTorch. This is a classic head-scratcher, and I've certainly spent my share of late nights debugging it back when I was initially deploying models on the platform. The core issue, distilled down, is that somewhere in your code, you're attempting to access an attribute or method on a variable that has, unexpectedly, become `None`. In the context of Azure ML with PyTorch, this usually stems from a few common pitfalls related to the data loading pipeline, model definition, or the interplay between distributed training and environment configurations.
 
 Before we dive deeper, understand that PyTorch, unlike some other frameworks, isn’t very forgiving about unexpected null values. It expects that the tensors you're feeding through the model are well-defined and populated with data. `None` is essentially treated as an object, albeit one lacking any attributes or methods we'd expect, hence the `AttributeError`.
 

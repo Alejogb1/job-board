@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-cnn-model-be-deployed-using-flask-and-tensorflow"
 ---
 
-, let's tackle this one. I’ve actually been down this path a few times, most memorably when we were pushing a real-time image classification system into production a few years back. Getting the model from a training environment to a functioning web service using Flask and TensorFlow can have a few gotchas, so let’s break down the process methodically.
+, one. I’ve actually been down this path a few times, most memorably when we were pushing a real-time image classification system into production a few years back. Getting the model from a training environment to a functioning web service using Flask and TensorFlow can have a few gotchas, so let’s break down the process methodically.
 
 The core idea revolves around leveraging Flask, a micro web framework in python, to serve as the interface between your model and the outside world via http requests. TensorFlow, of course, provides the machinery for running the model. It's essentially a case of creating a Flask application, loading your pre-trained TensorFlow model into memory, and then crafting endpoints that accept requests and pass data through the model for a prediction.
 

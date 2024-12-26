@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-are-opensearch-transforms-splitting-array-values-to-new-events"
 ---
 
-let's tackle this, i've seen this behavior plenty of times, and it always boils down to how opensearch transforms handles arrays. basically, it's not an error but a designed behavior.
+, i've seen this behavior plenty of times, and it always boils down to how opensearch transforms handles arrays. basically, it's not an error but a designed behavior.
 
 when opensearch transform encounters a document with a field containing an array, it doesn't treat the whole array as a single value to be copied or manipulated. instead, it interprets each element of that array as a separate value that needs processing, which effectively causes it to create new events per element. this is fundamentally linked to how transform works, it is designed for a flat structure and array type fields violate that structure.
 
@@ -32,25 +32,28 @@ after the transform, with the default behaviours, we'll have 3 new documents, ea
 
 ```json
 {
- "id": 1,
- "user": "john",
- "items": "apple"
+  "id": 1,
+  "user": "john",
+  "items": "apple"
 }
 ```
+
 ```json
 {
- "id": 1,
- "user": "john",
- "items": "banana"
+  "id": 1,
+  "user": "john",
+  "items": "banana"
 }
 ```
+
 ```json
 {
- "id": 1,
- "user": "john",
- "items": "orange"
+  "id": 1,
+  "user": "john",
+  "items": "orange"
 }
 ```
+
 as you can see, our single document generated three different documents.
 
 so, how do we handle this in practice? there isn’t a silver bullet that magically makes opensearch treat arrays as a whole in transform, but here are a few strategies depending on what the user needs.
@@ -63,6 +66,7 @@ String[] arr = ctx._source.items;
 String joined = String.join(",", arr);
 ctx._source.items = joined;
 ```
+
 here's another example, in case you have more complex objects inside your arrays:
 
 ```painless
@@ -75,11 +79,10 @@ if (ctx._source.items != null) {
     ctx._source.items = String.join(";", itemsString);
 }
 ```
+
 this script will convert all the objects inside the array to strings and then join them using a semicolon.
 
-these scripts will effectively flatten your array into a string, which allows the transform to handle it as a single value. keep in mind that if the objects in the array are very large or you need to query specific properties on them, this strategy won't work. you can also use json.stringify() method if you want to keep them as a json string.
-3. **post-transform aggregation:** often, the split might actually be what you need but if you just want to count the number of distinct values, you have to process it in an extra step. after running the transform, you can do another aggregation which counts the number of elements created by your transforms. this method might require extra resources and is not as optimal as avoiding the split altogether but it’s the simplest method when your target is counting the size of arrays and you cannot avoid the split.
-4. **restructuring with aggregations:** if you're dealing with nested structures, you might need to use aggregations within the transform to restructure your data and avoid the implicit split from arrays. this would require building a pipeline with different aggregation steps, and it can get quite complex, but it offers better control over the output structure.
+these scripts will effectively flatten your array into a string, which allows the transform to handle it as a single value. keep in mind that if the objects in the array are very large or you need to query specific properties on them, this strategy won't work. you can also use json.stringify() method if you want to keep them as a json string. 3. **post-transform aggregation:** often, the split might actually be what you need but if you just want to count the number of distinct values, you have to process it in an extra step. after running the transform, you can do another aggregation which counts the number of elements created by your transforms. this method might require extra resources and is not as optimal as avoiding the split altogether but it’s the simplest method when your target is counting the size of arrays and you cannot avoid the split. 4. **restructuring with aggregations:** if you're dealing with nested structures, you might need to use aggregations within the transform to restructure your data and avoid the implicit split from arrays. this would require building a pipeline with different aggregation steps, and it can get quite complex, but it offers better control over the output structure.
 
 in my experience, i've tried all these approaches at different times. there's rarely one size fits all solution. i think you should first consider the possibility of restructuring your ingestion pipeline to avoid using arrays altogether. i mean, "why did the array cross the road?", "because it was already flattened". but if that's not an option, scripting is a powerful tool that can handle more complex scenarios.
 

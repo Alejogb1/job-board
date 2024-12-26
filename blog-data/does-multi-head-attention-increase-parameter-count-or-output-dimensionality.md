@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-multi-head-attention-increase-parameter-count-or-output-dimensionality"
 ---
 
-, let's tackle this. It's a common question, and one that I recall encountering fairly early in my deep learning journey, specifically when I was implementing a transformer-based sequence model for a natural language processing task back in '19. We were seeing some unexpected resource consumption, and that's when the multi-head attention mechanism really came under scrutiny. Let’s break down what’s actually going on under the hood, clarifying the impact it has on both parameter count and output dimensionality.
+, . It's a common question, and one that I recall encountering fairly early in my deep learning journey, specifically when I was implementing a transformer-based sequence model for a natural language processing task back in '19. We were seeing some unexpected resource consumption, and that's when the multi-head attention mechanism really came under scrutiny. Let’s break down what’s actually going on under the hood, clarifying the impact it has on both parameter count and output dimensionality.
 
 The essence of multi-head attention is to allow the model to attend to different parts of the input sequence with different learned representations. Instead of just one set of query, key, and value vectors – as in single-head attention – we have _h_ sets, hence “multi-head.” This design enables the model to capture a wider variety of relationships within the data. Crucially, each head operates independently in its own subspace before being concatenated and projected back. So, the question hinges on how this multi-headed nature affects the overall dimensions and parameters.
 
@@ -103,7 +103,7 @@ multi_attn = MultiHeadAttentionDebug(d_model, d_k, h)
 _ = multi_attn(x)
 ```
 
-Running this will show you the dimensions of the head outputs before concatenation (shape should be batch _ sequence length _ 64, where 64 is d_k), the concatenated output (shape batch _ sequence length _ 512, where 512 is h*d_k), and the final output which matches the original input, batch * sequence length \* d_model.
+Running this will show you the dimensions of the head outputs before concatenation (shape should be batch _ sequence length _ 64, where 64 is d*k), the concatenated output (shape batch * sequence length \_ 512, where 512 is h*d_k), and the final output which matches the original input, batch * sequence length \* d_model.
 
 Let's quickly review one final code example that implements scaled dot-product attention.
 

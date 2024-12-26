@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-typeerror-cannot-read-properties-of-undefined-reading-then-error-when-using-react-asyncawait"
 ---
 
-, let's tackle this `TypeError: Cannot read properties of undefined (reading 'then')` error in the context of React and async/await. This one pops up more often than one might think, and from what I've observed in my years developing, it almost always boils down to a specific pattern of misunderstanding how promises and their handling works, especially within React's lifecycle.
+, `TypeError: Cannot read properties of undefined (reading 'then')` error in the context of React and async/await. This one pops up more often than one might think, and from what I've observed in my years developing, it almost always boils down to a specific pattern of misunderstanding how promises and their handling works, especially within React's lifecycle.
 
 It's not uncommon; I've spent my share of late nights debugging this exact scenario in various applications. I recall one project in particular, an e-commerce platform where user data fetches were causing sporadic crashes—that's where I really learned the ins and outs of this error firsthand.
 

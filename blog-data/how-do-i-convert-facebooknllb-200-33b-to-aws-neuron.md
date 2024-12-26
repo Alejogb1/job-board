@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-convert-facebooknllb-200-33b-to-aws-neuron"
 ---
 
-, let's tackle this conversion process. I've encountered similar challenges migrating large language models (LLMs) to specialized hardware before, specifically when trying to deploy a transformer model I had trained for a client on a custom edge device. The core of the issue, as it pertains to your desire to convert the `facebook/nllb-200-3.3B` model to AWS neuron, lies in bridging the gap between the PyTorch-centric world where many transformers are initially built and the particular hardware acceleration environment offered by AWS neuron. This isn't a straightforward plug-and-play situation; it necessitates careful consideration of several technical layers.
+, conversion process. I've encountered similar challenges migrating large language models (LLMs) to specialized hardware before, specifically when trying to deploy a transformer model I had trained for a client on a custom edge device. The core of the issue, as it pertains to your desire to convert the `facebook/nllb-200-3.3B` model to AWS neuron, lies in bridging the gap between the PyTorch-centric world where many transformers are initially built and the particular hardware acceleration environment offered by AWS neuron. This isn't a straightforward plug-and-play situation; it necessitates careful consideration of several technical layers.
 
 The essential steps involve, broadly, model preparation, graph compilation, and finally, deployment. Let’s dissect each part, with an emphasis on the practicalities you will face.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-approach-cloudampq-or-kubernetes-deployment-is-better-for-rabbitmq-as-a-paas"
 ---
 
-Let's tackle this one. I've seen firsthand how both CloudAMQP and Kubernetes deployments for RabbitMQ can play out, and it's definitely not a one-size-fits-all scenario. My experience stems from a rather turbulent project a few years back, where we initially went all-in on a self-managed Kubernetes cluster for everything, including our messaging infrastructure. Long story short, we later re-evaluated that decision. This isn't to say one is inherently superior; it’s about understanding the trade-offs and selecting the right tool for the specific context.
+one. I've seen firsthand how both CloudAMQP and Kubernetes deployments for RabbitMQ can play out, and it's definitely not a one-size-fits-all scenario. My experience stems from a rather turbulent project a few years back, where we initially went all-in on a self-managed Kubernetes cluster for everything, including our messaging infrastructure. Long story short, we later re-evaluated that decision. This isn't to say one is inherently superior; it’s about understanding the trade-offs and selecting the right tool for the specific context.
 
 The core of the matter is whether you prioritize control and customization versus operational simplicity and reduced overhead. CloudAMQP essentially offers RabbitMQ as a managed service – a PaaS (Platform as a Service). You’re abstracting away the complexities of the underlying infrastructure. You get your connection details and start coding, leaving much of the operational burden (scaling, upgrades, monitoring) to the provider. This simplicity comes at a cost – reduced control over the finer details. Conversely, deploying on Kubernetes provides fine-grained control and customization but necessitates expertise in both RabbitMQ and Kubernetes operations. It puts the onus of management squarely on your shoulders.
 
@@ -56,23 +56,23 @@ spec:
         app: rabbitmq
     spec:
       containers:
-      - name: rabbitmq
-        image: rabbitmq:3-management
-        ports:
-        - containerPort: 5672
-        - containerPort: 15672
-        env:
-          - name: RABBITMQ_DEFAULT_USER
-            value: "guest"
-          - name: RABBITMQ_DEFAULT_PASS
-            value: "guest"
-        resources:
-          requests:
-            cpu: 200m
-            memory: 512Mi
-          limits:
-            cpu: 500m
-            memory: 1Gi
+        - name: rabbitmq
+          image: rabbitmq:3-management
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: "guest"
+            - name: RABBITMQ_DEFAULT_PASS
+              value: "guest"
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
 ```
 
 This yaml defines a deployment with three RabbitMQ replicas. We need to expose this deployment through services to connect to the RabbitMQ nodes from other services running on the cluster. A simple `Service` definition may look like this:

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-different-recaptcha-keys-for-devprod"
 ---
 
-, let's tackle this. I've certainly bumped into this exact scenario a few times during my career, particularly during the early days of web application development when we were rapidly iterating through different security measures. Using different recaptcha keys for development and production environments isn't just good practice, it’s practically a necessity to avoid polluting real-world metrics with your testing. Let’s walk through how I've approached this problem in the past, focusing on clarity and concrete examples.
+, . I've certainly bumped into this exact scenario a few times during my career, particularly during the early days of web application development when we were rapidly iterating through different security measures. Using different recaptcha keys for development and production environments isn't just good practice, it’s practically a necessity to avoid polluting real-world metrics with your testing. Let’s walk through how I've approached this problem in the past, focusing on clarity and concrete examples.
 
 The core idea is to configure your application to conditionally load the correct recaptcha key based on the environment it’s running in. This usually involves some form of environment variable management, often coupled with configuration files. You generally do _not_ want to hardcode your keys directly into your source code. That’s bad practice, and it’s a recipe for accidental exposure, especially when working collaboratively.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-running-rake-assetsprecompile-in-docker-compose-reset-changes-made-after-a-previous-docker-compose-up"
 ---
 
-, let's tackle this one. It's a question I've personally circled back to more than once, often after a particularly frustrating debug session. In short, whether `rake assets:precompile` within a docker-compose environment resets changes made after a previous `docker-compose up` really hinges on a few critical factors, predominantly related to how you're managing persistent data, and specifically how your Dockerfile and `docker-compose.yml` interact with your application's asset pipeline.
+, one. It's a question I've personally circled back to more than once, often after a particularly frustrating debug session. In short, whether `rake assets:precompile` within a docker-compose environment resets changes made after a previous `docker-compose up` really hinges on a few critical factors, predominantly related to how you're managing persistent data, and specifically how your Dockerfile and `docker-compose.yml` interact with your application's asset pipeline.
 
 The core issue stems from Docker's layered filesystem. When you build a Docker image, each instruction in your Dockerfile adds a new layer. These layers are read-only, with the exception of the topmost container layer. When `docker-compose up` starts your application, it's working with the final assembled image. Any changes made _within_ the running container are written to this mutable container layer, not back to the image itself.
 

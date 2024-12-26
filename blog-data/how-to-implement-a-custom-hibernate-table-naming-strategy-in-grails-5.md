@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-implement-a-custom-hibernate-table-naming-strategy-in-grails-5"
 ---
 
-, let's tackle this one. I remember back in the early days of a project where we inherited a somewhat… _unique_ database schema. The existing naming conventions were, shall we say, less than ideal, and forced our hand into implementing a custom Hibernate table naming strategy. It wasn't particularly difficult, but it definitely required diving into the nuances of both Grails and Hibernate configurations. Here’s a breakdown of how I've approached it, and how you can effectively implement your own in Grails 5.
+, one. I remember back in the early days of a project where we inherited a somewhat… _unique_ database schema. The existing naming conventions were, shall we say, less than ideal, and forced our hand into implementing a custom Hibernate table naming strategy. It wasn't particularly difficult, but it definitely required diving into the nuances of both Grails and Hibernate configurations. Here’s a breakdown of how I've approached it, and how you can effectively implement your own in Grails 5.
 
 First, let’s frame the problem. Hibernate, by default, uses a somewhat predictable algorithm to generate table names from your domain class names. This is usually fine, but sometimes you have legacy systems, specific organizational standards, or just plain eccentric requirements that demand something different. Grails, sitting atop Hibernate, provides mechanisms to tap into these customizations. The key lies in creating a custom `NamingStrategy` implementation. This class dictates how table and column names are generated.
 

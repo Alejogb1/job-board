@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-colon-in-constructor-chaining-fail"
 ---
 
-, let's tackle this one. I've seen my share of constructor mishaps over the years, and that colon in constructor chaining, or rather its _incorrect_ usage, always throws beginners for a loop. It’s understandable, though, since the syntax can be a bit deceptive if you're not fully aware of what's under the hood.
+, one. I've seen my share of constructor mishaps over the years, and that colon in constructor chaining, or rather its _incorrect_ usage, always throws beginners for a loop. It’s understandable, though, since the syntax can be a bit deceptive if you're not fully aware of what's under the hood.
 
 The core issue isn’t that a colon _inherently_ fails in constructor chaining; it's that the colon, in many languages like C++ and others influenced by it, is part of a very specific initialization list syntax, and this list has very strict rules about _where_ it can appear and _what_ it can do. Thinking of the colon as just any part of general constructor "chaining" misses the point entirely. The colon's role is to initialize member variables _before_ the constructor's body executes.
 

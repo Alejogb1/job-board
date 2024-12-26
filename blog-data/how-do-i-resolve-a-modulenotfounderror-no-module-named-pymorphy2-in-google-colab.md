@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-a-modulenotfounderror-no-module-named-pymorphy2-in-google-colab"
 ---
 
-, let's tackle this common issue. I’ve seen this particular error pop up more times than I care to recall, particularly when moving between local environments and cloud platforms like Google Colab. The `ModuleNotFoundError: No module named 'pymorphy2'` simply means that the Python interpreter can't locate the 'pymorphy2' library that your code is trying to import. Think of it like trying to borrow a specific tool from a toolbox that isn't present or properly labeled. It's a library that’s often used for morphological analysis of Russian words, and its absence throws a wrench in the works if your script relies on it.
+, common issue. I’ve seen this particular error pop up more times than I care to recall, particularly when moving between local environments and cloud platforms like Google Colab. The `ModuleNotFoundError: No module named 'pymorphy2'` simply means that the Python interpreter can't locate the 'pymorphy2' library that your code is trying to import. Think of it like trying to borrow a specific tool from a toolbox that isn't present or properly labeled. It's a library that’s often used for morphological analysis of Russian words, and its absence throws a wrench in the works if your script relies on it.
 
 The good news is this is almost always resolvable with a few common steps. It generally boils down to the fact that Colab, while providing a robust environment, doesn’t pre-install every package imaginable. You need to explicitly tell it to install the ones you need, just like configuring a new virtual environment on your local machine. Let's break it down and look at several solutions, each with practical application.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-run-a-docker-image-from-gha-or-local-cache"
 ---
 
-, let's tackle this one. I've been through this dance with docker images and GitHub Actions (GHA) countless times, and optimizing the process is critical, especially when dealing with large projects. The issue of pulling images repeatedly, even when they haven’t changed, can slow down your pipelines dramatically. So, let’s break down how to leverage caching, both locally and within GHA, to minimize those redundant pulls.
+, one. I've been through this dance with docker images and GitHub Actions (GHA) countless times, and optimizing the process is critical, especially when dealing with large projects. The issue of pulling images repeatedly, even when they haven’t changed, can slow down your pipelines dramatically. So, let’s break down how to leverage caching, both locally and within GHA, to minimize those redundant pulls.
 
 The core concept here revolves around understanding how docker’s layer architecture works and how both your local docker daemon and GHA runners handle caching. Docker images aren’t monolithic entities; they are composed of layered filesystems. Each instruction in your dockerfile typically generates a new layer. This layering allows docker to only download the layers that have changed since the last build. Similarly, GHA runners can cache these layers to avoid pulling the same unchanged image multiple times in a workflow.
 

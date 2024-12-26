@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-hidden-parameters-be-included-in-rails-linkto"
 ---
 
-, let's tackle this. Instead of diving straight into the syntax, let's first think about why we'd even want hidden parameters in a `link_to` tag. I've seen this need pop up more times than I care to remember, often in scenarios involving state management or passing additional context to controllers without exposing it directly in the URL. Early on in my career, I was working on an e-commerce platform, and we needed to track the source of a user's visit to specific product pages, but showing that in the URL felt clunky. That's where hidden parameters came to the rescue.
+, . Instead of diving straight into the syntax, let's first think about why we'd even want hidden parameters in a `link_to` tag. I've seen this need pop up more times than I care to remember, often in scenarios involving state management or passing additional context to controllers without exposing it directly in the URL. Early on in my career, I was working on an e-commerce platform, and we needed to track the source of a user's visit to specific product pages, but showing that in the URL felt clunky. That's where hidden parameters came to the rescue.
 
 The standard `link_to` helper in Rails primarily uses query parameters to pass information. These parameters are appended to the URL and are visible in the browser's address bar. This is perfectly acceptable for many situations, but it's not ideal for sensitive data or parameters that are meant to influence server-side logic without being a persistent, addressable part of the navigation. Hidden parameters, on the other hand, are tucked away within the request's form data when a link is clicked, typically as a _post_ request, allowing for more discreet data handling.
 
@@ -23,7 +23,7 @@ Here's an example of how we can achieve this using Rails view code and javascrip
 
 ```
 
-In this example, we're wrapping a form around the content of the link_to. The form is hidden via styling because we don’t actually want a visible form. The javascript triggers the submission of the invisible form when the user clicks the link. This approach provides us with a way to send hidden parameters to the `products_path` as a _post_ request, along with the `source` parameter.
+In this example, we're wrapping a form around the content of the link*to. The form is hidden via styling because we don’t actually want a visible form. The javascript triggers the submission of the invisible form when the user clicks the link. This approach provides us with a way to send hidden parameters to the `products_path` as a \_post* request, along with the `source` parameter.
 
 Let's break down another use case I've encountered—passing information about a specific action context. In a dashboard application, I needed to enable bulk deletion of items, but I didn't want to expose the IDs in the URL during the navigation phase. Here's how I implemented it using a similar technique:
 

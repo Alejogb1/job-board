@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-vs-code-themes-be-applied-to-rider"
 ---
 
-Let's tackle this one, shall we? From my experience, I've often found myself switching between environments, and the desire for consistency in my visual workspace is quite relatable. The short answer to whether visual studio code (vs code) themes can be directly applied to rider is: no, not in a direct, plug-and-play manner. They are fundamentally different beasts under the hood, built on different architectures and technologies. However, it's certainly not the end of the story, and there are viable alternatives that approximate the look and feel. Let's delve deeper.
+one, shall we? From my experience, I've often found myself switching between environments, and the desire for consistency in my visual workspace is quite relatable. The short answer to whether visual studio code (vs code) themes can be directly applied to rider is: no, not in a direct, plug-and-play manner. They are fundamentally different beasts under the hood, built on different architectures and technologies. However, it's certainly not the end of the story, and there are viable alternatives that approximate the look and feel. Let's delve deeper.
 
 The core issue is that vs code uses a json-based theme format, relying on the textmate grammars for syntax highlighting. These grammars are processed by vs code's internal rendering engine. Rider, on the other hand, leverages jetbrains’ proprietary platform, which utilizes a different model for syntax highlighting and theming. Specifically, it uses custom xml configuration files to define styles. Because these foundational structures are not interchangeable, direct theme import is simply not possible. To visualize it, imagine trying to insert a square peg into a round hole – it won't fit even if both shapes aim to achieve the same visual effect.
 
@@ -67,14 +67,14 @@ Here’s a small snippet showcasing how you might use a css override plugin for 
 }
 
 /* Overriding comments */
-.editor-comment{
-    color: #5c6370 !important;
+.editor-comment {
+  color: #5c6370 !important;
 }
 
 /* Overriding method definition */
 .method-definition {
-    color: #e06c75 !important; /* set a color for methods*/
-    font-weight: bold !important; /* makes them appear bold */
+  color: #e06c75 !important; /* set a color for methods*/
+  font-weight: bold !important; /* makes them appear bold */
 }
 ```
 

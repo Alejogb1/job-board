@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-brownie-test-for-the-mainnet-fork-failing-to-run"
 ---
 
-, let's tackle this brownie test failure for the mainnet fork. I've seen this scenario play out more times than I care to count, often with frustratingly subtle causes. It's almost always a confluence of factors, rarely just one isolated problem. From my experience, dealing with mainnet forks in a testing environment can be a bit like navigating a minefield if you're not meticulous in your setup and understand the underlying mechanics at play.
+, brownie test failure for the mainnet fork. I've seen this scenario play out more times than I care to count, often with frustratingly subtle causes. It's almost always a confluence of factors, rarely just one isolated problem. From my experience, dealing with mainnet forks in a testing environment can be a bit like navigating a minefield if you're not meticulous in your setup and understand the underlying mechanics at play.
 
 Typically, a failing brownie test against a mainnet fork boils down to issues related to either the forking configuration, the environment setup within brownie, or the contract interaction itself, including any state-related dependencies. I'll break down these areas based on what I've personally run into, with some code snippets to illustrate.
 

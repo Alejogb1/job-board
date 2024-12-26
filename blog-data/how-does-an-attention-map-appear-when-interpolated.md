@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-does-an-attention-map-appear-when-interpolated"
 ---
 
-Let's tackle this. Interpolation of attention maps, a topic I've frequently encountered in my work with neural networks, can sometimes be perplexing. The visual change that occurs during interpolation isn't always intuitive, and it’s critical to understand what it represents when analyzing model behavior. I remember once dealing with a particularly recalcitrant image classification model where the attention maps kept shifting wildly during gradient-based backpropagation; that taught me the importance of really grasping interpolation's effects.
+. Interpolation of attention maps, a topic I've frequently encountered in my work with neural networks, can sometimes be perplexing. The visual change that occurs during interpolation isn't always intuitive, and it’s critical to understand what it represents when analyzing model behavior. I remember once dealing with a particularly recalcitrant image classification model where the attention maps kept shifting wildly during gradient-based backpropagation; that taught me the importance of really grasping interpolation's effects.
 
 Essentially, interpolation in the context of attention maps refers to the process of resizing a low-resolution attention map to match the dimensions of the input image or feature map that it’s supposedly highlighting. The raw attention maps are often smaller, produced after several layers of processing in a convolutional neural network, so scaling them up to visualize their effect on the input requires interpolation. Without this, you'd essentially just get a blocky, pixelated heat map that doesn’t accurately reflect what part of the image was influencing the network's decision.
 
-Now, the visual impact hinges largely on the *interpolation method* used. You won’t see a uniformly blurred expansion – different techniques yield distinctly different results. Let's examine some common methods and their implications.
+Now, the visual impact hinges largely on the _interpolation method_ used. You won’t see a uniformly blurred expansion – different techniques yield distinctly different results. Let's examine some common methods and their implications.
 
 **Nearest-Neighbor Interpolation:** This method, quite frankly, is the simplest. It involves selecting the nearest pixel value in the low-resolution attention map and duplicating it to fill in the corresponding area in the higher-resolution map. Imagine it as stretching the existing pixels to fill the void. This leads to a blocky, pixelated look where there are no smooth transitions between high and low attention regions. While computationally cheap, it isn't great for understanding fine-grained attention patterns because it doesn’t provide any indication of intermediate attention values between the low-resolution attention map’s existing values. I've seen cases where this can drastically misrepresent the actual attended region, especially on highly detailed images. This approach is less about visualizing a nuanced gradient and more about a quick-and-dirty magnification.
 
@@ -92,6 +92,7 @@ print("\nTensorflow Bilinear:\n", upscaled_bilinear)
 upscaled_bicubic = tf.image.resize(attention_map, [4, 4], method=tf.image.ResizeMethod.BICUBIC)
 print("\nTensorflow Bicubic:\n", upscaled_bicubic)
 ```
+
 Here, we see the same pattern again, now shown in a more model friendly way through the tensorflow library.
 
 For deeper theoretical understanding, I recommend delving into books like "Digital Image Processing" by Rafael C. Gonzalez and Richard E. Woods. This book provides an excellent foundation on interpolation techniques and their mathematical underpinnings. Another great resource is "Computer Vision: Algorithms and Applications" by Richard Szeliski, especially the chapter on image resizing. These resources provide a more complete understanding of the mathematics and applications related to interpolation, going far beyond the initial visualizations.

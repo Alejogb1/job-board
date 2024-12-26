@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-accuracy-so-different-when-i-use-evaluate-and-predict"
 ---
 
-, let's tackle this one. It’s a classic head-scratcher, and I’ve definitely been in that spot before—staring at inexplicably different results from `evaluate()` and `predict()` on machine learning models. It usually boils down to a few core differences in how these methods are implemented and intended to be used, especially when we’re not dealing with the simplest of scenarios. Let's dissect it.
+, one. It’s a classic head-scratcher, and I’ve definitely been in that spot before—staring at inexplicably different results from `evaluate()` and `predict()` on machine learning models. It usually boils down to a few core differences in how these methods are implemented and intended to be used, especially when we’re not dealing with the simplest of scenarios. Let's dissect it.
 
 The fundamental distinction comes from their _purpose_ and how the underlying framework manages calculations during their execution. `evaluate()` is designed, primarily, for model validation and diagnostic purposes. It's meant to give you a good, aggregated assessment of your model's performance over a dataset. It calculates the loss (or cost function) and any specified metrics you've requested. This entire process happens _in a controlled setting_. Crucially, many frameworks use internal mechanisms like 'batching' or specific handling of gradients that optimize for the evaluation phase and might not precisely mirror what happens during individual predictions.
 

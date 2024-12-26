@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-wont-wikibase-docker-start-on-an-azure-container-instance"
 ---
 
-, let's tackle this one. I've definitely seen my share of docker container misbehavior, and wikibase-docker refusing to start on an azure container instance is a classic example of where things can go sideways in deployment. It's never a single smoking gun, usually a confluence of environmental and configuration issues. Let me walk you through the likely culprits based on similar headaches I’ve personally encountered over the years.
+, one. I've definitely seen my share of docker container misbehavior, and wikibase-docker refusing to start on an azure container instance is a classic example of where things can go sideways in deployment. It's never a single smoking gun, usually a confluence of environmental and configuration issues. Let me walk you through the likely culprits based on similar headaches I’ve personally encountered over the years.
 
 First off, it's crucial to understand that Azure Container Instances (ACI) are, at their core, lightweight, single-container deployments. This means complexities handled by full-fledged orchestrators like Kubernetes are now your direct responsibility. We're not dealing with the typical docker-compose setup that wikibase-docker usually assumes. This transition introduces potential fault points.
 

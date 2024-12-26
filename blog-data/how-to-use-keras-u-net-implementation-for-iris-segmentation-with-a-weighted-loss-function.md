@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-keras-u-net-implementation-for-iris-segmentation-with-a-weighted-loss-function"
 ---
 
-, let's tackle this u-net for iris segmentation with weighted loss thing. i've been down this road before, believe me. it’s not as straightforward as plugging in some code and hoping for the best. there are a couple of gotchas that can really throw a wrench in your plans if you're not careful.
+, u-net for iris segmentation with weighted loss thing. i've been down this road before, believe me. it’s not as straightforward as plugging in some code and hoping for the best. there are a couple of gotchas that can really throw a wrench in your plans if you're not careful.
 
 first off, when you're dealing with segmentation, especially with medical images or something like iris scans where the target area might be a small part of the image, class imbalance becomes a real pain. if your network is just trained on the raw pixel data, it’ll learn to predict the background and ignore the iris because the background is way more common. hence, the need for weighted losses which i'll get to in a bit.
 

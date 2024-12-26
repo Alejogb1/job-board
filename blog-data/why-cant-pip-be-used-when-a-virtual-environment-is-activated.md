@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-pip-be-used-when-a-virtual-environment-is-activated"
 ---
 
-, let's tackle this one. It's a question I’ve seen pop up more times than I care to count, and it often boils down to a fundamental misunderstanding of how virtual environments operate and how pip interacts with them. Let's break it down, shall we? It's not that `pip` _can't_ be used when a virtual environment is activated; it's that `pip` _shouldn't_ be used outside an active virtual environment if you aim to keep your projects clean and reproducible.
+, one. It's a question I’ve seen pop up more times than I care to count, and it often boils down to a fundamental misunderstanding of how virtual environments operate and how pip interacts with them. Let's break it down, shall we? It's not that `pip` _can't_ be used when a virtual environment is activated; it's that `pip` _shouldn't_ be used outside an active virtual environment if you aim to keep your projects clean and reproducible.
 
 The core issue stems from the way python manages packages and dependencies. If you install a package using `pip` globally, it'll be placed within the system-wide python installation, typically in a location like `/usr/lib/python3.x/site-packages` on linux-based systems or similar locations on other OSes. This global location can become a chaotic jumble of packages from various projects, leading to potential conflicts and unpredictable behavior when different projects require different versions of the same package. I’ve seen that mess firsthand countless times in my career.
 

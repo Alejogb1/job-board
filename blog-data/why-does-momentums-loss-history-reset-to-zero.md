@@ -4,23 +4,23 @@ date: "2024-12-23"
 id: "why-does-momentums-loss-history-reset-to-zero"
 ---
 
-Let's tackle this concept from a somewhat different angle, perhaps reflecting on a past project where this issue became painfully evident. I recall working on a system for optimizing machine learning model training, specifically focusing on stochastic gradient descent (sgd) variants. We incorporated momentum, intending to accelerate convergence, and initially, the behavior seemed somewhat... baffling. We observed that, under certain conditions, especially after parameter updates involving large gradients or after a model reset, the momentum term seemed to vanish – its 'loss history' effectively reset to zero.
+concept from a somewhat different angle, perhaps reflecting on a past project where this issue became painfully evident. I recall working on a system for optimizing machine learning model training, specifically focusing on stochastic gradient descent (sgd) variants. We incorporated momentum, intending to accelerate convergence, and initially, the behavior seemed somewhat... baffling. We observed that, under certain conditions, especially after parameter updates involving large gradients or after a model reset, the momentum term seemed to vanish – its 'loss history' effectively reset to zero.
 
-At its core, momentum in sgd isn't about storing a past *loss* but rather a weighted average of past *gradient* vectors. Think of it not as a memory of errors but as a velocity vector guiding parameter updates. This vector, typically denoted as 'v', is updated at each iteration by combining a fraction of the current gradient with a fraction of the previous velocity vector. When we say 'loss history reset to zero,' what’s actually resetting is this accumulated velocity, 'v', not any historical measure of the loss function itself. Loss is always calculated based on the current parameters and the data; it’s not a term in momentum.
+At its core, momentum in sgd isn't about storing a past _loss_ but rather a weighted average of past _gradient_ vectors. Think of it not as a memory of errors but as a velocity vector guiding parameter updates. This vector, typically denoted as 'v', is updated at each iteration by combining a fraction of the current gradient with a fraction of the previous velocity vector. When we say 'loss history reset to zero,' what’s actually resetting is this accumulated velocity, 'v', not any historical measure of the loss function itself. Loss is always calculated based on the current parameters and the data; it’s not a term in momentum.
 
 The standard update rule for sgd with momentum typically looks like this:
 
-v(t+1) = β * v(t) + (1- β) * ∇L(θ(t))
+v(t+1) = β _ v(t) + (1- β) _ ∇L(θ(t))
 
-θ(t+1) = θ(t) - α * v(t+1)
+θ(t+1) = θ(t) - α \* v(t+1)
 
 Where:
 
-*   v(t) is the velocity vector at time step t.
-*   β is the momentum coefficient (typically a value between 0 and 1, often close to 0.9).
-*   ∇L(θ(t)) is the gradient of the loss function with respect to the parameters at time step t.
-*   θ(t) is the parameters at time step t.
-*   α is the learning rate.
+- v(t) is the velocity vector at time step t.
+- β is the momentum coefficient (typically a value between 0 and 1, often close to 0.9).
+- ∇L(θ(t)) is the gradient of the loss function with respect to the parameters at time step t.
+- θ(t) is the parameters at time step t.
+- α is the learning rate.
 
 The crux of the issue arises when the 'v' vector is explicitly or implicitly reset to zero. This reset can occur in several common scenarios, and understanding these is vital:
 

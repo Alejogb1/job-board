@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-reusable-templates-be-created-in-cairo"
 ---
 
-Let's tackle this one. Templates, or rather, reusable code patterns, are absolutely crucial when dealing with the kind of complexities Cairo throws at you, especially if you're aiming for maintainability and reducing redundant code, and I've certainly seen my fair share of that over the years. Cairo, while potent, requires some cleverness to structure things in a way that promotes reuse. I remember back in my early days on a project dealing with secure multi-party computation on StarkNet, we had a real mess of duplicated code until we finally nailed down a proper templating strategy. We had to refactor quite a bit, but the effort paid off enormously.
+one. Templates, or rather, reusable code patterns, are absolutely crucial when dealing with the kind of complexities Cairo throws at you, especially if you're aiming for maintainability and reducing redundant code, and I've certainly seen my fair share of that over the years. Cairo, while potent, requires some cleverness to structure things in a way that promotes reuse. I remember back in my early days on a project dealing with secure multi-party computation on StarkNet, we had a real mess of duplicated code until we finally nailed down a proper templating strategy. We had to refactor quite a bit, but the effort paid off enormously.
 
 The core issue in Cairo, stemming from its low-level nature, is the lack of traditional template mechanisms akin to what you might find in, say, C++ or generics in languages like Java or C#. We don't have type parameters we can directly inject. This requires a more hands-on approach. When thinking about reusability in Cairo, I focus on a few specific techniques. The first is to design functions to accept and return abstract types, often using `felt252` as a sort of all-purpose data container, as well as `Span<T>`, which is also critical for generic data handling. The key here is to operate on data structures in a consistent way regardless of the exact type they might hold. This is especially useful if you find yourself needing to perform similar actions on different types.
 
@@ -72,9 +72,11 @@ func test_sum_span_struct() -> (result: felt252):
 
 end
 ```
+
 In this example, notice how the `sum_span` function is designed to operate generically on a `Span{felt252}`. It doesn't care whether that `Span` points to an array of plain `felt252` values, or an array of pointers to structs; the key thing is that we are passing a `felt252` span to the function, allowing reuse across various data types.
 
 For a more complex example, imagine having to perform a similar operation to sum on various complex struct, but this time based on a specific member of the struct, so we also require a function pointer to a getter function.
+
 ```cairo
 %lang starknet
 from starkware.cairo.common.math import assert_nn
@@ -128,9 +130,11 @@ func test_sum_struct_span_with_getter() -> (result: felt252):
     return (result=result,);
 end
 ```
+
 This example takes things a step further by introducing a function pointer (`get_member`). This allows us to pass any function with the `(MyStruct) -> (felt252)` signature, achieving an even higher level of generalization. Here, the `sum_struct_span` can now add the result of any `felt252` returned from the passed getter function.
 
 Finally, let's illustrate a more specific case, where you want to pass `Span<T>` with different types, and require a custom size to use that data properly:
+
 ```cairo
 %lang starknet
 from starkware.cairo.common.math import assert_nn
@@ -195,6 +199,7 @@ func test_process_data_struct() -> ():
     return ();
 end
 ```
+
 Here we have the function `process_data`, which takes a span, a size parameter and a process function. This allows us to iterate over the data with the correct step, while also allowing any type of function to be used on the data. This means we can perform data processing on different types of spans without rewriting the data loop.
 
 In essence, "templating" in Cairo is about embracing abstraction, focusing on operating on data views and pointers, and utilizing function pointers to achieve flexible and reusable code patterns. It's not as straightforward as in other languages, but with careful design, it's definitely achievable.

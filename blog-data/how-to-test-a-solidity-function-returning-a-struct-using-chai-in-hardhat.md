@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-test-a-solidity-function-returning-a-struct-using-chai-in-hardhat"
 ---
 
-, let's tackle this one. It's not uncommon to find yourself needing to thoroughly test Solidity functions that return structs, especially when dealing with complex data structures in your smart contracts. I've certainly been in that position countless times, often having to unravel some rather intricate test scenarios. The core of the challenge, as I see it, isn't simply _calling_ the function; it's about effectively asserting that the returned struct contains the values you expect after your logic has executed.
+, one. It's not uncommon to find yourself needing to thoroughly test Solidity functions that return structs, especially when dealing with complex data structures in your smart contracts. I've certainly been in that position countless times, often having to unravel some rather intricate test scenarios. The core of the challenge, as I see it, isn't simply _calling_ the function; it's about effectively asserting that the returned struct contains the values you expect after your logic has executed.
 
 Using Chai within Hardhat's testing environment provides a powerful and relatively straightforward mechanism to achieve this. The typical stumbling block for many developers tends to be how to access the individual fields within the returned struct for assertion purposes, since the returned value is essentially a complex object. This is where a clear understanding of how Solidity and Javascript (the language used within Hardhat's test files) interact is critical.
 

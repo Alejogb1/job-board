@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-a-valueerror-no-gradients-provided-for-a-custom-loss-function"
 ---
 
-Right then, let's tackle this "ValueError: No gradients provided" issue, a classic headache when venturing into custom loss functions. I've seen this particular error rear its ugly head more times than i care to recall, often in situations where we're pushing the boundaries of standard machine learning models. It’s usually a sign that the gradient calculation, the very engine of backpropagation, is either missing or incorrectly defined. When building your own loss functions, especially in deep learning frameworks like tensorflow or pytorch, a seemingly small oversight in the gradient definition can bring the training process to a screeching halt.
+Right then, "ValueError: No gradients provided" issue, a classic headache when venturing into custom loss functions. I've seen this particular error rear its ugly head more times than i care to recall, often in situations where we're pushing the boundaries of standard machine learning models. It’s usually a sign that the gradient calculation, the very engine of backpropagation, is either missing or incorrectly defined. When building your own loss functions, especially in deep learning frameworks like tensorflow or pytorch, a seemingly small oversight in the gradient definition can bring the training process to a screeching halt.
 
 Essentially, the error message is your framework saying, "Hey, i know you defined a way to measure how well the model is doing (your loss), but you haven’t told me how to adjust the model’s parameters to improve." Backpropagation needs a gradient, which is a vector of partial derivatives indicating the direction and magnitude of change needed for each parameter. Without it, it's like trying to drive a car without a steering wheel; you have a destination but no mechanism to get there.
 
@@ -38,6 +38,7 @@ with tf.GradientTape() as tape:
 # this line would cause the "No gradients provided" error during real model training
 # gradients = tape.gradient(loss, trainable_variables) # this will cause the value error
 ```
+
 In this initial example, if you attempt to calculate the gradients of the loss with respect to any trainable variables (for example, weights of a model) you would encounter the "No gradients provided" error. The problem here is that the `y_pred` tensor needs to have been derived from some trainable variable through operations that tf's `GradientTape` can track. It's not enough just to write the function; you need to embed it into the gradient computation pipeline.
 
 **Scenario 2: TensorFlow with GradientTape and trainable variables**

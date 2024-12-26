@@ -18,7 +18,7 @@ Here's a crucial point though I've found It's very easy to mess up the configura
 
 When I first started using Weka I made that mistake frequently My parameters would be too wide of a range and the program would run for hours even days Sometimes I would simply abandon them after a while because I thought something was wrong with the script itself When I checked later on I realised it was just me not knowing how to configure the parameters correctly This is very common believe me
 
-So let's tackle this with some concrete examples first how to set this up
+So with some concrete examples first how to set this up
 
 ```java
 import weka.classifiers.Classifier;

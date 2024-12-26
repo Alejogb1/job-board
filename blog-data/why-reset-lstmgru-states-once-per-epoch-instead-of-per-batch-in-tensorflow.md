@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-reset-lstmgru-states-once-per-epoch-instead-of-per-batch-in-tensorflow"
 ---
 
-Let's tackle this one. I remember a particularly nasty sequence-to-sequence translation project a few years back where this very detail became the linchpin of whether our models converged or not. The initial assumption, naturally, was that resetting the recurrent neural network states—specifically lstm and gru—after each batch would be the optimal approach. After all, each batch is a new set of inputs, isn't it? However, that's where we ran into significant instability and poor learning. Let me explain why resetting states per epoch, rather than per batch, is often the more appropriate methodology in tensorflow and similar frameworks, and why this choice directly impacts model performance.
+one. I remember a particularly nasty sequence-to-sequence translation project a few years back where this very detail became the linchpin of whether our models converged or not. The initial assumption, naturally, was that resetting the recurrent neural network states—specifically lstm and gru—after each batch would be the optimal approach. After all, each batch is a new set of inputs, isn't it? However, that's where we ran into significant instability and poor learning. Let me explain why resetting states per epoch, rather than per batch, is often the more appropriate methodology in tensorflow and similar frameworks, and why this choice directly impacts model performance.
 
 The core issue revolves around how recurrent neural networks, particularly lstm and gru, process information. These models maintain an internal memory, or 'state', that allows them to retain information from previous time steps. This state is crucial for handling sequential data where context is paramount. Resetting this state means the model effectively forgets everything about the sequence it just processed, including the learned dependencies.
 
@@ -46,9 +46,9 @@ for epoch in range(epochs):
        model.train_on_batch(batch_data, batch_labels)
 ```
 
-In this first example, we utilize tensorflow's default, *stateful=False*, behavior for the lstm layer. Note how the model doesn't require explicit state resetting at all. This implementation implicitly handles the state by resetting it at the start of each *epoch*, as the batches are processed sequentially within the epoch. This provides a functional baseline. The key is in how the data is iterated - the dataset is iterated once fully, before restarting the whole loop, and the model is expected to retain state between batches inside of the loop.
+In this first example, we utilize tensorflow's default, _stateful=False_, behavior for the lstm layer. Note how the model doesn't require explicit state resetting at all. This implementation implicitly handles the state by resetting it at the start of each _epoch_, as the batches are processed sequentially within the epoch. This provides a functional baseline. The key is in how the data is iterated - the dataset is iterated once fully, before restarting the whole loop, and the model is expected to retain state between batches inside of the loop.
 
-Now, let's explore how you might *incorrectly* try to force a reset at batch level and how it goes wrong.
+Now, let's explore how you might _incorrectly_ try to force a reset at batch level and how it goes wrong.
 
 ```python
 import tensorflow as tf
@@ -81,7 +81,8 @@ for epoch in range(epochs):
         model.reset_states() # the mistake is here, resetting the state each batch
         model.train_on_batch(batch_data, batch_labels)
 ```
-Here, the crucial change is the inclusion of `stateful=True` in the lstm layer and subsequent manual `model.reset_states()` call in the training loop *before* processing each batch. This attempts to force a state reset for each batch rather than the proper behavior of resetting between epochs. This approach will generally degrade performance because you are throwing away all temporal context learned during a single epoch.
+
+Here, the crucial change is the inclusion of `stateful=True` in the lstm layer and subsequent manual `model.reset_states()` call in the training loop _before_ processing each batch. This attempts to force a state reset for each batch rather than the proper behavior of resetting between epochs. This approach will generally degrade performance because you are throwing away all temporal context learned during a single epoch.
 
 Finally, let's look at an example that provides a closer approximation to the proper method, using the `stateful` option to retain state across batches within one epoch and to reset the state at the beginning of each epoch:
 
@@ -116,7 +117,8 @@ for epoch in range(epochs):
     for batch_data, batch_labels in dataset:
         model.train_on_batch(batch_data, batch_labels)
 ```
-Here, the `stateful=True` parameter maintains the state across batches within the epoch. We then explicitly `model.reset_states()` at the *start* of *each epoch*. This method is generally the more appropriate approach for tasks that need long-range dependencies as the model remembers the past through the whole epoch.
+
+Here, the `stateful=True` parameter maintains the state across batches within the epoch. We then explicitly `model.reset_states()` at the _start_ of _each epoch_. This method is generally the more appropriate approach for tasks that need long-range dependencies as the model remembers the past through the whole epoch.
 
 For further reading, I'd strongly recommend exploring the following:
 
@@ -125,4 +127,4 @@ For further reading, I'd strongly recommend exploring the following:
 3.  **"Understanding LSTM Networks" by Christopher Olah**: Though not a book, this blog post provides a fantastic visualization and explanation of lstm internals. While it might not specifically address state resets in tensorflow, it offers a fundamental understanding of how lstms work. Understanding the theory helps make correct implementation choices.
 4.  **Tensorflow documentation on recurrent layers:** Specifically, look at the documentation for tf.keras.layers.lstm and tf.keras.layers.gru and carefully review the sections on `stateful` parameter behavior.
 
-In summary, resetting lstm and gru states per *epoch* rather than per *batch* is usually the correct strategy in tensorflow and other deep learning frameworks. The fundamental reason is the necessity to retain inter-batch context and learn longer-range temporal dependencies in sequential data. Resetting after each batch can significantly hinder learning, whereas resetting at the beginning of each epoch allows for effective learning and improved performance across epochs. The devil, as they say, often lies in the details, and understanding the state management of recurrent layers is fundamental for training robust and performant sequence models.
+In summary, resetting lstm and gru states per _epoch_ rather than per _batch_ is usually the correct strategy in tensorflow and other deep learning frameworks. The fundamental reason is the necessity to retain inter-batch context and learn longer-range temporal dependencies in sequential data. Resetting after each batch can significantly hinder learning, whereas resetting at the beginning of each epoch allows for effective learning and improved performance across epochs. The devil, as they say, often lies in the details, and understanding the state management of recurrent layers is fundamental for training robust and performant sequence models.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-should-train-data-be-split"
 ---
 
-Let's tackle this, shall we? Data splitting – a seemingly simple task that’s often the bedrock upon which a robust model is built, or, conversely, where things can go terribly wrong. It's a subject I've seen cause more headaches than necessary in my years working on machine learning projects. I recall a project involving predicting customer churn for a large telco where a naive split nearly tanked the entire initiative. The issue wasn't the algorithms we were using but the fundamental manner in which we had portioned our data. It was a stark lesson in the importance of understanding the nuances of train, validation, and test set creation.
+, shall we? Data splitting – a seemingly simple task that’s often the bedrock upon which a robust model is built, or, conversely, where things can go terribly wrong. It's a subject I've seen cause more headaches than necessary in my years working on machine learning projects. I recall a project involving predicting customer churn for a large telco where a naive split nearly tanked the entire initiative. The issue wasn't the algorithms we were using but the fundamental manner in which we had portioned our data. It was a stark lesson in the importance of understanding the nuances of train, validation, and test set creation.
 
-When we talk about splitting data, we are essentially creating distinct subsets to serve different purposes in the model development lifecycle. The primary goal is to train a model on one portion of the data (the train set), evaluate its performance on unseen data (the validation set), and then, finally, measure its generalization capability on a completely held-out portion (the test set). The crucial thing to understand is that *each* set must accurately represent the overall population distribution to avoid biases or misleading metrics.
+When we talk about splitting data, we are essentially creating distinct subsets to serve different purposes in the model development lifecycle. The primary goal is to train a model on one portion of the data (the train set), evaluate its performance on unseen data (the validation set), and then, finally, measure its generalization capability on a completely held-out portion (the test set). The crucial thing to understand is that _each_ set must accurately represent the overall population distribution to avoid biases or misleading metrics.
 
 The most basic split, often seen as the starting point, is simply partitioning the data into three sets: train, validation, and test. A common ratio is 70-15-15 or 80-10-10; however, these are not gospel. The ideal ratio depends on various factors including the total dataset size and the complexity of the task. For a larger dataset, a smaller percentage for validation and testing may be acceptable, whereas with limited data, you might consider techniques like k-fold cross-validation or stratification for a more effective evaluation.
 
@@ -105,8 +105,8 @@ In summary, there is no single “best” way to split data; it’s all contextu
 
 For deeper dives on splitting data effectively, I recommend consulting these sources:
 
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book provides very solid and practical explanations of different data splitting techniques and their implications.
-*   **"The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman:** A more theoretical but thorough look at statistical learning techniques, including evaluation methodologies. It's denser but will certainly provide a solid foundation.
-*   **Research papers specific to your type of data and machine learning problem:** Databases like ArXiv or IEEE Xplore may reveal nuanced splitting strategies relevant to the research domain.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book provides very solid and practical explanations of different data splitting techniques and their implications.
+- **"The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman:** A more theoretical but thorough look at statistical learning techniques, including evaluation methodologies. It's denser but will certainly provide a solid foundation.
+- **Research papers specific to your type of data and machine learning problem:** Databases like ArXiv or IEEE Xplore may reveal nuanced splitting strategies relevant to the research domain.
 
 Remember that the data splitting strategy is not an afterthought but rather a critical part of a robust model building process. Consider data characteristics when making these decisions, otherwise you'll end up with unreliable models.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-the-cnn-perform-poorly-in-gtas-automated-car"
 ---
 
-Let's tackle this head-on, shall we? The performance of convolutional neural networks (CNNs) in the context of automated driving within environments like Grand Theft Auto (GTA) is, putting it mildly, a complex topic. It's not just a case of "slap a network on it and go." I've seen this firsthand, particularly back when I was working on a simulated autonomous drone project – the challenges with perception and prediction share significant overlap with driving in a highly dynamic virtual environment. We were struggling with similar issues; it seemed like every corner we turned, another unexpected hiccup arose.
+head-on, shall we? The performance of convolutional neural networks (CNNs) in the context of automated driving within environments like Grand Theft Auto (GTA) is, putting it mildly, a complex topic. It's not just a case of "slap a network on it and go." I've seen this firsthand, particularly back when I was working on a simulated autonomous drone project – the challenges with perception and prediction share significant overlap with driving in a highly dynamic virtual environment. We were struggling with similar issues; it seemed like every corner we turned, another unexpected hiccup arose.
 
-The core problem isn’t inherently that CNNs are *bad* per se. Rather, it’s that they’re susceptible to a confluence of factors that are often amplified in complex simulated environments like GTA. We're not talking about static image recognition here; we're talking about a continuous stream of visual data, coupled with constant changes in lighting, weather, object dynamics, and human behavior. It’s a far cry from the carefully curated datasets most CNNs are initially trained on.
+The core problem isn’t inherently that CNNs are _bad_ per se. Rather, it’s that they’re susceptible to a confluence of factors that are often amplified in complex simulated environments like GTA. We're not talking about static image recognition here; we're talking about a continuous stream of visual data, coupled with constant changes in lighting, weather, object dynamics, and human behavior. It’s a far cry from the carefully curated datasets most CNNs are initially trained on.
 
 Let’s break it down into a few key areas:
 

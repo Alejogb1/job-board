@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-docker-compose-stack-using-azure-container-instances"
 ---
 
-Let's tackle this, shall we? I've spent a fair bit of time navigating the intersection of docker compose and cloud container services, and, specifically, Azure container instances (aci). It's not a direct mapping, as you'll discover, but there are workarounds and strategies that get you surprisingly close to that familiar docker compose workflow. I recall a particularly challenging project a couple of years back, where we had to rapidly deploy a multi-container application for a proof of concept, and we absolutely needed a lean, serverless option—that's when we really dove deep into this area.
+, shall we? I've spent a fair bit of time navigating the intersection of docker compose and cloud container services, and, specifically, Azure container instances (aci). It's not a direct mapping, as you'll discover, but there are workarounds and strategies that get you surprisingly close to that familiar docker compose workflow. I recall a particularly challenging project a couple of years back, where we had to rapidly deploy a multi-container application for a proof of concept, and we absolutely needed a lean, serverless option—that's when we really dove deep into this area.
 
 The critical thing to understand is that docker compose is, fundamentally, designed for local development or orchestrated environments like docker swarm or kubernetes. Aci, conversely, is a container-as-a-service offering with different constraints and operational models. Directly deploying a `docker-compose.yml` isn't natively supported. Instead, we must translate the concepts embedded within that yaml file into individual aci deployments, often orchestrated by other azure tools.
 
@@ -28,7 +28,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: my_database
     ports:
-       - "5432:5432"
+      - "5432:5432"
 ```
 
 Now, if we were to translate that into aci-friendly commands, using the azure cli, it would look like this:

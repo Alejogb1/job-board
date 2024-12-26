@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-access-a-stored-claimsprincipal-in-aspnet-core"
 ---
 
-, let's tackle this issue – accessing a stored `ClaimsPrincipal` in an ASP.NET Core application. This is a scenario I've seen crop up multiple times in projects, and it usually boils down to a misunderstanding of how authentication middleware and the underlying http context work, especially regarding persistence. Let's dissect this.
+, issue – accessing a stored `ClaimsPrincipal` in an ASP.NET Core application. This is a scenario I've seen crop up multiple times in projects, and it usually boils down to a misunderstanding of how authentication middleware and the underlying http context work, especially regarding persistence. Let's dissect this.
 
 Fundamentally, a `ClaimsPrincipal` represents the authenticated user and their associated claims. In a standard ASP.NET Core setup, this is built by the authentication middleware during each request, based on the incoming authorization data—cookies, bearer tokens, etc. Crucially, this object isn't inherently persisted; its lifetime is typically tied to the request lifecycle. When you attempt to store and retrieve it outside this request context, you'll run into difficulties because the serialized form might not be directly usable in a new context.
 

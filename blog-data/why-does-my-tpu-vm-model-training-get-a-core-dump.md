@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-my-tpu-vm-model-training-get-a-core-dump"
 ---
 
-, let's tackle this core dump during TPU VM model training. I've seen my share of these, and frankly, they’re rarely straightforward. A core dump, in essence, is a snapshot of a program’s memory at the point of failure. When it happens during TPU training, it suggests a catastrophic, often hardware-related, issue or a really deep flaw in how your program interacts with the tensor processing unit. Let's break down what commonly causes these problems and how to approach debugging them.
+, core dump during TPU VM model training. I've seen my share of these, and frankly, they’re rarely straightforward. A core dump, in essence, is a snapshot of a program’s memory at the point of failure. When it happens during TPU training, it suggests a catastrophic, often hardware-related, issue or a really deep flaw in how your program interacts with the tensor processing unit. Let's break down what commonly causes these problems and how to approach debugging them.
 
 First, it's rarely the TPU _itself_ being faulty. More often, it's the way the software stack—your code, the libraries, the TPU driver—interacts with the hardware. Think of it as a delicate dance. One wrong step can lead to a trip, a stumble, or in this case, a core dump. I distinctly remember a project back in '19, involving a large-scale transformer model. We were pushing the limits of the hardware, and core dumps became, unfortunately, a regular part of our debugging routine. That experience taught me a lot about the nuances of TPU programming, especially in distributed training scenarios.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-grails-spring-batch-plugin-unable-to-locate-defined-jobs"
 ---
 
-Let's tackle this one. I remember a particularly challenging project back in '14 where we migrated a legacy system to Grails and used the Spring Batch plugin for a crucial data processing pipeline. We faced a seemingly intractable issue where, despite clearly defining our batch jobs, the plugin simply refused to acknowledge their existence. It took a fair bit of troubleshooting, and looking back, the reasons, while technical, were quite logical and often overlooked.
+one. I remember a particularly challenging project back in '14 where we migrated a legacy system to Grails and used the Spring Batch plugin for a crucial data processing pipeline. We faced a seemingly intractable issue where, despite clearly defining our batch jobs, the plugin simply refused to acknowledge their existence. It took a fair bit of troubleshooting, and looking back, the reasons, while technical, were quite logical and often overlooked.
 
 The core issue, in my experience, almost always boils down to how the plugin discovers and manages its job definitions. The Grails Spring Batch plugin, fundamentally, is an integration layer. It’s essentially a Spring application context grafted onto a Grails application’s structure. This means our job definitions need to be correctly integrated into this context, and any discrepancy will result in the plugin acting like it can't find the proverbial needle in the haystack. The reasons this integration may fail are usually a combination of incorrect configuration, class loading issues, and scoping concerns.
 
@@ -136,6 +136,7 @@ class MyTasklet implements Tasklet {
     }
 }
 ```
+
 and then the job bean:
 
 ```groovy

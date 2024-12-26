@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-can-a-graphql-playground-be-used-to-query-loopring-nfts"
 ---
 
-Let's tackle this interesting query regarding GraphQL playgrounds and Loopring NFTs. It's something I had to get my hands dirty with a few years back during a project involving blockchain-based asset management, and believe me, the initial setup wasn't exactly trivial. While Loopring itself doesn’t inherently offer a direct GraphQL endpoint, we can leverage the Loopring API (or a third-party service built on it) which provides the necessary data. Then, with a bit of careful configuration, a GraphQL playground becomes an exceptionally powerful tool for querying this data about Loopring NFTs.
+interesting query regarding GraphQL playgrounds and Loopring NFTs. It's something I had to get my hands dirty with a few years back during a project involving blockchain-based asset management, and believe me, the initial setup wasn't exactly trivial. While Loopring itself doesn’t inherently offer a direct GraphQL endpoint, we can leverage the Loopring API (or a third-party service built on it) which provides the necessary data. Then, with a bit of careful configuration, a GraphQL playground becomes an exceptionally powerful tool for querying this data about Loopring NFTs.
 
-First, it’s crucial to understand that GraphQL playgrounds like GraphiQL or Apollo Sandbox aren’t directly communicating with the Loopring smart contracts on the blockchain. They interact with a service that has already processed and indexed the blockchain data, presenting it through an API – typically a REST API or, ideally, a GraphQL endpoint. This middleman is essential. Attempting to query the blockchain directly with GraphQL wouldn't work. I've seen junior devs try this, and it's never pretty. So, what we need is to identify this API endpoint first. Assume for a moment that you've located a service that *does* provide a GraphQL endpoint for Loopring NFTs. For the sake of this demonstration, let’s call it `https://api.exampleloopring.com/graphql`. This is completely fictional, but the logic holds.
+First, it’s crucial to understand that GraphQL playgrounds like GraphiQL or Apollo Sandbox aren’t directly communicating with the Loopring smart contracts on the blockchain. They interact with a service that has already processed and indexed the blockchain data, presenting it through an API – typically a REST API or, ideally, a GraphQL endpoint. This middleman is essential. Attempting to query the blockchain directly with GraphQL wouldn't work. I've seen junior devs try this, and it's never pretty. So, what we need is to identify this API endpoint first. Assume for a moment that you've located a service that _does_ provide a GraphQL endpoint for Loopring NFTs. For the sake of this demonstration, let’s call it `https://api.exampleloopring.com/graphql`. This is completely fictional, but the logic holds.
 
 The first step is configuring our GraphQL playground. GraphiQL and Apollo Sandbox, among others, all generally work the same way: they allow you to specify the endpoint to query and have the capability to write and execute GraphQL queries and mutations. Here is a simple example of setting up a basic query in a playground like GraphiQL:
 
@@ -23,6 +23,7 @@ query GetUserNFTs {
   }
 }
 ```
+
 This query is hypothetical, but illustrative. It demonstrates the kind of information we might extract. I remember needing something similar when trying to build a basic NFT display component – showing users a quick view of their owned items. In my past project, we ended up using pagination to avoid pulling all the nfts a user had, since some users, particularly those with early engagement, had vast collections.
 
 Here's what's going on with the above code snippet: we're defining a GraphQL query named `GetUserNFTs`, which aims to retrieve information about a user's NFTs. We're passing an argument, `id` (in this case, the user's address), to the `user` field, and in turn, we ask for its `nfts` field which contains an array of NFT objects. The structure of these objects is what you'd expect: a token id, a uri pointing to its metadata, the time it was minted, the associated contract address, and the type of nft. Of course, the exact structure depends on the API provider, but generally follows this pattern for on-chain data.
@@ -32,16 +33,13 @@ Now, let's consider more practical examples. Suppose you want to filter the NFTs
 ```graphql
 query FilteredNFTs {
   nfts(
-    filter: {
-      contractAddress: "0xsomeContractAddress",
-      nftType: "erc721"
-    }
+    filter: { contractAddress: "0xsomeContractAddress", nftType: "erc721" }
   ) {
     tokenId
     metadataUri
     mintTime
     owner {
-        id
+      id
     }
   }
 }

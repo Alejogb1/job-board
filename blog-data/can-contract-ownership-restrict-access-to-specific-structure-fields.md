@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "can-contract-ownership-restrict-access-to-specific-structure-fields"
 ---
 
-Let's tackle this directly, shall we? The question of whether contract ownership can restrict access to specific structure fields is nuanced and touches upon core principles in smart contract development, particularly within the context of solidity. It’s not a simple yes or no answer. My experience with developing decentralized applications, especially in environments requiring strict permissioning, has taught me the critical importance of managing data visibility. In short, contract ownership *itself* doesn't directly restrict access at the storage level to specific fields. However, you absolutely use contract ownership, along with carefully designed access control mechanisms, to enforce restrictions *logically*. Let’s break that down, going a bit deeper than surface-level understanding.
+directly, shall we? The question of whether contract ownership can restrict access to specific structure fields is nuanced and touches upon core principles in smart contract development, particularly within the context of solidity. It’s not a simple yes or no answer. My experience with developing decentralized applications, especially in environments requiring strict permissioning, has taught me the critical importance of managing data visibility. In short, contract ownership _itself_ doesn't directly restrict access at the storage level to specific fields. However, you absolutely use contract ownership, along with carefully designed access control mechanisms, to enforce restrictions _logically_. Let’s break that down, going a bit deeper than surface-level understanding.
 
 The fundamental aspect here revolves around the concept of visibility modifiers and modifier functions in solidity. These are tools you wield to determine if a particular function or a state variable can be accessed and modified by different callers. When we say a variable is private, internal, or public, we're defining these access boundaries. When we talk about ownership, we’re usually referring to a specific address, typically the one that deployed the contract. This address gains privileged abilities, like calling functions only designated for the owner.
 
-Now, let's clarify: even if a field is *private*, it doesn’t inherently mean it's cryptographically invisible or impossible to access. It means solidity’s compiler will prevent *direct* access through normal contract function calls, outside of the contract's own functions. With sufficiently advanced techniques, such as accessing raw storage using tools like `web3.eth.getStorageAt` (which is not recommended in typical use cases), one could potentially inspect storage locations and their values. This is where the logical restrictions become crucial.
+Now, let's clarify: even if a field is _private_, it doesn’t inherently mean it's cryptographically invisible or impossible to access. It means solidity’s compiler will prevent _direct_ access through normal contract function calls, outside of the contract's own functions. With sufficiently advanced techniques, such as accessing raw storage using tools like `web3.eth.getStorageAt` (which is not recommended in typical use cases), one could potentially inspect storage locations and their values. This is where the logical restrictions become crucial.
 
-The way I've consistently and effectively implemented field access restriction is by leveraging modifier functions that check ownership *before* performing certain actions. Let's look at three example scenarios, coded in solidity to illustrate this:
+The way I've consistently and effectively implemented field access restriction is by leveraging modifier functions that check ownership _before_ performing certain actions. Let's look at three example scenarios, coded in solidity to illustrate this:
 
 **Example 1: Restricted Modification of User Data**
 
@@ -50,7 +50,7 @@ contract UserData {
 }
 ```
 
-In this example, `modifyUserName` is decorated with `onlyOwner`. This modifier ensures that only the contract owner can alter a user’s name. Any non-owner attempting this will trigger a revert. The contract owner has *logical* ownership privileges. The `users` mapping, although publicly viewable via the `getUserName` function, can only be *modified* via `modifyUserName` which is gated by the ownership check.
+In this example, `modifyUserName` is decorated with `onlyOwner`. This modifier ensures that only the contract owner can alter a user’s name. Any non-owner attempting this will trigger a revert. The contract owner has _logical_ ownership privileges. The `users` mapping, although publicly viewable via the `getUserName` function, can only be _modified_ via `modifyUserName` which is gated by the ownership check.
 
 **Example 2: Controlled Access to Configuration Parameters**
 
@@ -125,6 +125,7 @@ contract TimelockedData {
     }
 }
 ```
+
 In this example, modifying `_secretData` through the `setSecretData` function requires both ownership (onlyOwner) and the time lock to be open (afterUnlock). The owner can extend the lock time. Even though the secret data is marked as private, it can be accessed through the view function `getSecretData` which demonstrates the limitation of privacy modifier on its own.
 
 These examples demonstrate that the real control over data visibility lies in a combination of modifiers and proper access control checks, not solely on storage modifiers. Contract ownership acts as the backbone of permissioning within these structures, but it's the solidity language features and your use of modifiers that determine actual access.

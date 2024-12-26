@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-download-dag-files-from-a-github-repository"
 ---
 
-Let's tackle this, shall we? It’s a common need, and I’ve certainly navigated this particular landscape many times, especially during my stint managing cloud workflows a few years back. You’re looking to pull Directed Acyclic Graph (DAG) files from a GitHub repository, which, while conceptually straightforward, can involve a few practical considerations that I’ve learned to appreciate over time.
+, shall we? It’s a common need, and I’ve certainly navigated this particular landscape many times, especially during my stint managing cloud workflows a few years back. You’re looking to pull Directed Acyclic Graph (DAG) files from a GitHub repository, which, while conceptually straightforward, can involve a few practical considerations that I’ve learned to appreciate over time.
 
 Essentially, you’re trying to get files that define your workflows, often for tools like Apache Airflow or similar orchestration systems. These files are typically Python scripts but could also be YAML or other formats, depending on your specific setup. You'll usually want these files in your local environment, or perhaps on a server, so that the orchestration tool can pick them up and execute your pipelines.
 
@@ -52,7 +52,7 @@ local_dag_dir = "dag_files"
 def download_dags(repository_url, local_dag_dir):
     #clone repo
     subprocess.run(["git", "clone", repository_url])
-    
+
     #navigate to repo
     os.chdir(repo_name)
 
@@ -63,7 +63,7 @@ def download_dags(repository_url, local_dag_dir):
     for file_name in os.listdir("dags"):
       if file_name.endswith(".py"):
         shutil.copy(os.path.join("dags",file_name), os.path.join("..",local_dag_dir,file_name))
-    
+
     #remove the cloned repo if needed
     os.chdir("..")
     shutil.rmtree(repo_name)
@@ -135,7 +135,7 @@ def get_dag_files_via_api(repository_owner, repository_name, dag_directory, loca
   headers = {}
   if github_token:
         headers = {"Authorization": f"token {github_token}"}
-    
+
   api_url = f"https://api.github.com/repos/{repository_owner}/{repository_name}/contents/{dag_directory}"
   response = requests.get(api_url, headers=headers)
 
@@ -170,9 +170,9 @@ This code iterates through files within the specified directory. It downloads Py
 
 For those interested in delving deeper, I'd recommend looking into:
 
-* **"Pro Git" by Scott Chacon and Ben Straub**: This is a comprehensive resource for all things Git and provides a thorough understanding of sparse checkout and other advanced functionalities. It's freely available online and in print.
-* **GitHub's REST API documentation**: This is essential if you plan to interact directly with the GitHub API as I have outlined in the third method. It explains authentication, endpoints, and all available functionalities in detail.
-* **The Apache Airflow documentation**: If you are working with Apache Airflow, its official documentation is vital to understand how to structure and manage your DAG files effectively. It also provides guidance on deployment strategies.
-* **Various blogs and articles on version control best practices:** There are countless great blog posts and technical articles on how to effectively manage your repositories and automate your workflow. Use them to further refine your strategies, based on experience.
+- **"Pro Git" by Scott Chacon and Ben Straub**: This is a comprehensive resource for all things Git and provides a thorough understanding of sparse checkout and other advanced functionalities. It's freely available online and in print.
+- **GitHub's REST API documentation**: This is essential if you plan to interact directly with the GitHub API as I have outlined in the third method. It explains authentication, endpoints, and all available functionalities in detail.
+- **The Apache Airflow documentation**: If you are working with Apache Airflow, its official documentation is vital to understand how to structure and manage your DAG files effectively. It also provides guidance on deployment strategies.
+- **Various blogs and articles on version control best practices:** There are countless great blog posts and technical articles on how to effectively manage your repositories and automate your workflow. Use them to further refine your strategies, based on experience.
 
 In summary, while using `git clone` is the most direct way to acquire the entire repository, `git sparse-checkout` provides a leaner approach when you need only the DAGs. If your pipeline requires git-independent file access, the GitHub API can be highly efficient. Each method has its own set of trade-offs, and the best one depends on your specific needs and context.

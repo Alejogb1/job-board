@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-gem-native-extensions-failing-to-build-in-docker-images"
 ---
 
-, let's tackle this one. I've seen my share of gem native extension build failures within Docker, and it can definitely feel like chasing ghosts if you don't understand the underlying causes. It’s a particularly annoying issue because the build often works perfectly on your local machine, but falls apart in the container. It's almost never a random occurrence. There are usually specific and logical reasons why this happens, primarily stemming from discrepancies in the environment, dependencies, and build processes.
+, one. I've seen my share of gem native extension build failures within Docker, and it can definitely feel like chasing ghosts if you don't understand the underlying causes. It’s a particularly annoying issue because the build often works perfectly on your local machine, but falls apart in the container. It's almost never a random occurrence. There are usually specific and logical reasons why this happens, primarily stemming from discrepancies in the environment, dependencies, and build processes.
 
 When I first encountered this problem a few years back, while setting up a continuous integration pipeline for a rather complex rails application, I nearly pulled my hair out. The application relied heavily on image processing libraries, many of which had native extensions compiled from C. Locally, development was smooth sailing. But in the dockerized CI/CD environment, these gems kept failing during the `bundle install` phase. After much troubleshooting, it became clear that the Docker environment wasn’t as close to my development setup as I’d initially thought.
 
@@ -16,7 +16,7 @@ Native extensions require specific system-level tools to compile, like `make`, `
 
 **2. Incompatible Architecture or Operating System:**
 
-Another common culprit is building on an architecture different from the target deployment environment. If you develop on an x86_64 machine but deploy on an ARM64 server (or vice-versa), pre-built native extensions will likely be incompatible. The same problem occurs with minor version differences of underlying libraries (for example, different version of `libc`). If you compile the extensions _within_ the Docker build process on the correct target system, this mismatch is avoided. However, pre-built binaries from gems are tied to the environment they were compiled in. This is why it is crucial to build native extensions _inside_ the final docker image, and not use pre-built binaries.
+Another common culprit is building on an architecture different from the target deployment environment. If you develop on an x86*64 machine but deploy on an ARM64 server (or vice-versa), pre-built native extensions will likely be incompatible. The same problem occurs with minor version differences of underlying libraries (for example, different version of `libc`). If you compile the extensions \_within* the Docker build process on the correct target system, this mismatch is avoided. However, pre-built binaries from gems are tied to the environment they were compiled in. This is why it is crucial to build native extensions _inside_ the final docker image, and not use pre-built binaries.
 
 **3. Incorrect or Incomplete System Libraries:**
 

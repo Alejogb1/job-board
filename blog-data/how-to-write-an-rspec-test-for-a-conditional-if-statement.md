@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-write-an-rspec-test-for-a-conditional-if-statement"
 ---
 
-Let's tackle this head-on, because I’ve certainly had my share of debugging conditional logic gone awry, especially in complex applications. Testing `if` statements properly in RSpec is fundamental to building robust, maintainable Ruby code. The trick isn't just about asserting that the code *runs*, but about validating that the different *paths* created by the conditions behave as intended. Over the years, I've found a few common pitfalls and best practices that I'd like to share, focusing on clarity and completeness.
+head-on, because I’ve certainly had my share of debugging conditional logic gone awry, especially in complex applications. Testing `if` statements properly in RSpec is fundamental to building robust, maintainable Ruby code. The trick isn't just about asserting that the code _runs_, but about validating that the different _paths_ created by the conditions behave as intended. Over the years, I've found a few common pitfalls and best practices that I'd like to share, focusing on clarity and completeness.
 
 Essentially, when we test a method containing an `if` statement, we need to ensure that we cover each branch of that conditional. In simple cases, it might seem obvious, but when dealing with nested conditions or complex boolean logic, meticulous testing becomes crucial. Ignoring any one path leads to hidden bugs and unpredictable behavior later on. Our goal is to achieve thorough code coverage and also make the tests themselves clearly communicate the expected behavior. I’ve had situations where subtle variations in input yielded drastically different, unexpected output, simply because tests didn’t explore all the possibilities. That's a lesson I don’t plan to repeat.
 
@@ -22,7 +22,7 @@ def process_order(order_total, is_premium_customer)
 end
 ```
 
-We've got three paths here: a premium customer with a large order, any customer with a mid-range order, and all other orders. Each of these conditions has to be specifically tested, and it’s not enough to test *one* of the `true` cases; we have to test *each* path. This isn’t just about hitting lines of code; it’s about verifying the logic behind each condition and its resulting behavior.
+We've got three paths here: a premium customer with a large order, any customer with a mid-range order, and all other orders. Each of these conditions has to be specifically tested, and it’s not enough to test _one_ of the `true` cases; we have to test _each_ path. This isn’t just about hitting lines of code; it’s about verifying the logic behind each condition and its resulting behavior.
 
 Here's how we’d approach writing those tests in RSpec:
 

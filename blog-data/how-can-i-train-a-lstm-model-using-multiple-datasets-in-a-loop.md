@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-train-a-lstm-model-using-multiple-datasets-in-a-loop"
 ---
 
-Let's tackle this. Handling iterative training of an lstm (long short-term memory) model across several datasets is a common scenario, and it requires a bit more than a simple `for` loop, though a loop is definitely involved. Over my years working on time-series predictions and sequential data modeling, I've seen various approaches, and I'll share what I've found to be the most effective and practical. The key is to ensure that each dataset contributes to the learning process without causing catastrophic forgetting or overfitting on any single dataset.
+. Handling iterative training of an lstm (long short-term memory) model across several datasets is a common scenario, and it requires a bit more than a simple `for` loop, though a loop is definitely involved. Over my years working on time-series predictions and sequential data modeling, I've seen various approaches, and I'll share what I've found to be the most effective and practical. The key is to ensure that each dataset contributes to the learning process without causing catastrophic forgetting or overfitting on any single dataset.
 
 The fundamental challenge is that each dataset likely has its own specific characteristics: different distributions, varying temporal lengths, and unique underlying patterns. If we naively iterate through each dataset sequentially and train the model, the model might primarily adapt to the most recent dataset and lose what it had learned from previous ones – a scenario known as catastrophic forgetting. To combat this, you need a structured approach that considers these potential pitfalls.
 
@@ -176,6 +176,6 @@ if __name__ == '__main__':
     trained_model = train_iteratively_with_padding(datasets)
 ```
 
-To go deeper into this, I’d recommend checking out the chapter on recurrent neural networks in *Deep Learning* by Goodfellow, Bengio, and Courville (2016), as it provides a rigorous theoretical background. Specifically, look at material regarding learning rate schedules and their effects on gradient descent. Another excellent resource is *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* by Aurélien Géron (2019), which offers a very practical view on implementing deep learning techniques in keras.
+To go deeper into this, I’d recommend checking out the chapter on recurrent neural networks in _Deep Learning_ by Goodfellow, Bengio, and Courville (2016), as it provides a rigorous theoretical background. Specifically, look at material regarding learning rate schedules and their effects on gradient descent. Another excellent resource is _Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow_ by Aurélien Géron (2019), which offers a very practical view on implementing deep learning techniques in keras.
 
 In conclusion, training an lstm using multiple datasets in a loop isn't simply about iterating through the datasets. It requires a structured process, considering the inherent differences between the datasets and the potential for catastrophic forgetting. By carefully managing the learning rate, employing validation, and implementing model checkpoints, you can effectively learn from multiple sources and build robust models that generalize well.

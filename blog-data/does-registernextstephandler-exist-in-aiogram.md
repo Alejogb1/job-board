@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "does-registernextstephandler-exist-in-aiogram"
 ---
 
-Let's tackle this head-on. I've spent quite a few years building Telegram bots with aiogram, and I've seen patterns emerge that often trip up newcomers, and sometimes even seasoned developers revisiting the framework after a break. The concept of "register_next_step_handler" as a single, direct function call in aiogram _as you might expect it from other frameworks_ doesn't exist in the straightforward manner some might initially anticipate. This is often a point of confusion because the underlying paradigm is slightly different.
+head-on. I've spent quite a few years building Telegram bots with aiogram, and I've seen patterns emerge that often trip up newcomers, and sometimes even seasoned developers revisiting the framework after a break. The concept of "register*next_step_handler" as a single, direct function call in aiogram \_as you might expect it from other frameworks* doesn't exist in the straightforward manner some might initially anticipate. This is often a point of confusion because the underlying paradigm is slightly different.
 
 Instead of having a singular function named `register_next_step_handler`, aiogram leverages its state management system along with message handlers to achieve the same functionality: managing multi-step conversations where the bot remembers context between user messages. In aiogram, the key tools for managing these multi-step interactions are state groups defined via the `StatesGroup` class and filters applied to message handlers. Think of it this way: instead of a function that registers a _next_ step, you are defining _states_ a user can be in and the handlers respond to messages according to the current state.
 

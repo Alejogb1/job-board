@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-the-git-clone-of-faiss-fail-on-the-master-tag"
 ---
 
-, let's tackle this faiss cloning issue. It's a situation I've definitely encountered before, and it's almost never straightforward, especially when dealing with a specific tag like 'master'. Often, it's not a git problem _per se_, but a confluence of factors related to dependencies, submodules, and even the target system's environment. Let me recount a particularly memorable incident.
+, faiss cloning issue. It's a situation I've definitely encountered before, and it's almost never straightforward, especially when dealing with a specific tag like 'master'. Often, it's not a git problem _per se_, but a confluence of factors related to dependencies, submodules, and even the target system's environment. Let me recount a particularly memorable incident.
 
 I recall working on a large-scale recommendation system a couple of years back. We decided to leverage faiss for its efficiency in similarity search, and as best practice, we cloned it via the 'master' tag to get the latest stable version. The clone operation initially seemed successful, but during the build phase, all sorts of cryptic errors began appearing. Turns out, we'd fallen victim to a couple of common culprits that tend to surface when using a moving target like the ‘master’ tag, which points to the most recent commit on the main branch.
 

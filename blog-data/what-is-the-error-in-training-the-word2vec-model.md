@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-error-in-training-the-word2vec-model"
 ---
 
-Let's tackle this. I’ve spent enough time knee-deep in embedding spaces to have a few war stories about word2vec training issues, and pinpointing the error is rarely a straightforward 'aha' moment. The problem isn't usually a single, monolithic failure, but rather a constellation of interconnected issues that manifest in various ways, primarily through poor quality embeddings. Let's break it down based on my experiences.
+. I’ve spent enough time knee-deep in embedding spaces to have a few war stories about word2vec training issues, and pinpointing the error is rarely a straightforward 'aha' moment. The problem isn't usually a single, monolithic failure, but rather a constellation of interconnected issues that manifest in various ways, primarily through poor quality embeddings. Let's break it down based on my experiences.
 
 The fundamental idea behind word2vec, whether you're using the continuous bag-of-words (cbow) or skip-gram architecture, is to learn word representations such that words appearing in similar contexts have similar vector representations. This process relies heavily on stochastic gradient descent (sgd) or its variants. And here’s where things often go sideways. The 'error' in training isn’t necessarily a bug in the algorithm itself, but often stems from how we’re feeding data, setting parameters, and ultimately interpreting the results.
 
@@ -17,6 +17,7 @@ Finally, oversimplification of the training process is a frequent source of erro
 Let's illustrate this with some Python examples. Assume we're using gensim, a widely used library for NLP:
 
 **Snippet 1: An Example of Poor Dataset Size (and therefore a poor result)**
+
 ```python
 from gensim.models import Word2Vec
 from gensim.utils import simple_preprocess
@@ -34,9 +35,11 @@ model = Word2Vec(sentences=tokenized_sentences, vector_size=10, window=5, min_co
 print(model.wv.most_similar('cat', topn=5))
 #Output will not have meaningful relationships and may be erratic on multiple runs
 ```
+
 In this scenario, the very limited training data will result in an unreliable embedding space. Words may have similarities that don’t make sense at all. The issue here lies fundamentally in the data set size.
 
 **Snippet 2: Inadequate Hyperparameter Configuration (specifically window size)**
+
 ```python
 from gensim.models import Word2Vec
 from gensim.utils import simple_preprocess
@@ -63,9 +66,11 @@ print(model_good_window.wv.most_similar('add', topn=5))
 
 # Output should show a better contextual association for the smaller window.
 ```
+
 Here, a wider window dilutes the relationship between tokens closely linked together. The output demonstrates that a window size better suited to the locality of code provides more relevant results.
 
 **Snippet 3: Lack of Pre-processing**
+
 ```python
 from gensim.models import Word2Vec
 from gensim.utils import simple_preprocess
@@ -89,6 +94,7 @@ print(model_preprocessed.wv.most_similar('cat', topn=3))
 
 # Output should show that the preprocessing helped the model learn better similarities.
 ```
+
 This highlights how inconsistent formatting leads to multiple embeddings for semantically identical words. Preprocessing with simple_preprocess() in this case results in a much better representation.
 
 In essence, the 'error' isn’t localized in a specific line of code in the word2vec algorithm. The challenge lies in comprehending the interconnected web of data quality, hyperparameter tuning, and pre-processing techniques. Careful analysis, informed by a solid understanding of the data and the algorithm's behavior, is fundamental for producing high-quality word embeddings. It's never a black box, just a series of decisions which need to be well thought out.

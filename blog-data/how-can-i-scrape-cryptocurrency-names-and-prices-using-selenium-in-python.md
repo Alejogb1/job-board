@@ -19,7 +19,7 @@ The general strategy involves:
 5.  Extracting the text content from those elements.
 6.  Cleaning and formatting the extracted data as needed.
 
-Let's tackle this with some code examples. These are simplified snippets for illustrative purposes but are based on how I'd structure a real project.
+with some code examples. These are simplified snippets for illustrative purposes but are based on how I'd structure a real project.
 
 **Example 1: Basic Price and Name Extraction from a Single Coin**
 

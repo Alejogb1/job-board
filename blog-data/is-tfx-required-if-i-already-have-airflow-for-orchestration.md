@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-tfx-required-if-i-already-have-airflow-for-orchestration"
 ---
 
-, let's tackle this one. The question of whether TFX is strictly _required_ when you've already got Airflow in your toolkit is something I've grappled with on several projects. It’s not a simple yes or no answer, as it often depends on the specific needs and maturity of your machine learning infrastructure. To get to the heart of it, let's break down what each tool brings to the table and then I’ll share my experiences to illustrate.
+, one. The question of whether TFX is strictly _required_ when you've already got Airflow in your toolkit is something I've grappled with on several projects. It’s not a simple yes or no answer, as it often depends on the specific needs and maturity of your machine learning infrastructure. To get to the heart of it, let's break down what each tool brings to the table and then I’ll share my experiences to illustrate.
 
 Airflow, as we all know, is a fantastic workflow orchestration tool. Its strength lies in scheduling, managing, and monitoring Directed Acyclic Graphs (DAGs). These DAGs can represent virtually any sequence of tasks, making it incredibly versatile for orchestrating various parts of your ML pipeline—data ingestion, feature engineering, model training, evaluation, deployment, and so on. I’ve personally used Airflow to manage everything from scheduled batch data processing to real-time model updates via custom operators, and it’s quite robust when configured correctly.
 

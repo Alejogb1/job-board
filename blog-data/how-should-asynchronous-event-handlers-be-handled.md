@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-should-asynchronous-event-handlers-be-handled"
 ---
 
-Right then, let's tackle this. Asynchronous event handlers are a beast many developers encounter, and, if not handled correctly, they can quickly lead to some pretty messy code. I've seen more than my share of applications grind to a halt because someone didn't quite nail the intricacies of asynchrony in their event handling. We're talking deadlocks, race conditions, and the occasional unexplainable error that'll keep you up at night. It’s not about some esoteric concept; it’s about fundamentally understanding how events and asynchronous operations interact. I’ll share some hard-earned insights and some practical examples that helped me along the way.
+Right then, . Asynchronous event handlers are a beast many developers encounter, and, if not handled correctly, they can quickly lead to some pretty messy code. I've seen more than my share of applications grind to a halt because someone didn't quite nail the intricacies of asynchrony in their event handling. We're talking deadlocks, race conditions, and the occasional unexplainable error that'll keep you up at night. It’s not about some esoteric concept; it’s about fundamentally understanding how events and asynchronous operations interact. I’ll share some hard-earned insights and some practical examples that helped me along the way.
 
 The crux of the matter lies in understanding that event handlers, when asynchronous, don't simply pause execution when they encounter an `await` keyword or a promise resolution. They actually return control to the event loop, allowing other operations to proceed. This seemingly simple fact has significant implications. The first major area you need to consider is concurrency. If multiple events trigger the same handler simultaneously, and those handlers perform asynchronous operations that modify shared state, things can get ugly real fast. We're talking about data corruption, inconsistent states, and logic errors that are notoriously difficult to reproduce.
 
@@ -14,58 +14,57 @@ The fix wasn't overly complex, but it required a solid understanding of synchron
 
 ```javascript
 class SafeEventHandler {
-    constructor() {
-        this.isLocked = false;
-        this.queue = [];
+  constructor() {
+    this.isLocked = false;
+    this.queue = [];
+  }
+
+  async handleEvent(eventData) {
+    this.queue.push(eventData);
+    if (this.isLocked) {
+      return; // already processing, so just queue
     }
 
-    async handleEvent(eventData) {
-        this.queue.push(eventData);
-        if (this.isLocked) {
-            return; // already processing, so just queue
-        }
+    this.isLocked = true;
+    try {
+      while (this.queue.length > 0) {
+        const data = this.queue.shift();
+        await this.processData(data);
+      }
+    } finally {
+      this.isLocked = false;
+    }
+  }
 
-        this.isLocked = true;
-        try{
-          while(this.queue.length > 0){
-             const data = this.queue.shift();
-             await this.processData(data);
-           }
-        }
-        finally {
-            this.isLocked = false;
-        }
-    }
+  async processData(data) {
+    //perform some async validation
+    console.log("validating", data);
+    await this.asyncValidate(data);
+    //perform a database write operation here
+    console.log("writing", data);
+    await this.asyncDbWrite(data);
+  }
 
-   async processData(data){
-      //perform some async validation
-      console.log("validating" , data);
-      await this.asyncValidate(data);
-      //perform a database write operation here
-      console.log("writing" , data);
-      await this.asyncDbWrite(data);
-    }
-
-   async asyncValidate(data){
-       return new Promise(resolve => {
-           setTimeout(resolve, 100); //simulate async operation
-        })
-    }
-    async asyncDbWrite(data){
-      return new Promise(resolve => {
-           setTimeout(resolve, 200); //simulate async database write
-       })
-    }
+  async asyncValidate(data) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, 100); //simulate async operation
+    });
+  }
+  async asyncDbWrite(data) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, 200); //simulate async database write
+    });
+  }
 }
 
 const eventHandler = new SafeEventHandler();
 
-async function simulateEvents(){
-    for(let i = 0; i < 5; i++){
-       setTimeout(() => {
-           eventHandler.handleEvent(`event ${i}`);
-       },i * 50);
-    }
+async function simulateEvents() {
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      eventHandler.handleEvent(`event ${i}`);
+    }, i * 50);
+  }
 }
 
 simulateEvents();
@@ -79,72 +78,70 @@ Let’s look at another code snippet to demonstrate the error handling scenario.
 
 ```javascript
 class SafeEventHandlerWithErrors {
-    constructor() {
-        this.isLocked = false;
-        this.queue = [];
+  constructor() {
+    this.isLocked = false;
+    this.queue = [];
+  }
+
+  async handleEvent(eventData) {
+    this.queue.push(eventData);
+    if (this.isLocked) {
+      return;
     }
 
-    async handleEvent(eventData) {
-        this.queue.push(eventData);
-        if (this.isLocked) {
-            return;
+    this.isLocked = true;
+    try {
+      while (this.queue.length > 0) {
+        const data = this.queue.shift();
+        await this.processData(data);
+      }
+    } finally {
+      this.isLocked = false;
+    }
+  }
+
+  async processData(data) {
+    try {
+      //perform some async validation
+      console.log("validating", data);
+      await this.asyncValidate(data);
+      //perform a database write operation here
+      console.log("writing", data);
+      await this.asyncDbWrite(data);
+    } catch (error) {
+      console.error(`Error processing data: ${data}`, error);
+      //Handle the error gracefully, maybe retry here, or log it somewhere
+      //we may want to add the errored item to a separate error queue for later review
+    }
+  }
+
+  async asyncValidate(data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        //simulate some possible error situation
+        if (Math.random() > 0.8) {
+          return reject("Validation Failed: Invalid Data");
         }
+        resolve();
+      }, 100);
+    });
+  }
 
-        this.isLocked = true;
-        try {
-           while(this.queue.length > 0){
-                const data = this.queue.shift();
-              await this.processData(data);
-           }
-        } finally {
-            this.isLocked = false;
-        }
-    }
-
-    async processData(data) {
-      try {
-         //perform some async validation
-          console.log("validating" , data);
-          await this.asyncValidate(data);
-          //perform a database write operation here
-          console.log("writing" , data);
-          await this.asyncDbWrite(data);
-        }
-       catch(error){
-            console.error(`Error processing data: ${data}`, error);
-             //Handle the error gracefully, maybe retry here, or log it somewhere
-             //we may want to add the errored item to a separate error queue for later review
-       }
-
-    }
-
-    async asyncValidate(data) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                //simulate some possible error situation
-               if(Math.random() > 0.8){
-                   return reject("Validation Failed: Invalid Data");
-               }
-                resolve();
-            }, 100);
-        });
-    }
-
-    async asyncDbWrite(data) {
-        return new Promise(resolve => {
-            setTimeout(resolve, 200);
-        });
-    }
+  async asyncDbWrite(data) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, 200);
+    });
+  }
 }
 
 const eventHandlerErrors = new SafeEventHandlerWithErrors();
 
-async function simulateEventsWithErrors(){
-   for(let i = 0; i < 5; i++){
-       setTimeout(() => {
-           eventHandlerErrors.handleEvent(`event ${i}`);
-       },i * 50);
-    }
+async function simulateEventsWithErrors() {
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      eventHandlerErrors.handleEvent(`event ${i}`);
+    }, i * 50);
+  }
 }
 
 simulateEventsWithErrors();
@@ -165,26 +162,24 @@ class CancellableEventHandler {
   async handleEvent(eventData) {
     if (this.controller) {
       this.controller.abort();
-        console.log("Operation aborted.");
+      console.log("Operation aborted.");
     }
 
     this.controller = new AbortController();
 
     try {
-         console.log("Starting async operation:", eventData);
+      console.log("Starting async operation:", eventData);
       await this.performAsyncOperation(eventData, this.controller.signal);
-       console.log("Async operation completed:", eventData);
+      console.log("Async operation completed:", eventData);
+    } catch (error) {
+      if (error.name === "AbortError") {
+        console.log("The operation was aborted.");
+      } else {
+        console.error("Error during operation:", error);
       }
-    catch (error) {
-        if (error.name === 'AbortError'){
-            console.log("The operation was aborted.")
-        }
-       else {
-          console.error("Error during operation:", error);
-        }
     } finally {
-         this.controller = null;
-     }
+      this.controller = null;
+    }
   }
 
   async performAsyncOperation(data, signal) {
@@ -203,11 +198,11 @@ class CancellableEventHandler {
 
 const cancellableHandler = new CancellableEventHandler();
 
-async function simulateEventsWithCancel(){
-  for(let i=0; i < 5; i++){
-     setTimeout(() => {
-        cancellableHandler.handleEvent(`event ${i}`);
-     }, i * 100)
+async function simulateEventsWithCancel() {
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      cancellableHandler.handleEvent(`event ${i}`);
+    }, i * 100);
   }
 }
 

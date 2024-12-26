@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-code-showing-no-jpeg-images-found-in-the-folder-even-though-the-folder-contains-jpeg-images"
 ---
 
-Let's tackle this. I've certainly been down this particular rabbit hole a few times, and it's usually a subtle detail that’s causing the problem. The fact that your code isn't detecting .jpeg images despite their presence in the specified folder suggests a disconnect between what you *think* the code is doing and what it’s actually doing. It rarely boils down to the images themselves being corrupted, though that’s a possibility to rule out. More often than not, the issue lies within the specifics of file system interactions and string matching.
+. I've certainly been down this particular rabbit hole a few times, and it's usually a subtle detail that’s causing the problem. The fact that your code isn't detecting .jpeg images despite their presence in the specified folder suggests a disconnect between what you _think_ the code is doing and what it’s actually doing. It rarely boils down to the images themselves being corrupted, though that’s a possibility to rule out. More often than not, the issue lies within the specifics of file system interactions and string matching.
 
 First off, consider the actual file extensions you’re searching for. It might seem obvious, but have you double-checked that all your images truly end in `.jpeg` and not, say, `.jpg`? Windows, in particular, has a habit of hiding extensions by default which can lead to confusion. I recall a project back in '15 where I spent a good chunk of an afternoon tracking this precise discrepancy; I had mixed `.jpeg` and `.jpg` extensions in the same folder, and the code was strictly looking for `.jpeg`.
 
@@ -67,7 +67,7 @@ def find_jpeg_images_robust(folder_path):
     if not os.path.isdir(folder_path):
         logging.error(f"Error: Folder path is invalid or does not exist: {folder_path}")
         return jpeg_images
-    
+
     logging.info(f"Searching for JPEG images in: {folder_path}")
     for filename in os.listdir(folder_path):
         full_path = os.path.join(folder_path, filename)
@@ -76,7 +76,7 @@ def find_jpeg_images_robust(folder_path):
              logging.info(f"Found JPEG: {full_path}")
         else:
             logging.debug(f"Skipped: {full_path} - not a .jpeg or not a file.")
-    
+
     return jpeg_images
 
 folder = "/path/to/your/images" # <-- REPLACE with your actual path
@@ -84,6 +84,7 @@ found_images = find_jpeg_images_robust(folder)
 print(f"Found {len(found_images)} JPEG images: {found_images}")
 
 ```
+
 This version is more verbose and includes several important checks. It validates the input folder path, uses logging to record the execution process and it uses `os.path.isfile` to verify that an entry is a file. Moreover, it performs a case-insensitive match using `.lower()` which handles cases when your extensions might be uppercase. This shows a more robust and helpful example.
 
 These examples highlight common issues. After you've ruled out file extension variations and pathing problems using a similar methodology, a good next step would be to ensure your script has the necessary permissions to read from the directory in question. Permissions can be a bit tricky on some systems, so it's often helpful to try running your script in an environment where you know the permissions are adequate, at least during debugging. Also, ensure you’re using the correct working directory when running the script and try printing out the working directory (`os.getcwd()`).
@@ -92,8 +93,8 @@ If all this seems to check out, there might be more nuanced filesystem issues at
 
 For more in-depth information about file system interactions and handling paths in different programming environments, I’d recommend looking into the following:
 
-*   **"Advanced Programming in the UNIX Environment" by W. Richard Stevens and Stephen A. Rago**: This book provides exhaustive detail on file system specifics in Unix-like systems, including intricacies of file paths, permissions, and low-level I/O operations.
-*  **"Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne:**  While more general, this provides fundamental understanding of how operating systems handle files and file systems, which will help to troubleshoot underlying problems
-*   **The official Python documentation on the `os` and `glob` modules**: This is crucial for understanding the specifics of file system interaction in Python. Pay particular attention to functions like `os.listdir()`, `os.path.join()`, `os.path.isfile()`, and the pattern matching behavior of `glob`.
+- **"Advanced Programming in the UNIX Environment" by W. Richard Stevens and Stephen A. Rago**: This book provides exhaustive detail on file system specifics in Unix-like systems, including intricacies of file paths, permissions, and low-level I/O operations.
+- **"Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne:** While more general, this provides fundamental understanding of how operating systems handle files and file systems, which will help to troubleshoot underlying problems
+- **The official Python documentation on the `os` and `glob` modules**: This is crucial for understanding the specifics of file system interaction in Python. Pay particular attention to functions like `os.listdir()`, `os.path.join()`, `os.path.isfile()`, and the pattern matching behavior of `glob`.
 
 By systematically addressing the possibilities I've described, you'll typically find the root cause. These kinds of problems are often the result of some subtle detail that requires methodical troubleshooting. Good luck, and remember to double-check the obvious before diving too deep.

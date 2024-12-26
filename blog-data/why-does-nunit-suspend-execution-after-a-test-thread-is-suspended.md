@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-nunit-suspend-execution-after-a-test-thread-is-suspended"
 ---
 
-, let's tackle this one. It’s a situation I’ve seen more than a few times, particularly back when I was heavily involved in building out our automated testing infrastructure at TechCorp – we had a fairly complex asynchronous system to wrangle. The frustration of seeing NUnit just seemingly… stop… after a test thread hits a suspension point is very real. Let me break down why this occurs and offer a few solutions based on how I've worked through this in the past.
+, one. It’s a situation I’ve seen more than a few times, particularly back when I was heavily involved in building out our automated testing infrastructure at TechCorp – we had a fairly complex asynchronous system to wrangle. The frustration of seeing NUnit just seemingly… stop… after a test thread hits a suspension point is very real. Let me break down why this occurs and offer a few solutions based on how I've worked through this in the past.
 
 The core issue stems from how NUnit, and in fact most testing frameworks, handle test executions and thread management. When you execute a test method, NUnit spawns a test runner. Each test method typically gets its own thread. However, unlike a long-running application server, a testing framework assumes tests are primarily synchronous. When you introduce asynchronous code, or any action that can result in a thread suspension, things get a little more complex.
 

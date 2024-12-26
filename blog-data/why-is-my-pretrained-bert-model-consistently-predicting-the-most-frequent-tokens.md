@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-pretrained-bert-model-consistently-predicting-the-most-frequent-tokens"
 ---
 
-, let's tackle this. I've encountered this very frustrating scenario myself, back when I was working on a custom text classification project using BERT for financial news sentiment. The issue of a pretrained BERT model stubbornly favoring the most frequent tokens—essentially defaulting to a safe, albeit often unhelpful, prediction—is unfortunately quite common and speaks volumes about the inner workings of these models and the data they’re trained on.
+, . I've encountered this very frustrating scenario myself, back when I was working on a custom text classification project using BERT for financial news sentiment. The issue of a pretrained BERT model stubbornly favoring the most frequent tokens—essentially defaulting to a safe, albeit often unhelpful, prediction—is unfortunately quite common and speaks volumes about the inner workings of these models and the data they’re trained on.
 
 First off, it’s crucial to understand that this behavior isn’t a bug or some inherent flaw in BERT itself. Rather, it's a consequence of how the model is trained and, more often than not, how it’s subsequently used. BERT, like most large language models (llms), is trained on massive text corpora. During this pretraining phase, it learns the statistical co-occurrences of words. High-frequency words, such as ‘the,’ ‘a,’ ‘is,’ ‘of,’ and so on, appear exceptionally often, creating strong biases within the model’s learned representations. These biases can dominate the prediction process, particularly if not properly mitigated. In short, the model has simply learned that these words are, statistically, the safest bet due to their prevalence.
 

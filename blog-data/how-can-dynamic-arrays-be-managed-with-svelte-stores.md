@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-dynamic-arrays-be-managed-with-svelte-stores"
 ---
 
-, let's tackle this one. I've seen this come up a few times in different guises over the years, and it always boils down to a good understanding of reactivity and how Svelte stores operate. It’s not complicated, but there are nuances, particularly when you're dealing with mutable structures like arrays.
+, one. I've seen this come up a few times in different guises over the years, and it always boils down to a good understanding of reactivity and how Svelte stores operate. It’s not complicated, but there are nuances, particularly when you're dealing with mutable structures like arrays.
 
 The core challenge lies in Svelte's reactivity system relying on object identity changes for triggering updates. Simply pushing or popping elements within an array won't necessarily signal to Svelte that something's changed because the array instance itself hasn't been replaced. To effectively manage dynamic arrays with Svelte stores, you need to create a new array instance whenever the data within the array is modified. This allows Svelte to detect the change and update the relevant components.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-typeerror-when-initializing-my-deep-neural-network"
 ---
 
-Let's tackle this type error. It's something I've definitely bumped into more than a few times during my years developing neural networks. Usually, when you see a `TypeError` during network initialization, it boils down to a mismatch in expected data types or dimensions, often stemming from how you're defining or passing parameters within your model's architecture. It's rarely the code itself that's fundamentally broken, but rather, a case of subtle inconsistencies in the building blocks. I've seen it happen with everything from TensorFlow to PyTorch and even custom frameworks.
+type error. It's something I've definitely bumped into more than a few times during my years developing neural networks. Usually, when you see a `TypeError` during network initialization, it boils down to a mismatch in expected data types or dimensions, often stemming from how you're defining or passing parameters within your model's architecture. It's rarely the code itself that's fundamentally broken, but rather, a case of subtle inconsistencies in the building blocks. I've seen it happen with everything from TensorFlow to PyTorch and even custom frameworks.
 
 I remember one specific project, a rather complex image segmentation model for medical scans. We were chasing down this very error for what felt like ages. We’d inadvertently passed an integer where a floating-point tensor was expected in one of the early convolutional layers, and it caused a cascade of downstream failures. Debugging it required a methodical tracing of data types throughout the model creation process. It's a painful, but vital lesson that emphasizes the importance of meticulous parameter checking, especially when you're working with numerous layers and complex tensor shapes.
 
@@ -40,7 +40,7 @@ print("Correctly initialized:", model_correct)
 
 ```
 
-In this case, passing `"64"` as a string for the number of input features will cause the framework to raise a `TypeError`. The layer expects an integer, which is clear in the error message. Always, and I mean *always*, carefully check the types you pass during model initialization.
+In this case, passing `"64"` as a string for the number of input features will cause the framework to raise a `TypeError`. The layer expects an integer, which is clear in the error message. Always, and I mean _always_, carefully check the types you pass during model initialization.
 
 **Example 2: Dimension Mismatches**
 
@@ -61,6 +61,7 @@ model_conv_good = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3, strid
 print("Correctly initialized Convolution Layer:", model_conv_good)
 
 ```
+
 In this example, the `padding` argument accepts an integer for equal padding on all sides, or a tuple for individual padding on different sides; it doesn't accept a string like `"same"`.
 
 **Example 3: Custom initialization and tensor mismatches:**

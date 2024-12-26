@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-pytorch-accuracy-staying-at-0"
 ---
 
-Let's tackle this. I’ve certainly been down that particular rabbit hole, seeing a PyTorch model stubbornly refuse to learn, the accuracy flatlining at zero. It’s frustrating, to say the least, but often indicative of specific issues that, once identified, are usually straightforward to resolve. There isn't a single magic bullet here, but a systematic approach focusing on common culprits usually does the trick.
+. I’ve certainly been down that particular rabbit hole, seeing a PyTorch model stubbornly refuse to learn, the accuracy flatlining at zero. It’s frustrating, to say the least, but often indicative of specific issues that, once identified, are usually straightforward to resolve. There isn't a single magic bullet here, but a systematic approach focusing on common culprits usually does the trick.
 
 First, let’s acknowledge that an accuracy of zero in most classification scenarios (and often regression scenarios, when using metrics meant for classification) typically signifies that your model is outputting predictions that are, for all intents and purposes, random or always the same – certainly not aligning with any ground truth. This usually doesn't happen by accident; it almost always points to a fundamental problem in your setup.
 
@@ -36,7 +36,7 @@ for batch_idx, (data, target) in enumerate(train_loader):
     pass
 ```
 
-Secondly, let's address **model architecture and initialization**. It's surprisingly easy to accidentally construct a network that is either too small or too complex for the task at hand. Too few layers or nodes can lead to underfitting, where the model simply lacks the capacity to capture complex patterns. Conversely, overly deep networks, especially without proper regularization, can suffer from vanishing gradients and make training unstable. Using good initialization methods for the weights in your model is also crucial. Pytorch provides several initializers (e.g., kaiming_uniform_, xavier_normal_). When I suspect that the architecture might be an issue I start with very simple model, to verify the process and then gradually increasing the complexity.
+Secondly, let's address **model architecture and initialization**. It's surprisingly easy to accidentally construct a network that is either too small or too complex for the task at hand. Too few layers or nodes can lead to underfitting, where the model simply lacks the capacity to capture complex patterns. Conversely, overly deep networks, especially without proper regularization, can suffer from vanishing gradients and make training unstable. Using good initialization methods for the weights in your model is also crucial. Pytorch provides several initializers (e.g., kaiming*uniform*, xavier*normal*). When I suspect that the architecture might be an issue I start with very simple model, to verify the process and then gradually increasing the complexity.
 
 Also, verify if you have any accidental 'dead' neurons during training. If an activation function, such as ReLU, is producing zero outputs consistently, that can hinder training because there's no gradient flowing through those weights, and the relevant neuron essentially becomes useless. This situation can be more difficult to diagnose. There are techniques (like more complex activation functions with built-in leakage, or methods using batch normalization) that can assist in avoiding this and could be worth exploring, if applicable.
 
@@ -67,6 +67,7 @@ for epoch in range(5):
 
     print(f"Epoch {epoch} loss: {loss.item()}")
 ```
+
 Also, check that you are calling `.backward()` and `optimizer.step()` correctly within your training loop. If the gradients are not calculated and applied to the model's parameters, training won't happen. Similarly `optimizer.zero_grad()` must be called before the backpropagation, or else it will accumulate gradients from multiple batches which will give you incorrect results.
 
 Finally, verify your **evaluation process**. Are you evaluating the model using an appropriate metric? Are you correctly loading the validation dataset? Are you using the same preprocessing steps for validation and testing as you are in training? It is crucial that you check your validation or test code, and how you’re loading the data that you are evaluating with. There have been numerous instances where the issue was as simple as accidentally evaluating on the training dataset, or incorrectly loading validation/test data.

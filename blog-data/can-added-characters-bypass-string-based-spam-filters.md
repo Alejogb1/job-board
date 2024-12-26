@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-added-characters-bypass-string-based-spam-filters"
 ---
 
-Let's tackle this from the trenches, shall we? I've seen this exact scenario play out more times than I care to remember, particularly in my early days building email systems and later, during a stint focused on web application security. The short answer is: absolutely, added characters can and very often *do* bypass string-based spam filters. It's a game of cat and mouse, and the spammers are often infuriatingly innovative.
+from the trenches, shall we? I've seen this exact scenario play out more times than I care to remember, particularly in my early days building email systems and later, during a stint focused on web application security. The short answer is: absolutely, added characters can and very often _do_ bypass string-based spam filters. It's a game of cat and mouse, and the spammers are often infuriatingly innovative.
 
 The fundamental weakness lies within the simplicity of string matching itself. A string-based filter operates by scanning incoming text for specific predefined strings. If a match is found, the message is flagged as spam. This method is effective against the most rudimentary attempts, but it's woefully inadequate when facing even slightly more sophisticated techniques.
 
@@ -35,7 +35,7 @@ def homoglyph_example():
 homoglyph_example()
 ```
 
-The output clearly shows that even though the homoglyph-containing messages *look* like they contain "viagra", the basic filter doesn't recognize them. This is because the underlying character codes are different. A filter relies on the *exact* string match, and any deviation is treated as a completely distinct input.
+The output clearly shows that even though the homoglyph-containing messages _look_ like they contain "viagra", the basic filter doesn't recognize them. This is because the underlying character codes are different. A filter relies on the _exact_ string match, and any deviation is treated as a completely distinct input.
 
 **Example 2: Zero-Width Character Injection**
 
@@ -73,7 +73,7 @@ def extra_char_example():
 extra_char_example()
 ```
 
-These examples demonstrate that simple string matching, by itself, is prone to bypass attacks. The filter only looks for the *exact* string, and variations, no matter how trivial to the human observer, will slip right past.
+These examples demonstrate that simple string matching, by itself, is prone to bypass attacks. The filter only looks for the _exact_ string, and variations, no matter how trivial to the human observer, will slip right past.
 
 How, then, do we combat these types of evasions? The answer lies in moving beyond simple string matching to techniques that are more sophisticated. Instead of exact string matches, filters can use techniques that include:
 
@@ -86,8 +86,8 @@ Implementing these strategies greatly increases the effectiveness of spam filter
 
 For deeper insight, I strongly recommend you look at the following:
 
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** Specifically, the sections on text preprocessing and stemming/lemmatization would be highly beneficial.
-*   **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** This book provides a practical introduction to using Python for NLP tasks and includes chapters on tokenization and classification methods.
-*   **Research papers on spam filtering and machine learning-based classification in reputable conferences like SIGIR, WWW, or NeurIPS:** Explore specific papers using keywords relevant to the techniques discussed above for cutting-edge research insights.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** Specifically, the sections on text preprocessing and stemming/lemmatization would be highly beneficial.
+- **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** This book provides a practical introduction to using Python for NLP tasks and includes chapters on tokenization and classification methods.
+- **Research papers on spam filtering and machine learning-based classification in reputable conferences like SIGIR, WWW, or NeurIPS:** Explore specific papers using keywords relevant to the techniques discussed above for cutting-edge research insights.
 
 In conclusion, relying solely on string-based filters is a flawed approach to handling spam. Modern spam filtering systems must employ a combination of robust techniques to effectively defend against constantly evolving evasion methods. The examples I've shown only scratch the surface of the complexities, but I hope it serves as a practical foundation and motivates further exploration.

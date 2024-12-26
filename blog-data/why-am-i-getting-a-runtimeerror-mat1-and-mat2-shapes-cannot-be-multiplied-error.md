@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-runtimeerror-mat1-and-mat2-shapes-cannot-be-multiplied-error"
 ---
 
-, let's tackle this `RuntimeError: mat1 and mat2 shapes cannot be multiplied`. I've seen this particular error more times than I care to recall, and usually, it boils down to a mismatch in the dimensions of your matrices when you’re attempting matrix multiplication. It's a common hiccup, especially when working with libraries like numpy in python or similar matrix algebra operations in other languages. Don't worry, it's something we can definitely sort out.
+, `RuntimeError: mat1 and mat2 shapes cannot be multiplied`. I've seen this particular error more times than I care to recall, and usually, it boils down to a mismatch in the dimensions of your matrices when you’re attempting matrix multiplication. It's a common hiccup, especially when working with libraries like numpy in python or similar matrix algebra operations in other languages. Don't worry, it's something we can definitely sort out.
 
 The core issue, as the error message succinctly states, is a shape incompatibility during multiplication. When performing matrix multiplication, the number of columns in the first matrix (mat1) _must_ equal the number of rows in the second matrix (mat2). If this condition isn’t met, the operation simply isn’t defined mathematically, and your runtime environment quite rightly throws an exception. Think of it like trying to fit a square peg into a round hole; it just won't work.
 

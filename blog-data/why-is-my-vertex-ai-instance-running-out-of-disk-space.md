@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-my-vertex-ai-instance-running-out-of-disk-space"
 ---
 
-, let's tackle this disk space issue you're experiencing with your Vertex AI instance. I’ve seen this happen more often than one might expect, especially in environments where data volumes fluctuate or when complex pipelines are involved. My initial instinct tells me it's probably not a single cause, but rather a combination of factors that, when left unmanaged, can quickly consume available storage. I recall a particularly challenging project a few years back—we were processing genomic sequencing data on a custom Vertex AI setup. We were constantly battling similar disk space warnings until we implemented a more rigorous monitoring and cleanup strategy. Let’s break down why this happens and what you can do about it.
+, disk space issue you're experiencing with your Vertex AI instance. I’ve seen this happen more often than one might expect, especially in environments where data volumes fluctuate or when complex pipelines are involved. My initial instinct tells me it's probably not a single cause, but rather a combination of factors that, when left unmanaged, can quickly consume available storage. I recall a particularly challenging project a few years back—we were processing genomic sequencing data on a custom Vertex AI setup. We were constantly battling similar disk space warnings until we implemented a more rigorous monitoring and cleanup strategy. Let’s break down why this happens and what you can do about it.
 
 The primary culprit usually boils down to the accumulation of various temporary files and cached data. Vertex AI instances, while powerful, are essentially virtual machines, and they operate using local disks. Here's a breakdown of the common sources:
 

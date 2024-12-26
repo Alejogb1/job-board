@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-datetime-features-be-used-to-improve-text-classification-with-nlp"
 ---
 
-Let's tackle this one. I've seen this issue pop up more than a few times in my career, particularly when dealing with systems that need to understand the context of user-generated content. It's not enough just to treat text as a bag of words; often, the 'when' something was written is just as crucial as the 'what'. So, how can we actually use datetime features to boost text classification models? It's all about enriching the data presented to our classifier, giving it more dimensions to discern patterns.
+one. I've seen this issue pop up more than a few times in my career, particularly when dealing with systems that need to understand the context of user-generated content. It's not enough just to treat text as a bag of words; often, the 'when' something was written is just as crucial as the 'what'. So, how can we actually use datetime features to boost text classification models? It's all about enriching the data presented to our classifier, giving it more dimensions to discern patterns.
 
 In the past, I worked on a sentiment analysis project for a large social media platform. Initially, our models performed adequately, picking up on obvious positive and negative statements. However, we noticed significant inaccuracies when dealing with time-sensitive trends or events. A post expressing dissatisfaction with a newly released product might be misclassified as simply negative in general, missing the crucial aspect of it being tied to a specific launch date. That’s when we realized the importance of factoring in the temporal element.
 
@@ -12,13 +12,13 @@ The core principle is to transform datetime information into numerical features 
 
 First, let’s look at some of the features we can derive from a datetime object:
 
-* **Hour of the day:** Useful for identifying patterns associated with certain times, such as a higher volume of complaints during the late evening or early morning.
-* **Day of the week:** This could reveal usage patterns, like higher engagement during weekends.
-* **Day of the month:** We might find variations related to paydays or monthly recurring events.
-* **Month of the year:** Helpful for recognizing seasonal trends, holidays, or product launch times.
-* **Year:** Important for understanding long-term trends and tracking changes over time.
-* **Time since an event:** This can be calculated as the time elapsed between a given timestamp and a significant event (e.g., product launch, political statement). This is especially powerful for capturing the decay or surge in discussion following an event.
-* **Is holiday:** A binary feature that indicates if a particular date is a holiday, useful for recognizing impact on user behavior.
+- **Hour of the day:** Useful for identifying patterns associated with certain times, such as a higher volume of complaints during the late evening or early morning.
+- **Day of the week:** This could reveal usage patterns, like higher engagement during weekends.
+- **Day of the month:** We might find variations related to paydays or monthly recurring events.
+- **Month of the year:** Helpful for recognizing seasonal trends, holidays, or product launch times.
+- **Year:** Important for understanding long-term trends and tracking changes over time.
+- **Time since an event:** This can be calculated as the time elapsed between a given timestamp and a significant event (e.g., product launch, political statement). This is especially powerful for capturing the decay or surge in discussion following an event.
+- **Is holiday:** A binary feature that indicates if a particular date is a holiday, useful for recognizing impact on user behavior.
 
 Now, let’s see how we might implement some of these ideas. Here are some illustrative Python code snippets, assuming you're using `pandas` and `datetime`:
 

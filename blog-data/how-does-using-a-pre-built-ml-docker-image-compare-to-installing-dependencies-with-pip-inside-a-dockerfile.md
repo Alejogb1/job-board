@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-using-a-pre-built-ml-docker-image-compare-to-installing-dependencies-with-pip-inside-a-dockerfile"
 ---
 
-Let's tackle this one. From experience, I can definitively say that choosing between a pre-built machine learning (ml) docker image and installing dependencies via `pip` in your Dockerfile isn't just a minor detail; it's a decision that profoundly impacts build times, image sizes, and, crucially, the reproducibility of your ml workflows. I’ve spent a significant portion of my career dealing with this, and the optimal choice often boils down to your specific project constraints and priorities.
+one. From experience, I can definitively say that choosing between a pre-built machine learning (ml) docker image and installing dependencies via `pip` in your Dockerfile isn't just a minor detail; it's a decision that profoundly impacts build times, image sizes, and, crucially, the reproducibility of your ml workflows. I’ve spent a significant portion of my career dealing with this, and the optimal choice often boils down to your specific project constraints and priorities.
 
 The core issue lies in the inherent complexities of ml libraries and their often tangled web of dependencies. When we talk about a 'pre-built' ml image, think of distributions like those offered by Nvidia with their pytorch or tensorflow containers. These aren’t just arbitrary collections of libraries; they are meticulously constructed environments tailored for ml, often optimized for hardware acceleration (like gpu support), and regularly updated with compatible versions of various packages. This pre-optimization is a major advantage.
 

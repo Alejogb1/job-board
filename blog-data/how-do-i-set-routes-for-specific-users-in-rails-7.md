@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-set-routes-for-specific-users-in-rails-7"
 ---
 
-Let's tackle this routing challenge head-on. You're aiming to direct users to specific parts of your Rails 7 application based on some identifier, and that's a very common requirement in complex web applications. Over the years, I've encountered this exact scenario numerous times, from simple user roles to intricate permission systems. There's no single magic bullet; it typically involves a combination of resourceful routing, custom constraints, and potentially some backend logic.
+routing challenge head-on. You're aiming to direct users to specific parts of your Rails 7 application based on some identifier, and that's a very common requirement in complex web applications. Over the years, I've encountered this exact scenario numerous times, from simple user roles to intricate permission systems. There's no single magic bullet; it typically involves a combination of resourceful routing, custom constraints, and potentially some backend logic.
 
 The core problem centers around how Rails evaluates routes. It uses a first-match-wins approach. So, if you're not careful, your generic routes might gobble up the more specific ones. Let's start with the most basic, and then we'll escalate to more nuanced solutions.
 
@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     root "posts#index"
 end
 ```
+
 ```ruby
 # app/constraints/user_subdomain_constraint.rb
 class UserSubdomainConstraint
@@ -79,6 +80,7 @@ Rails.application.routes.draw do
 end
 
 ```
+
 ```ruby
 # app/controllers/redirect_controller.rb
 class RedirectController < ApplicationController

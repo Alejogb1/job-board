@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-deployment-of-amazon-linux-2-on-lightsail-get-canceled"
 ---
 
-, let's tackle this deployment conundrum. From experience, I've seen Lightsail deployments on Amazon Linux 2 fail for a variety of reasons, some subtle, others glaringly obvious. It's rarely a single issue; more often, a confluence of factors is at play. Let me walk you through the common culprits and some solutions that have worked for me.
+, deployment conundrum. From experience, I've seen Lightsail deployments on Amazon Linux 2 fail for a variety of reasons, some subtle, others glaringly obvious. It's rarely a single issue; more often, a confluence of factors is at play. Let me walk you through the common culprits and some solutions that have worked for me.
 
 First off, let's be clear: Lightsail, while convenient, isn't as flexible as EC2. It operates within a predefined set of constraints, and misalignments with these can derail a deployment. One of the most prevalent reasons I’ve encountered revolves around insufficient instance resources. You might think you've selected an instance size that's plenty, but consider what's happening during the initial setup. The system is pulling down updates, installing packages (sometimes a lot), and potentially performing other resource-intensive tasks. If your chosen instance doesn’t have enough memory (RAM) or CPU power, the deployment process can get stuck, and ultimately time out, leading to cancellation. The underlying processes can become unresponsive, and Lightsail's monitoring mechanisms might interpret this as a failed or stalled deployment, triggering a rollback. I once tried deploying a fairly intricate web app on a micro instance—a painful lesson in resource misallocation.
 

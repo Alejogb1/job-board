@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-log-in-to-the-domain-controller"
 ---
 
-Let's tackle this. A login failure against a domain controller (dc) can manifest in several distinct ways, each hinting at a different underlying problem. In my years managing enterprise environments, I've seen this scenario play out more times than I care to remember, and it rarely boils down to a simple case of incorrect password entry. Let’s break down the most common culprits and the diagnostic steps I typically take.
+. A login failure against a domain controller (dc) can manifest in several distinct ways, each hinting at a different underlying problem. In my years managing enterprise environments, I've seen this scenario play out more times than I care to remember, and it rarely boils down to a simple case of incorrect password entry. Let’s break down the most common culprits and the diagnostic steps I typically take.
 
 First, let's acknowledge that the error message displayed is often generic. "Incorrect username or password" doesn't necessarily mean that. The problem might lie deeper in the authentication process or even with the infrastructure supporting it. A first practical step is always to verify the basics from a different, known-working client machine to rule out immediate client-side issues.
 
@@ -20,7 +20,7 @@ This command will tell you the time source and any recent errors in time synchro
 w32tm /resync
 ```
 
-Can be a useful immediate solution to attempt a forced sync. But, remember, identifying and fixing the *source* of the incorrect time is the goal, not just repeated syncing.
+Can be a useful immediate solution to attempt a forced sync. But, remember, identifying and fixing the _source_ of the incorrect time is the goal, not just repeated syncing.
 
 Another layer to consider is network connectivity. Before authentication occurs, a client must be able to discover the available dcs. Any network issues like a faulty dhcp configuration where the client cannot resolve the domain, misconfigured firewall, or incorrect vlan tagging could prevent domain controllers from being found. I recall an instance where an inexperienced network engineer implemented a new vlan but failed to enable the necessary routing to the domain controllers. Clients were getting ip addresses but could not locate the domain. A simple `ping` to the domain controller’s ip address from the client would be the starting point, followed by an `nslookup` on the domain name, to see if dns resolution is functional. A successful `ping` and `nslookup` is not conclusive. The domain discovery mechanisms use a combination of dns queries, and the results need to return working domain controllers.
 
@@ -90,6 +90,7 @@ if ($lockedAccounts) {
     Write-Host "No accounts were locked out on $domainController."
 }
 ```
+
 This script filters event logs on the given domain controller, searches for the event id 4740 (lockout events), then extracts and displays the user names that were locked out. This helps you narrow down if it is a policy-based lock out. Once identified the user account will need to be unlocked manually through the Active Directory Users and Computers management console or programmatically.
 
 Finally, issues with the dcs themselves can prevent logins. If a domain controller is having internal problems, like database inconsistencies or a service failure, it will be unable to authenticate. The dcdiag tool, run from a command prompt on a domain controller, is invaluable to run a multitude of checks and can show a more comprehensive view of the domain controller’s state and the domain health. There are options within the tool to perform specific tests.

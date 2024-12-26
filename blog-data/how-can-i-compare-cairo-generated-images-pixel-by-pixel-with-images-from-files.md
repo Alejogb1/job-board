@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-compare-cairo-generated-images-pixel-by-pixel-with-images-from-files"
 ---
 
-, let's tackle this pixel-by-pixel comparison of Cairo-generated images and those from files. It's a common scenario, and I've been down this path myself quite a few times, especially back when I was working on a cross-platform rendering engine. The devil is always in the details with image comparisons, and simply looking at visual differences often isn’t enough; we need the precision of a pixel-level comparison.
+, pixel-by-pixel comparison of Cairo-generated images and those from files. It's a common scenario, and I've been down this path myself quite a few times, especially back when I was working on a cross-platform rendering engine. The devil is always in the details with image comparisons, and simply looking at visual differences often isn’t enough; we need the precision of a pixel-level comparison.
 
 The core challenge lies in the way images are represented and accessed. Cairo, when creating its output, typically gives you a surface – an in-memory buffer of pixel data. File-based images, on the other hand, usually come in encoded formats like PNG or JPEG, requiring decoding to get to the raw pixel information. The crucial steps, therefore, involve getting both types of images into a comparable raw pixel format, and then implementing the actual comparison logic.
 

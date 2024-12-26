@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-seq2seq-models-relate-to-prompt-learning"
 ---
 
-, let's tackle this one. I've spent a fair bit of time working with both seq2seq architectures and the more recent approaches in prompt engineering, and the relationship between the two is more intricate than it might initially seem. It’s not a simple case of one being an antecedent of the other, rather, they exist in a sort of symbiotic relationship, each benefiting from the understanding gleaned by the other.
+, one. I've spent a fair bit of time working with both seq2seq architectures and the more recent approaches in prompt engineering, and the relationship between the two is more intricate than it might initially seem. It’s not a simple case of one being an antecedent of the other, rather, they exist in a sort of symbiotic relationship, each benefiting from the understanding gleaned by the other.
 
 My experience with sequence-to-sequence models goes back a few years, to when we were building a system for automatic machine translation. We were heavily invested in an encoder-decoder architecture using recurrent neural networks (RNNs), specifically LSTMs. Back then, the predominant approach was to train these models end-to-end on massive parallel corpora. The model learned the mapping between languages implicitly; you’d feed in a source sentence, and the decoder would dutifully output the translated sentence, all learned from millions of examples. It was effective, but also a bit of a black box.
 

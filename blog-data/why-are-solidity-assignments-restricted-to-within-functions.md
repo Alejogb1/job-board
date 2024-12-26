@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-solidity-assignments-restricted-to-within-functions"
 ---
 
-Let's tackle this one head-on; it's a nuanced topic, and I've certainly spent my fair share of time debugging Solidity contracts only to find a misplaced assignment causing headaches. It's a limitation that can seem counterintuitive at first, especially coming from languages where you might freely assign values to global variables. But there's sound reasoning behind Solidity's design choice of restricting assignments to within functions; it's about ensuring predictable behavior, maintaining integrity, and managing gas costs effectively within the Ethereum Virtual Machine (EVM).
+one head-on; it's a nuanced topic, and I've certainly spent my fair share of time debugging Solidity contracts only to find a misplaced assignment causing headaches. It's a limitation that can seem counterintuitive at first, especially coming from languages where you might freely assign values to global variables. But there's sound reasoning behind Solidity's design choice of restricting assignments to within functions; it's about ensuring predictable behavior, maintaining integrity, and managing gas costs effectively within the Ethereum Virtual Machine (EVM).
 
 Essentially, the crux of it lies in how the EVM interprets and executes code. When we're talking about Solidity, the smart contracts aren’t just passive data structures; they are active pieces of code designed to interact with and modify blockchain state. That state, represented by variables declared outside functions (commonly referred to as state variables), is persistent. It exists across transactions and is integral to the contract's functionality. Direct, unrestricted modification of this state outside of a structured transaction (function call) could lead to chaos.
 
@@ -52,7 +52,7 @@ contract InitialAssignment {
 }
 ```
 
-Here, we see the exception: state variables *can* be assigned values during the contract's initialization within the constructor. The constructor is a special function, executed only once during the deployment of the contract. The constructor sets `myNumber` to a passed-in value. This allows for controlled initial setup of state variables. The `getNumber` function allows reading but not modifying the state variable.
+Here, we see the exception: state variables _can_ be assigned values during the contract's initialization within the constructor. The constructor is a special function, executed only once during the deployment of the contract. The constructor sets `myNumber` to a passed-in value. This allows for controlled initial setup of state variables. The `getNumber` function allows reading but not modifying the state variable.
 
 **Example 3: Assignment within a Function (Correct Approach)**
 

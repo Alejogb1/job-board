@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-filter-network-communities-with-degrees-below-a-threshold"
 ---
 
-Let's tackle this. Filtering network communities based on node degree is actually a common requirement, and I've had to implement this several times in past projects, particularly when dealing with large social network graphs or analyzing complex systems. It’s not just about finding the 'core' of a network; sometimes you need to strip away peripheral elements for a clearer view, or perhaps to improve the efficiency of certain downstream analyses.
+. Filtering network communities based on node degree is actually a common requirement, and I've had to implement this several times in past projects, particularly when dealing with large social network graphs or analyzing complex systems. It’s not just about finding the 'core' of a network; sometimes you need to strip away peripheral elements for a clearer view, or perhaps to improve the efficiency of certain downstream analyses.
 
 When we discuss network communities, we're essentially talking about subsets of nodes that are densely connected to each other but sparsely connected to the rest of the network. Degree, in this context, simply refers to the number of connections a node has. Filtering based on this is, therefore, a way to identify and potentially discard less significant elements of your data.
 
 The challenge, however, lies in implementing this efficiently, especially if the network is large. A naive approach of iterating through every node and every community would be incredibly slow, so we need to think strategically about our algorithms and data structures. I remember an instance where I had to deal with a social graph with millions of nodes – a linear search would have been a disaster.
 
-The core idea revolves around a few steps: identifying the communities, calculating the degree of each node within its respective community, and then filtering out entire communities that don't meet the degree threshold. Note that we're filtering entire communities, not just individual nodes. Otherwise, the concept of community itself would lose its meaning. It's also good to keep in mind that a community is typically defined, not arbitrarily. There are many well-established community detection algorithms that you'll need to employ *before* filtering by degree threshold.
+The core idea revolves around a few steps: identifying the communities, calculating the degree of each node within its respective community, and then filtering out entire communities that don't meet the degree threshold. Note that we're filtering entire communities, not just individual nodes. Otherwise, the concept of community itself would lose its meaning. It's also good to keep in mind that a community is typically defined, not arbitrarily. There are many well-established community detection algorithms that you'll need to employ _before_ filtering by degree threshold.
 
 Let's dive into some specific implementations. I'll show you three examples in Python, using common libraries like `networkx` and `scikit-network`.
 
@@ -145,7 +145,7 @@ In this version, I've replaced the average with the median. This can provide a m
 
 While these snippets provide a good starting point, remember these points:
 
-1.  **Community Detection Method**: The choice of community detection algorithm matters significantly. `Louvain` or `greedy modularity maximization`, like in our examples, are commonly used but consider their assumptions and limitations. Look into *Community Structure in Social and Biological Networks* by Michelle Girvan and Mark Newman, or more recently, the *Graph Partitioning and Community Detection* chapter in *Handbook of Graph Theory*, to understand the different algorithms.
+1.  **Community Detection Method**: The choice of community detection algorithm matters significantly. `Louvain` or `greedy modularity maximization`, like in our examples, are commonly used but consider their assumptions and limitations. Look into _Community Structure in Social and Biological Networks_ by Michelle Girvan and Mark Newman, or more recently, the _Graph Partitioning and Community Detection_ chapter in _Handbook of Graph Theory_, to understand the different algorithms.
 2.  **Threshold Selection**: Deciding on the 'correct' threshold is not trivial. You’ll need to understand the characteristics of your data and your analysis goals. This often involves some exploratory data analysis and trial-and-error.
 3.  **Scalability**: For very large networks, optimized implementations in libraries like `igraph` or specialized graph databases might be necessary. This is where you start thinking about parallel processing or using disk-based data structures. I recall a particular project where we had to use a distributed graph database due to the sheer size of the data, and it drastically cut processing times.
 

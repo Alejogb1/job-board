@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-the-azureml-sdk-corrupt-the-default-datastore"
 ---
 
-Let's tackle this directly. It's a frustrating experience when an sdk, especially one as critical as the AzureML sdk, seems to be meddling with the default datastore. Based on some past, very much hands-on encounters, I can tell you it's rarely a case of the sdk *intentionally* corrupting the datastore itself. Instead, what's usually happening is a misunderstanding of how the default datastore works within the Azure Machine Learning ecosystem, coupled with some common coding patterns that can unintentionally cause issues that resemble corruption.
+directly. It's a frustrating experience when an sdk, especially one as critical as the AzureML sdk, seems to be meddling with the default datastore. Based on some past, very much hands-on encounters, I can tell you it's rarely a case of the sdk _intentionally_ corrupting the datastore itself. Instead, what's usually happening is a misunderstanding of how the default datastore works within the Azure Machine Learning ecosystem, coupled with some common coding patterns that can unintentionally cause issues that resemble corruption.
 
-Think of the default datastore within an AzureML workspace as a sort of convenience zone – it's there out-of-the-box, often pointing to the storage account associated with the workspace. It's *not* a black box; it has specific behaviors and, importantly, isn't designed to be a general-purpose dumping ground for data, especially if you have workflows that involve modifications or iterative writes. This point, often overlooked, is where many problems begin. I've seen countless projects where the default datastore was treated like a local file system, which, in a shared or collaborative environment, becomes a quick recipe for conflicts and apparent data corruption.
+Think of the default datastore within an AzureML workspace as a sort of convenience zone – it's there out-of-the-box, often pointing to the storage account associated with the workspace. It's _not_ a black box; it has specific behaviors and, importantly, isn't designed to be a general-purpose dumping ground for data, especially if you have workflows that involve modifications or iterative writes. This point, often overlooked, is where many problems begin. I've seen countless projects where the default datastore was treated like a local file system, which, in a shared or collaborative environment, becomes a quick recipe for conflicts and apparent data corruption.
 
 The key misunderstanding often boils down to these critical aspects:
 
@@ -70,12 +70,12 @@ print(f'Data has been processed and uploaded to {default_ds.name}/preprocessed_d
 
 ```
 
-In this basic example, I am simulating a situation where two jobs are attempting to write a processed output to the datastore in a parallel fashion. This simplified case results in the *second* upload overriding the first. This is the key takeaway; because they are both writing to `preprocessed_data` the first upload is lost.
+In this basic example, I am simulating a situation where two jobs are attempting to write a processed output to the datastore in a parallel fashion. This simplified case results in the _second_ upload overriding the first. This is the key takeaway; because they are both writing to `preprocessed_data` the first upload is lost.
 This is NOT corruption in the datastore, but is a user problem when using the datastore as intended and without versioning or additional separation.
 
 **Scenario 2: Incorrect Data Uploads**
 
-Consider an attempt to upload a directory containing multiple files, and instead of specifying the source directory, the user includes the files directly. This could lead to unexpected behavior where only a *single* file is uploaded, or uploaded to an unexpected location.
+Consider an attempt to upload a directory containing multiple files, and instead of specifying the source directory, the user includes the files directly. This could lead to unexpected behavior where only a _single_ file is uploaded, or uploaded to an unexpected location.
 
 ```python
 from azureml.core import Workspace, Datastore
@@ -101,6 +101,7 @@ default_ds.upload(src_dir="upload_folder", target_path="uploaded_files", overwri
 print(f'Data uploaded to {default_ds.name}/uploaded_files')
 
 ```
+
 By calling the `upload` function with the directory containing the files in `src_dir`, we correctly upload the files to the correct location. Without the directory, or with incorrect paths, the default datastore won't be able to resolve the correct target location resulting in potential data loss.
 
 **Scenario 3: Data Transformation within pipelines**
@@ -173,11 +174,12 @@ df.to_csv(os.path.join(output_path,'transformed.csv'), index=False)
 """)
 ```
 
-In this final example, the pipeline reads raw data, and performs a very simple transformation to create a `col3`, saving the transformed csv back to the datastore, without consideration of the underlying architecture or any other considerations. This *can* cause issues when we're re-running pipelines frequently and can lead to the datastore holding unexpected information.
+In this final example, the pipeline reads raw data, and performs a very simple transformation to create a `col3`, saving the transformed csv back to the datastore, without consideration of the underlying architecture or any other considerations. This _can_ cause issues when we're re-running pipelines frequently and can lead to the datastore holding unexpected information.
 
 In each of these cases, the "corruption" isn’t due to the sdk’s inherent flaws but arises from how it’s used and the data patterns involved.
 
 To avoid these problems, I strongly recommend several key strategies:
+
 1.  **Dataset Versioning**: use the dataset registration features of AzureML extensively. This is best practice for ensuring reproducibility and avoiding unexpected changes to datasets used in model training and pipelines.
 2.  **Separate Datastores**: do not use default datastores for all data operations. Set up specialized datastores that are tailored to specific experiment or data groups.
 3.  **Careful Path Management**: be very cautious when working with data paths within AzureML experiments and pipelines. Use unique and descriptive names for paths and folders, especially when dealing with intermediate data. Use pipeline data objects effectively for controlling inputs and outputs.

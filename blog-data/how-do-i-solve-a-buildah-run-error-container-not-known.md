@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-solve-a-buildah-run-error-container-not-known"
 ---
 
-Let's tackle this. I’ve definitely seen that particular "container not known" error with buildah more times than I’d care to recall. It often surfaces when your build process, for whatever reason, doesn't quite track the containers it's spinning up internally, and it’s usually a symptom, not the root cause. This typically happens when buildah loses its grip on the intermediate container layers, specifically during a `buildah run` operation, or when the container ID or name reference you’re using in your script is not the one buildah expects at that specific moment. The frustrating part is that the error itself is a bit of a black box; it doesn’t precisely tell you *why* the container isn't known, just that it *isn't*.
+. I’ve definitely seen that particular "container not known" error with buildah more times than I’d care to recall. It often surfaces when your build process, for whatever reason, doesn't quite track the containers it's spinning up internally, and it’s usually a symptom, not the root cause. This typically happens when buildah loses its grip on the intermediate container layers, specifically during a `buildah run` operation, or when the container ID or name reference you’re using in your script is not the one buildah expects at that specific moment. The frustrating part is that the error itself is a bit of a black box; it doesn’t precisely tell you _why_ the container isn't known, just that it _isn't_.
 
 Essentially, buildah maintains an internal state of all containers it has created and is currently managing. When you use `buildah run`, you’re essentially creating a temporary container based on the current image, performing commands inside that container, and then committing those changes back to a new image layer. If buildah's internal record keeping goes awry, either due to a script error, a previous failure, or even an environmental issue, this can cause the infamous “container not known” error to rear its ugly head.
 
@@ -34,7 +34,7 @@ buildah commit my_image $image_name
 buildah rm $container_name
 ```
 
-In this case, we are *explicitly* removing the container, but it also can be removed when a command fails due to a syntax issue, incorrect command arguments or other issues. Let’s fix that, shall we? The correct way is to make sure you're always referencing the correct current container and to avoid reusing the same name across separate steps.
+In this case, we are _explicitly_ removing the container, but it also can be removed when a command fails due to a syntax issue, incorrect command arguments or other issues. Let’s fix that, shall we? The correct way is to make sure you're always referencing the correct current container and to avoid reusing the same name across separate steps.
 
 ```bash
 #!/bin/bash
@@ -49,16 +49,18 @@ buildah commit my_temp_image $image_name
 buildah rm my_temp_container
 
 ```
-*Note: I've replaced the named container with a `buildah commit` that then creates an image `my_temp_image` instead. By using the commit command we're ensuring we are creating a new image layer which is then used in the following run.*
+
+_Note: I've replaced the named container with a `buildah commit` that then creates an image `my_temp_image` instead. By using the commit command we're ensuring we are creating a new image layer which is then used in the following run._
 
 This example uses commit to get a new image, meaning that the `buildah rm $container_name` call doesn't affect the rest of the operations, and we do not try to operate on a container that may not exist.
-*Note also: It's a good practice to use a random or unique name for each container or image if the same script is run multiple times, which can be generated using, for example, `$RANDOM` or a timestamp.*
+_Note also: It's a good practice to use a random or unique name for each container or image if the same script is run multiple times, which can be generated using, for example, `$RANDOM` or a timestamp._
 
 **Scenario 2: Incorrect Layer Management**
 
 Another common area where issues arise is around how buildah manages layers. Each `buildah run` or `buildah commit` typically generates a new image layer. If the container ID used in a subsequent `buildah run` call is related to a different layer – an older, or sometimes removed one - that’s not the immediate parent of the image you’re attempting to operate on, buildah will understandably complain with “container not known”. You've to make sure you're working with the image or container you think you are, and that each operation is building off the previous step's output. This is why `buildah commit` and making a new image each step might be more convenient for some workflows that are prone to these types of issues.
 
 Let's illustrate with another problematic example using an image name and forgetting that we need to work with the correct output from the previous command:
+
 ```bash
 #!/bin/bash
 image_name="my_app_image"
@@ -75,7 +77,7 @@ buildah rm my_container
 
 ```
 
-Here, the second `buildah run` refers to the *original* image `my_image`, not the image generated by the previous step, causing a failure. We need to target the generated image, so let's make that fix:
+Here, the second `buildah run` refers to the _original_ image `my_image`, not the image generated by the previous step, causing a failure. We need to target the generated image, so let's make that fix:
 
 ```bash
 #!/bin/bash
@@ -97,7 +99,7 @@ In the corrected script, we create the `my_intermediate_image`, and then use tha
 
 **Scenario 3: Errors during the Run Command**
 
-Sometimes the “container not known” error arises because of an unexpected exit or error *within* the `buildah run` command execution itself, particularly with complex shell commands or lengthy processing. When an operation inside the container fails due to errors in the command itself, the container might not be committed correctly, and buildah might not register it properly. When buildah does not commit, it effectively does a `buildah rm` to clean up, which, on a subsequent call can lead to the 'container not known' error.
+Sometimes the “container not known” error arises because of an unexpected exit or error _within_ the `buildah run` command execution itself, particularly with complex shell commands or lengthy processing. When an operation inside the container fails due to errors in the command itself, the container might not be committed correctly, and buildah might not register it properly. When buildah does not commit, it effectively does a `buildah rm` to clean up, which, on a subsequent call can lead to the 'container not known' error.
 
 Let’s have a look:
 

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-traits-of-an-nft-from-opensea-using-javascript"
 ---
 
-Let's tackle this one. I remember a project a few years back where we were building an aggregator for various NFT marketplaces, and getting trait data from OpenSea proved to be... *interesting*, shall we say. It's not always as straightforward as one might initially expect, and the nuances of their api, while generally robust, require a considered approach.
+one. I remember a project a few years back where we were building an aggregator for various NFT marketplaces, and getting trait data from OpenSea proved to be... _interesting_, shall we say. It's not always as straightforward as one might initially expect, and the nuances of their api, while generally robust, require a considered approach.
 
-The core challenge lies in understanding that OpenSea doesn't directly expose a single endpoint where you can retrieve *all* traits of an nft from a single call using only its contract address and token id. Instead, you usually need to navigate several layers to piece together the complete picture. My experience highlighted that a combination of their 'assets' endpoint and careful data manipulation is the most effective strategy. Let's delve into the specifics.
+The core challenge lies in understanding that OpenSea doesn't directly expose a single endpoint where you can retrieve _all_ traits of an nft from a single call using only its contract address and token id. Instead, you usually need to navigate several layers to piece together the complete picture. My experience highlighted that a combination of their 'assets' endpoint and careful data manipulation is the most effective strategy. Let's delve into the specifics.
 
 The initial step revolves around querying the `/assets` endpoint. This is where we start. This particular endpoint can fetch data on multiple nfts simultaneously, which is great for efficiency but needs to be properly structured for single-nft cases. Now, the payload we're interested in contains a lot of information, but the 'traits' property nestled within each asset is key. However, a critical point to observe is that the ‘traits’ data is not universally present. For some nfts, particularly those on less active collections, this data might be absent. Therefore, it’s crucial to handle these edge cases gracefully.
 
@@ -14,56 +14,55 @@ Here's a practical example of how you'd typically perform this initial fetch usi
 
 ```javascript
 async function fetchNftTraits(contractAddress, tokenId) {
-    const apiUrl = `https://api.opensea.io/api/v1/assets?asset_contract_addresses=${contractAddress}&token_ids=${tokenId}`;
+  const apiUrl = `https://api.opensea.io/api/v1/assets?asset_contract_addresses=${contractAddress}&token_ids=${tokenId}`;
 
-    try {
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-                'X-API-KEY': 'YOUR_OPENSEA_API_KEY', // Replace with your actual API key
-                'Accept': 'application/json'
-          }
-        });
+  try {
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "X-API-KEY": "YOUR_OPENSEA_API_KEY", // Replace with your actual API key
+        Accept: "application/json",
+      },
+    });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-
-
-        if(data.assets && data.assets.length > 0){
-          const nft = data.assets[0];
-          if(nft.traits){
-            return nft.traits;
-          } else {
-             console.warn(`No traits found for token ${tokenId} at address ${contractAddress}`);
-             return []; // Return empty array or handle as per your project's logic
-          }
-        } else {
-           console.warn(`No asset found with token id ${tokenId} at address ${contractAddress}`);
-           return []; //Return empty array or handle as per your project logic
-
-        }
-
-
-
-    } catch (error) {
-        console.error("Error fetching NFT traits:", error);
-        return null;  //Or handle error as per project need
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const data = await response.json();
+
+    if (data.assets && data.assets.length > 0) {
+      const nft = data.assets[0];
+      if (nft.traits) {
+        return nft.traits;
+      } else {
+        console.warn(
+          `No traits found for token ${tokenId} at address ${contractAddress}`
+        );
+        return []; // Return empty array or handle as per your project's logic
+      }
+    } else {
+      console.warn(
+        `No asset found with token id ${tokenId} at address ${contractAddress}`
+      );
+      return []; //Return empty array or handle as per your project logic
+    }
+  } catch (error) {
+    console.error("Error fetching NFT traits:", error);
+    return null; //Or handle error as per project need
+  }
 }
 
 // Example usage
-async function main(){
-    const contractAddress = '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d';  //Example: Bored Ape Yacht Club contract
-    const tokenId = '1'; //Example: Bored Ape #1
-    const traits = await fetchNftTraits(contractAddress, tokenId);
+async function main() {
+  const contractAddress = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"; //Example: Bored Ape Yacht Club contract
+  const tokenId = "1"; //Example: Bored Ape #1
+  const traits = await fetchNftTraits(contractAddress, tokenId);
 
-    if (traits){
-       console.log("NFT Traits:", traits);
-    } else {
-      console.log("Could not retrieve traits.")
-    }
+  if (traits) {
+    console.log("NFT Traits:", traits);
+  } else {
+    console.log("Could not retrieve traits.");
+  }
 }
 
 main();
@@ -79,71 +78,76 @@ To fetch and process this metadata, you'd usually start by looking at the `token
 
 ```javascript
 async function fetchNftTraits(contractAddress, tokenId) {
-    const apiUrl = `https://api.opensea.io/api/v1/assets?asset_contract_addresses=${contractAddress}&token_ids=${tokenId}`;
+  const apiUrl = `https://api.opensea.io/api/v1/assets?asset_contract_addresses=${contractAddress}&token_ids=${tokenId}`;
 
-    try {
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-               'X-API-KEY': 'YOUR_OPENSEA_API_KEY', // Replace with your actual API key
-                'Accept': 'application/json'
-          }
-        });
+  try {
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "X-API-KEY": "YOUR_OPENSEA_API_KEY", // Replace with your actual API key
+        Accept: "application/json",
+      },
+    });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-
-        if(data.assets && data.assets.length > 0){
-          const nft = data.assets[0];
-          if(nft.traits){
-            return nft.traits;
-          } else if(nft.token_metadata){
-            try{
-              const metadataResponse = await fetch(nft.token_metadata);
-              if(!metadataResponse.ok) {
-                 throw new Error(`HTTP error! status: ${metadataResponse.status}`);
-              }
-              const metadata = await metadataResponse.json();
-              if (metadata && metadata.attributes){
-                return metadata.attributes;
-              }
-               console.warn(`Metadata found at ${nft.token_metadata}, but no attributes field found.`);
-               return [];
-
-            } catch(metadataError){
-               console.error(`Error fetching or parsing metadata from ${nft.token_metadata}:`, metadataError);
-                return [];
-            }
-         } else {
-             console.warn(`No traits or token_metadata found for token ${tokenId} at address ${contractAddress}`);
-             return []; // Handle edge cases if no traits or metadata are available
-          }
-        } else {
-          console.warn(`No asset found with token id ${tokenId} at address ${contractAddress}`);
-          return []; //Handle cases where no asset found
-        }
-
-
-    } catch (error) {
-        console.error("Error fetching NFT traits:", error);
-        return null;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const data = await response.json();
+
+    if (data.assets && data.assets.length > 0) {
+      const nft = data.assets[0];
+      if (nft.traits) {
+        return nft.traits;
+      } else if (nft.token_metadata) {
+        try {
+          const metadataResponse = await fetch(nft.token_metadata);
+          if (!metadataResponse.ok) {
+            throw new Error(`HTTP error! status: ${metadataResponse.status}`);
+          }
+          const metadata = await metadataResponse.json();
+          if (metadata && metadata.attributes) {
+            return metadata.attributes;
+          }
+          console.warn(
+            `Metadata found at ${nft.token_metadata}, but no attributes field found.`
+          );
+          return [];
+        } catch (metadataError) {
+          console.error(
+            `Error fetching or parsing metadata from ${nft.token_metadata}:`,
+            metadataError
+          );
+          return [];
+        }
+      } else {
+        console.warn(
+          `No traits or token_metadata found for token ${tokenId} at address ${contractAddress}`
+        );
+        return []; // Handle edge cases if no traits or metadata are available
+      }
+    } else {
+      console.warn(
+        `No asset found with token id ${tokenId} at address ${contractAddress}`
+      );
+      return []; //Handle cases where no asset found
+    }
+  } catch (error) {
+    console.error("Error fetching NFT traits:", error);
+    return null;
+  }
 }
 
 // Example usage
-async function main(){
-    const contractAddress = '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'; //Example: Bored Ape Yacht Club contract
-    const tokenId = '1'; //Example: Bored Ape #1
-    const traits = await fetchNftTraits(contractAddress, tokenId);
-    if (traits){
-       console.log("NFT Traits:", traits);
-    } else {
-       console.log("Could not retrieve traits.")
-    }
+async function main() {
+  const contractAddress = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"; //Example: Bored Ape Yacht Club contract
+  const tokenId = "1"; //Example: Bored Ape #1
+  const traits = await fetchNftTraits(contractAddress, tokenId);
+  if (traits) {
+    console.log("NFT Traits:", traits);
+  } else {
+    console.log("Could not retrieve traits.");
+  }
 }
 
 main();
@@ -157,85 +161,88 @@ Finally, a good practice I always follow is to cache the results of this process
 const cache = new Map(); // Simple in-memory cache
 
 async function fetchNftTraits(contractAddress, tokenId) {
-    const cacheKey = `${contractAddress}-${tokenId}`;
+  const cacheKey = `${contractAddress}-${tokenId}`;
 
-    if (cache.has(cacheKey)){
-      return cache.get(cacheKey); //Return from cache if found
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey); //Return from cache if found
+  }
+
+  const apiUrl = `https://api.opensea.io/api/v1/assets?asset_contract_addresses=${contractAddress}&token_ids=${tokenId}`;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "X-API-KEY": "YOUR_OPENSEA_API_KEY", // Replace with your actual API key
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const apiUrl = `https://api.opensea.io/api/v1/assets?asset_contract_addresses=${contractAddress}&token_ids=${tokenId}`;
+    const data = await response.json();
 
-    try {
-        const response = await fetch(apiUrl, {
-           method: 'GET',
-          headers: {
-                'X-API-KEY': 'YOUR_OPENSEA_API_KEY', // Replace with your actual API key
-                'Accept': 'application/json'
+    if (data.assets && data.assets.length > 0) {
+      const nft = data.assets[0];
+      let traits = [];
+      if (nft.traits) {
+        traits = nft.traits;
+      } else if (nft.token_metadata) {
+        try {
+          const metadataResponse = await fetch(nft.token_metadata);
+          if (!metadataResponse.ok) {
+            throw new Error(`HTTP error! status: ${metadataResponse.status}`);
           }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+          const metadata = await metadataResponse.json();
+          if (metadata && metadata.attributes) {
+            traits = metadata.attributes;
+          }
+        } catch (metadataError) {
+          console.error(
+            `Error fetching or parsing metadata from ${nft.token_metadata}:`,
+            metadataError
+          );
         }
-
-         const data = await response.json();
-
-
-        if(data.assets && data.assets.length > 0){
-           const nft = data.assets[0];
-          let traits = [];
-           if(nft.traits){
-               traits = nft.traits;
-            } else if(nft.token_metadata){
-              try{
-                const metadataResponse = await fetch(nft.token_metadata);
-                if(!metadataResponse.ok) {
-                  throw new Error(`HTTP error! status: ${metadataResponse.status}`);
-                }
-                const metadata = await metadataResponse.json();
-                if (metadata && metadata.attributes){
-                  traits = metadata.attributes;
-                }
-
-              } catch(metadataError){
-                 console.error(`Error fetching or parsing metadata from ${nft.token_metadata}:`, metadataError);
-              }
-            } else{
-             console.warn(`No traits or token_metadata found for token ${tokenId} at address ${contractAddress}`);
-            }
-           cache.set(cacheKey, traits); // Save to cache before returning
-           return traits;
-
-        } else{
-           console.warn(`No asset found with token id ${tokenId} at address ${contractAddress}`);
-           return [];
-        }
-
-    } catch (error) {
-        console.error("Error fetching NFT traits:", error);
-        return null;
+      } else {
+        console.warn(
+          `No traits or token_metadata found for token ${tokenId} at address ${contractAddress}`
+        );
+      }
+      cache.set(cacheKey, traits); // Save to cache before returning
+      return traits;
+    } else {
+      console.warn(
+        `No asset found with token id ${tokenId} at address ${contractAddress}`
+      );
+      return [];
     }
+  } catch (error) {
+    console.error("Error fetching NFT traits:", error);
+    return null;
+  }
 }
 
 // Example usage
-async function main(){
-    const contractAddress = '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'; //Example: Bored Ape Yacht Club contract
-    const tokenId = '1'; //Example: Bored Ape #1
-    const traits = await fetchNftTraits(contractAddress, tokenId);
-      if (traits){
-         console.log("NFT Traits:", traits);
-      } else {
-         console.log("Could not retrieve traits.")
-      }
-     const traitsCached = await fetchNftTraits(contractAddress, tokenId); //fetch again
-      if (traitsCached){
-          console.log("NFT Traits from cache:", traitsCached);
-      }
+async function main() {
+  const contractAddress = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"; //Example: Bored Ape Yacht Club contract
+  const tokenId = "1"; //Example: Bored Ape #1
+  const traits = await fetchNftTraits(contractAddress, tokenId);
+  if (traits) {
+    console.log("NFT Traits:", traits);
+  } else {
+    console.log("Could not retrieve traits.");
+  }
+  const traitsCached = await fetchNftTraits(contractAddress, tokenId); //fetch again
+  if (traitsCached) {
+    console.log("NFT Traits from cache:", traitsCached);
+  }
 }
 
 main();
-
 ```
+
 Here, we introduce a basic `Map` as the in-memory cache. Before making an api call, we check if the data is already in the cache. If so, it's returned directly. Otherwise, after receiving data from the server we save it in the cache. This demonstrates a simple caching mechanism. In production environments, you might opt for more sophisticated solutions involving databases or dedicated caching servers.
 
 For a deeper dive, I'd recommend exploring the OpenSea API documentation extensively. “Mastering Blockchain Programming with Python” by Elias Ntaganda covers a range of relevant topics, including apis, and “Programming Web3: Building Decentralized Applications on the Blockchain” by Manu Sharma is also quite informative. For api design patterns, I strongly suggest “RESTful Web APIs” by Leonard Richardson and Mike Amundsen.

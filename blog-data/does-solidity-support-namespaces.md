@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-solidity-support-namespaces"
 ---
 
-Let's tackle this one. I've seen this question pop up in a few different contexts over the years, often from developers transitioning from other languages. The short answer is, no, Solidity doesn’t directly support namespaces in the way you might expect if you're coming from, say, C++ or Python. However, it offers alternative mechanisms to achieve similar organizational goals.
+one. I've seen this question pop up in a few different contexts over the years, often from developers transitioning from other languages. The short answer is, no, Solidity doesn’t directly support namespaces in the way you might expect if you're coming from, say, C++ or Python. However, it offers alternative mechanisms to achieve similar organizational goals.
 
 Thinking back to my time building a complex decentralized exchange contract, I vividly recall the organizational headaches we faced. We had multiple libraries and data structures representing different asset types, all within the same monolithic solidity file. Initially, we tried a prefixing naming convention, which, while functional, became cumbersome and error-prone as the codebase expanded. It made code less readable and harder to maintain, essentially defeating the purpose of clean, modular design. This experience cemented the need to understand how Solidity really handles code organization.
 

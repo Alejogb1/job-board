@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-determine-if-a-word-exists-within-a-string-in-go-without-using-the-contains-function"
 ---
 
-, let's tackle this one. I remember vividly, back in the early days of a particularly challenging text processing project, needing to optimize exactly this scenario – finding if a specific word existed within a larger string, without relying on the straightforward `strings.Contains` function. We were processing massive text files, and even seemingly small performance gains added up quickly. The default string search wasn’t cutting it for us, so we had to get a little creative.
+, one. I remember vividly, back in the early days of a particularly challenging text processing project, needing to optimize exactly this scenario – finding if a specific word existed within a larger string, without relying on the straightforward `strings.Contains` function. We were processing massive text files, and even seemingly small performance gains added up quickly. The default string search wasn’t cutting it for us, so we had to get a little creative.
 
 The `Contains` function, internally, often leverages efficient algorithms, but for specific use cases like needing exact word matching (and not partial matches like `contain` within `containing`), or if you were dealing with some peculiar edge case in your text data that the standard implementation didn't account for, you often need to roll your own. I’ve found that often, the "standard way" is good for 80% of cases, but the remaining 20% require something custom.
 

@@ -4,19 +4,19 @@ date: "2024-12-23"
 id: "why-does-a-collectionselect-default-value-in-rails-revert-to-the-original-value-on-edit"
 ---
 
-Let's tackle this one. I’ve seen this particular head-scratcher pop up more than a few times, and it always boils down to a few common misunderstandings regarding how rails handles form data and model associations, specifically within the context of `collection_select`. The issue, as you're experiencing, is that when editing a record, the `collection_select` dropdown seems to disregard the currently associated value and defaults back to the first option in the list, or perhaps the placeholder. Let me break it down for you.
+one. I’ve seen this particular head-scratcher pop up more than a few times, and it always boils down to a few common misunderstandings regarding how rails handles form data and model associations, specifically within the context of `collection_select`. The issue, as you're experiencing, is that when editing a record, the `collection_select` dropdown seems to disregard the currently associated value and defaults back to the first option in the list, or perhaps the placeholder. Let me break it down for you.
 
 Essentially, when you use `collection_select`, rails is doing a bit of behind-the-scenes magic involving the `select` tag itself and your model's relationship. Let's consider a scenario I dealt with several years ago: we had a system where users could assign tasks to different teams. We had a `Task` model and a `Team` model, with a simple `belongs_to :team` association on the `Task` side. The form for editing a `Task` utilized `collection_select` to choose the associated team.
 
 The problem we initially faced mirrored yours: when a task was loaded for editing, the `collection_select` would reset to the first team in the list rather than displaying the team that was already assigned to the task. It appeared the current value wasn't being respected, and that's often how it seems when you encounter this issue.
 
-The root of the problem lies in how rails expects to see the *selected* value. The `collection_select` helper is expecting the value of the option that should be selected to match the currently assigned value of the associated attribute. In the case of my `Task` model, it's expecting a `task.team_id` to correspond to one of the ids in the `@teams` collection passed into the helper. If the model attribute isn't explicitly present or if the attribute is `nil`, the selection will revert to the default option.
+The root of the problem lies in how rails expects to see the _selected_ value. The `collection_select` helper is expecting the value of the option that should be selected to match the currently assigned value of the associated attribute. In the case of my `Task` model, it's expecting a `task.team_id` to correspond to one of the ids in the `@teams` collection passed into the helper. If the model attribute isn't explicitly present or if the attribute is `nil`, the selection will revert to the default option.
 
 The issue commonly occurs because you're loading your collection (e.g. `@teams`) correctly but not always ensuring the associated attribute (`task.team_id`) is properly set on the model you're trying to edit. Here are a few common scenarios and solutions:
 
 **Scenario 1: The attribute is `nil` during edit.**
 
-This is often the first thing to check. If you're creating a new record, this isn’t a problem because the initial value for the associated attribute is likely `nil`. But when *editing* a record, you need to ensure that the `task.team_id` is populated with the correct value when your controller fetches the task. Let's look at some code to make it concrete.
+This is often the first thing to check. If you're creating a new record, this isn’t a problem because the initial value for the associated attribute is likely `nil`. But when _editing_ a record, you need to ensure that the `task.team_id` is populated with the correct value when your controller fetches the task. Let's look at some code to make it concrete.
 
 ```ruby
 # tasks_controller.rb

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-searchkick-returning-only-distinct-values-for-ids"
 ---
 
-Let's tackle this from a practical angle, given I’ve seen similar situations arise on more than one occasion with search implementations. The situation you describe, where Searchkick returns only distinct values for IDs, typically stems from how Elasticsearch, the underlying search engine, aggregates results when dealing with search and faceting operations. Specifically, the issue usually isn’t a Searchkick "bug" per se, but a misunderstanding of how `group` or aggregation functions are handled by Elasticsearch.
+from a practical angle, given I’ve seen similar situations arise on more than one occasion with search implementations. The situation you describe, where Searchkick returns only distinct values for IDs, typically stems from how Elasticsearch, the underlying search engine, aggregates results when dealing with search and faceting operations. Specifically, the issue usually isn’t a Searchkick "bug" per se, but a misunderstanding of how `group` or aggregation functions are handled by Elasticsearch.
 
 In the past, I remember a project where we were building an e-commerce platform. We had product data with multiple variations (e.g., size, color) sharing the same base product id. Our search results, using Searchkick, were initially returning what seemed like incomplete data—only one variation per base product ID, rather than the complete set. It was a frustrating discovery initially but became a very telling example of how Elasticsearch’s default behaviors interact with Searchkick's methods.
 
@@ -52,7 +52,7 @@ end
 
 In this example, we are sending Elasticsearch a more nuanced instruction. We use the `terms` aggregation on `base_product_id` to group results by the unique base product IDs. Then within each group, we use the `top_hits` aggregation to retrieve all associated documents for that specific `base_product_id` using the `_id` field as the lookup key for the associated Ruby object. You’ll notice the response structure is also considerably more complex; we traverse the results to find each document and reconstitute them into Product objects. The 'size' parameters are set to a large number; adjust it as needed based on how many records might belong to a particular group. In practice, if the size is too low, some results will be dropped.
 
-Finally, depending on your particular needs, you may not actually *need* to group results; you might simply be after all the matching records. In that scenario, you can achieve the desired output without any aggregation steps, just regular search.
+Finally, depending on your particular needs, you may not actually _need_ to group results; you might simply be after all the matching records. In that scenario, you can achieve the desired output without any aggregation steps, just regular search.
 
 ```ruby
 # Example 3: Simple search, no grouping required

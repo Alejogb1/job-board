@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-a-scrollview-with-a-layout-included-scrollable"
 ---
 
-Let's tackle this head-on; I've seen this scenario pop up more times than I care to count during my years developing front-end interfaces. It’s a deceptively simple problem – why isn't my darn `ScrollView` scrolling even though it contains a perfectly laid out set of child elements? Typically, this isn't a bug in the framework itself, but rather a misunderstanding of how layout and scrolling mechanics interact within its system.
+head-on; I've seen this scenario pop up more times than I care to count during my years developing front-end interfaces. It’s a deceptively simple problem – why isn't my darn `ScrollView` scrolling even though it contains a perfectly laid out set of child elements? Typically, this isn't a bug in the framework itself, but rather a misunderstanding of how layout and scrolling mechanics interact within its system.
 
 Essentially, the issue stems from the `ScrollView`'s dependence on its child's measured size. It needs to know the total content size – both width and height, depending on the scroll direction – before it can effectively enable scrolling. If the `ScrollView`’s child’s layout doesn’t inform the `ScrollView` about its full extent, then the `ScrollView` will have nothing to scroll over. It assumes the child’s dimensions are limited to what's visible, or it might be collapsing due to conflicting layout constraints, often resulting in no scrollable area being detected.
 
@@ -14,17 +14,19 @@ I'll illustrate what's going on here using a couple of code examples. Let's cons
 
 ```javascript
 // A simplified representation, not actual code
-import React from 'react';
-import { View, ScrollView, Text } from 'react-native'; // Replace with relevant framework equivalents
+import React from "react";
+import { View, ScrollView, Text } from "react-native"; // Replace with relevant framework equivalents
 
 const items = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`);
 
 const MyScreen = () => {
   return (
     <ScrollView>
-        <View style={{ flex: 1, backgroundColor: 'lightblue' }}>
-           {items.map(item => <Text key={item}>{item}</Text>)}
-        </View>
+      <View style={{ flex: 1, backgroundColor: "lightblue" }}>
+        {items.map((item) => (
+          <Text key={item}>{item}</Text>
+        ))}
+      </View>
     </ScrollView>
   );
 };
@@ -40,23 +42,26 @@ Now, let's see a version where scrolling is enabled correctly. We can accomplish
 
 ```javascript
 // A simplified representation, not actual code
-import React from 'react';
-import { View, ScrollView, Text } from 'react-native'; // Replace with relevant framework equivalents
+import React from "react";
+import { View, ScrollView, Text } from "react-native"; // Replace with relevant framework equivalents
 
 const items = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`);
 
 const MyScreen = () => {
   return (
     <ScrollView>
-        <View> {/* Removed flex: 1 style  */}
-           {items.map(item => <Text key={item}>{item}</Text>)}
-        </View>
+      <View>
+        {" "}
+        {/* Removed flex: 1 style  */}
+        {items.map((item) => (
+          <Text key={item}>{item}</Text>
+        ))}
+      </View>
     </ScrollView>
   );
 };
 
 export default MyScreen;
-
 ```
 
 Notice the key change in this second example: I've removed `flex: 1` from the inner `View`. The `ScrollView` then has an easy time calculating the content size based on the sum of its child components' heights. Because the content is now larger than the viewport, scrolling kicks in as expected. Alternatively, if the child view required flex to work correctly within the layout, we might have considered setting a `minHeight` (or `minWidth` in a horizontal context) on the inner `View`, a value that is guaranteed to extend beyond the viewport.
@@ -66,25 +71,29 @@ Notice the key change in this second example: I've removed `flex: 1` from the in
 For added clarity and another perspective, if for example the items we were working with had a fixed height we could give our content view, another effective method is to specify a height on the view itself.
 
 ```javascript
-import React from 'react';
-import { View, ScrollView, Text } from 'react-native'; // Replace with relevant framework equivalents
+import React from "react";
+import { View, ScrollView, Text } from "react-native"; // Replace with relevant framework equivalents
 
 const items = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`);
 const ITEM_HEIGHT = 40;
 
 const MyScreen = () => {
-    return (
-        <ScrollView>
-            <View style={{height: items.length * ITEM_HEIGHT}} >
-                {items.map(item => <Text key={item} style={{ height: ITEM_HEIGHT }}>{item}</Text>)}
-            </View>
-        </ScrollView>
-    )
-}
+  return (
+    <ScrollView>
+      <View style={{ height: items.length * ITEM_HEIGHT }}>
+        {items.map((item) => (
+          <Text key={item} style={{ height: ITEM_HEIGHT }}>
+            {item}
+          </Text>
+        ))}
+      </View>
+    </ScrollView>
+  );
+};
 
 export default MyScreen;
-
 ```
+
 In this case, I am using a fixed item height `ITEM_HEIGHT` and, by knowing the number of items, I can calculate the height of the inner `View` to `items.length * ITEM_HEIGHT`. This is similar to example 2, but now the height of the inner content is explicitly set and is therefore easy for the ScrollView to understand. The critical point here is to provide enough information so the ScrollView can correctly calculate the scrollable area.
 
 Beyond these core code-level fixes, the broader issue often boils down to constraints and how layout systems resolve them. When a `ScrollView` is not behaving as expected, there are a few things to check:

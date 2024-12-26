@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-uniswap-upgrade-its-smart-contract-given-that-smart-contracts-are-immutable-once-deployed"
 ---
 
-, let's tackle this one. It's a common misconception that smart contracts are _entirely_ immutable in a practical sense. While it's true that the code itself, once deployed, cannot be directly modified on the blockchain, there are well-established patterns to enable upgrades. I’ve certainly navigated this situation more than once in my time, particularly when working on decentralized finance protocols, which often need to evolve rapidly.
+, one. It's a common misconception that smart contracts are _entirely_ immutable in a practical sense. While it's true that the code itself, once deployed, cannot be directly modified on the blockchain, there are well-established patterns to enable upgrades. I’ve certainly navigated this situation more than once in my time, particularly when working on decentralized finance protocols, which often need to evolve rapidly.
 
 The core challenge lies in that foundational principle of immutability – how do you change the rules of the game when the rules are etched in stone? The solution, broadly speaking, involves a layer of indirection and careful planning during the contract's initial deployment. It's not magic; it's good engineering. Uniswap, like many other projects facing this issue, leverages what we often refer to as proxy patterns for this purpose.
 

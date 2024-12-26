@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-train-a-model-with-untrained-feature-extraction-layers-using-pytorch"
 ---
 
-Let's tackle this head-on. I recall an old project involving satellite imagery analysis back in '18; we had a trove of high-res images, but the feature extraction part was a total bottleneck. We didn't want to pre-train on some generic dataset; the features needed to be specific to our target. Training a model with untrained feature extraction layers, while common in some scenarios, does indeed present its own set of challenges. Let’s break down how to achieve this in PyTorch, covering not just the 'how' but also a bit of the 'why'.
+head-on. I recall an old project involving satellite imagery analysis back in '18; we had a trove of high-res images, but the feature extraction part was a total bottleneck. We didn't want to pre-train on some generic dataset; the features needed to be specific to our target. Training a model with untrained feature extraction layers, while common in some scenarios, does indeed present its own set of challenges. Let’s break down how to achieve this in PyTorch, covering not just the 'how' but also a bit of the 'why'.
 
 Essentially, the crux of the matter lies in configuring your model architecture and the training loop such that both the feature extraction part, typically convolutional layers, and the classification part are optimized simultaneously. We're not freezing any pre-trained layers here; it's an end-to-end training scenario from random initializations. This can lead to more task-specific features but can also demand more data and careful tuning.
 
@@ -48,7 +48,7 @@ criterion = nn.CrossEntropyLoss()
 
 In this example, `CustomModel` contains a `feature_extractor` section made of convolutional and pooling layers followed by a `classifier` section comprising fully connected layers. Note that the output size of the last pooling layer is calculated manually (in this case, it is `32*7*7`, this would change depending on your own input image size). It is vital that these are calculated correctly, as they will determine the input size for your first fully connected layer. The `forward` method defines how data flows through this network. The `Adam` optimizer is used here, alongside `CrossEntropyLoss` which is commonly used for multi-class classification, but may not be ideal for other applications.
 
-Next, the training process. A standard training loop in PyTorch involves iterating through your dataset, feeding batches into your model, calculating a loss, and then backpropagating this loss to update the weights. The crucial point here is that *all* parameters, those from both the feature extractor and classifier, are updated during each iteration. That's precisely what we want.
+Next, the training process. A standard training loop in PyTorch involves iterating through your dataset, feeding batches into your model, calculating a loss, and then backpropagating this loss to update the weights. The crucial point here is that _all_ parameters, those from both the feature extractor and classifier, are updated during each iteration. That's precisely what we want.
 
 Consider this training loop snippet, assuming you have a `train_loader` for your data:
 
@@ -75,7 +75,7 @@ def train_model(model, train_loader, optimizer, criterion, epochs=5):
 # train_model(model, train_loader, optimizer, criterion, epochs=10)
 ```
 
-This function encapsulates a typical training process. In each epoch, it iterates through each batch of data, calculates the loss and updates the model’s parameters. The key here is the use of `optimizer.step()` which will backpropagate gradients through *all* layers of the network. It is critical here to check how the model performs on the validation or test set, to ensure it is learning the features you intended it to, instead of over-fitting.
+This function encapsulates a typical training process. In each epoch, it iterates through each batch of data, calculates the loss and updates the model’s parameters. The key here is the use of `optimizer.step()` which will backpropagate gradients through _all_ layers of the network. It is critical here to check how the model performs on the validation or test set, to ensure it is learning the features you intended it to, instead of over-fitting.
 
 A third, and equally important aspect is data augmentation. Since we are training the feature extractor from scratch, the model needs a lot of examples to adequately learn features. Data augmentation is essential for this, as it will help your model generalize better to new data, by adding random transformations to your existing dataset. PyTorch provides transformations using `torchvision.transforms`. Consider adding random rotations, crops, flips, and brightness changes. This can dramatically improve performance if you are using limited data.
 

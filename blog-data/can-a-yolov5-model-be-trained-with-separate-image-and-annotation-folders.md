@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-yolov5-model-be-trained-with-separate-image-and-annotation-folders"
 ---
 
-, let's tackle this one. I've certainly run into this exact scenario multiple times, usually when inheriting projects with… let's say, _less-than-ideal_ data organization. So, the short answer is yes, a yolov5 model _can_ absolutely be trained with separate image and annotation folders. It's quite common in fact. However, it's crucial to understand how yolov5, or any object detection framework for that matter, expects its data and how to guide it if you deviate from a standard setup.
+, one. I've certainly run into this exact scenario multiple times, usually when inheriting projects with… let's say, _less-than-ideal_ data organization. So, the short answer is yes, a yolov5 model _can_ absolutely be trained with separate image and annotation folders. It's quite common in fact. However, it's crucial to understand how yolov5, or any object detection framework for that matter, expects its data and how to guide it if you deviate from a standard setup.
 
 The core issue here isn’t whether you _can_ have them separate; it's about creating a proper mapping that the yolov5 training script understands. The model doesn't care where the images and annotations physically reside; it cares that the annotation file corresponding to a specific image can be found quickly and easily. The default yolov5 configuration often assumes that the image and annotation share the same base filename (e.g., 'image1.jpg' and 'image1.txt'). If you have them in separate folders, you have to explicitly specify the relationship between them.
 
@@ -50,7 +50,7 @@ path: data # parent path, where the train/val subfolders are found
 label_path: labels # this is not a standard yolov5 parameter and hence will not work.
 ```
 
-**This will NOT work,** as the label_path parameter is not a standard yolov5 argument. It's an illustration of how you _might_ think it should work based on other frameworks or intuition. You should _not_ add this parameter, as it will be ignored. The correct approach utilizes the path value together with the image file name and matching annotation file name.
+**This will NOT work,** as the label*path parameter is not a standard yolov5 argument. It's an illustration of how you \_might* think it should work based on other frameworks or intuition. You should _not_ add this parameter, as it will be ignored. The correct approach utilizes the path value together with the image file name and matching annotation file name.
 
 Let's take a step further. The critical point is that yolov5 expects label files with names that match the corresponding image, but within the label folder. Internally, during the data loading process, the framework scans images in the specified train and validation image paths. For each image file, it then _expects_ an annotation file with the same base name, _within the sibling folder_. The name _must_ match. If it can't find the annotation file, it will print an error during training. This is a very common issue to encounter.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-accessible-is-chainlinks-ccip-cross-chain-interoperability-protocol"
 ---
 
-Let's tackle this; chainlink's cross-chain interoperability protocol, or ccip, accessibility is a topic I’ve had some firsthand experience with, given its relative newness and complex nature. I wouldn’t say it's inherently 'easy' to pick up, but it’s certainly not insurmountable for a developer with a reasonable background in smart contracts and distributed systems.
+; chainlink's cross-chain interoperability protocol, or ccip, accessibility is a topic I’ve had some firsthand experience with, given its relative newness and complex nature. I wouldn’t say it's inherently 'easy' to pick up, but it’s certainly not insurmountable for a developer with a reasonable background in smart contracts and distributed systems.
 
 From my perspective, having previously worked on a project that involved moving assets between ethereum and polygon using a custom bridge before we migrated to ccip, accessibility has multiple layers. It’s not just about how quickly you can implement the basic functionality. We need to consider the onboarding experience for developers, the complexity of integration, the gas costs, and the overall maintainability of the solutions built on top of it.
 
@@ -14,7 +14,7 @@ One of the first accessibility hurdles is the initial setup and understanding of
 
 Let’s dive into practical aspects with a basic example. Imagine a simple scenario: sending a message from ethereum to polygon using ccip. The code will be divided into two parts, a sender contract on ethereum and a receiver on polygon.
 
-First, the *sender* contract on ethereum (simplified for demonstration):
+First, the _sender_ contract on ethereum (simplified for demonstration):
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -53,7 +53,7 @@ contract MessageSender {
 
 In this sender contract, we are importing the ccip client library to call `ccipSend`. The key is the `message` struct which tells ccip how and where to send the `messageBytes`. This is fairly straightforward if you're comfortable with solidity. We are not sending tokens with this message. The `value` that is passed in with `ccipSend` is for the gas that is required for the transaction to be sent to the destination chain.
 
-Now, let's look at the *receiver* contract on polygon:
+Now, let's look at the _receiver_ contract on polygon:
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -82,7 +82,7 @@ This example demonstrates sending a simple string message. The setup and contrac
 
 The above implementation is functional; however, the reality is seldom this clean. When i transitioned our project to ccip, we started with simple message passing, but soon realized there were several factors requiring deeper consideration to make the entire process production-ready. Let's take a look at another more realistic example involving token transfers, adding some complexity.
 
-Consider the following modified *sender* contract on ethereum, designed to send erc-20 tokens along with a message:
+Consider the following modified _sender_ contract on ethereum, designed to send erc-20 tokens along with a message:
 
 ```solidity
 // SPDX-License-Identifier: MIT

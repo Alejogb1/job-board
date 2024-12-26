@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-spaces-in-a-column-be-identified-counted-and-labeled"
 ---
 
-Let's tackle this challenge head-on. I recall an incident, some years back, while working on a data migration project where we were pulling information from legacy systems. The data cleaning phase was… extensive, to say the least. One persistent issue was the inconsistent use of whitespace within string columns. We had to identify these spaces, count occurrences, and then, crucially, label or categorize them for proper handling. It wasn’t just about trimming leading or trailing spaces; there were multiple internal spaces, varying in numbers, and often adjacent to other special characters. So, I’ve got a pretty good grasp on this.
+challenge head-on. I recall an incident, some years back, while working on a data migration project where we were pulling information from legacy systems. The data cleaning phase was… extensive, to say the least. One persistent issue was the inconsistent use of whitespace within string columns. We had to identify these spaces, count occurrences, and then, crucially, label or categorize them for proper handling. It wasn’t just about trimming leading or trailing spaces; there were multiple internal spaces, varying in numbers, and often adjacent to other special characters. So, I’ve got a pretty good grasp on this.
 
 The initial problem isn’t that hard; it’s often the subsequent handling that makes or breaks data quality. The methods for identifying, counting, and labeling spaces in a column will often depend on the environment and toolset you have available. We can broadly break this down into steps that are applicable across most data processing frameworks, but the specific code will vary.
 
@@ -58,7 +58,7 @@ print(df)
 
 ```
 
-In the second example, we’ve introduced a normalization step using `re.sub(r'\s+', ' ', text).strip()`. `\s+` matches one or more whitespace characters (space, tab, newline, etc.), and substitutes them with a single space, ` `. The `.strip()` method removes any leading or trailing spaces. The function now returns both the count of spaces in the *normalized* text and the normalized text itself, which is then added as a new column to our dataframe. Notice, we also split out the result, using a lambda and creating a pandas Series to make sure the function’s multiple returns are handled correctly when creating new columns. This normalization technique is quite common in data cleaning pipelines.
+In the second example, we’ve introduced a normalization step using `re.sub(r'\s+', ' ', text).strip()`. `\s+` matches one or more whitespace characters (space, tab, newline, etc.), and substitutes them with a single space, ` `. The `.strip()` method removes any leading or trailing spaces. The function now returns both the count of spaces in the _normalized_ text and the normalized text itself, which is then added as a new column to our dataframe. Notice, we also split out the result, using a lambda and creating a pandas Series to make sure the function’s multiple returns are handled correctly when creating new columns. This normalization technique is quite common in data cleaning pipelines.
 
 **Example 3: Flagging and Categorizing Rows with Spaces**
 
@@ -81,7 +81,8 @@ def categorize_spaces(text):
 df['space_category'] = df['text_column'].apply(categorize_spaces)
 print(df)
 ```
-In our third example, the `categorize_spaces` function assigns a category based on the presence and number of spaces. This is a common requirement when you're not just counting, but understanding the state of the data. Here we look first for the 'empty/null' and then if it has spaces. It then provides a label such as 'multiple_spaces', 'single_space' or 'no_spaces'.  This sort of categorization is extremely useful when creating quality control reports or to apply targeted cleaning methods.
+
+In our third example, the `categorize_spaces` function assigns a category based on the presence and number of spaces. This is a common requirement when you're not just counting, but understanding the state of the data. Here we look first for the 'empty/null' and then if it has spaces. It then provides a label such as 'multiple_spaces', 'single_space' or 'no_spaces'. This sort of categorization is extremely useful when creating quality control reports or to apply targeted cleaning methods.
 
 Regarding further learning, I’d recommend looking at **"Regular Expressions Cookbook" by Jan Goyvaerts and Steven Levithan** for a deeper understanding of regular expressions; they are indispensable for this sort of work. For data manipulation techniques with pandas, **"Python for Data Analysis" by Wes McKinney** is a must-read. Finally, if you're dealing with very large datasets and need more robust or scalable techniques, it’s worth looking into more advanced data processing tools such as Spark or Dask. Their documentation is also essential when dealing with these kinds of problems on a scale.
 

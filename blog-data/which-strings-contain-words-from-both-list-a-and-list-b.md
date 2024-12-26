@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-strings-contain-words-from-both-list-a-and-list-b"
 ---
 
-, let's tackle this string-matching problem. I've encountered this kind of task countless times, typically when dealing with data sanitization or complex log analysis. The challenge isn't simply finding a single match; it's identifying if a string contains words _from both_ list a and list b, which adds a layer of nuance. We need to approach this strategically for both efficiency and clarity.
+, string-matching problem. I've encountered this kind of task countless times, typically when dealing with data sanitization or complex log analysis. The challenge isn't simply finding a single match; it's identifying if a string contains words _from both_ list a and list b, which adds a layer of nuance. We need to approach this strategically for both efficiency and clarity.
 
 My past experiences reveal that a naive double loop approach quickly becomes unsustainable, especially when you're dealing with large lists or numerous strings to evaluate. Let’s focus on methods that offer better performance without sacrificing readability. The core of the solution involves iterating through the input strings, tokenizing them into individual words, and then checking for presence in both lists. A good first step is always preprocessing to handle case sensitivity and edge cases like punctuation.
 

@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "how-to-do-azure-automl-with-historical-data-context-forecast"
 ---
 
-let's tackle this azure automl with historical context forecasting thing. i've seen this pop up more times than i care to count, and it's a bit more nuanced than just throwing data at the machine. the core issue isn't just predicting future values, it's making those predictions *aware* of past trends and patterns. it's like trying to predict the weather tomorrow by only looking at today's temperature - sure it's *something*, but you’re missing a huge chunk of useful information, all that past data is valuable context.
+azure automl with historical context forecasting thing. i've seen this pop up more times than i care to count, and it's a bit more nuanced than just throwing data at the machine. the core issue isn't just predicting future values, it's making those predictions _aware_ of past trends and patterns. it's like trying to predict the weather tomorrow by only looking at today's temperature - sure it's _something_, but you’re missing a huge chunk of useful information, all that past data is valuable context.
 
 so, my past experience? well, back in the day, i was working on a project to forecast energy consumption for a small city. at first, we just used basic time series models. the predictions were… let's just say less than stellar. they'd miss those big peak demands and underestimate the baseline usage during holidays. it felt like we were trying to predict stock prices by throwing darts at a board. we needed a more intelligent way to inject the past information, the historical context. we had mountains of historical data but couldn't effectively tell the model what to look for. that’s when we started experimenting with what you're asking about here, effectively using historical context in azure automl.
 
-first up, remember, azure automl isn't a magical black box, it needs data in a particular shape. if you have multiple historical series, treat them as individual time series. you don't want to blend a bunch of different energy usage from different areas with each other and then expect it to work effectively. so, if the context is *other* time series impacting the main time series you want to forecast, make sure these are properly aligned on the time axis. basically, every record has the timestamp for the forecasted series and all the context data available at that time. this means, you should be mindful of the data granularity, both the target variable (the thing you want to predict) and the features from the historical data. you need to ensure that they all share the same time frequency.
+first up, remember, azure automl isn't a magical black box, it needs data in a particular shape. if you have multiple historical series, treat them as individual time series. you don't want to blend a bunch of different energy usage from different areas with each other and then expect it to work effectively. so, if the context is _other_ time series impacting the main time series you want to forecast, make sure these are properly aligned on the time axis. basically, every record has the timestamp for the forecasted series and all the context data available at that time. this means, you should be mindful of the data granularity, both the target variable (the thing you want to predict) and the features from the historical data. you need to ensure that they all share the same time frequency.
 
-now, how do we actually get this in the right format for automl?  let me show you a simple example. suppose you have two time series: `target_series` and `context_series`. let’s use pandas for handling this:
+now, how do we actually get this in the right format for automl? let me show you a simple example. suppose you have two time series: `target_series` and `context_series`. let’s use pandas for handling this:
 
 ```python
 import pandas as pd
@@ -26,11 +26,13 @@ df = pd.DataFrame(data)
 df = df.set_index('timestamp')
 print(df)
 ```
+
 this snippet demonstrates how to put the target and context series in a pandas dataframe with the timestamp as the index. this way all time series are aligned.
 
 the critical part comes when configuring automl. you'll need to tell it which column contains the timestamp, which one is the target and which columns are features. remember to make sure these are all numerical values if you expect automl to perform any sensible computations.
 
 let's get into the actual azure automl code configuration:
+
 ```python
 from azure.ml import automl, Input, Output
 from azure.identity import DefaultAzureCredential
@@ -99,6 +101,7 @@ returned_job = ml_client.jobs.create_or_update(automl_job)
 print(f"job started: {returned_job.name}")
 
 ```
+
 the main thing here is the `forecasting_parameters`. note i've set `time_column_name` and the `forecast_horizon`. also `time_series_id_column_names` should be None if you are not dealing with multiple series. you'll also notice how you pass your dataframe as an input dataset using `ml_client.data.create_or_update` and then pass the dataset to the automl job in the `inputs` dictionary with key `training_data`.
 
 another thing that could help, instead of just feeding the raw historical data, consider engineered features. for instance, lagged values can be incredibly effective. this means, instead of just using the raw `context_series` you create new columns that represent the same variable a few steps back in time, this could greatly help model understand the temporal dependencies between your data. it is the models way to "remember" the past. you can add some rolling statistics as well, such as moving average and standard deviation of your variables. here is a quick pandas example:
@@ -125,9 +128,9 @@ df['context_series_rolling_std'] = df['context_series'].rolling(window=3).std()
 print(df)
 ```
 
-here i've created lagged features (using `.shift()`) and rolling window statistics (using `.rolling()` with a window of size 3).  you'd need to carefully consider what makes sense for your specific data. some more complex feature engineering steps could involve discrete Fourier transforms, or wavelet decompositions if your data requires this level of complexity, this could capture seasonality or other periodicities in the data.
+here i've created lagged features (using `.shift()`) and rolling window statistics (using `.rolling()` with a window of size 3). you'd need to carefully consider what makes sense for your specific data. some more complex feature engineering steps could involve discrete Fourier transforms, or wavelet decompositions if your data requires this level of complexity, this could capture seasonality or other periodicities in the data.
 
-now, something to keep in mind when dealing with historical data, you must split the data into training, validation and test sets. since we are dealing with time series you should *not* shuffle the data. you should keep the temporal order. the validation and test sets must be after the train set so you ensure that the model will not see data from the future, which is very important for time series modeling. another thing, if your time series has missing data, you must handle it, either by imputing the missing values or dropping the records.
+now, something to keep in mind when dealing with historical data, you must split the data into training, validation and test sets. since we are dealing with time series you should _not_ shuffle the data. you should keep the temporal order. the validation and test sets must be after the train set so you ensure that the model will not see data from the future, which is very important for time series modeling. another thing, if your time series has missing data, you must handle it, either by imputing the missing values or dropping the records.
 
 regarding resources, i'd recommend looking at "forecasting: principles and practice" by hyndman and athanasopoulos. it's a pretty solid resource for understanding time series forecasting. for more specific azure automl stuff, the microsoft documentation is usually quite comprehensive, just search the specific classes and functions.
 

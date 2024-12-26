@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-configure-nginx-reverse-proxy-to-redirect-subdomains-to-a-dynamic-port"
 ---
 
-, let's tackle this subdomain redirection via nginx to a dynamic port; it's a fairly common scenario in microservices architectures or development environments where services are constantly spinning up on different ports. From my experience, there's a few ways to go about it, each with their own nuances and tradeoffs, and the optimal choice often depends on the specifics of your setup. I’ve certainly tripped over my fair share of configuration files getting it just so.
+, subdomain redirection via nginx to a dynamic port; it's a fairly common scenario in microservices architectures or development environments where services are constantly spinning up on different ports. From my experience, there's a few ways to go about it, each with their own nuances and tradeoffs, and the optimal choice often depends on the specifics of your setup. I’ve certainly tripped over my fair share of configuration files getting it just so.
 
 First, let's dissect what we actually mean by "dynamic port." Typically, when we think of port assignments, we tend to associate a service with a specific port, say, port 8080 for a web application. However, for various reasons, these ports might not be fixed. Perhaps you have a Docker swarm dynamically assigning ports, or your application server’s runtime selects them on each startup. In these scenarios, relying on static port configurations in nginx will obviously fail.
 

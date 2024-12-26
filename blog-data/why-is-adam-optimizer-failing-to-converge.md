@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-adam-optimizer-failing-to-converge"
 ---
 
-Let's tackle this—it's a situation I've encountered more times than I care to remember. Adam failing to converge, especially when it seems like it should be performing optimally, is a nuanced problem with several potential causes. I've seen it in everything from basic image classification tasks to complex reinforcement learning environments, and each time the underlying reason has been subtly different, requiring careful diagnosis. There’s no magic bullet here; understanding the inner workings of Adam, combined with a methodical troubleshooting approach, is critical.
+—it's a situation I've encountered more times than I care to remember. Adam failing to converge, especially when it seems like it should be performing optimally, is a nuanced problem with several potential causes. I've seen it in everything from basic image classification tasks to complex reinforcement learning environments, and each time the underlying reason has been subtly different, requiring careful diagnosis. There’s no magic bullet here; understanding the inner workings of Adam, combined with a methodical troubleshooting approach, is critical.
 
 The Adam optimizer, at its core, is an adaptive learning rate algorithm, which modifies learning rates for each parameter individually based on estimates of first-order (gradient) and second-order (squared gradient) moments. These adaptive learning rates can be incredibly helpful, leading to faster convergence in many scenarios compared to standard stochastic gradient descent (sgd). However, that same adaptivity can sometimes lead it astray, causing non-convergence.
 
@@ -105,9 +105,9 @@ epochs = 200
 for epoch in range(epochs):
     optimizer.zero_grad()
     outputs = model(X_train_tensor)
-    # A complex loss could be, for example, something like 
+    # A complex loss could be, for example, something like
     # a sum of squared errors, but with an added penalty that is hard to optimize
-    loss = criterion(outputs, y_train_tensor) + torch.mean(torch.abs(torch.sin(outputs))) 
+    loss = criterion(outputs, y_train_tensor) + torch.mean(torch.abs(torch.sin(outputs)))
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0) # gradient clipping for stability
     optimizer.step()
@@ -119,6 +119,7 @@ for epoch in range(epochs):
 Finally, an often overlooked but vital aspect is data quality. If your training data is inherently noisy, contains errors, or exhibits biases, no amount of hyperparameter tuning will enable convergence. A good practice is to validate your data and try to rectify as many of these problems before passing the dataset to the optimizer. I’ve had instances where a small portion of mislabeled data caused Adam to keep oscillating around inconsistent targets, without ever truly converging, and it was only after rigorously checking the dataset that I found the error.
 
 Here’s a very basic example of adding noise to our dataset. This technique is most beneficial when your data is very limited, to add a level of diversity in data. In this case, we are introducing the noisy data on the fly, to simulate a situation where we need to introduce some perturbations to the original data:
+
 ```python
 import torch
 import torch.optim as optim

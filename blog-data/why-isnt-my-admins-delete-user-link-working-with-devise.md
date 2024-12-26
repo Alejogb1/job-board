@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-my-admins-delete-user-link-working-with-devise"
 ---
 
-, let's tackle this. I’ve seen this particular puzzle crop up more times than I care to remember, and it’s almost always a subtle permissions issue tangled up with Devise's default behaviors and possibly a sprinkle of confusion around HTTP methods. So, let's break down why your admin's delete user link might be failing, even when it _looks_ like it should work.
+, . I’ve seen this particular puzzle crop up more times than I care to remember, and it’s almost always a subtle permissions issue tangled up with Devise's default behaviors and possibly a sprinkle of confusion around HTTP methods. So, let's break down why your admin's delete user link might be failing, even when it _looks_ like it should work.
 
 First off, Devise is remarkably good at handling authentication for user models, but it doesn't magically grant superpowers to your admin panel. What's often missed is that while Devise handles user login, signup, and password resets, it doesn't inherently provide any logic for different _roles_ or _authorization_. You've got to layer that on yourself. My experience comes from building and maintaining a multi-tenant application where we had admins, moderators, regular users and some custom roles too. We battled through these sorts of things consistently.
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "what-is-the-difference-between-id-id-and-id-in-ruby"
 ---
 
-Let's tackle this directly; it's a common point of confusion for those venturing into Ruby's syntax, especially when dealing with hashes, symbols, and keyword arguments. I've personally tripped over this a few times in my early days working on a large Rails application that relied heavily on dynamic configurations, so trust me, I understand where the questions stem from.
+directly; it's a common point of confusion for those venturing into Ruby's syntax, especially when dealing with hashes, symbols, and keyword arguments. I've personally tripped over this a few times in my early days working on a large Rails application that relied heavily on dynamic configurations, so trust me, I understand where the questions stem from.
 
-The key here lies in understanding the *context* in which each of these `id` variations appears, as they represent different things despite seeming superficially similar. We're talking about hash keys, symbol notation, and lastly, parameter declaration in method definitions.
+The key here lies in understanding the _context_ in which each of these `id` variations appears, as they represent different things despite seeming superficially similar. We're talking about hash keys, symbol notation, and lastly, parameter declaration in method definitions.
 
-First, let's discuss `:id`. This notation, starting with a colon, signifies a *symbol*. Symbols are immutable, lightweight strings often used as keys in hashes or as identifiers. You might be tempted to think of them as merely strings, but they're not. Symbols are unique objects, which means that `:id` will always refer to the same object in memory, whereas `"id"` could create multiple string objects with identical content. This makes them efficient for comparisons and hash lookups. I remember optimizing a particularly slow configuration parser by switching from string keys to symbol keys, which resulted in a noticeable speed increase.
+First, let's discuss `:id`. This notation, starting with a colon, signifies a _symbol_. Symbols are immutable, lightweight strings often used as keys in hashes or as identifiers. You might be tempted to think of them as merely strings, but they're not. Symbols are unique objects, which means that `:id` will always refer to the same object in memory, whereas `"id"` could create multiple string objects with identical content. This makes them efficient for comparisons and hash lookups. I remember optimizing a particularly slow configuration parser by switching from string keys to symbol keys, which resulted in a noticeable speed increase.
 
 Here’s an example illustrating the use of symbols as hash keys:
 
@@ -20,7 +20,7 @@ puts user[:name] # Output: Alice
 
 In this code, `:id`, `:name`, and `:email` are symbols. Notice the `=>` operator which explicitly links the symbol key to its corresponding value within the hash literal.
 
-Now, let's move to `id:`. This form is used primarily when defining or using *keyword arguments* in Ruby methods. It's essentially a shorthand syntax for defining a method parameter that can be passed using a key-value pair. Ruby then internally handles it as a symbol key-value pair behind the scenes. When calling the method with keyword arguments, you specify the argument name (`id` in this case) followed by a colon and the value.
+Now, let's move to `id:`. This form is used primarily when defining or using _keyword arguments_ in Ruby methods. It's essentially a shorthand syntax for defining a method parameter that can be passed using a key-value pair. Ruby then internally handles it as a symbol key-value pair behind the scenes. When calling the method with keyword arguments, you specify the argument name (`id` in this case) followed by a colon and the value.
 
 Here is an illustrative example showing how this works in a method declaration and call:
 
@@ -37,7 +37,7 @@ find_user(id: 3) # output: Finding user with id: 3
 
 In `def find_user(id:, name: nil, email: nil)`, `id:`, `name:`, and `email:` define keyword arguments with their default values. Notice that we call the `find_user` method providing the arguments using the same `id: value` syntax. This form improves code readability by explicitly labeling the purpose of each parameter passed to the method. This is a significant improvement over using traditional positional arguments, especially for methods that accept numerous parameters, and it has saved me from countless bugs caused by misplaced arguments.
 
-Finally, simply `id` without a colon can take multiple roles, and the role depends on the context within the code. In its simplest form, when not acting as part of a hash key or keyword argument, it will usually refer to a *variable name* or a *method call*. It's crucial to look at the surrounding syntax to understand exactly what it is doing.
+Finally, simply `id` without a colon can take multiple roles, and the role depends on the context within the code. In its simplest form, when not acting as part of a hash key or keyword argument, it will usually refer to a _variable name_ or a _method call_. It's crucial to look at the surrounding syntax to understand exactly what it is doing.
 
 Consider this extended example demonstrating a variety of use cases:
 

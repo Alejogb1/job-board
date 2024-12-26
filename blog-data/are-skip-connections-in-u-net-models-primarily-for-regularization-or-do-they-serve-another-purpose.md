@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "are-skip-connections-in-u-net-models-primarily-for-regularization-or-do-they-serve-another-purpose"
 ---
 
-Let's tackle this, shall we? It's a question that's popped up more than once in my experience, particularly when I was knee-deep in medical image segmentation projects a few years back. Specifically, we were dealing with 3d scans of the brain, and the subtle details were just getting washed out during the downsampling and upsampling phases. That's where the understanding of what skip connections truly offer became paramount.
+, shall we? It's a question that's popped up more than once in my experience, particularly when I was knee-deep in medical image segmentation projects a few years back. Specifically, we were dealing with 3d scans of the brain, and the subtle details were just getting washed out during the downsampling and upsampling phases. That's where the understanding of what skip connections truly offer became paramount.
 
-The initial assumption, especially when you're first encountering the U-Net architecture, is that skip connections act primarily as a form of regularization, and it's easy to see why that thought process prevails. After all, they reduce the vanishing gradient problem, which indirectly helps with regularization. However, reducing the vanishing gradient isn't their fundamental design intent. Their primary purpose leans more towards preserving and propagating finer-grained spatial information that would be otherwise lost during the contracting (downsampling) phase. Regularization is indeed a beneficial *side effect*, not the driving motivation.
+The initial assumption, especially when you're first encountering the U-Net architecture, is that skip connections act primarily as a form of regularization, and it's easy to see why that thought process prevails. After all, they reduce the vanishing gradient problem, which indirectly helps with regularization. However, reducing the vanishing gradient isn't their fundamental design intent. Their primary purpose leans more towards preserving and propagating finer-grained spatial information that would be otherwise lost during the contracting (downsampling) phase. Regularization is indeed a beneficial _side effect_, not the driving motivation.
 
-Consider the core issue in deep convolutional networks: as you stack layers, the receptive field of each neuron expands, allowing it to capture higher-level, more abstract features. This is fantastic for identifying the *what* of an image – Is it a cat? Is it a lesion? – but this process inevitably comes at a cost: finer-grained spatial information about the *where* is sacrificed. This is particularly critical in tasks like segmentation, where precise delineation of object boundaries is crucial.
+Consider the core issue in deep convolutional networks: as you stack layers, the receptive field of each neuron expands, allowing it to capture higher-level, more abstract features. This is fantastic for identifying the _what_ of an image – Is it a cat? Is it a lesion? – but this process inevitably comes at a cost: finer-grained spatial information about the _where_ is sacrificed. This is particularly critical in tasks like segmentation, where precise delineation of object boundaries is crucial.
 
 The downsampling in a U-Net, using max-pooling or strided convolutions, is necessary for feature abstraction and increasing the receptive field, but it discards fine details that will never be recovered solely through upsampling. This is where the magic of skip connections comes into play. They directly copy feature maps from the contracting path to corresponding levels of the expanding path. These copied feature maps, rich in spatial information, are then concatenated with the upsampled feature maps. This fusion allows the decoder to not only benefit from abstracted features but also contextualize them within the original spatial structure. It's like giving the network a detailed map alongside the abstract interpretation.
 
@@ -79,7 +79,7 @@ In this example, you see that each downsampling block saves its feature map `fea
 
 **Example 2: Examining Information Flow Without Skip Connections**
 
-Now, let’s create a version *without* skip connections to highlight their significance.
+Now, let’s create a version _without_ skip connections to highlight their significance.
 
 ```python
 import torch

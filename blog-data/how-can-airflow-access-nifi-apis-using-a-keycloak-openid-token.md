@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-access-nifi-apis-using-a-keycloak-openid-token"
 ---
 
-Let's tackle this one, shall we? I've actually had to architect a very similar pipeline involving airflow and nifi, both secured by keycloak, back when I was working on a data ingestion project for a multinational retail group. The challenge, as you’re hinting, is not merely making the api call; it’s doing so securely with the right authorization flow. It requires a delicate dance between python, airflow's extensibility, and the specific authentication protocols of nifi and keycloak. Let's break down how this can be achieved, and, in particular, how you should handle the authorization token.
+one, shall we? I've actually had to architect a very similar pipeline involving airflow and nifi, both secured by keycloak, back when I was working on a data ingestion project for a multinational retail group. The challenge, as you’re hinting, is not merely making the api call; it’s doing so securely with the right authorization flow. It requires a delicate dance between python, airflow's extensibility, and the specific authentication protocols of nifi and keycloak. Let's break down how this can be achieved, and, in particular, how you should handle the authorization token.
 
 The central issue here is authentication: ensuring airflow, acting as a client, can successfully interact with nifi apis, which are protected by keycloak. We're not talking about simple username/password authentication. We're dealing with the more robust oidc flow using keycloak to provide access tokens. The process, at a high level, consists of these steps:
 
@@ -141,9 +141,9 @@ This basic dag shows how to use a python operator to chain the two core function
 
 In terms of additional reading, i'd highly recommend the following:
 
-*   **O'Reilly's “OAuth 2 in Action” by Justin Richer and Antonio Sanso:** This will provide a thorough understanding of OAuth 2.0, a critical piece of the puzzle for this architecture.
-*   **The official Keycloak documentation:** This is invaluable for understanding the specifics of keycloak's configuration and endpoints. Pay attention to the section related to token endpoints and client configuration.
-*   **The Apache Nifi documentation:** Understanding the Nifi API is, of course, vital. The documentation describes the various rest endpoints that can be interacted with.
-*  **"Python for Data Analysis" by Wes McKinney:** This is more general, but it will provide foundational knowledge for writing effective python scripts for data processing, a core competency for any airflow developer.
+- **O'Reilly's “OAuth 2 in Action” by Justin Richer and Antonio Sanso:** This will provide a thorough understanding of OAuth 2.0, a critical piece of the puzzle for this architecture.
+- **The official Keycloak documentation:** This is invaluable for understanding the specifics of keycloak's configuration and endpoints. Pay attention to the section related to token endpoints and client configuration.
+- **The Apache Nifi documentation:** Understanding the Nifi API is, of course, vital. The documentation describes the various rest endpoints that can be interacted with.
+- **"Python for Data Analysis" by Wes McKinney:** This is more general, but it will provide foundational knowledge for writing effective python scripts for data processing, a core competency for any airflow developer.
 
 Remember, security is not an add-on; it's a critical component to bake into your system. Always be cognizant of where you are storing your sensitive credentials, use secure connections (https), and ensure that access tokens are handled appropriately. Token rotation, rate limiting, and retries should also be factored in. The solution laid out here serves as a very solid base for implementing this kind of complex integration.

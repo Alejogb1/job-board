@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-arent-session-cookies-being-passed-in-my-rails-7-api"
 ---
 
-Let's tackle this persistent issue of session cookies not making the trip in your Rails 7 api setup. It's a classic head-scratcher, often a matter of configuration details that can get overlooked. I’ve personally debugged this particular gremlin several times, and it always seems to boil down to a handful of common suspects. We're not going to just throw spaghetti at the wall; we'll methodically explore the potential culprits.
+persistent issue of session cookies not making the trip in your Rails 7 api setup. It's a classic head-scratcher, often a matter of configuration details that can get overlooked. I’ve personally debugged this particular gremlin several times, and it always seems to boil down to a handful of common suspects. We're not going to just throw spaghetti at the wall; we'll methodically explore the potential culprits.
 
 First off, it's crucial to remember that apis typically operate on the premise of statelessness. Sessions, by their very nature, introduce state. While Rails provides robust session management, integrating it into an api context requires a bit of careful handling. The core issue often lies in the interplay between your frontend and your api server, specifically how you're handling cookies in cross-origin requests, and also, ensuring your api is explicitly set up to recognize and manage them.
 
@@ -68,13 +68,12 @@ Note that setting the `domain` attribute may require you to set a specific root 
 Finally, let’s not neglect the client-side. If you're using javascript to make api calls, you need to explicitly tell your client to include credentials. With `fetch`, this usually entails adding the `credentials: 'include'` option. For example:
 
 ```javascript
-fetch('http://localhost:3001/some_api_endpoint', {
-    method: 'GET',
-    credentials: 'include', // <-- Essential for sending cookies
-})
-.then(response => {
-        // Handle response
-    })
+fetch("http://localhost:3001/some_api_endpoint", {
+  method: "GET",
+  credentials: "include", // <-- Essential for sending cookies
+}).then((response) => {
+  // Handle response
+});
 ```
 
 This little line ensures your browser transmits any associated cookies when sending the request to your api. If you're using libraries like axios, it has a similar configuration option often within the request configuration object you pass to its `get`, `post`, etc. methods.
@@ -82,8 +81,9 @@ This little line ensures your browser transmits any associated cookies when send
 These three code snippets highlight the places where these session cookies issues often arise. Debugging the transmission of cookies often involves careful review of your server-side `cors.rb` and `session_store.rb` files, along with your client-side fetch or axios configurations.
 
 For a deeper understanding, I would highly recommend reading up on the following resources:
-* "HTTP: The Definitive Guide" by David Gourley and Brian Totty; it provides a comprehensive overview of http fundamentals, particularly with regards to cookies and headers.
-* The "SameSite cookies" documentation on the Mozilla Developer Network (MDN), which covers the details of how the `samesite` attribute works in depth.
-* The official Rails documentation specifically surrounding action controller and session management, which can be found within the Rails Guides.
+
+- "HTTP: The Definitive Guide" by David Gourley and Brian Totty; it provides a comprehensive overview of http fundamentals, particularly with regards to cookies and headers.
+- The "SameSite cookies" documentation on the Mozilla Developer Network (MDN), which covers the details of how the `samesite` attribute works in depth.
+- The official Rails documentation specifically surrounding action controller and session management, which can be found within the Rails Guides.
 
 By methodically checking your configurations in these key areas, you can trace the path of your cookies and identify the point where they’re not being passed as expected. Remember, browser security is quite thorough, so being specific, not general, in your settings is key to getting this to work smoothly.

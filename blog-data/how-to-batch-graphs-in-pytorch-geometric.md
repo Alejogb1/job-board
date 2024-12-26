@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-batch-graphs-in-pytorch-geometric"
 ---
 
-Let's tackle this one; batching graphs in PyTorch Geometric can seem daunting initially, but it’s quite manageable once you understand the core concepts. It's something I’ve worked extensively with, particularly when developing large-scale graph neural networks for recommendation systems a few years back. We were dealing with millions of user-item interactions, represented as graphs, and efficient batching was crucial to avoid running into memory constraints and accelerate training.
+one; batching graphs in PyTorch Geometric can seem daunting initially, but it’s quite manageable once you understand the core concepts. It's something I’ve worked extensively with, particularly when developing large-scale graph neural networks for recommendation systems a few years back. We were dealing with millions of user-item interactions, represented as graphs, and efficient batching was crucial to avoid running into memory constraints and accelerate training.
 
 At its heart, batching graphs isn't as straightforward as batching tensors because graphs have variable structure; they don't necessarily have a uniform number of nodes or edges. We can't just stack them along a new dimension. PyTorch Geometric, however, handles this elegantly by creating a large, disconnected "super-graph." Each original graph becomes a sub-graph within this larger structure. This approach allows for parallel computation across the sub-graphs using the same underlying message-passing framework.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-shouldmatch-with-regex-and-variables-in-chai"
 ---
 
-, let's tackle this one. It's a common scenario, and getting the interaction between `should.match` in Chai, regular expressions, and dynamic variables just right can sometimes feel a bit... nuanced. I've definitely tripped over this one a few times myself, especially back when I was knee-deep in API testing for a large-scale e-commerce platform. We had some seriously complex responses, and static assertions simply wouldn't cut it.
+, one. It's a common scenario, and getting the interaction between `should.match` in Chai, regular expressions, and dynamic variables just right can sometimes feel a bit... nuanced. I've definitely tripped over this one a few times myself, especially back when I was knee-deep in API testing for a large-scale e-commerce platform. We had some seriously complex responses, and static assertions simply wouldn't cut it.
 
 The core issue is that `should.match` expects a regular expression object, not a string representation of one. When you're dealing with variables, particularly those that might contain regex patterns, you can't just plop them directly into the `match` call and expect it to work. The string, however valid regex it might contain, will be treated literally, not as a pattern to be evaluated.
 

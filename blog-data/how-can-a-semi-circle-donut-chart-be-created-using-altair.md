@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-semi-circle-donut-chart-be-created-using-altair"
 ---
 
-, let's tackle this semi-circle donut chart challenge with Altair. I’ve certainly bumped into similar visualization needs during various data explorations, especially when space is a premium or when a standard pie chart feels…excessive. The trick lies in manipulating Altair's arc marks and careful data transformations, which I've streamlined over time through a few different project contexts. Let's get into the practicalities.
+, semi-circle donut chart challenge with Altair. I’ve certainly bumped into similar visualization needs during various data explorations, especially when space is a premium or when a standard pie chart feels…excessive. The trick lies in manipulating Altair's arc marks and careful data transformations, which I've streamlined over time through a few different project contexts. Let's get into the practicalities.
 
 Firstly, the essence of a semi-circle donut chart involves visualizing data as arcs covering only 180 degrees instead of the full 360. Altair, being declarative, doesn't inherently offer a 'semi-circle' chart type. Instead, we achieve it by calculating and applying start and end angles for our arc marks. This requires a specific data structure and encoding, which is where understanding the nuances becomes essential.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-save-and-access-picklehdf5-files-in-azure-ml-studio"
 ---
 
-, let's tackle this pickle/hdf5 storage and retrieval issue within Azure ml studio. It's a common hurdle, and I’ve certainly spent my share of time navigating it in past projects, particularly when dealing with large model objects or complex datasets. The core challenge lies in efficiently managing data persistence across training runs and between different execution environments, and Azure ml studio has some specific considerations.
+, pickle/hdf5 storage and retrieval issue within Azure ml studio. It's a common hurdle, and I’ve certainly spent my share of time navigating it in past projects, particularly when dealing with large model objects or complex datasets. The core challenge lies in efficiently managing data persistence across training runs and between different execution environments, and Azure ml studio has some specific considerations.
 
 Essentially, you're working within a managed environment where you often need to persist data to a durable store that can be accessed by subsequent steps or different pipeline stages. This isn't a simple matter of saving files locally to the compute; those files vanish when the compute instance terminates. We need to leverage Azure blob storage or data stores provided by Azure ml studio. I'll outline the common approaches and provide code examples.
 

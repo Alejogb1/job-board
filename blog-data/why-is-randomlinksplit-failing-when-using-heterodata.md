@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-randomlinksplit-failing-when-using-heterodata"
 ---
 
-Let's tackle this. I remember dealing with a very similar issue back in the days of developing a large-scale graph learning model for a social network analysis project – it's always a bit of a puzzle when these seemingly straightforward data handling utilities throw a curveball. The question, as you've posed it, revolves around why `RandomLinkSplit` might fail when used with `HeteroData` objects, and the short answer isn't always immediately obvious. Essentially, the crux of the problem lies in the fact that `RandomLinkSplit` is designed to operate on homogeneous graphs represented by the `Data` class in PyTorch Geometric, whereas `HeteroData` represents heterogeneous graphs – those with different node and edge types. Their underlying structures are fundamentally different, and therefore, naive application of the former to the latter will break down.
+. I remember dealing with a very similar issue back in the days of developing a large-scale graph learning model for a social network analysis project – it's always a bit of a puzzle when these seemingly straightforward data handling utilities throw a curveball. The question, as you've posed it, revolves around why `RandomLinkSplit` might fail when used with `HeteroData` objects, and the short answer isn't always immediately obvious. Essentially, the crux of the problem lies in the fact that `RandomLinkSplit` is designed to operate on homogeneous graphs represented by the `Data` class in PyTorch Geometric, whereas `HeteroData` represents heterogeneous graphs – those with different node and edge types. Their underlying structures are fundamentally different, and therefore, naive application of the former to the latter will break down.
 
 The issue emerges from how `RandomLinkSplit` works internally. It expects a single set of edge indices corresponding to the connections between nodes. When faced with a `HeteroData` object, which can have multiple types of edges, each stored in its individual edge attribute dictionary (e.g., `data['edge_type_1'].edge_index`, `data['edge_type_2'].edge_index` and so on), it simply doesn’t know which set of edge indices to operate upon for splitting the graph into train/validation/test sets for link prediction. That lack of clarity manifests as the errors you're seeing.
 
-To put it another way, think of a `Data` object as representing a single graph, while a `HeteroData` object is a container for *multiple* interconnected graphs (or subgraphs). Each edge type within `HeteroData` has its own adjacency matrix representation, and `RandomLinkSplit` doesn't know how to deal with that multiplicity by default. The splitting function needs to understand what edges, and which *types* of edges, to split.
+To put it another way, think of a `Data` object as representing a single graph, while a `HeteroData` object is a container for _multiple_ interconnected graphs (or subgraphs). Each edge type within `HeteroData` has its own adjacency matrix representation, and `RandomLinkSplit` doesn't know how to deal with that multiplicity by default. The splitting function needs to understand what edges, and which _types_ of edges, to split.
 
 So, what’s the workaround? We need to handle each edge type individually. Essentially, you will need to iterate through the edge types present in your `HeteroData` object, applying a suitable splitting function for each of them, and then reconstructing the datasets accordingly. This often involves several steps of data manipulation, but it's a necessity for correct operation.
 
@@ -80,12 +80,12 @@ def split_hetero_data_with_features(hetero_data, split_ratio=0.8):
         val_nodes = list(set(val_data.edge_index.flatten().tolist()))
         test_nodes = list(set(test_data.edge_index.flatten().tolist()))
 
-        
+
         nodes_present = list(set(train_nodes + val_nodes + test_nodes))
-        
+
         source_node_type, _, target_node_type = edge_type
 
-        
+
         train_data[source_node_type].x = hetero_data[source_node_type].x[nodes_present]
         train_data[target_node_type].x = hetero_data[target_node_type].x[nodes_present]
 
@@ -144,22 +144,22 @@ def split_and_reconstruct_hetero_data(hetero_data, split_ratio=0.8):
                                     add_negative_train_samples=False,
                                     neg_sampling_ratio=1.0)
         train_data, val_data, test_data = transform(deepcopy(edge_data))
-                
+
         train_nodes = list(set(train_data.edge_index.flatten().tolist()))
         val_nodes = list(set(val_data.edge_index.flatten().tolist()))
         test_nodes = list(set(test_data.edge_index.flatten().tolist()))
         nodes_present = list(set(train_nodes + val_nodes + test_nodes))
-        
+
         source_node_type, _, target_node_type = edge_type
-                
-        
+
+
         train_data[source_node_type].x = hetero_data[source_node_type].x[nodes_present]
         train_data[target_node_type].x = hetero_data[target_node_type].x[nodes_present]
         val_data[source_node_type].x = hetero_data[source_node_type].x[nodes_present]
         val_data[target_node_type].x = hetero_data[target_node_type].x[nodes_present]
         test_data[source_node_type].x = hetero_data[source_node_type].x[nodes_present]
         test_data[target_node_type].x = hetero_data[target_node_type].x[nodes_present]
-        
+
         split_datasets[edge_type] = (train_data, val_data, test_data)
 
     train_hetero_data = HeteroData()
@@ -170,8 +170,8 @@ def split_and_reconstruct_hetero_data(hetero_data, split_ratio=0.8):
         train_hetero_data[edge_type] = train
         val_hetero_data[edge_type] = val
         test_hetero_data[edge_type] = test
-        
-    
+
+
     for node_type in hetero_data.node_types:
         train_hetero_data[node_type].x = hetero_data[node_type].x
         val_hetero_data[node_type].x = hetero_data[node_type].x

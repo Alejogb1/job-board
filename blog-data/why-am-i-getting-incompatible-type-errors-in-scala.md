@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-incompatible-type-errors-in-scala"
 ---
 
-Let's tackle this. Type incompatibility errors in Scala, as you’ve probably noticed, can be particularly… precise. They aren’t always immediately transparent, and the compiler often feels like a very strict instructor. I've spent a fair amount of time chasing down similar issues over the years, often in large-scale systems where the interaction of types becomes intricate. It’s rarely a single, easily-spotted culprit. Instead, it often boils down to a few core concepts that, when misunderstood or overlooked, lead to frustrating compiler errors.
+. Type incompatibility errors in Scala, as you’ve probably noticed, can be particularly… precise. They aren’t always immediately transparent, and the compiler often feels like a very strict instructor. I've spent a fair amount of time chasing down similar issues over the years, often in large-scale systems where the interaction of types becomes intricate. It’s rarely a single, easily-spotted culprit. Instead, it often boils down to a few core concepts that, when misunderstood or overlooked, lead to frustrating compiler errors.
 
 The fundamental issue, broadly speaking, arises when Scala's strong, static type system detects a mismatch between the expected type and the actual type being used in a particular context. This mismatch might stem from a variety of factors: incorrect type annotations, implicit conversions gone wrong, variance issues, type erasure, or a misunderstanding of generics. Let's dive deeper.
 
@@ -74,8 +74,9 @@ object VarianceExample {
   }
 }
 ```
+
 Here, the `processAnimals` function expects a list of `Animal`, but neither `List[Cat]` nor `List[Dog]` is directly compatible. Scala’s List is invariant (it doesn’t have variance), so `List[Cat]` is neither a subtype nor a supertype of `List[Animal]`, even though `Cat` is a subtype of `Animal`. This error occurs because the `List` type parameter is invariant, meaning `List[Cat]` is not a subtype of `List[Animal]`. To be clear, a list of cats is NOT considered a list of animals, and it does not follow the same subtyping rules because this might lead to unexpected errors.
-The fix here *is not* simply adding a `+` before animal as shown above in `processAnimalsCorrect`, but to review your specific use-case. If all your need is to **read** elements from the list and never add to it, using a more abstract type such as `Seq[Animal]` or `Iterable[Animal]` would help (as `Seq` or `Iterable` are covariant, which you will learn about by reading the recommended book). This issue highlights the importance of understanding variance, and it becomes increasingly relevant in complex inheritance structures.
+The fix here _is not_ simply adding a `+` before animal as shown above in `processAnimalsCorrect`, but to review your specific use-case. If all your need is to **read** elements from the list and never add to it, using a more abstract type such as `Seq[Animal]` or `Iterable[Animal]` would help (as `Seq` or `Iterable` are covariant, which you will learn about by reading the recommended book). This issue highlights the importance of understanding variance, and it becomes increasingly relevant in complex inheritance structures.
 
 Type erasure is another important concept that can sometimes lead to confusing errors. Scala (like Java) employs type erasure when dealing with generics at runtime. This means that the type parameter of generic types is erased during compilation. This can cause runtime errors when type information is no longer available, and the code relies on it during reflection or other runtime operations.
 

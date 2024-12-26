@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-the-admins-delete-user-link-not-working-with-devise-and-rails-7"
 ---
 
-Let's tackle this issue of the admin's delete user link failing in a Rails 7 application using Devise – it's a scenario I've certainly encountered more than once. When something like this goes sideways, it's rarely a single, obvious culprit. Usually, it's a subtle combination of factors related to how Devise handles resource authorization, routing, and, crucially, the http method used for the request.
+issue of the admin's delete user link failing in a Rails 7 application using Devise – it's a scenario I've certainly encountered more than once. When something like this goes sideways, it's rarely a single, obvious culprit. Usually, it's a subtle combination of factors related to how Devise handles resource authorization, routing, and, crucially, the http method used for the request.
 
 From past experiences, a common pitfall lies within how we manage the deletion action itself, especially within the context of a Devise-controlled user. Devise, while powerful, isn't a complete system on its own; it often needs our careful guidance, particularly when deviating from its default assumptions. A basic `link_to` tag, especially without explicitly defining the http method, often defaults to a get request, which rails will interpret as an attempt to view the resource not delete it.
 
-Here's where I often start: examining the route configuration. Devise typically establishes CRUD routes for user management, but we need to ensure the *delete* path is correctly associated with the destroy action in our controller and the correct http method. I’ve seen cases where developers assumed the default routes would automatically handle delete operations from a link and not a form, but this is not how devise operates.
+Here's where I often start: examining the route configuration. Devise typically establishes CRUD routes for user management, but we need to ensure the _delete_ path is correctly associated with the destroy action in our controller and the correct http method. I’ve seen cases where developers assumed the default routes would automatically handle delete operations from a link and not a form, but this is not how devise operates.
 
 Another, somewhat frequent source of headache arises from incorrect form handling. If the deletion is initiated through a form, the form must use the method `delete` and the correct CSRF protection. If it’s initiated by a link, it must be accompanied by the correct method using the `method` attribute. Failing to include this, or incorrectly applying the csrf token can lead to the deletion failing quietly, or appearing to fail.
 
@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 end
 ```
 
-The issue here is subtle. While this *does* create CRUD paths for `users`, the default `link_to` in your view will render a get request for `/users/1`, which will trigger the `show` action, not the destroy action, which is associated with a `delete` request.
+The issue here is subtle. While this _does_ create CRUD paths for `users`, the default `link_to` in your view will render a get request for `/users/1`, which will trigger the `show` action, not the destroy action, which is associated with a `delete` request.
 
 **Solution:** Explicitly define a delete method within your `link_to`.
 
@@ -49,6 +49,7 @@ Imagine the delete action is initiated from a form (this is less common, but it 
   <%= form.submit 'Delete User', data: {confirm: 'Are you sure?'} %>
 <% end %>
 ```
+
 This code uses the `form_with` helper, which defaults to a post request when method is not defined, and creates a post request to the user path. This will not trigger the deletion action, which rails associates to a delete request.
 
 **Solution:** We need to explicitly specify the method:
@@ -59,6 +60,7 @@ This code uses the `form_with` helper, which defaults to a post request when met
   <%= form.submit 'Delete User', data: {confirm: 'Are you sure?'} %>
 <% end %>
 ```
+
 By defining method `:delete`, the form now triggers the destroy action within the users controller, and the controller can process it.
 
 **Example 3: Insufficient Authorization Check**

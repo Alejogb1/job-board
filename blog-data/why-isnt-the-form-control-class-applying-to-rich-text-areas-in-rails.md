@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-form-control-class-applying-to-rich-text-areas-in-rails"
 ---
 
-Let's tackle this one. I’ve certainly encountered this head-scratcher more than once, especially during the early days of adopting ActionText and other similar rich text editors in Rails projects. The issue, at its core, isn't usually that the `form-control` class is *failing* to apply in the technical sense of css specificity. Rather, it's that its intended effects are often overridden or obscured by the particular way rich text editors are implemented. It's less about incorrect application and more about how these editors manipulate the underlying dom structure and styling.
+one. I’ve certainly encountered this head-scratcher more than once, especially during the early days of adopting ActionText and other similar rich text editors in Rails projects. The issue, at its core, isn't usually that the `form-control` class is _failing_ to apply in the technical sense of css specificity. Rather, it's that its intended effects are often overridden or obscured by the particular way rich text editors are implemented. It's less about incorrect application and more about how these editors manipulate the underlying dom structure and styling.
 
 The problem boils down to the fact that rich text areas don't work as simple textareas do. While you might apply `form-control` directly to a `<textarea>` element and get the expected styling, rich text editors typically inject a more complex structure to facilitate editing functionality. This structure usually involves a surrounding container and a child element (often contenteditable div) where you directly type and edit the text. This intermediate layer effectively isolates the inner content from your direct styling, and the `form-control` class, which typically targets `<input>`, `<select>`, or `<textarea>` elements, won't directly impact the styled content of the rich text editor.
 
@@ -41,11 +41,10 @@ To rectify this, we need to specifically target the inner elements of the rich t
 }
 
 .action-text-rich-text-area .trix-editor:focus {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-    outline: 0; /* this hides the default focus outline */
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: 0; /* this hides the default focus outline */
 }
-
 ```
 
 This css directly targets the `trix-editor` class that is part of the ActionText implementation. It essentially duplicates the styling characteristics of `form-control`. This isn’t the ideal approach if we’re trying to keep our styling consistent and easy to maintain, but it shows directly how to get the styling applied.
@@ -68,12 +67,12 @@ A better, albeit more involved approach, involves wrapping the rich text area in
 <% end %>
 ```
 
-Notice how we've added a new `rich-text-editor-container` div that *also* has the `form-control` class. Now, we need to adjust our css. Instead of targeting `trix-editor` directly we’ll make the container responsible for styling. This is the second snippet:
+Notice how we've added a new `rich-text-editor-container` div that _also_ has the `form-control` class. Now, we need to adjust our css. Instead of targeting `trix-editor` directly we’ll make the container responsible for styling. This is the second snippet:
 
 ```css
 .rich-text-editor-container {
-   display: block;
-   border: 1px solid #ced4da;
+  display: block;
+  border: 1px solid #ced4da;
   border-radius: 0.25rem;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
@@ -84,9 +83,9 @@ Notice how we've added a new `rich-text-editor-container` div that *also* has th
 }
 
 .rich-text-editor-container:focus-within {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-    outline: 0; /* this hides the default focus outline */
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: 0; /* this hides the default focus outline */
 }
 
 .rich-text-editor-container .trix-content {
@@ -114,6 +113,6 @@ The final approach involves leveraging the inherent flexibility of ActionText it
 
 With this small adjustment, ActionText will render the necessary tags with the `form-control` applied to the inner editable content. This approach is the cleanest and most maintainable, as it avoids manual css manipulation and is in line with how ActionText developers designed the tool.
 
-For those looking for a more in-depth look into styling rich text editors, I highly recommend checking out the official documentation of your specific rich text editor (for example, ActionText for Rails) to fully understand how it structures the underlying HTML. You could also take a closer look at the *CSS Specificity* section in the “Cascading Style Sheets (CSS) Level 2 Revision 1” specification on the W3C site, to better grasp the inner mechanisms of how styles are applied and why direct styling isn’t always straightforward. Also, exploring the source code of libraries such as Bootstrap or Bulma, where the `form-control` class comes from can provide crucial insights into how to design maintainable and scalable css, which is vital for tackling issues like this.
+For those looking for a more in-depth look into styling rich text editors, I highly recommend checking out the official documentation of your specific rich text editor (for example, ActionText for Rails) to fully understand how it structures the underlying HTML. You could also take a closer look at the _CSS Specificity_ section in the “Cascading Style Sheets (CSS) Level 2 Revision 1” specification on the W3C site, to better grasp the inner mechanisms of how styles are applied and why direct styling isn’t always straightforward. Also, exploring the source code of libraries such as Bootstrap or Bulma, where the `form-control` class comes from can provide crucial insights into how to design maintainable and scalable css, which is vital for tackling issues like this.
 
 In summary, the "form-control" class doesn't directly apply to rich text areas due to the complex dom structure these areas generate. The key lies in understanding how these editors operate and then either targeting their inner elements, or using containers to apply your styles. With some careful thought and a bit of targeted css, you can achieve the desired look and feel while maintaining a manageable codebase.

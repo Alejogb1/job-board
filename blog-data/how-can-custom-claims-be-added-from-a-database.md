@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-custom-claims-be-added-from-a-database"
 ---
 
-, let's tackle this one. Having worked on various identity and access management (iam) systems over the years, adding custom claims sourced from a database is a recurring need, and one that often warrants careful planning. The basic concept involves fetching data from your database—usually based on some user identifier—and packaging it into claims that are then included in the user's access token. This approach allows for fine-grained authorization and can avoid constant trips back to the database for authorization purposes.
+, one. Having worked on various identity and access management (iam) systems over the years, adding custom claims sourced from a database is a recurring need, and one that often warrants careful planning. The basic concept involves fetching data from your database—usually based on some user identifier—and packaging it into claims that are then included in the user's access token. This approach allows for fine-grained authorization and can avoid constant trips back to the database for authorization purposes.
 
 The primary challenge often lies in how you integrate this database lookup into your authentication workflow. You have to consider performance, security, and maintainability. Ideally, you want the claim insertion process to be as seamless as possible without introducing significant latency or vulnerabilities. I’ve personally seen implementations where poorly handled database lookups crippled authentication services under heavy load, so this is not a trivial matter.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-correctly-use-the-dicescore-function-in-pytorchs-torchmetrics-with-the-provided-target-data"
 ---
 
-, let's tackle this dice score question. It's a topic that, frankly, I've spent more time than I care to count debugging. Specifically, getting that dice score calculation _just_ right in `torchmetrics` with varied target data can be a bit nuanced, but the underlying logic is quite solid.
+, dice score question. It's a topic that, frankly, I've spent more time than I care to count debugging. Specifically, getting that dice score calculation _just_ right in `torchmetrics` with varied target data can be a bit nuanced, but the underlying logic is quite solid.
 
 The `dice_score()` function in `torchmetrics` (or the `Dice` class, which it often sits under) is fundamentally about measuring overlap between predicted and target segmentation masks. It's particularly useful in tasks like medical image analysis or any scenario where you're dealing with pixel-level classification into distinct regions. The common stumbling block, in my experience, revolves around ensuring the input tensors are in the format the function expects. These expectations aren't complex, but they _are_ precise. If your data is in the wrong shape, or your targets aren't correctly represented as integer class labels, the dice score you'll compute will be garbage.
 

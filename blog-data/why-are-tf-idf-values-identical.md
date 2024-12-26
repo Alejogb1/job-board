@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-tf-idf-values-identical"
 ---
 
-, let's tackle this. Identical tf-idf values, a situation I’ve definitely encountered more than once in my career—often when helping colleagues debug their information retrieval pipelines. It usually boils down to a few core issues, and the solution often involves inspecting the data preprocessing stage, the tf-idf calculation parameters, or even the text data itself. Let me break it down, based on my past projects, and then we can look at some code.
+, . Identical tf-idf values, a situation I’ve definitely encountered more than once in my career—often when helping colleagues debug their information retrieval pipelines. It usually boils down to a few core issues, and the solution often involves inspecting the data preprocessing stage, the tf-idf calculation parameters, or even the text data itself. Let me break it down, based on my past projects, and then we can look at some code.
 
 Essentially, tf-idf, or term frequency-inverse document frequency, aims to reflect how important a word is to a document within a collection (or corpus) of documents. Term frequency (tf) calculates how often a term appears within a document, while inverse document frequency (idf) measures how common or rare a term is across the entire collection. A high tf-idf value implies that a term is both frequent within a document and rare across the entire collection, suggesting it's highly representative of that document. So, when you see identical values for different terms or documents, it signals a breakdown in this differentiating mechanism.
 

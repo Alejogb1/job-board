@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-my-rails-controller-update-despite-form-errors"
 ---
 
-, let's tackle this. I've seen this particular head-scratcher more times than I care to remember, and it always boils down to a few specific nuances in how Rails handles form submissions and data persistence. It’s a classic symptom of how the framework’s lifecycle interacts with your code, and it’s something we’ve all had to debug at some point.
+, . I've seen this particular head-scratcher more times than I care to remember, and it always boils down to a few specific nuances in how Rails handles form submissions and data persistence. It’s a classic symptom of how the framework’s lifecycle interacts with your code, and it’s something we’ve all had to debug at some point.
 
 The scenario, as I understand it, is that you’re submitting a form, your model's validations are kicking in (good!), errors are being generated (also good, in a way, it means validations are working!), but despite those errors, the record is still being updated in the database, which, of course, is not what you want. It feels counterintuitive, because logically, one might expect the update to be entirely blocked on the presence of validation failures.
 

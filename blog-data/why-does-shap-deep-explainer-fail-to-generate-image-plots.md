@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-shap-deep-explainer-fail-to-generate-image-plots"
 ---
 
-Let's tackle this head-on. I've certainly bumped into the SHAP deep explainer's reluctance to produce image plots myself, and it’s not always straightforward why. It’s a nuanced issue that stems from a few key places within how SHAP interacts with deep learning models and, specifically, how it processes image data. In my experience—I vividly recall a particularly frustrating project involving medical image classification where this issue reared its head—the problem often boils down to a mismatch between the expected input structure by the explainer and the actual output format returned by the model, how the image data is being handled, and occasionally, the configuration parameters passed to the SHAP explainer itself. It’s rarely a single culprit, more often a combination.
+head-on. I've certainly bumped into the SHAP deep explainer's reluctance to produce image plots myself, and it’s not always straightforward why. It’s a nuanced issue that stems from a few key places within how SHAP interacts with deep learning models and, specifically, how it processes image data. In my experience—I vividly recall a particularly frustrating project involving medical image classification where this issue reared its head—the problem often boils down to a mismatch between the expected input structure by the explainer and the actual output format returned by the model, how the image data is being handled, and occasionally, the configuration parameters passed to the SHAP explainer itself. It’s rarely a single culprit, more often a combination.
 
-The first, and perhaps most common, reason for this failure is that the deep explainer expects a specific format for the output of your model. Specifically, it expects the output to be a *scalar* representing the model's prediction. When dealing with image classification models, especially those that produce probabilities for each class, the direct output of the model is a vector or even a matrix. SHAP needs to know *which* output to explain—is it the probability of class A or class B? If you don’t explicitly specify this, or if the explainer misinterprets the structure, it will fail to generate the plots.
+The first, and perhaps most common, reason for this failure is that the deep explainer expects a specific format for the output of your model. Specifically, it expects the output to be a _scalar_ representing the model's prediction. When dealing with image classification models, especially those that produce probabilities for each class, the direct output of the model is a vector or even a matrix. SHAP needs to know _which_ output to explain—is it the probability of class A or class B? If you don’t explicitly specify this, or if the explainer misinterprets the structure, it will fail to generate the plots.
 
-I've found that the *feature_perturbation* argument within the SHAP explainer can also lead to issues. When dealing with image data, 'interventional' perturbation (the default) often makes more sense than 'conditional'. *Interventional* perturbation samples the background data and applies it to your input, whereas *conditional* perturbation masks features based on correlation within the background data itself. Since image data is highly structured, using a purely conditional approach may not make logical sense for all architectures. If you're not using an appropriate background dataset either, that too can cause issues.
+I've found that the _feature_perturbation_ argument within the SHAP explainer can also lead to issues. When dealing with image data, 'interventional' perturbation (the default) often makes more sense than 'conditional'. _Interventional_ perturbation samples the background data and applies it to your input, whereas _conditional_ perturbation masks features based on correlation within the background data itself. Since image data is highly structured, using a purely conditional approach may not make logical sense for all architectures. If you're not using an appropriate background dataset either, that too can cause issues.
 
 Furthermore, the underlying structure of the deep learning model, specifically the use of convolutional layers, may influence how SHAP computes the attributions. SHAP needs to backpropagate the effects from the model output to the input pixels, and how this backpropagation occurs can depend on the specific libraries being used (e.g., TensorFlow, PyTorch). If the gradient calculations don’t align with what SHAP expects, the attribution calculation can break down, preventing proper plot generation.
 
@@ -40,7 +40,7 @@ shap_values = e.shap_values(input_image)
 # shap.image_plot(shap_values, input_image) # This will often fail
 ```
 
-The above will likely fail due to the output not being a scalar value. To fix it, you'd need to specify the *index* of the class you're interested in:
+The above will likely fail due to the output not being a scalar value. To fix it, you'd need to specify the _index_ of the class you're interested in:
 
 ```python
 import shap
@@ -65,10 +65,12 @@ class_to_explain = 5  # Example: explaining class 5.
 shap_values = e.shap_values(input_image,check_additivity=False)[class_to_explain]
 shap.image_plot(shap_values, input_image[0]) # this should work!
 ```
+
 By indexing the shap values using `class_to_explain`, we now have the correct dimensions for plotting.
 
 **Example 2: Perturbation Method**
 This example will illustrate how the method of perturbation can affect the output.
+
 ```python
 import shap
 import tensorflow as tf
@@ -95,7 +97,8 @@ e_interventional = shap.DeepExplainer((my_model, my_model.layers[-1].output), ba
 shap_values = e_interventional.shap_values(input_image, check_additivity=False)[5]
 shap.image_plot(shap_values, input_image[0]) # this should generate a plot
 ```
-Here, setting `feature_perturbation` to *conditional* may cause issues. Setting to *interventional* is generally more suitable for image data, and leads to better outcomes and fewer errors.
+
+Here, setting `feature_perturbation` to _conditional_ may cause issues. Setting to _interventional_ is generally more suitable for image data, and leads to better outcomes and fewer errors.
 
 **Example 3: Layer Specification**
 
@@ -125,6 +128,7 @@ e = shap.DeepExplainer((my_model, my_model.layers[-1].output), background_data)
 shap_values = e.shap_values(input_image, check_additivity=False)[5]
 shap.image_plot(shap_values, input_image[0]) # this should work.
 ```
+
 Notice how we provide a tuple `(my_model, my_model.layers[-1].output)` to the explainer which specifies that we want to look at the last layer's output, which can sometimes help in isolating issues of gradient back propagation through the neural network.
 
 In addition to these code fixes, I recommend diving deeper into specific texts. For a fundamental understanding of gradient-based explanation methods, I recommend "Deep Learning" by Goodfellow et al. It offers a detailed treatment of backpropagation and neural network architectures, which are essential for understanding how SHAP operates. For more SHAP specific insights, I’ve often gone back to the original SHAP paper ("A Unified Approach to Interpreting Model Predictions" by Lundberg and Lee). Furthermore, the "Interpretable Machine Learning" book by Christoph Molnar is an excellent resource for understanding the broader context of model explainability. Also, diving into the SHAP library's documentation can uncover specifics that sometimes get overlooked.

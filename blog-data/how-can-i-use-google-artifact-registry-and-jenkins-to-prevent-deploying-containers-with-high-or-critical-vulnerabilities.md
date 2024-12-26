@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-use-google-artifact-registry-and-jenkins-to-prevent-deploying-containers-with-high-or-critical-vulnerabilities"
 ---
 
-Let's tackle this vulnerability prevention problem – I've definitely been down this road before, wrestling (oops, nearly slipped there) with pipelines where a leaky container slipped through the cracks. It's not enough to just scan images; you need a robust process that integrates scanning into your workflow. For us, that meant tightly coupling Google Artifact Registry (GAR) and Jenkins, and it’s a strategy I've seen work effectively in several contexts.
+vulnerability prevention problem – I've definitely been down this road before, wrestling (oops, nearly slipped there) with pipelines where a leaky container slipped through the cracks. It's not enough to just scan images; you need a robust process that integrates scanning into your workflow. For us, that meant tightly coupling Google Artifact Registry (GAR) and Jenkins, and it’s a strategy I've seen work effectively in several contexts.
 
 The core principle is to use GAR’s vulnerability scanning feature combined with Jenkins' ability to automate build and deployment workflows. We're aiming for a system that not only identifies vulnerabilities but actively blocks deployments if critical issues are detected. It's a proactive, rather than reactive, stance on security. Let’s dissect how we can set this up practically.
 
-First, understand that GAR, when enabled, will automatically scan newly pushed images for known vulnerabilities. The vulnerability data is stored alongside the image in the registry. This data then becomes our source of truth about image security. What we need from Jenkins is the capability to query this data *before* any deployment action is taken. The key is to integrate this into the pipeline.
+First, understand that GAR, when enabled, will automatically scan newly pushed images for known vulnerabilities. The vulnerability data is stored alongside the image in the registry. This data then becomes our source of truth about image security. What we need from Jenkins is the capability to query this data _before_ any deployment action is taken. The key is to integrate this into the pipeline.
 
 The typical flow we want goes like this:
 
@@ -70,10 +70,10 @@ def checkImageVulnerabilities(String project, String region, String imageName, S
     def vulnerabilityData = readJSON text: cliOutput
     def criticalCount = vulnerabilityData.image_summary?.vulnerability_summary?.critical_count ?: 0
     def highCount = vulnerabilityData.image_summary?.vulnerability_summary?.high_count ?: 0
-    
+
     echo "Critical Vulnerabilities Found: ${criticalCount}"
     echo "High Vulnerabilities Found: ${highCount}"
-    
+
      if (criticalCount > maxCritical || highCount > maxHigh) {
         error "Image has too many critical/high vulnerabilities, failing deployment!"
     } else {
@@ -82,7 +82,7 @@ def checkImageVulnerabilities(String project, String region, String imageName, S
 }
 pipeline {
     agent any
-    
+
     stages {
        stage('Build and Push') {
             steps {
@@ -124,8 +124,8 @@ For a more robust setup I recommend researching and using the 'Google Cloud SDK'
 
 To round this out, for authoritative technical resources, delve into the following:
 
-*   **"Google Cloud Documentation for Artifact Registry"**: The official Google Cloud documentation is your definitive source for understanding GAR's features, including vulnerability scanning, and the APIs available for programmatic access. Pay particular attention to the descriptions of the `gcloud container images` commands and the corresponding APIs.
-*   **"Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation"** by Jez Humble and David Farley: While not specifically focused on Google Cloud, this book is foundational for understanding the principles of continuous delivery, and a solid understanding of these principles is essential for building a secure deployment pipeline.
-*   **"The Phoenix Project"** by Gene Kim et al. and its related resources: While a novel, it highlights organizational and development issues in ways that are very relatable to practical challenges, specifically how these kinds of changes need to be seen from an organizational perspective, rather than just a technical one, to be successfully adopted.
+- **"Google Cloud Documentation for Artifact Registry"**: The official Google Cloud documentation is your definitive source for understanding GAR's features, including vulnerability scanning, and the APIs available for programmatic access. Pay particular attention to the descriptions of the `gcloud container images` commands and the corresponding APIs.
+- **"Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation"** by Jez Humble and David Farley: While not specifically focused on Google Cloud, this book is foundational for understanding the principles of continuous delivery, and a solid understanding of these principles is essential for building a secure deployment pipeline.
+- **"The Phoenix Project"** by Gene Kim et al. and its related resources: While a novel, it highlights organizational and development issues in ways that are very relatable to practical challenges, specifically how these kinds of changes need to be seen from an organizational perspective, rather than just a technical one, to be successfully adopted.
 
 Implementing these techniques requires a blend of practical scripting, pipeline automation, and a solid understanding of cloud-native security. By carefully integrating scanning with your pipeline and using the tools available in GAR and Jenkins, you can construct a highly effective barrier against deploying vulnerable containers. Remember, this is a continuous journey; keep evaluating your processes and look for areas for improvement.

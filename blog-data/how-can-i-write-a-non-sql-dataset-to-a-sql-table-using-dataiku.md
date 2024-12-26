@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-write-a-non-sql-dataset-to-a-sql-table-using-dataiku"
 ---
 
-Let's tackle this. I remember a particularly frustrating project a few years back. We had this system that churned out data in, let's call it, a semi-structured format—think nested json objects mixed with some flat csv-like data. The target was, of course, a well-structured postgresql database. Dataiku’s inherent capabilities couldn't directly consume it, so we had to get a bit inventive to get it into the SQL tables. It's a very common scenario, and Dataiku, while powerful, often needs a helping hand when faced with non-standard data structures moving into a rigid schema. The key here is understanding data transformations and leveraging Dataiku’s flexibility.
+. I remember a particularly frustrating project a few years back. We had this system that churned out data in, let's call it, a semi-structured format—think nested json objects mixed with some flat csv-like data. The target was, of course, a well-structured postgresql database. Dataiku’s inherent capabilities couldn't directly consume it, so we had to get a bit inventive to get it into the SQL tables. It's a very common scenario, and Dataiku, while powerful, often needs a helping hand when faced with non-standard data structures moving into a rigid schema. The key here is understanding data transformations and leveraging Dataiku’s flexibility.
 
 The core issue isn't about a direct "write non-sql to sql" action—Dataiku doesn’t offer magic that simply bypasses the structured nature of databases. Instead, we need to shape the non-sql data into a tabular format that mirrors our target SQL table schema before inserting it. Think of it as translation; you're converting from a language the database doesn’t speak into one it understands.
 
@@ -106,14 +106,15 @@ output_dataset_csv = Dataset("sql_output_dataset_csv")
 pdu.write_to_dataset(output_dataset_csv, df_all)
 
 ```
+
 This example shows how you might read from multiple non-standard csv files. It includes a function `read_csv_and_apply` to manipulate the data using pandas before writing it to the dataset. This demonstrates the flexibility of applying custom transformations to the input data.
 
 **Key points to consider**
 
-*   **Data quality:** Pre-processing steps are crucial. Handle missing data, type mismatches, and inconsistencies to avoid problems down the line.
-*   **Schema alignment:** Ensure your transformed dataframe's columns precisely match your SQL table's schema. Pay special attention to data types (integer vs. string, timestamp formats, etc.).
-*   **Performance:** For very large datasets, optimizing transformations in Python and using batch inserts can improve the write performance.
-*   **Error handling:** Implement proper error catching and logging during transformation and write processes for debugging. Dataiku's logging capabilities can be very helpful for this.
+- **Data quality:** Pre-processing steps are crucial. Handle missing data, type mismatches, and inconsistencies to avoid problems down the line.
+- **Schema alignment:** Ensure your transformed dataframe's columns precisely match your SQL table's schema. Pay special attention to data types (integer vs. string, timestamp formats, etc.).
+- **Performance:** For very large datasets, optimizing transformations in Python and using batch inserts can improve the write performance.
+- **Error handling:** Implement proper error catching and logging during transformation and write processes for debugging. Dataiku's logging capabilities can be very helpful for this.
 
 **Further Reading:**
 

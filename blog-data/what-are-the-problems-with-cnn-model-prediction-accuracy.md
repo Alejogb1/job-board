@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-problems-with-cnn-model-prediction-accuracy"
 ---
 
-Let's tackle this. From the trenches, having deployed and debugged convolutional neural networks (CNNs) in various contexts, I can tell you that achieving consistently high prediction accuracy is far from straightforward. It’s not just a matter of throwing more data at the model; there are nuances that often get overlooked. The issues aren’t monolithic either; they stem from various sources, ranging from data quality to architectural limitations. Let’s break it down.
+. From the trenches, having deployed and debugged convolutional neural networks (CNNs) in various contexts, I can tell you that achieving consistently high prediction accuracy is far from straightforward. It’s not just a matter of throwing more data at the model; there are nuances that often get overlooked. The issues aren’t monolithic either; they stem from various sources, ranging from data quality to architectural limitations. Let’s break it down.
 
 One of the primary culprits I’ve consistently encountered is the problem of **insufficient or biased training data**. Remember that image classification project for detecting manufacturing defects? The initial dataset was heavily skewed towards images of functioning parts, with only a small percentage showing actual flaws. This led to the model becoming incredibly good at identifying regular components but hopelessly ineffective at spotting defects. It learned to predict the majority class because it saw it so frequently; it became biased towards the ‘normal.’ This skewed class distribution, a common occurrence in practical applications, results in poor generalization to unseen data, particularly for minority classes. The model essentially becomes a specialized expert in identifying regular components, while essentially being ignorant of the actual problem space.
 
@@ -141,6 +141,7 @@ print(f"Accuracy with engineered features: {accuracy_strong:.4f}") # Significant
 
 
 ```
+
 Here, the engineered features are more representative, improving the performance of the model. Similarly in CNN, if early layers fail, later layers cannot compensate.
 
 These examples, while simplified, highlight fundamental accuracy issues. Addressing these challenges requires a multifaceted approach. For deeper insight into data imbalance, I recommend exploring “SMOTE: Synthetic Minority Over-sampling Technique” by Chawla et al. (2002). To gain a deeper understanding of overfitting and regularization, I suggest delving into “Deep Learning” by Goodfellow, Bengio, and Courville. For comprehensive knowledge on feature extraction, look to “Feature Extraction: Foundations and Applications” by Guyon, Gunn, Nikravesh, and Zadeh. These texts offer a solid foundation for addressing the complexities of improving CNN prediction accuracy. My practical experience, combined with these resources, forms my current knowledge on the subject.

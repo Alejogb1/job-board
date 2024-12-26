@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-altair-control-tick-counts-on-binned-axes"
 ---
 
-Let's tackle this. I recall a project a few years back where we were visualizing sensor data, and the default tick placement on our binned histograms was... less than ideal. It became painfully apparent that letting Altair's automatic tick placement run wild on binned axes was a recipe for confusing charts. Fortunately, we have several precise control mechanisms to get things just how we want. The essence of manipulating tick counts on binned axes in Altair revolves around carefully defining the scale properties in your chart specifications. Specifically, we'll focus on the `scale` property within your encoding, leveraging the `nice` and `ticks` parameters.
+. I recall a project a few years back where we were visualizing sensor data, and the default tick placement on our binned histograms was... less than ideal. It became painfully apparent that letting Altair's automatic tick placement run wild on binned axes was a recipe for confusing charts. Fortunately, we have several precise control mechanisms to get things just how we want. The essence of manipulating tick counts on binned axes in Altair revolves around carefully defining the scale properties in your chart specifications. Specifically, we'll focus on the `scale` property within your encoding, leveraging the `nice` and `ticks` parameters.
 
 First off, it’s crucial to understand how Altair, built atop Vega-Lite, typically generates bins. When you specify an encoding with a `bin` transform, such as `alt.X('data_field:Q', bin=True)`, Vega-Lite automatically calculates a set of bins based on your data’s distribution. This is convenient for initial explorations, but it often produces bin boundaries and, consequently, tick locations that aren't inherently human-readable or conducive to comparisons across multiple visualizations. What we often need is to manually sculpt how the binning happens (and then subsequently, how the ticks are shown), particularly with regards to count.
 
@@ -12,7 +12,7 @@ The primary challenge when working with binned axes stems from the fact that, by
 
 The `nice` parameter, when set to `False`, disables this automatic "niceness," and then we are allowed to directly control the ticks. This is often the first move in a series of adjustments. It’s important to combine the `nice=False` setting with explicit `ticks` specifications to avoid unexpected default behavior from Vega-Lite.
 
-The most straightforward mechanism for specifying tick count in this scenario is the `ticks` parameter in conjunction with `nice=False`. Instead of specifying the actual tick values themselves, which can get unwieldy if dealing with changing datasets, we specify the *number* of ticks we desire. Altair, when provided with an integer as `ticks` alongside `nice=False`, will attempt to divide the axis range into equal intervals, and place ticks at those locations. It is not as granular as providing explicit tick values, but it’s a very effective starting point.
+The most straightforward mechanism for specifying tick count in this scenario is the `ticks` parameter in conjunction with `nice=False`. Instead of specifying the actual tick values themselves, which can get unwieldy if dealing with changing datasets, we specify the _number_ of ticks we desire. Altair, when provided with an integer as `ticks` alongside `nice=False`, will attempt to divide the axis range into equal intervals, and place ticks at those locations. It is not as granular as providing explicit tick values, but it’s a very effective starting point.
 
 Let’s look at some examples using fictional data:
 
@@ -39,7 +39,7 @@ Here, `alt.Bin(maxbins=20)` generates our bins, and then the `scale` property te
 
 **Example 2: Specifying tick intervals with a step property**
 
-Let’s say we want the tick labels to show up every 5 units. This is generally achieved by specifying a `step` property along with the `bins` object. By default, the ticks would appear at each bin boundary – we can change the bin intervals to match our needs, instead of controlling the ticks directly. Note that while this affects the bin *boundaries*, and the labels on the ticks at the bin boundaries *can* be controlled, it does not specify the number of ticks, but instead the *intervals* between them.
+Let’s say we want the tick labels to show up every 5 units. This is generally achieved by specifying a `step` property along with the `bins` object. By default, the ticks would appear at each bin boundary – we can change the bin intervals to match our needs, instead of controlling the ticks directly. Note that while this affects the bin _boundaries_, and the labels on the ticks at the bin boundaries _can_ be controlled, it does not specify the number of ticks, but instead the _intervals_ between them.
 
 ```python
 import altair as alt

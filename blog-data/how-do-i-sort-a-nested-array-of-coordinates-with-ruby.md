@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-sort-a-nested-array-of-coordinates-with-ruby"
 ---
 
-Let's tackle this, shall we? It's a problem I've bumped into more than once, especially when dealing with geospatial data and similar applications. Nested arrays of coordinates, representing polygons, paths, or other spatial constructs, can become a tangled mess if they’re not properly sorted. Ruby, thankfully, gives us the tools we need to manage this efficiently.
+, shall we? It's a problem I've bumped into more than once, especially when dealing with geospatial data and similar applications. Nested arrays of coordinates, representing polygons, paths, or other spatial constructs, can become a tangled mess if they’re not properly sorted. Ruby, thankfully, gives us the tools we need to manage this efficiently.
 
-The core challenge isn't just sorting; it's defining *how* we sort those nested arrays. Do we want to sort by the x-coordinate first, then the y? Or perhaps we need to consider other factors entirely, depending on the context. In my experience, you’ll usually find that a specific sort order is required based on the application’s requirements. For example, I once had to implement a polygon simplification algorithm where the vertices needed to be in a particular clockwise order, a task that initially presented itself as a sorting problem.
+The core challenge isn't just sorting; it's defining _how_ we sort those nested arrays. Do we want to sort by the x-coordinate first, then the y? Or perhaps we need to consider other factors entirely, depending on the context. In my experience, you’ll usually find that a specific sort order is required based on the application’s requirements. For example, I once had to implement a polygon simplification algorithm where the vertices needed to be in a particular clockwise order, a task that initially presented itself as a sorting problem.
 
 Fundamentally, when we have a nested array like `[[x1, y1], [x2, y2], [x3, y3], ...]`, the default sort operation will compare the inner arrays based on their elements sequentially. For example, `[1, 2]` comes before `[1, 3]` in a default ascending sort. However, that doesn't necessarily mean we want to sort based purely on the 'x' or 'y' values alone.
 

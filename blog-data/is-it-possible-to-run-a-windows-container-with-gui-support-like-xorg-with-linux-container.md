@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-it-possible-to-run-a-windows-container-with-gui-support-like-xorg-with-linux-container"
 ---
 
-, let's tackle this one. From the get-go, the idea of running a windows container with fully fledged graphical user interface support like xorg in a linux container might sound like threading a needle, given the inherent architectural differences. But, having grappled with this particular challenge in a previous project involving specialized data visualization tools running on a windows-based server farm, I can confidently say it’s not only possible, but achievable with a solid understanding of the underlying mechanisms.
+, one. From the get-go, the idea of running a windows container with fully fledged graphical user interface support like xorg in a linux container might sound like threading a needle, given the inherent architectural differences. But, having grappled with this particular challenge in a previous project involving specialized data visualization tools running on a windows-based server farm, I can confidently say it’s not only possible, but achievable with a solid understanding of the underlying mechanisms.
 
 The crucial difference is that windows containers, by their design, are more tightly coupled with the host operating system than their linux counterparts. You're not typically dealing with a complete, independent kernel virtualization. Instead, windows containers leverage shared resources from the host windows kernel, which impacts how graphical interfaces are managed. Unlike linux containers where xorg (or wayland more recently) operates as a separate service interacting with the host kernel, achieving graphical output with windows containers requires a different approach.
 

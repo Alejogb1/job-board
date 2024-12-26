@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-asynchronous-operations-improve-performance-over-synchronous-ones-for-fire-and-forget-tasks"
 ---
 
-Let's tackle this from a pragmatic angle, something I've bumped into quite a few times over the years. The question of whether asynchronous operations enhance performance for fire-and-forget tasks compared to their synchronous counterparts isn't a simple "yes" or "no." It fundamentally hinges on how you define performance and, crucially, the nature of the task itself. It also requires understanding the underlying mechanisms at play within an operating system or a particular runtime environment.
+from a pragmatic angle, something I've bumped into quite a few times over the years. The question of whether asynchronous operations enhance performance for fire-and-forget tasks compared to their synchronous counterparts isn't a simple "yes" or "no." It fundamentally hinges on how you define performance and, crucially, the nature of the task itself. It also requires understanding the underlying mechanisms at play within an operating system or a particular runtime environment.
 
 My experience has taught me that blindly throwing asynchrony at every problem won’t cut it. I recall a project back in my early days where we were building a system for processing image uploads. Initially, we naively used a synchronous approach: the user would upload an image, and our server would process it before returning a response. The server became unresponsive during heavy upload periods because the main request-processing thread was busy with lengthy image processing tasks. The user experience was, to put it mildly, atrocious. We learned then, the hard way, the crucial difference between tasks that block and tasks that don't.
 
@@ -12,7 +12,7 @@ The key point is that synchronous operations block the execution thread until th
 
 When dealing with fire-and-forget situations, asynchronous operations can be hugely beneficial, but only if you have operations that are I/O bound, meaning they involve waiting for an external resource, such as file system access, network requests, or database operations. Processing a user’s image involves I/O for both uploading, storing, and eventually resizing it. The CPU isn't generally the bottleneck; waiting for the files and database to cooperate is. Asynchrony allows us to release our processing thread and move onto other tasks during this wait. Synchronous operations would have the thread waiting, accomplishing nothing.
 
-However, it is also critical to note that asynchronous operations aren't magic. They don't *make* computations faster. A CPU bound task will remain CPU bound whether it's handled synchronously or asynchronously. They simply allow for better resource utilization in cases where the program would otherwise be idle.
+However, it is also critical to note that asynchronous operations aren't magic. They don't _make_ computations faster. A CPU bound task will remain CPU bound whether it's handled synchronously or asynchronously. They simply allow for better resource utilization in cases where the program would otherwise be idle.
 
 Let's illustrate this with some practical examples. Imagine you're logging application events:
 
@@ -35,6 +35,7 @@ if __name__ == "__main__":
     end_time = time.time()
     print(f"Total synchronous time: {end_time - start_time}")
 ```
+
 In this first example, each logging operation waits before returning. The program will be idle while it writes each entry into the log. This would be a problem if a server were handling a large number of concurrent requests.
 
 **Example 2: Asynchronous Logging (Using `asyncio`)**
@@ -94,6 +95,6 @@ if __name__ == "__main__":
 
 Here, each logging operation runs in a separate thread. Unlike the `asyncio` example, threads are managed by the operating system which performs the context switching. Both the thread based and the async based approaches allow our main thread to continue execution without waiting for each individual log to complete.
 
-To really understand this better, I'd recommend diving into *Operating Systems Concepts* by Silberschatz, Galvin, and Gagne. It goes into depth on threads, processes, and task scheduling, which provides the foundational understanding of how concurrent and asynchronous operations are executed at the lowest levels of software execution. Another useful resource is the *Programming Erlang* book by Joe Armstrong, which while Erlang specific, provides excellent insights into asynchronous programming using message passing. And, of course, any thorough textbook on distributed systems design will discuss patterns for managing asynchronous tasks effectively.
+To really understand this better, I'd recommend diving into _Operating Systems Concepts_ by Silberschatz, Galvin, and Gagne. It goes into depth on threads, processes, and task scheduling, which provides the foundational understanding of how concurrent and asynchronous operations are executed at the lowest levels of software execution. Another useful resource is the _Programming Erlang_ book by Joe Armstrong, which while Erlang specific, provides excellent insights into asynchronous programming using message passing. And, of course, any thorough textbook on distributed systems design will discuss patterns for managing asynchronous tasks effectively.
 
 In summary, asynchronous operations often improve performance for fire-and-forget tasks, especially I/O bound tasks, by preventing the main thread from becoming blocked and allowing the program to continue executing other operations while the tasks are handled in the background. However, it is essential to pick the right paradigm given the problem and to have a good grasp of the system-level operations to use asynchrony effectively. It is not a silver bullet. Just a tool, and like any tool, it should be used properly.

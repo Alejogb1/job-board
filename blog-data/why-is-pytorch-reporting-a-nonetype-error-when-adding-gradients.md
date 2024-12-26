@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-pytorch-reporting-a-nonetype-error-when-adding-gradients"
 ---
 
-, let's tackle this 'NoneType' error that crops up in PyTorch when gradients go awry. I’ve seen this particular headache more times than I care to recall, often in situations where the underlying issue wasn't immediately obvious. It’s almost always related to how PyTorch manages its computational graph and backpropagation.
+, 'NoneType' error that crops up in PyTorch when gradients go awry. I’ve seen this particular headache more times than I care to recall, often in situations where the underlying issue wasn't immediately obvious. It’s almost always related to how PyTorch manages its computational graph and backpropagation.
 
 Here's the core problem: when you try to compute gradients using `loss.backward()`, PyTorch propagates gradients backwards through your graph. If at any point in that graph, a tensor required to compute the gradient isn't actually part of the computation _chain_, or if the computation chain has been detached, you might end up trying to access a gradient that simply hasn’t been calculated. That results in, you guessed it, a `NoneType` being returned instead of a tensor. This commonly manifests when you try to add these ‘None’ gradient values somewhere later in your code.
 

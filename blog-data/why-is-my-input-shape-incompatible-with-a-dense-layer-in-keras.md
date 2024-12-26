@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-my-input-shape-incompatible-with-a-dense-layer-in-keras"
 ---
 
-, let's tackle this. I've seen this issue crop up more times than I care to remember, usually when someone's just starting out with neural networks or even when experienced folks get a little too fancy with their preprocessing. The “input shape incompatible with dense layer” error in Keras, or more accurately now, TensorFlow with its integrated Keras API, generally stems from a misunderstanding of how data flows through the layers. It's not a particularly complicated concept once you grasp the basics, but the error message itself can be somewhat cryptic if you're not familiar with the underlying mathematics and tensor manipulations.
+, . I've seen this issue crop up more times than I care to remember, usually when someone's just starting out with neural networks or even when experienced folks get a little too fancy with their preprocessing. The “input shape incompatible with dense layer” error in Keras, or more accurately now, TensorFlow with its integrated Keras API, generally stems from a misunderstanding of how data flows through the layers. It's not a particularly complicated concept once you grasp the basics, but the error message itself can be somewhat cryptic if you're not familiar with the underlying mathematics and tensor manipulations.
 
 My history with this, let’s say, involves a rather complex time series prediction project a few years back. We were dealing with multi-variate data streams and were using a recurrent network followed by dense layers. We had preprocessed everything beautifully, so we thought, but kept getting hit with this error. It turned out we were inadvertently flattening the temporal dimension too early, a mistake which, looking back, seems elementary. So, what's going on under the hood?
 
@@ -36,7 +36,7 @@ except Exception as e:
   print(f"Error: {e}")
 ```
 
-Here, the `input_shape=(5,)` in the `Dense` layer specifies it expects vectors of length 5. However, `input_data` has the shape `(5, 1)`, where 5 represents the batch size and 1 is the single feature. This creates a mismatch. The dense layer expects a (batch_size, 5) shape when a shape of (5, 1) is provided. It looks for an input vector with 5 entries _per instance_ in your batch and not an input with 1 entry, batched 5 times.
+Here, the `input_shape=(5,)` in the `Dense` layer specifies it expects vectors of length 5. However, `input_data` has the shape `(5, 1)`, where 5 represents the batch size and 1 is the single feature. This creates a mismatch. The dense layer expects a (batch*size, 5) shape when a shape of (5, 1) is provided. It looks for an input vector with 5 entries \_per instance* in your batch and not an input with 1 entry, batched 5 times.
 
 **Solution:** To rectify, we must ensure our input data aligns with the expected shape. Below, we change our input data and pass in 1 sample with 5 features:
 

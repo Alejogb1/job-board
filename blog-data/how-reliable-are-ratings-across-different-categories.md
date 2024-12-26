@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-reliable-are-ratings-across-different-categories"
 ---
 
-Let's tackle this one; it’s a question that surfaces constantly when you're building any kind of recommendation system or dealing with user-generated content, and it's far from trivial. I recall a rather involved project several years back involving a platform that reviewed both restaurants *and* software. The initial assumption was that, well, a rating is a rating. A five-star review was equally "good" across both categories. We quickly discovered that was spectacularly untrue, and it led to some intense re-evaluation of our approach.
+one; it’s a question that surfaces constantly when you're building any kind of recommendation system or dealing with user-generated content, and it's far from trivial. I recall a rather involved project several years back involving a platform that reviewed both restaurants _and_ software. The initial assumption was that, well, a rating is a rating. A five-star review was equally "good" across both categories. We quickly discovered that was spectacularly untrue, and it led to some intense re-evaluation of our approach.
 
 The core issue with comparing ratings across categories lies in the inherent differences in how users perceive and evaluate different types of items. The rating scale, typically a numerical or star-based system, serves as a common language, but the semantic meaning tied to each level isn't uniform across all contexts. The "five-star" for a restaurant, meaning excellent food, ambiance, and service, carries a different connotation than a "five-star" for a piece of software, usually referring to flawless performance, intuitive user interface, and reliable support. These are entirely different sets of attributes being evaluated, leading to incompatible scales. The distributions themselves vary; you might find restaurants, for example, often skewed towards higher ratings given human inclination to positive bias. Conversely, software may have a more evenly distributed rating pattern due to the objective and often more critical nature of evaluation.
 
@@ -33,9 +33,9 @@ print("Normalized Software Ratings:", normalized_software_ratings)
 
 Here, the `normalize_ratings` function standardizes the ratings, allowing for a more equitable comparison after the transformation. Now, a normalized score of, say, '1' has the same relative standing within their respective category’s distribution.
 
-However, normalization is a blunt instrument; it doesn't consider the *why* behind a given rating. More advanced approaches often incorporate techniques like collaborative filtering or content-based filtering, but these techniques need modification if they are to be applied across multiple categories. For example, a simple collaborative filtering model based on cosine similarity over the rating vector will fail because the rating values have different meanings as pointed out earlier.
+However, normalization is a blunt instrument; it doesn't consider the _why_ behind a given rating. More advanced approaches often incorporate techniques like collaborative filtering or content-based filtering, but these techniques need modification if they are to be applied across multiple categories. For example, a simple collaborative filtering model based on cosine similarity over the rating vector will fail because the rating values have different meanings as pointed out earlier.
 
-A crucial refinement involves applying a transformation informed by the *context* of the category. A basic attempt can be to apply a linear transformation, which we can calibrate empirically:
+A crucial refinement involves applying a transformation informed by the _context_ of the category. A basic attempt can be to apply a linear transformation, which we can calibrate empirically:
 
 ```python
 def transform_rating(rating, category):
@@ -107,6 +107,6 @@ model.fit([sample_user_ids, sample_item_ids, sample_category_ids], sample_rating
 
 The key here is the inclusion of `category_input` and its associated embedding, which is concatenated with other user and item embeddings. The network learns, in effect, how each category influences a particular user's rating of an item. This is generally better than simple normalization, as it captures category-specific semantics in learned representation.
 
-For deeper dives, I recommend studying the concepts in papers related to *transfer learning* and *domain adaptation* since it helps model the category differences more effectively, particularly work involving deep learning architectures applied to recommendations. For fundamental statistical principles, consider diving into ‘Elements of Statistical Learning’ by Hastie, Tibshirani, and Friedman; and for specific recommendation systems techniques, Shani, and Gunawardana’s, “Evaluating Recommender Systems”.
+For deeper dives, I recommend studying the concepts in papers related to _transfer learning_ and _domain adaptation_ since it helps model the category differences more effectively, particularly work involving deep learning architectures applied to recommendations. For fundamental statistical principles, consider diving into ‘Elements of Statistical Learning’ by Hastie, Tibshirani, and Friedman; and for specific recommendation systems techniques, Shani, and Gunawardana’s, “Evaluating Recommender Systems”.
 
 In conclusion, comparing ratings across categories without proper consideration is fundamentally flawed. Simple normalization might be sufficient for some analyses but more nuanced approaches that take into account category context through explicit embedding or transformation are necessary for building robust, category-agnostic systems.

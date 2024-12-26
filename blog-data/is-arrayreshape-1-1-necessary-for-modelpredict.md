@@ -4,12 +4,12 @@ date: "2024-12-23"
 id: "is-arrayreshape-1-1-necessary-for-modelpredict"
 ---
 
-Let's tackle this. Having spent a fair amount of time deploying machine learning models, specifically with python's scientific stack, I've definitely encountered the 'reshape(-1, 1)' conundrum, and it’s worth clarifying when it becomes absolutely essential. The short answer is: it's *often* necessary when feeding data into a scikit-learn model's `predict()` method, but not always and the reason revolves around how the model was trained and how scikit-learn expects inputs to be structured. It's more about conformity with the input requirements than any inherent magic.
+. Having spent a fair amount of time deploying machine learning models, specifically with python's scientific stack, I've definitely encountered the 'reshape(-1, 1)' conundrum, and it’s worth clarifying when it becomes absolutely essential. The short answer is: it's _often_ necessary when feeding data into a scikit-learn model's `predict()` method, but not always and the reason revolves around how the model was trained and how scikit-learn expects inputs to be structured. It's more about conformity with the input requirements than any inherent magic.
 
 The core problem stems from the distinction between single-sample predictions and predictions on a batch of samples. `scikit-learn` models, during training (`model.fit()`) and typically during prediction (`model.predict()`), expect a 2d numpy array (or a compatible sparse matrix representation) where:
 
-*   Rows represent individual samples (or instances)
-*   Columns represent features (or variables) of each sample.
+- Rows represent individual samples (or instances)
+- Columns represent features (or variables) of each sample.
 
 If your dataset consists of a single feature, then for an individual sample, that would naturally be represented by a single value. But that single value doesn't quite match the model’s expectation of a 2d structure, so we introduce reshaping to get to that 2d representation even for a single sample. That's precisely where `reshape(-1, 1)` comes in:
 
@@ -75,7 +75,7 @@ predicted_values_alternative = model.predict(x_batch_reshaped)
 print(f"Predicted Batch Values Alternative: {predicted_values_alternative}")
 ```
 
-In this second snippet, the training data `X_train` is initialized to be a 2d array. Here I'm showing that batch predictions, if already structured in a 2d manner, do not *need* any further reshaping. Notice in this example that if the original format of our x_batch is 1d, we would apply the same technique demonstrated previously to `reshape(-1,1)` to achieve the right structure.
+In this second snippet, the training data `X_train` is initialized to be a 2d array. Here I'm showing that batch predictions, if already structured in a 2d manner, do not _need_ any further reshaping. Notice in this example that if the original format of our x_batch is 1d, we would apply the same technique demonstrated previously to `reshape(-1,1)` to achieve the right structure.
 
 **Snippet 3: A Scenario where Reshape is not Needed:**
 
@@ -104,9 +104,9 @@ predicted_batch_value= model.predict(x_batch)
 print(f"Predicted Batch Value (Multi-Feature): {predicted_batch_value}")
 ```
 
-In this final snippet, we're dealing with multi-feature data. Both training data `X_train` and prediction sample `x_new` are already in the expected 2D format, thereby avoiding the need to use `reshape` again, demonstrating cases where `reshape` is *not* required.
+In this final snippet, we're dealing with multi-feature data. Both training data `X_train` and prediction sample `x_new` are already in the expected 2D format, thereby avoiding the need to use `reshape` again, demonstrating cases where `reshape` is _not_ required.
 
-It's crucial to understand that the necessity of reshaping isn't inherent to `model.predict()`. It is a question of how the data *should* be formatted as per the requirements of `scikit-learn` and ensuring the input to `predict()` matches the expected format based on how the model was trained with `fit()`.
+It's crucial to understand that the necessity of reshaping isn't inherent to `model.predict()`. It is a question of how the data _should_ be formatted as per the requirements of `scikit-learn` and ensuring the input to `predict()` matches the expected format based on how the model was trained with `fit()`.
 
 For further understanding I highly recommend reviewing resources such as the scikit-learn documentation itself; it’s remarkably comprehensive. “Python Data Science Handbook” by Jake VanderPlas also dedicates significant space to these concepts, particularly within the sections on data handling and model implementation. Lastly, and especially for a more formal treatment of the mathematics of linear algebra which underpins a lot of these operations, I find the lectures on linear algebra provided by MIT OpenCourseware or a textbook like “Linear Algebra and Its Applications” by Gilbert Strang to be invaluable.
 

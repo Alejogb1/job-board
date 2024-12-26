@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-split-a-csv-file-7030-and-use-the-first-column-as-the-target-variable"
 ---
 
-, let's tackle this CSV splitting problem. I've certainly seen my share of these, especially in the early days of machine learning projects when dealing with less-than-ideal data pipelines. It’s a common task, but getting it right – efficiently and robustly – is crucial. We're aiming for a 70/30 split, taking the first column as our target, which usually implies we're setting up a classification or regression task.
+, CSV splitting problem. I've certainly seen my share of these, especially in the early days of machine learning projects when dealing with less-than-ideal data pipelines. It’s a common task, but getting it right – efficiently and robustly – is crucial. We're aiming for a 70/30 split, taking the first column as our target, which usually implies we're setting up a classification or regression task.
 
 My experience with this often stems from scenarios where data is provided as a single, large CSV file, without pre-existing separation into training and validation sets. I recall a particular project where we were forecasting energy consumption based on various sensor readings, and the raw data was one enormous CSV, with timestamps as the first column. It was a fairly large file, forcing me to think carefully about memory usage and efficiency.
 

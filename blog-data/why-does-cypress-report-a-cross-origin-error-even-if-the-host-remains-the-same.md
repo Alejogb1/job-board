@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-cypress-report-a-cross-origin-error-even-if-the-host-remains-the-same"
 ---
 
-Let's tackle this directly. It's a scenario I've personally navigated several times, particularly when dealing with complex application architectures that aren't always transparent in their routing mechanisms. The apparent paradox of Cypress throwing a cross-origin error while *seemingly* staying on the same host is frequently a result of how the browser interprets and manages domains and origins, especially when dealing with redirects, subdomains, or iframes. The "host" isn’t the sole determinant; it's the *origin* that matters, and origins include the protocol, domain, and port.
+directly. It's a scenario I've personally navigated several times, particularly when dealing with complex application architectures that aren't always transparent in their routing mechanisms. The apparent paradox of Cypress throwing a cross-origin error while _seemingly_ staying on the same host is frequently a result of how the browser interprets and manages domains and origins, especially when dealing with redirects, subdomains, or iframes. The "host" isn’t the sole determinant; it's the _origin_ that matters, and origins include the protocol, domain, and port.
 
 The key lies in understanding the same-origin policy. This browser security mechanism prevents scripts from one origin accessing data from another origin. It’s a cornerstone of web security, preventing malicious code from one site meddling with another. Where it gets tricky is that even subtle variations in the origin are treated as distinct entities. For instance, `http://example.com` and `https://example.com` are different origins. Likewise, `example.com` and `www.example.com` are distinct. The same holds true for different port numbers on the same domain (`example.com:80` vs `example.com:8080`).
 
@@ -28,12 +28,11 @@ To illustrate how to address this, consider the following code snippets:
 // cy.get('#dashboard-element').should('be.visible'); // Error: cross origin
 
 // After: Using cy.origin to handle the origin switch
-cy.visit('https://myapp.com');
+cy.visit("https://myapp.com");
 
-cy.origin('https://app.myapp.com', () => {
-    cy.get('#dashboard-element').should('be.visible');
+cy.origin("https://app.myapp.com", () => {
+  cy.get("#dashboard-element").should("be.visible");
 });
-
 ```
 
 Here, the `cy.origin()` command tells Cypress that the subsequent commands should execute within the context of the new origin. It’s crucial for maintaining a controlled testing flow across domain transitions.
@@ -46,14 +45,11 @@ Here, the `cy.origin()` command tells Cypress that the subsequent commands shoul
 //cy.get('iframe#payment-iframe').its('document').should('exist').its('body')
 //.find('#submit-payment-button').click() //Error: cross origin
 
-
 //After: using cy.frameLoaded and cy.iframe to access and interact with iframe content
-cy.visit('https://main-site.com');
+cy.visit("https://main-site.com");
 
-cy.frameLoaded('iframe#payment-iframe')
-cy.iframe('iframe#payment-iframe').find('#submit-payment-button').click();
-
-
+cy.frameLoaded("iframe#payment-iframe");
+cy.iframe("iframe#payment-iframe").find("#submit-payment-button").click();
 ```
 
 In this scenario, the `cy.frameLoaded` and `cy.iframe` commands allows access to the iframe's content as if it was an internal page. This ensures that Cypress doesn't treat the iframe as a foreign origin, allowing for seamless interaction with elements within the iframe.
@@ -67,17 +63,14 @@ In this scenario, the `cy.frameLoaded` and `cy.iframe` commands allows access to
 //       expect(response.status).to.eq(200)
 //   })  //Error: intermittent cross origin
 
-
 //After: defining custom behavior for API endpoints
-const apiDomain = 'https://api.myapp.com';
-const verifyEndpoint = '/endpoint';
-const otherEndpoint = '/other-endpoint';
+const apiDomain = "https://api.myapp.com";
+const verifyEndpoint = "/endpoint";
+const otherEndpoint = "/other-endpoint";
 cy.visit(`${apiDomain}${verifyEndpoint}`);
-cy.request(`${apiDomain}${otherEndpoint}`).then(response =>{
-     expect(response.status).to.eq(200)
-})
-
-
+cy.request(`${apiDomain}${otherEndpoint}`).then((response) => {
+  expect(response.status).to.eq(200);
+});
 ```
 
 By declaring the api base url, you can avoid problems when the service changes locations or alters the returned headers in a way that causes the browser to report a cross-origin error. This allows explicit behavior that is not assumed or guessed, thereby minimizing potential cross-origin issues related to inconsistent server configurations.

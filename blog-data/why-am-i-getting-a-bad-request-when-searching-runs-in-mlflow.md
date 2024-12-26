@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-bad-request-when-searching-runs-in-mlflow"
 ---
 
-, let's tackle this one. It's a classic issue and, believe me, I’ve spent my fair share of time debugging those pesky 400 bad request errors when querying mlflow runs. It usually boils down to a handful of culprits, and while the error message itself is rather generic, the root cause is typically more specific. I'm going to walk you through the typical scenarios I’ve encountered, how to diagnose them, and provide some actionable solutions, with a little code to demonstrate what’s happening.
+, one. It's a classic issue and, believe me, I’ve spent my fair share of time debugging those pesky 400 bad request errors when querying mlflow runs. It usually boils down to a handful of culprits, and while the error message itself is rather generic, the root cause is typically more specific. I'm going to walk you through the typical scenarios I’ve encountered, how to diagnose them, and provide some actionable solutions, with a little code to demonstrate what’s happening.
 
 The core of the problem is, simply put, that the server receiving your request doesn't understand the parameters of the request you’re sending. In the context of MLflow, this often revolves around the query filters used when searching for runs. MLflow's search functionality is powerful, but it has rules and expectations for those filters that, if not met, result in a bad request.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-using-a-custom-transformer-in-a-scikit-learn-pipeline-produce-an-error"
 ---
 
-Let's tackle this error. It’s a common head-scratcher when first implementing custom transformers within scikit-learn pipelines, and frankly, something I've personally tripped over more than once during my tenure working with machine learning models. The issue often boils down to the expected interface of a scikit-learn transformer, and where we might miss adhering to it when crafting our custom solutions.
+error. It’s a common head-scratcher when first implementing custom transformers within scikit-learn pipelines, and frankly, something I've personally tripped over more than once during my tenure working with machine learning models. The issue often boils down to the expected interface of a scikit-learn transformer, and where we might miss adhering to it when crafting our custom solutions.
 
 The primary error, which usually manifests as something along the lines of `AttributeError: 'MyCustomTransformer' object has no attribute 'fit'`, highlights a fundamental incompatibility: scikit-learn pipelines expect transformers to be objects adhering to a specific protocol. This protocol requires the presence of at least two critical methods: `fit` and `transform`. In some contexts, `fit_transform` might be needed as well, especially if you want your transformer to operate as a standalone step outside the fit phase. Failing to implement these correctly (or at all) throws off the pipeline's internal mechanics and leads to the errors you're seeing.
 
@@ -47,7 +47,7 @@ except Exception as e:
 
 ```
 
-Here, `MyBadTransformer` *seems* like it should work since it inherits from `BaseEstimator` and `TransformerMixin`, but it lacks the required `fit` and `transform` methods. While we defined a method `apply_transformation`, the pipeline will specifically look for methods named `fit` and `transform` and, finding neither, will trigger the error we're discussing.
+Here, `MyBadTransformer` _seems_ like it should work since it inherits from `BaseEstimator` and `TransformerMixin`, but it lacks the required `fit` and `transform` methods. While we defined a method `apply_transformation`, the pipeline will specifically look for methods named `fit` and `transform` and, finding neither, will trigger the error we're discussing.
 
 **Example 2: Correct implementation with `fit` and `transform` methods**
 
@@ -144,10 +144,10 @@ These scenarios, which are often encountered when creating pipelines, highlight 
 
 For deeper insight into this topic, I strongly recommend exploring the following resources:
 
-*   **The Scikit-learn Documentation:** Specifically, the sections on transformers, pipelines, and custom estimators. It’s a fantastic and authoritative starting point.
+- **The Scikit-learn Documentation:** Specifically, the sections on transformers, pipelines, and custom estimators. It’s a fantastic and authoritative starting point.
 
-*   **“Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron:** This book provides a very practical and thorough explanation of all aspects of using Scikit-learn, including pipelines and custom components.
+- **“Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron:** This book provides a very practical and thorough explanation of all aspects of using Scikit-learn, including pipelines and custom components.
 
-*   **“Python Machine Learning” by Sebastian Raschka:** Offers in-depth theoretical explanations and practical code examples relating to all the core topics of machine learning using python, including transformer creation and manipulation.
+- **“Python Machine Learning” by Sebastian Raschka:** Offers in-depth theoretical explanations and practical code examples relating to all the core topics of machine learning using python, including transformer creation and manipulation.
 
 Finally, a good practice is to always start with small, testable custom components, and add more complexity incrementally. Use the error messages as diagnostic tools, and make sure to test the `fit` and `transform` methods of your custom transformers individually before integrating them into a full pipeline. This systematic approach will save you a lot of debugging time, I can assure you that from experience.

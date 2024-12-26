@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-enzyme-mocha-and-chai-be-used-to-test-a-window-events-addeventlistener-with-a-callback"
 ---
 
-Let's tackle this. Over the years, I've found that testing event listeners, particularly those tied to the window object, can become a surprisingly intricate affair. It's not enough to simply trigger an event and hope the callback fires; we need to be certain it does, and we also want to verify the data passed to the callback. The combination of enzyme, mocha, and chai, when wielded properly, provides a robust framework for this kind of testing.
+. Over the years, I've found that testing event listeners, particularly those tied to the window object, can become a surprisingly intricate affair. It's not enough to simply trigger an event and hope the callback fires; we need to be certain it does, and we also want to verify the data passed to the callback. The combination of enzyme, mocha, and chai, when wielded properly, provides a robust framework for this kind of testing.
 
 First, let's understand the problem. The `window` object operates somewhat outside the typical scope of component-based testing, particularly when we're using React or similar frameworks. You can't simply render a component and expect `window.addEventListener` to behave within the shallow rendering context. This is where mocking and careful assertion are key.
 
@@ -16,7 +16,7 @@ Let's say we have a component that sets up a simple resize listener:
 
 ```javascript
 // MyComponent.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 function MyComponent() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -26,10 +26,10 @@ function MyComponent() {
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -47,29 +47,31 @@ To test this, we'll use mocha with chai and enzyme to simulate a window resize e
 
 ```javascript
 // MyComponent.test.js
-import React from 'react';
-import { mount } from 'enzyme';
-import { expect } from 'chai';
-import MyComponent from './MyComponent';
+import React from "react";
+import { mount } from "enzyme";
+import { expect } from "chai";
+import MyComponent from "./MyComponent";
 
-describe('MyComponent', () => {
-  it('should update windowWidth on resize event', () => {
+describe("MyComponent", () => {
+  it("should update windowWidth on resize event", () => {
     const wrapper = mount(<MyComponent />);
 
     const initialWidth = window.innerWidth;
     window.innerWidth = initialWidth + 100; // Simulating a resize
 
-    const event = new Event('resize');
+    const event = new Event("resize");
     window.dispatchEvent(event);
 
     // give it some time for React to process the event
-    return new Promise(resolve => setTimeout(() => {
-      expect(wrapper.find('p').text()).to.equal(`Window Width: ${initialWidth + 100}`);
-       window.innerWidth = initialWidth; // reset
-      resolve();
-    }, 0));
-
-
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        expect(wrapper.find("p").text()).to.equal(
+          `Window Width: ${initialWidth + 100}`
+        );
+        window.innerWidth = initialWidth; // reset
+        resolve();
+      }, 0)
+    );
   });
 });
 ```
@@ -82,18 +84,18 @@ For more granular testing or when we need to examine the function calls themselv
 
 ```javascript
 // AnotherComponent.js
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
 function AnotherComponent() {
   useEffect(() => {
     const handleOrientationChange = (event) => {
-      console.log('Orientation change event:', event);
+      console.log("Orientation change event:", event);
     };
 
-    window.addEventListener('orientationchange', handleOrientationChange);
+    window.addEventListener("orientationchange", handleOrientationChange);
 
     return () => {
-      window.removeEventListener('orientationchange', handleOrientationChange);
+      window.removeEventListener("orientationchange", handleOrientationChange);
     };
   }, []);
 
@@ -101,29 +103,29 @@ function AnotherComponent() {
 }
 
 export default AnotherComponent;
-
 ```
+
 Now, let's construct our test with spying:
 
 ```javascript
 // AnotherComponent.test.js
-import React from 'react';
-import { mount } from 'enzyme';
-import { expect, spy } from 'chai';
-import AnotherComponent from './AnotherComponent';
+import React from "react";
+import { mount } from "enzyme";
+import { expect, spy } from "chai";
+import AnotherComponent from "./AnotherComponent";
 
-describe('AnotherComponent', () => {
-  it('should call the event listener with correct details on orientation change', () => {
-    const addEventListenerSpy = spy(window, 'addEventListener');
+describe("AnotherComponent", () => {
+  it("should call the event listener with correct details on orientation change", () => {
+    const addEventListenerSpy = spy(window, "addEventListener");
     const wrapper = mount(<AnotherComponent />);
 
-    const event = new Event('orientationchange');
+    const event = new Event("orientationchange");
     window.dispatchEvent(event);
-    
+
     const [eventType, callback] = addEventListenerSpy.getCall(0).args;
 
-     expect(eventType).to.equal('orientationchange');
-    expect(typeof callback).to.equal('function');
+    expect(eventType).to.equal("orientationchange");
+    expect(typeof callback).to.equal("function");
 
     addEventListenerSpy.restore();
     wrapper.unmount();
@@ -139,7 +141,7 @@ Now, let's tackle situations where the event listener's callback needs to be ver
 
 ```javascript
 // MessageComponent.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 function MessageComponent() {
   const [messageData, setMessageData] = useState(null);
@@ -151,45 +153,48 @@ function MessageComponent() {
       }
     };
 
-    window.addEventListener('message', handleMessage);
+    window.addEventListener("message", handleMessage);
 
     return () => {
-      window.removeEventListener('message', handleMessage);
+      window.removeEventListener("message", handleMessage);
     };
   }, []);
 
   return (
-      <div data-testid="message-component">
-        {messageData && <p>Received Message: {JSON.stringify(messageData)}</p>}
-      </div>
+    <div data-testid="message-component">
+      {messageData && <p>Received Message: {JSON.stringify(messageData)}</p>}
+    </div>
   );
 }
 
 export default MessageComponent;
-
 ```
+
 The test now needs to dispatch a `message` event with a `data` payload.
 
 ```javascript
 // MessageComponent.test.js
-import React from 'react';
-import { mount } from 'enzyme';
-import { expect } from 'chai';
-import MessageComponent from './MessageComponent';
+import React from "react";
+import { mount } from "enzyme";
+import { expect } from "chai";
+import MessageComponent from "./MessageComponent";
 
-describe('MessageComponent', () => {
-  it('should update messageData on a message event', () => {
+describe("MessageComponent", () => {
+  it("should update messageData on a message event", () => {
     const wrapper = mount(<MessageComponent />);
 
-    const messageData = { type: 'test', payload: 'hello' };
-    const messageEvent = new MessageEvent('message', { data: messageData });
+    const messageData = { type: "test", payload: "hello" };
+    const messageEvent = new MessageEvent("message", { data: messageData });
     window.dispatchEvent(messageEvent);
 
-     return new Promise(resolve => setTimeout(() => {
-       expect(wrapper.find('p').text()).to.equal(`Received Message: ${JSON.stringify(messageData)}`);
-      resolve();
-     }, 0));
-
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        expect(wrapper.find("p").text()).to.equal(
+          `Received Message: ${JSON.stringify(messageData)}`
+        );
+        resolve();
+      }, 0)
+    );
   });
 });
 ```
@@ -198,9 +203,9 @@ Here, we create a `MessageEvent` and set its `data` property to the object we wa
 
 **Important Considerations**
 
-*   **Clean Up:** Always ensure you clean up event listeners by calling `window.removeEventListener` in the component's `useEffect` cleanup function. This is critical to avoid memory leaks, especially in test environments.
-*   **Timing:** As we saw in the examples, DOM updates triggered by event listeners can sometimes require a small delay to ensure that assertions are performed after React has updated the DOM. Promises or similar techniques can be employed for such scenarios.
-*   **Mocking:** While these examples directly manipulate the window object, in a more comprehensive test suite, you might want to use mocks instead, particularly when you're dealing with browser-specific apis. This allows to unit test in an environment without a browser context. Libraries like Jest (with `jest.spyOn`) offer similar capabilities for spying and mocking if you are not set on using mocha.
-*   **Specific Libraries:** For a deeper understanding of testing event listeners, I recommend consulting the documentation for enzyme (`enzymejs.github.io/enzyme/`), mocha (`mochajs.org`), and chai (`chaijs.com`). Additionally, the *Testing JavaScript Applications* by Luca Matteis is an excellent resource for all aspects of Javascript testing, as is *Effective Testing with RSpec 3* by Myron Marston for a look at how Ruby approaches testing, which often uses the same paradigms as javascript.
+- **Clean Up:** Always ensure you clean up event listeners by calling `window.removeEventListener` in the component's `useEffect` cleanup function. This is critical to avoid memory leaks, especially in test environments.
+- **Timing:** As we saw in the examples, DOM updates triggered by event listeners can sometimes require a small delay to ensure that assertions are performed after React has updated the DOM. Promises or similar techniques can be employed for such scenarios.
+- **Mocking:** While these examples directly manipulate the window object, in a more comprehensive test suite, you might want to use mocks instead, particularly when you're dealing with browser-specific apis. This allows to unit test in an environment without a browser context. Libraries like Jest (with `jest.spyOn`) offer similar capabilities for spying and mocking if you are not set on using mocha.
+- **Specific Libraries:** For a deeper understanding of testing event listeners, I recommend consulting the documentation for enzyme (`enzymejs.github.io/enzyme/`), mocha (`mochajs.org`), and chai (`chaijs.com`). Additionally, the _Testing JavaScript Applications_ by Luca Matteis is an excellent resource for all aspects of Javascript testing, as is _Effective Testing with RSpec 3_ by Myron Marston for a look at how Ruby approaches testing, which often uses the same paradigms as javascript.
 
 In closing, while these scenarios cover common cases, your specific needs might necessitate custom solutions. The foundational knowledge of mocking, spying, and event simulation provided here serves as a solid base for handling a variety of event-related testing challenges. Remember to stay methodical, and test incrementally.

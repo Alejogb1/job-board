@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-mark-a-past-task-as-successful-in-airflow-for-a-new-task"
 ---
 
-, let's tackle this. It’s something I’ve definitely encountered more than once in the trenches of data pipeline management. Marking a past task as successful for a new task in Apache Airflow isn’t immediately obvious, especially when you're dealing with dependencies that shift mid-flight. Essentially, you're aiming to bypass the regular scheduling logic for a very specific instance of a task, in relation to another.
+, . It’s something I’ve definitely encountered more than once in the trenches of data pipeline management. Marking a past task as successful for a new task in Apache Airflow isn’t immediately obvious, especially when you're dealing with dependencies that shift mid-flight. Essentially, you're aiming to bypass the regular scheduling logic for a very specific instance of a task, in relation to another.
 
 The core problem here revolves around Airflow’s understanding of task states and its directed acyclic graph (dag) structure. Typically, a task’s status is dictated by its execution, and a newly launched task doesn't inherently know about older, successful runs it might depend on. We have to explicitly tell Airflow to consider a particular older instance successful. So, let's break down the mechanisms and how to achieve this.
 
@@ -12,7 +12,7 @@ First, let's consider the common scenarios. Perhaps you've backfilled a portion 
 
 Airflow doesn’t provide a magical ‘set_success’ parameter on a task instance, instead we manipulate the database records to achieve the required outcome. The method I’ve found most reliable and repeatable involves directly interacting with Airflow’s metadata database via the airflow api or custom python code. It's a surgical approach, so we have to be careful.
 
-The critical concept we’re going to leverage is the task instance. Each run of a task is an instance, identified by its task_id, dag_id, and execution_date. When we want to set a past task as success, we are manipulating the state of a _specific_ task instance.
+The critical concept we’re going to leverage is the task instance. Each run of a task is an instance, identified by its task*id, dag_id, and execution_date. When we want to set a past task as success, we are manipulating the state of a \_specific* task instance.
 
 Here's how this process breaks down practically:
 

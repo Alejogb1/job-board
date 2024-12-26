@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-append-to-an-ember-rails-component"
 ---
 
-Let's tackle this – appending to an Ember component rendered within a Rails application isn't always as straightforward as it seems, and over the years, I've certainly had my share of troubleshooting sessions dealing with similar integration hurdles. The core challenge here stems from the fact that Ember and Rails operate on different layers of your application stack. Ember handles the front-end rendering with its own virtual dom and component lifecycle, while Rails primarily serves as the back-end API provider and initial server-side renderer. Directly manipulating Ember components from within Rails' views typically leads to unexpected behavior, often because you're bypassing Ember's rendering engine. What we need are controlled channels that let us influence the Ember component state in a predictable way.
+– appending to an Ember component rendered within a Rails application isn't always as straightforward as it seems, and over the years, I've certainly had my share of troubleshooting sessions dealing with similar integration hurdles. The core challenge here stems from the fact that Ember and Rails operate on different layers of your application stack. Ember handles the front-end rendering with its own virtual dom and component lifecycle, while Rails primarily serves as the back-end API provider and initial server-side renderer. Directly manipulating Ember components from within Rails' views typically leads to unexpected behavior, often because you're bypassing Ember's rendering engine. What we need are controlled channels that let us influence the Ember component state in a predictable way.
 
 The most common – and often best – approach involves leveraging Ember's data binding capabilities and component APIs, combined with some careful management of initial data loading. Instead of trying to directly append HTML elements from the Rails side, we’ll modify data, and let Ember rerender the component based on the changes. Think of it less like physically gluing elements together and more like feeding new instructions to a well-defined rendering machine.
 
@@ -45,29 +45,31 @@ Here’s how that can work on the Ember side:
 
 ```javascript
 Ember.Component.extend({
-    tagName: '',
-    layoutName: 'components/notification-list',
-    notifications: [], // Initialize as empty
-    init() {
-        this._super(...arguments);
-        this.fetchNotifications(); // Initial fetch
-        setInterval(() => {
-            this.fetchNotifications();
-        }, 5000); // Poll every 5 seconds
-    },
-     async fetchNotifications() {
-        try {
-          const response = await fetch('/api/notifications');
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          const newNotifications = await response.json();
-          this.set('notifications', newNotifications); // Update the component state
-        } catch (error) {
-          console.error('Error fetching notifications:', error);
-        }
+  tagName: "",
+  layoutName: "components/notification-list",
+  notifications: [], // Initialize as empty
+  init() {
+    this._super(...arguments);
+    this.fetchNotifications(); // Initial fetch
+    setInterval(() => {
+      this.fetchNotifications();
+    }, 5000); // Poll every 5 seconds
+  },
+  async fetchNotifications() {
+    try {
+      const response = await fetch("/api/notifications");
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const newNotifications = await response.json();
+      this.set("notifications", newNotifications); // Update the component state
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
     }
-}).create({}).appendTo('#ember-app');
+  },
+})
+  .create({})
+  .appendTo("#ember-app");
 ```
 
 In this modified example, I've removed the initial data loading directly from the Rails view as it is now controlled by the component. The component initializes with an empty array for `notifications`. The `init` method kicks off the `fetchNotifications` call once immediately after the component's setup, then every five seconds thereafter, polling the Rails backend at the `/api/notifications` endpoint. The component updates the `notifications` array in Ember using `this.set()`. This change triggers the Ember template to update the list of notifications automatically.
@@ -117,36 +119,35 @@ end
 The above code defines a channel that listens for updates. Then, on the Ember side, you could modify the component once more:
 
 ```javascript
-import { inject as service } from '@ember/service';
+import { inject as service } from "@ember/service";
 Ember.Component.extend({
-    websockets: service(),
-    tagName: '',
-    layoutName: 'components/notification-list',
-    notifications: [],
-    init() {
-      this._super(...arguments);
-      const socket = this.websockets.socketFor('ws://localhost:3000/cable'); // Replace with your websocket address
-      socket.on('open', this.onOpen, this);
-      socket.on('message', this.onMessage, this);
-      socket.on('close', this.onClose, this);
+  websockets: service(),
+  tagName: "",
+  layoutName: "components/notification-list",
+  notifications: [],
+  init() {
+    this._super(...arguments);
+    const socket = this.websockets.socketFor("ws://localhost:3000/cable"); // Replace with your websocket address
+    socket.on("open", this.onOpen, this);
+    socket.on("message", this.onMessage, this);
+    socket.on("close", this.onClose, this);
+  },
+  onOpen() {
+    console.log("Socket connection opened.");
+  },
+  onMessage(event) {
+    const data = JSON.parse(event.data);
 
-    },
-    onOpen() {
-      console.log('Socket connection opened.');
-    },
-    onMessage(event) {
-      const data = JSON.parse(event.data);
-
-      if (data.type === 'notification') {
-        this.get('notifications').pushObject(data.notification);
-      }
-
-    },
-    onClose() {
-      console.log('Socket connection closed.');
+    if (data.type === "notification") {
+      this.get("notifications").pushObject(data.notification);
     }
-
-}).create({}).appendTo('#ember-app');
+  },
+  onClose() {
+    console.log("Socket connection closed.");
+  },
+})
+  .create({})
+  .appendTo("#ember-app");
 ```
 
 Here, we initialize a WebSocket connection when the component initializes. Incoming messages are handled by the `onMessage` handler. We parse incoming data for a specific type (`notification`), and then push new notification objects onto the `notifications` array to be displayed. In this configuration, rather than polling, the backend publishes data using Rails ActionCable to be received by the Ember app.

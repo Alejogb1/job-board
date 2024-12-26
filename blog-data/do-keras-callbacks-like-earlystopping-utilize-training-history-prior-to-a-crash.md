@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "do-keras-callbacks-like-earlystopping-utilize-training-history-prior-to-a-crash"
 ---
 
-Let's tackle this one – I've certainly seen my fair share of training runs end unexpectedly, and it's always a question of how much of that work is salvageable, particularly when using callbacks like `EarlyStopping`. The short answer is: it depends, but primarily, no, not in the way you might initially think. `EarlyStopping` doesn't intrinsically "remember" history across program executions, so if your script crashes, that training history is essentially lost unless you've explicitly saved it. Let me elaborate based on some experiences I had with a rather large convolutional neural network for image classification a few years back, where I learned this lesson firsthand.
+one – I've certainly seen my fair share of training runs end unexpectedly, and it's always a question of how much of that work is salvageable, particularly when using callbacks like `EarlyStopping`. The short answer is: it depends, but primarily, no, not in the way you might initially think. `EarlyStopping` doesn't intrinsically "remember" history across program executions, so if your script crashes, that training history is essentially lost unless you've explicitly saved it. Let me elaborate based on some experiences I had with a rather large convolutional neural network for image classification a few years back, where I learned this lesson firsthand.
 
 Initially, I had this beast of a model training for days, and while I had `EarlyStopping` in place, we had a power outage – not fun. When I restarted, `EarlyStopping` had no memory of the previous run's validation losses, so the whole training process effectively started from scratch. That's when it became quite apparent that callbacks within Keras, while very helpful within a single training session, operate solely within that session's context.
 
@@ -75,7 +75,7 @@ def train_model_with_history_persistence():
     y_train = np.eye(10)[np.random.randint(0, 10, 100)]
     x_val = np.random.rand(50,10)
     y_val = np.eye(10)[np.random.randint(0, 10, 50)]
-    
+
     history_file = "training_history.json"
     if os.path.exists(history_file):
         with open(history_file, 'r') as f:
@@ -86,9 +86,9 @@ def train_model_with_history_persistence():
         history_data = {}
 
 
-    
+
     history = model.fit(x_train, y_train, epochs=20, batch_size=32, validation_data=(x_val, y_val), callbacks=[early_stopping])
-    
+
     # Merge current history with loaded history
     for key, value in history.history.items():
        if key in history_data:
@@ -99,13 +99,13 @@ def train_model_with_history_persistence():
     with open(history_file, 'w') as f:
         json.dump(history_data, f, indent=4)
     print("Training history saved and updated in training_history.json")
-    
+
 
 if __name__ == "__main__":
     train_model_with_history_persistence()
 ```
 
-In this second example, I introduced a very basic saving of the training `history`.  We serialize the dictionary that comes back from the `fit` method to a json file.  This enables a persistent record that can be retrieved between runs, and any future runs can update the persistent history. A similar process should be used for model weights as well, using Keras functions `model.save_weights` and `model.load_weights`, typically using .h5 or .keras format.
+In this second example, I introduced a very basic saving of the training `history`. We serialize the dictionary that comes back from the `fit` method to a json file. This enables a persistent record that can be retrieved between runs, and any future runs can update the persistent history. A similar process should be used for model weights as well, using Keras functions `model.save_weights` and `model.load_weights`, typically using .h5 or .keras format.
 
 Finally, I'll show a third example that's a bit more sophisticated, encapsulating the saving and loading of both model weights and training history in an abstract class, a pattern I often use.
 
@@ -125,7 +125,7 @@ class ResumableModel(keras.Model):
         self.model_dir = model_dir
         self.history_file = history_file
         self.history = {}
-        
+
         if os.path.exists(model_dir):
             self.model.load_weights(model_dir)
             print(f"Loaded model weights from {model_dir}")
@@ -133,15 +133,15 @@ class ResumableModel(keras.Model):
             with open(history_file, 'r') as f:
                 self.history = json.load(f)
                 print(f"Loaded training history from {history_file}")
-            
+
     def save(self):
         self.model.save_weights(self.model_dir)
         with open(self.history_file, 'w') as f:
                 json.dump(self.history, f, indent=4)
         print("Model and History Saved.")
-    
+
     def fit(self, *args, **kwargs):
-       
+
         history = super().fit(*args, **kwargs)
 
         # Merge current history with loaded history
@@ -150,7 +150,7 @@ class ResumableModel(keras.Model):
             self.history[key].extend(value)
           else:
               self.history[key] = value
-        
+
         return history
 
 # Example 3: Resumable model wrapper
@@ -161,7 +161,7 @@ def create_model():
   ])
   model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
   return model
-  
+
 def train_with_resumable_model():
     model = create_model()
     resumable_model = ResumableModel(model, "saved_weights/model.h5", "training_history.json")
@@ -170,7 +170,7 @@ def train_with_resumable_model():
     y_train = np.eye(10)[np.random.randint(0, 10, 100)]
     x_val = np.random.rand(50,10)
     y_val = np.eye(10)[np.random.randint(0, 10, 50)]
-  
+
     history = resumable_model.fit(x_train, y_train, epochs=20, batch_size=32, validation_data=(x_val, y_val), callbacks=[early_stopping])
     resumable_model.save()
 

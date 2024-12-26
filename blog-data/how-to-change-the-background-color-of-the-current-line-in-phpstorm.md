@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-change-the-background-color-of-the-current-line-in-phpstorm"
 ---
 
-well, let's tackle this phpstorm background color for the current line thing. i've been there, done that, got the t-shirt (and probably a few more from late-night coding sessions). it's one of those seemingly small things that can really boost your coding comfort and productivity once you get it dialed in.
+well, phpstorm background color for the current line thing. i've been there, done that, got the t-shirt (and probably a few more from late-night coding sessions). it's one of those seemingly small things that can really boost your coding comfort and productivity once you get it dialed in.
 
 first off, if you're looking to make the current line pop a bit more, you're not alone. the default highlighting can sometimes blend into the background, especially if you're working with a color scheme that's not super high contrast. been there, staring at a wall of text wondering where the heck my cursor was. trust me, it's a common struggle.
 
@@ -16,7 +16,7 @@ here’s how i usually do it (and how i'd recommend you do it as well):
 
 2.  **find the color scheme:** in the settings dialog, you'll need to navigate to `editor -> color scheme`. this is where all the visual elements are controlled. it's basically the canvas for your coding view.
 
-3. **customize the colors**: look for the option `general`. click on it, and there you should see the `caret row` setting. `caret row` is the one we want. that’s the current line we are focusing on.
+3.  **customize the colors**: look for the option `general`. click on it, and there you should see the `caret row` setting. `caret row` is the one we want. that’s the current line we are focusing on.
 
 4.  **change the background:** click on the color next to the `background` text field. and from the color selector choose your desired color. that color will now be the new current line color.
 
@@ -32,44 +32,47 @@ now, if you want to dive deeper into how all this works, i'd recommend looking i
 
 here are some snippets to better highlight the different settings that you could use (this is for the `settings.xml` file that phpstorm uses, it’s usually located in the `.idea` directory of your project):
 
-*   **snippet 1: a darker background**:
+- **snippet 1: a darker background**:
 
-    ```xml
-    <option name="LINE_MARKER_HIGHLIGHTER" value="true" />
-    <option name="CARET_ROW">
-        <value>
-            <option name="BACKGROUND" value="35363a" />
-             <option name="EFFECT_TYPE" value="1" />
-        </value>
-    </option>
-    ```
-    here, i'm using `35363a`, a dark gray color as the background. if you prefer a really dark look, you might use this one. i've tried it, and sometimes it's too dark for my tastes but it's not a bad starting point.
+  ```xml
+  <option name="LINE_MARKER_HIGHLIGHTER" value="true" />
+  <option name="CARET_ROW">
+      <value>
+          <option name="BACKGROUND" value="35363a" />
+           <option name="EFFECT_TYPE" value="1" />
+      </value>
+  </option>
+  ```
 
-*   **snippet 2: a lighter background**:
+  here, i'm using `35363a`, a dark gray color as the background. if you prefer a really dark look, you might use this one. i've tried it, and sometimes it's too dark for my tastes but it's not a bad starting point.
 
-    ```xml
-    <option name="LINE_MARKER_HIGHLIGHTER" value="true" />
-    <option name="CARET_ROW">
-        <value>
-            <option name="BACKGROUND" value="48494b" />
-            <option name="EFFECT_TYPE" value="1" />
-        </value>
-    </option>
-    ```
-    this one uses `48494b`, a lighter gray color, more subtle. this is more my speed, it's enough without being too distracting. i think a slightly lighter color is often better for extended periods of coding, it's easier on the eyes.
+- **snippet 2: a lighter background**:
 
-*   **snippet 3: a slightly different background**:
+  ```xml
+  <option name="LINE_MARKER_HIGHLIGHTER" value="true" />
+  <option name="CARET_ROW">
+      <value>
+          <option name="BACKGROUND" value="48494b" />
+          <option name="EFFECT_TYPE" value="1" />
+      </value>
+  </option>
+  ```
 
-   ```xml
-    <option name="LINE_MARKER_HIGHLIGHTER" value="true" />
-    <option name="CARET_ROW">
-        <value>
-            <option name="BACKGROUND" value="4a4c4e" />
-            <option name="EFFECT_TYPE" value="1" />
-        </value>
-    </option>
-   ```
-   this example with a slight change in values from the previous one shows that even subtle changes in these values can have a big effect in the final result.
+  this one uses `48494b`, a lighter gray color, more subtle. this is more my speed, it's enough without being too distracting. i think a slightly lighter color is often better for extended periods of coding, it's easier on the eyes.
+
+- **snippet 3: a slightly different background**:
+
+```xml
+ <option name="LINE_MARKER_HIGHLIGHTER" value="true" />
+ <option name="CARET_ROW">
+     <value>
+         <option name="BACKGROUND" value="4a4c4e" />
+         <option name="EFFECT_TYPE" value="1" />
+     </value>
+ </option>
+```
+
+this example with a slight change in values from the previous one shows that even subtle changes in these values can have a big effect in the final result.
 
 the `effect_type` attribute set to `1` simply states that the effect type should be the "background". these are just the hex color codes. you can play around with these as much as you want. after all, that is the purpose of customization!
 

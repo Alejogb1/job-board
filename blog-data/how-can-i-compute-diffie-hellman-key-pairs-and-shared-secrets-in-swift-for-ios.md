@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-compute-diffie-hellman-key-pairs-and-shared-secrets-in-swift-for-ios"
 ---
 
-Let's tackle this. I've seen my fair share of cryptographic implementations, and Diffie-Hellman key exchange is a foundational piece. You’re looking to compute key pairs and shared secrets within Swift for iOS, which involves diving into the security framework. It's not overly complex, but precision and understanding are key.
+. I've seen my fair share of cryptographic implementations, and Diffie-Hellman key exchange is a foundational piece. You’re looking to compute key pairs and shared secrets within Swift for iOS, which involves diving into the security framework. It's not overly complex, but precision and understanding are key.
 
 My journey with this started back in the days when we were building a secure messaging app. We needed a robust way to establish encrypted channels without relying on pre-shared secrets. That’s where Diffie-Hellman really shined. Instead of directly passing the secret key, we exchanged elements derived from it, making it safe even if intercepted. I’ll walk you through the process step-by-step, showing you the crucial parts with code snippets and addressing some nuances I encountered along the way.
 
-First, let's break down the core concepts. The Diffie-Hellman exchange revolves around a prime number, *p*, and a generator, *g*. Both are public. Each participant generates a private key (let's call them *a* and *b*), and from those private keys they derive public keys (let's call them *A* and *B*). These public keys are exchanged. Finally, each participant computes a shared secret using their own private key and the other participant's public key. This resulting shared secret is identical for both parties, and is now safe to use for symmetrical encryption algorithms like AES or ChaCha20.
+First, let's break down the core concepts. The Diffie-Hellman exchange revolves around a prime number, _p_, and a generator, _g_. Both are public. Each participant generates a private key (let's call them _a_ and _b_), and from those private keys they derive public keys (let's call them _A_ and _B_). These public keys are exchanged. Finally, each participant computes a shared secret using their own private key and the other participant's public key. This resulting shared secret is identical for both parties, and is now safe to use for symmetrical encryption algorithms like AES or ChaCha20.
 
 In Swift, you won't be directly manipulating large prime numbers or doing modular exponentiation yourself. Instead, we'll lean on the security framework, specifically `SecKey`. It provides the necessary functions to handle the cryptographic primitives in a secure and efficient way. The key generation process involves generating private and public key pairs, and then deriving the shared secret.
 
@@ -43,7 +43,7 @@ func generateDiffieHellmanKeyPair() -> (publicKey: Data?, privateKey: SecKey?) {
         publicKeyData = publicKeyDataRef as Data
         CFRelease(publicKeyDataRef)
     }
-    
+
     return (publicKeyData, privateKey)
 }
 
@@ -59,7 +59,7 @@ if let publicKey = myPublicKey {
 
 ```
 
-Here, we specify `kSecAttrKeyTypeECSECPrimeRandom` to indicate an elliptic curve cryptography (ECC) operation which is preferred over traditional DH. ECC offers better security for a smaller key size.  `SecKeyGeneratePair` does the heavy lifting of creating the private and public keys. Note we are returning the `publicKey` as a `Data` object, which is ready for transmission. The private key is kept secure, within the `SecKey` object.
+Here, we specify `kSecAttrKeyTypeECSECPrimeRandom` to indicate an elliptic curve cryptography (ECC) operation which is preferred over traditional DH. ECC offers better security for a smaller key size. `SecKeyGeneratePair` does the heavy lifting of creating the private and public keys. Note we are returning the `publicKey` as a `Data` object, which is ready for transmission. The private key is kept secure, within the `SecKey` object.
 
 The next important piece is calculating the shared secret. Both parties need to perform this.
 
@@ -117,7 +117,7 @@ We use `SecKeyCreateWithData` to re-instantiate the received public key as a `Se
 
 There are some important considerations. First, you need to securely transmit the public keys. I typically used a secure, authenticated channel for this, such as TLS. While the public keys themselves don't need to be encrypted, it is very important that they are authenticated and received without modification, to avoid a man-in-the-middle attack. This means sending them via a channel that has been authenticated and which provides integrity, such as TLS or SSH.
 
-Also, I found that storing the private key securely was critical. This usually meant utilizing the Keychain Services.  Finally, the generated shared secret is used to create a symmetric key for further encryption and decryption. It's crucial to apply a key derivation function (KDF) like HKDF or PBKDF2 to the raw shared secret to make it suitable for use as an encryption key.
+Also, I found that storing the private key securely was critical. This usually meant utilizing the Keychain Services. Finally, the generated shared secret is used to create a symmetric key for further encryption and decryption. It's crucial to apply a key derivation function (KDF) like HKDF or PBKDF2 to the raw shared secret to make it suitable for use as an encryption key.
 
 **Snippet 3: Deriving a usable key from the Shared Secret using HKDF**
 

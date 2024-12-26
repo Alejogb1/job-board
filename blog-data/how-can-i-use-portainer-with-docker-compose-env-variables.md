@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-portainer-with-docker-compose-env-variables"
 ---
 
-Let's tackle this one. Setting up Portainer to properly consume environment variables defined in your `docker-compose.yml` file, well, it's a scenario I've encountered more times than I care to recount, particularly back when I was leading the migration of our legacy services to containers. It’s a common stumbling block, but it’s a solvable one. The crux of the matter lies in understanding how Portainer interacts with Docker and Docker Compose, and where it expects to find these variables. The issue isn't that Portainer can't use them; it's more about how we need to explicitly tell it where to look.
+one. Setting up Portainer to properly consume environment variables defined in your `docker-compose.yml` file, well, it's a scenario I've encountered more times than I care to recount, particularly back when I was leading the migration of our legacy services to containers. It’s a common stumbling block, but it’s a solvable one. The crux of the matter lies in understanding how Portainer interacts with Docker and Docker Compose, and where it expects to find these variables. The issue isn't that Portainer can't use them; it's more about how we need to explicitly tell it where to look.
 
 Essentially, Portainer directly interacts with the Docker API, which in turn utilizes the Docker Compose configurations. However, Portainer doesn’t magically absorb environment variables defined solely within your `docker-compose.yml` file. Instead, these variables need to be either explicitly made available to the Docker environment or provided as part of the Portainer deployment. Let's break down the common methods and how to get them working.
 
@@ -24,7 +24,7 @@ API_KEY=super_secret_api_key
 Then modify your `docker-compose.yml`:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   my_app:
     image: my-application-image:latest
@@ -41,7 +41,7 @@ A second, sometimes useful approach when working with variables specific to indi
 For example:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   my_app:
     image: my-application-image:latest
@@ -60,7 +60,7 @@ A third technique, which I’ve used extensively when dealing with environment v
 In the `docker-compose.yml` this means referring to the host defined variables using the dollar sign syntax:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   my_app:
     image: my-application-image:latest
@@ -80,6 +80,7 @@ export DB_PASSWORD=my_secret_password
 export API_KEY=super_secret_api_key
 docker-compose up -d
 ```
+
 By exporting these variables first, any service using the `environment` key with `${VARIABLE_NAME}` references will inherit those values at container startup. Portainer will correctly display these variables because, again, the variables are available within the docker runtime environment.
 
 This last approach is crucial when managing secrets outside your source control or for sensitive information you don’t want directly in your Dockerfiles or compose files.

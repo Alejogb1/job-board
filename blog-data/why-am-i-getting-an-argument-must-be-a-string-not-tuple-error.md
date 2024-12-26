@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-argument-must-be-a-string-not-tuple-error"
 ---
 
-Let's tackle this. Ah, the dreaded "argument must be a string, not tuple" error. I've seen it countless times, usually in the wee hours after a long day of coding when the brain is a bit less vigilant. It's a classic example of a mismatch between what a function expects and what it actually receives, and while the traceback might point you directly to the issue, understanding *why* it occurs is paramount for preventing it in the future.
+. Ah, the dreaded "argument must be a string, not tuple" error. I've seen it countless times, usually in the wee hours after a long day of coding when the brain is a bit less vigilant. It's a classic example of a mismatch between what a function expects and what it actually receives, and while the traceback might point you directly to the issue, understanding _why_ it occurs is paramount for preventing it in the future.
 
 This particular error, as the message states, is thrown when a function expecting a string argument receives a tuple instead. The root cause typically boils down to either unintended tuple packing or improper formatting of data intended to be used in string operations. Specifically, string formatting methods or functions expecting a string path are often the culprits. I remember one time, I was working on a rather complex data pipeline for processing sensor readings. I had a function that took a file path as a string to store the processed data. However, due to an upstream data transformation that didn't unpack a tuple properly, the function was receiving a tuple of path components instead of the flattened string. It took a bit of debugging to trace it back, but once identified, the fix was straightforward.
 
@@ -79,6 +79,7 @@ print("Hello {name}, you are {age}".format(**data))
 
 print(f"Hello {data['name']}, you are {data['age']}")
 ```
+
 In this final example, it may be tempting to use tuple syntax, but we would get the same error, instead dictionaries must be used for this type of string interpolation. The first snippet highlights this error when we attempt to use the tuple as input. In the corrected snippet, the `%(name)s` syntax requires the `%` operator, but we use a dictionary input to the string, not a tuple. Finally, there are the `format` and `f-string` equivalents which have more concise syntax.
 
 The underlying issue, in all these cases, is the attempt to use a tuple as if it were a string, or in some way convertible to string, when what the string formatting methods, functions or libraries expect is a string or individual string arguments, rather than a sequence. It all comes down to having a solid understanding of the type expectations of each function or method involved.

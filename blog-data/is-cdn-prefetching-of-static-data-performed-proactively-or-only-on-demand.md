@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-cdn-prefetching-of-static-data-performed-proactively-or-only-on-demand"
 ---
 
-, let's tackle this one. I’ve certainly seen my fair share of CDN configurations over the years, and the question of prefetching behavior – whether proactive or purely demand-driven – is a good one because it gets to the heart of how efficient a caching strategy can be. It's not as simple as a binary ‘yes’ or ‘no’ though; it’s a bit more nuanced than that.
+, one. I’ve certainly seen my fair share of CDN configurations over the years, and the question of prefetching behavior – whether proactive or purely demand-driven – is a good one because it gets to the heart of how efficient a caching strategy can be. It's not as simple as a binary ‘yes’ or ‘no’ though; it’s a bit more nuanced than that.
 
 The short answer is that both proactive and on-demand prefetching strategies are employed by Content Delivery Networks (CDNs), but the _predominant_ behavior you’ll see, especially in production environments for most static assets, is **primarily on-demand**. Let's break that down.
 

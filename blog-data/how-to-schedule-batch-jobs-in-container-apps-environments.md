@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-schedule-batch-jobs-in-container-apps-environments"
 ---
 
-, let's tackle this one. Scheduling batch jobs within container app environments, it's a topic I've spent quite a bit of time with, having had the occasion to implement several variations across different projects. It’s not always straightforward, and the best approach really depends on the specific requirements of your batch workload, the overall system architecture, and the container environment itself. I’ve found that a one-size-fits-all solution rarely works in practice, and nuanced choices are often necessary.
+, one. Scheduling batch jobs within container app environments, it's a topic I've spent quite a bit of time with, having had the occasion to implement several variations across different projects. It’s not always straightforward, and the best approach really depends on the specific requirements of your batch workload, the overall system architecture, and the container environment itself. I’ve found that a one-size-fits-all solution rarely works in practice, and nuanced choices are often necessary.
 
 So, where do we begin? The core issue is that container apps, by their nature, are typically designed for long-running services, not the ephemeral nature of batch jobs. These jobs require a mechanism to trigger execution, track progress, and handle failures, something that a basic container app deployment doesn’t provide natively. We need to layer on specific scheduling and management capabilities.
 

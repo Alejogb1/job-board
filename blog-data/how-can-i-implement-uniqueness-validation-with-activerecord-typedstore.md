@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-uniqueness-validation-with-activerecord-typedstore"
 ---
 
-Let's tackle this. Dealing with uniqueness constraints when using `activerecord-typedstore` can indeed present a unique set of challenges. It's not your typical database-level unique index situation, and I've definitely seen teams stumble over this in practice, particularly in larger projects where data integrity is paramount. The key here lies in understanding how `typedstore` stores data and crafting a suitable validation strategy around it.
+. Dealing with uniqueness constraints when using `activerecord-typedstore` can indeed present a unique set of challenges. It's not your typical database-level unique index situation, and I've definitely seen teams stumble over this in practice, particularly in larger projects where data integrity is paramount. The key here lies in understanding how `typedstore` stores data and crafting a suitable validation strategy around it.
 
 The core issue is that `typedstore` serializes attributes into a single database column, typically as a json or hstore data type. This means your traditional database unique indexes aren't going to directly work on specific keys within your stored data. You might define a key like 'email' within your typed store, but the database only sees a monolithic string or a json object. Therefore, directly creating an index on the email key isn't feasible; instead, the uniqueness has to be validated on the application level.
 
@@ -116,15 +116,15 @@ This code uses the relationship to ensure the sku is unique within the company. 
 
 **Important Considerations:**
 
-*   **Database Type:** The way you query the json attributes within a typed store is dependent on the database. The examples above use PostgreSQL syntax, and you would need to adapt them for other databases such as MySQL or Sqlite.
-*   **Indexes:** While you can't directly create a unique index on a typed store key, you *can* add a functional index. This would be an index on an expression like `(profile ->> 'email')`. Consult your database documentation on how to implement those. This could improve query performance significantly if you have a large number of records.
-*   **Performance:** Be mindful of query performance. For very large datasets or frequent validations, it might be necessary to explore more specialized techniques and potentially denormalization strategies, or even offloading this validation to a separate asynchronous worker.
-*   **Transactions:** Remember that validation happens within the context of a transaction. This prevents race conditions where data is created between the check and the save operations.
+- **Database Type:** The way you query the json attributes within a typed store is dependent on the database. The examples above use PostgreSQL syntax, and you would need to adapt them for other databases such as MySQL or Sqlite.
+- **Indexes:** While you can't directly create a unique index on a typed store key, you _can_ add a functional index. This would be an index on an expression like `(profile ->> 'email')`. Consult your database documentation on how to implement those. This could improve query performance significantly if you have a large number of records.
+- **Performance:** Be mindful of query performance. For very large datasets or frequent validations, it might be necessary to explore more specialized techniques and potentially denormalization strategies, or even offloading this validation to a separate asynchronous worker.
+- **Transactions:** Remember that validation happens within the context of a transaction. This prevents race conditions where data is created between the check and the save operations.
 
 **Further Reading:**
 
-*   **PostgreSQL Documentation:** Specifically review the sections on JSON functions and operators and Hstore functions and operators. The knowledge of how to query your data within your database will prove invaluable for validating data that's stored using these types.
-*   **The Pragmatic Programmer by Andrew Hunt and David Thomas:** While not specific to activerecord-typedstore, this book offers general guidance on defensive programming and data integrity, which are crucial when implementing such validation scenarios.
-*   **"Refactoring Databases" by Scott W. Ambler and Pramod J. Sadalage:** Understanding database refactoring principles is key when your data models become more complex. This will be useful when tackling issues with validation performance in case your system starts to scale up.
+- **PostgreSQL Documentation:** Specifically review the sections on JSON functions and operators and Hstore functions and operators. The knowledge of how to query your data within your database will prove invaluable for validating data that's stored using these types.
+- **The Pragmatic Programmer by Andrew Hunt and David Thomas:** While not specific to activerecord-typedstore, this book offers general guidance on defensive programming and data integrity, which are crucial when implementing such validation scenarios.
+- **"Refactoring Databases" by Scott W. Ambler and Pramod J. Sadalage:** Understanding database refactoring principles is key when your data models become more complex. This will be useful when tackling issues with validation performance in case your system starts to scale up.
 
 In summary, implementing uniqueness validations with `activerecord-typedstore` requires a deliberate approach that recognizes the limitations of standard database indexes and employs application-level validations to enforce data integrity. I have seen my fair share of production outages because of similar issues, so taking the time to implement this correctly is essential. It’s not a silver bullet, but applying this combination of custom validations, database-specific queries, and thoughtful indexing can get you the results you need.

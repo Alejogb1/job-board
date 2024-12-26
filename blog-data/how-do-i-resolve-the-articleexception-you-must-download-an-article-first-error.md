@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-the-articleexception-you-must-download-an-article-first-error"
 ---
 
-, let's tackle this `ArticleException: You must download() an article first`. I've bumped into this little gremlin quite a few times over the years, and it usually boils down to a misunderstanding of how the underlying system, often related to web scraping or text processing libraries, manages its data flow. Essentially, this exception screams that you’re attempting an operation on an article that hasn’t been explicitly fetched from its source. Think of it like trying to analyze a report you’ve not yet acquired.
+, `ArticleException: You must download() an article first`. I've bumped into this little gremlin quite a few times over the years, and it usually boils down to a misunderstanding of how the underlying system, often related to web scraping or text processing libraries, manages its data flow. Essentially, this exception screams that you’re attempting an operation on an article that hasn’t been explicitly fetched from its source. Think of it like trying to analyze a report you’ve not yet acquired.
 
 Now, let's break down why this happens and, more importantly, how we fix it. Typically, when working with such libraries, the workflow involves distinct steps: identifying the resource (e.g., a URL), fetching the content, and then processing that content. The error arises when the system expects the content to be available locally, yet it hasn't been downloaded yet. In most cases, you are likely working with libraries that handle this in a non-transparent manner, needing a explicit `.download()` method call.
 

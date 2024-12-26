@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-do-i-make-airflow-tasks-run-continuously"
 ---
 
-Let's tackle this head-on; the question of continuous task execution in Apache Airflow isn't straightforward, and often, the desire for it stems from a misunderstanding of its core architecture. It’s not designed to be a continuously running process manager like, say, a Kubernetes deployment or a systemd service. Instead, Airflow focuses on orchestrating workflows based on schedules and dependencies. However, there are techniques—and I’ve certainly used them in production—to simulate continuous execution, albeit with nuances that need careful consideration.
+head-on; the question of continuous task execution in Apache Airflow isn't straightforward, and often, the desire for it stems from a misunderstanding of its core architecture. It’s not designed to be a continuously running process manager like, say, a Kubernetes deployment or a systemd service. Instead, Airflow focuses on orchestrating workflows based on schedules and dependencies. However, there are techniques—and I’ve certainly used them in production—to simulate continuous execution, albeit with nuances that need careful consideration.
 
-My own experience involved a rather tricky ETL pipeline a few years back. We were ingesting a near-constant stream of sensor data, and the initial thought was to have Airflow tasks running non-stop. That quickly led to a chaotic scheduler situation. What we learned was that, instead of forcing Airflow into a role it wasn't meant for, it’s more effective to adjust the *definition* of "continuous".
+My own experience involved a rather tricky ETL pipeline a few years back. We were ingesting a near-constant stream of sensor data, and the initial thought was to have Airflow tasks running non-stop. That quickly led to a chaotic scheduler situation. What we learned was that, instead of forcing Airflow into a role it wasn't meant for, it’s more effective to adjust the _definition_ of "continuous".
 
 The key here is to break down the need for continuous execution into what you actually require: data ingestion at a high frequency, processing steps performed promptly after ingestion, and then, ideally, a more loosely coupled system for anything truly continuous. We ended up creating "near real-time" execution by strategically using a combination of short interval DAGs, sensors, and task retries.
 
@@ -41,7 +41,7 @@ with DAG(
 
 This DAG, with `schedule_interval=timedelta(minutes=1)`, will start a new run every minute. Inside `my_continuous_task`, the work is limited, and the task completes. This allows the scheduler to keep launching new runs repeatedly. Importantly, `catchup=False` is set; otherwise, if the scheduler is paused or lags, it could trigger backfilled runs, leading to resource exhaustion and confusion.
 
-Now, this is often sufficient for most scenarios, but what if your "continuous" need is more nuanced? What if, instead of a fixed interval, you need to react to a signal, such as the arrival of new data? In this case, you'll leverage *sensors*. Airflow sensors monitor external systems and only trigger downstream tasks once a specific condition is met. Consider this slightly more complex example using a dummy sensor (for demonstration only; you'd usually monitor something real):
+Now, this is often sufficient for most scenarios, but what if your "continuous" need is more nuanced? What if, instead of a fixed interval, you need to react to a signal, such as the arrival of new data? In this case, you'll leverage _sensors_. Airflow sensors monitor external systems and only trigger downstream tasks once a specific condition is met. Consider this slightly more complex example using a dummy sensor (for demonstration only; you'd usually monitor something real):
 
 ```python
 from airflow import DAG
@@ -84,9 +84,10 @@ with DAG(
     )
     sensor_task >> process_task
 ```
+
 Here, `MySignalSensor` mimics a condition being met (every 10 seconds based on time). The `schedule_interval` is set to `None` , so the DAG only executes when the sensor's poke method returns `True`, which then triggers `process_signal`. The `poke_interval` controls how often the sensor checks for the condition. This is significantly more sophisticated than simple time-based triggering. A real sensor could check a message queue, the availability of a file, or the status of another system.
 
-Finally, if your continuous requirement really involves tasks needing to be *always* running and independent of a DAG, then Airflow may not be the best tool. Instead of trying to bend Airflow to be something it is not, consider using a separate long-running process that may communicate with Airflow. For example, use the Airflow API or command-line tools to trigger DAGs upon event from this long-running process. Here's a highly simplified code snippet for that:
+Finally, if your continuous requirement really involves tasks needing to be _always_ running and independent of a DAG, then Airflow may not be the best tool. Instead of trying to bend Airflow to be something it is not, consider using a separate long-running process that may communicate with Airflow. For example, use the Airflow API or command-line tools to trigger DAGs upon event from this long-running process. Here's a highly simplified code snippet for that:
 
 ```python
 import requests

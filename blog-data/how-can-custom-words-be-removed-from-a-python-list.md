@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-custom-words-be-removed-from-a-python-list"
 ---
 
-Right, let's tackle this. It's a problem I’ve run into more than once, typically when dealing with messy datasets or user input needing a good scrubbing. Removing custom words from a python list seems straightforward, but the devil, as they say, is in the details. We can't just blindly start deleting; there are performance considerations and, importantly, we need to consider what 'custom' actually means in the context of a specific problem.
+Right, . It's a problem I’ve run into more than once, typically when dealing with messy datasets or user input needing a good scrubbing. Removing custom words from a python list seems straightforward, but the devil, as they say, is in the details. We can't just blindly start deleting; there are performance considerations and, importantly, we need to consider what 'custom' actually means in the context of a specific problem.
 
 I recall a project a few years back involving sentiment analysis of customer reviews. The initial data contained a good deal of noise – things like website boilerplate, common stop words in the target language, and also specific product codes that were entirely irrelevant for the analysis. This is where a tailored word removal strategy became critical. So, how do we approach this in a robust and performant manner?
 
@@ -44,6 +44,7 @@ custom_words = ["apple", "Date", "fig"]
 new_list = remove_words_v2(my_list, custom_words)
 print(new_list)  # Output: ['banana', 'Cherry', 'Banana']
 ```
+
 Here, we apply the `.lower()` method to both the original list elements and the custom words before comparison. This ensures a case-insensitive comparison and prevents us from overlooking instances of "Apple" just because we defined "apple" as the word to remove. This is a step in the right direction, however, consider that the `remove_words_v2` function only addresses case issues. In many real-world situations we have to contend with a lot more mess. If the list contains punctuation along with our words, and we want to clean them up, we might need something more sophisticated. For instance, if the input list contains words with surrounding punctuation, we could use a regex to handle the cleanup, prior to removing words.
 
 ```python

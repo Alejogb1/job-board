@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-valueerror-with-instance-norm-during-training-expecting-more-than-1-spatial-element"
 ---
 
-, let's tackle this ValueError concerning Instance Normalization. It's a classic snag many of us hit, and I’ve certainly spent a few late nights debugging this very issue. The error message itself, "ValueError: Expected more than 1 value per channel when training, but got input of size [1, C, H, W]", points us directly to the heart of the matter – spatial dimensions are not playing nicely with the way instance normalization is intended to function.
+, ValueError concerning Instance Normalization. It's a classic snag many of us hit, and I’ve certainly spent a few late nights debugging this very issue. The error message itself, "ValueError: Expected more than 1 value per channel when training, but got input of size [1, C, H, W]", points us directly to the heart of the matter – spatial dimensions are not playing nicely with the way instance normalization is intended to function.
 
 The fundamental idea behind instance normalization is that it normalizes the activations within each channel of _each individual instance_ in your batch across the spatial dimensions, typically height and width for images. Crucially, it’s looking for variation across those dimensions to calculate a mean and variance. If either the height (H) or width (W) is 1, or worse, both are 1, you’re essentially asking it to calculate statistics over a single data point (or very few points), which leads to this error since there is no variation.
 

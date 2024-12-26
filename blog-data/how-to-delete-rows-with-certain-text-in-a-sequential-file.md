@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-delete-rows-with-certain-text-in-a-sequential-file"
 ---
 
-, let's tackle this one. I remember distinctly a project back in my early days, a rather cumbersome data processing pipeline where we received daily transaction logs. These logs, formatted as sequential files, often contained irrelevant entries—rows littered with specific text patterns that needed to be purged before further analysis. The task, on the surface, seems trivial, but when dealing with gigabytes or even terabytes, efficiency becomes paramount.
+, one. I remember distinctly a project back in my early days, a rather cumbersome data processing pipeline where we received daily transaction logs. These logs, formatted as sequential files, often contained irrelevant entries—rows littered with specific text patterns that needed to be purged before further analysis. The task, on the surface, seems trivial, but when dealing with gigabytes or even terabytes, efficiency becomes paramount.
 
 The challenge, as with most real-world problems, isn't about _whether_ you can do it, but _how efficiently_ you can do it. A naive approach, loading the entire file into memory, would quickly become impractical. So, what options do we have? We need to read the file line by line, evaluate each line against our target text, and selectively write the valid lines to a new file. This approach limits the memory footprint and keeps the processing scalable.
 

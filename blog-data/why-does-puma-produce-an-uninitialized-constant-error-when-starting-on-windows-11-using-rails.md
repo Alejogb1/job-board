@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-puma-produce-an-uninitialized-constant-error-when-starting-on-windows-11-using-rails"
 ---
 
-, let's tackle this. I've definitely seen this one pop up a few times, particularly when setting up fresh Rails environments on Windows machines, and it can be quite the head-scratcher if you're not familiar with the underlying quirks. The "uninitialized constant" error you're encountering when booting Puma on Windows 11 with Rails isn't actually a problem with Puma itself in most cases. Rather, it's a symptom of how Ruby's autoloading mechanisms interact with the intricacies of the Windows filesystem and how gems are loaded in general.
+, . I've definitely seen this one pop up a few times, particularly when setting up fresh Rails environments on Windows machines, and it can be quite the head-scratcher if you're not familiar with the underlying quirks. The "uninitialized constant" error you're encountering when booting Puma on Windows 11 with Rails isn't actually a problem with Puma itself in most cases. Rather, it's a symptom of how Ruby's autoloading mechanisms interact with the intricacies of the Windows filesystem and how gems are loaded in general.
 
 The fundamental issue is that Windows paths are case-insensitive, whereas Ruby, and particularly Rails’ autoloader, operates by default as if paths were case-sensitive. This is a critical mismatch that can lead to Ruby failing to locate classes and modules because the case of the file paths does not exactly match the case declared in the source code.
 

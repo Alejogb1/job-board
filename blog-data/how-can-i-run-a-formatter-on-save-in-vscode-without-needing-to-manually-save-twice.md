@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-a-formatter-on-save-in-vscode-without-needing-to-manually-save-twice"
 ---
 
-Let's tackle this issue of formatting on save in vscode, a situation I've certainly encountered more than once in my development journey, particularly when dealing with diverse codebases and team preferences. It's definitely frustrating when a single save doesn’t trigger the formatting as expected, necessitating a second save, which introduces unnecessary interruption to the workflow. Let me share how I've tackled this, diving into the mechanics and configuration details with a focus on preventing that extra save.
+issue of formatting on save in vscode, a situation I've certainly encountered more than once in my development journey, particularly when dealing with diverse codebases and team preferences. It's definitely frustrating when a single save doesn’t trigger the formatting as expected, necessitating a second save, which introduces unnecessary interruption to the workflow. Let me share how I've tackled this, diving into the mechanics and configuration details with a focus on preventing that extra save.
 
 The core of the problem lies in how vscode’s formatting mechanisms and its 'save' event interplay. Usually, when you press `ctrl+s` (or `cmd+s` on macOS), vscode detects this event, triggers its built-in or configured formatters, and then saves the formatted file. However, if this process isn't correctly set up, particularly with certain extensions or complex file structures, you can end up with the dreaded need for a double save. The culprit often isn't just one setting, but a confluence of factors, including the specific formatter you're using, how it’s integrated with vscode, and the presence of other extensions.
 
@@ -12,7 +12,7 @@ The first thing to address is ensuring that your chosen formatter is correctly c
 
 ```json
 {
- "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -21,22 +21,21 @@ The first thing to address is ensuring that your chosen formatter is correctly c
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-   },
-   "[typescriptreact]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
-   },
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "editor.formatOnSave": true,
   "prettier.requireConfig": true
 }
-
 ```
 
 Here’s what this configuration is doing:
 
-*   `"editor.defaultFormatter": "esbenp.prettier-vscode"`: This line designates the prettier extension as the default formatter for the whole editor; other extensions will likely have their own identifying string that can be used here.
-*   `"[javascript]": { ... }`, `"[typescript]": { ... }`, etc.:  These sections ensure that prettier is the formatter specifically for files of the given types. If you use other extensions, like ESLint with a formatter, this is where you would configure them.
-*   `"editor.formatOnSave": true`: This is the crucial setting enabling formatting each time you save.
-*   `"prettier.requireConfig": true`: This forces prettier to look for a config file (`.prettierrc`, `prettier.config.js`, etc.), making formatting behaviour consistent across environments and ensuring the rules are explicitly defined.
+- `"editor.defaultFormatter": "esbenp.prettier-vscode"`: This line designates the prettier extension as the default formatter for the whole editor; other extensions will likely have their own identifying string that can be used here.
+- `"[javascript]": { ... }`, `"[typescript]": { ... }`, etc.: These sections ensure that prettier is the formatter specifically for files of the given types. If you use other extensions, like ESLint with a formatter, this is where you would configure them.
+- `"editor.formatOnSave": true`: This is the crucial setting enabling formatting each time you save.
+- `"prettier.requireConfig": true`: This forces prettier to look for a config file (`.prettierrc`, `prettier.config.js`, etc.), making formatting behaviour consistent across environments and ensuring the rules are explicitly defined.
 
 The key takeaway here is the explicit declaration for specific file types. If you only configure the default formatter, it may not always apply correctly, especially with extensions that use their own language server.
 
@@ -46,34 +45,34 @@ Here’s a more complex case using a `settings.json` setup that includes both Pr
 
 ```json
 {
-   "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": {
-            "source.fixAll.eslint": true
-        }
-    },
-    "[javascriptreact]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": {
-           "source.fixAll.eslint": true
-         }
-    },
-     "[typescript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-         "editor.codeActionsOnSave": {
-           "source.fixAll.eslint": true
-         }
-      },
-      "[typescriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": {
-           "source.fixAll.eslint": true
-        }
-      },
-    "editor.formatOnSave": true,
-    "prettier.requireConfig": true,
-    "eslint.format.enable": false
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "editor.formatOnSave": true,
+  "prettier.requireConfig": true,
+  "eslint.format.enable": false
 }
 ```
 
@@ -85,8 +84,8 @@ Lastly, there’s a rare instance where the formatter itself takes too long. Whi
 
 To delve deeper, I’d recommend the following resources:
 
-*   **"Effective TypeScript" by Dan Vanderkam:** while focused on TypeScript, it often covers patterns that can improve overall settings and workflows, especially when dealing with linters and formatters.
-*   **VSCode documentation for extensions:** The official vscode website has detailed information on how to configure the code editor, including specific documentation about settings and how extensions are integrated. Especially the page about code actions on save.
-*   **Prettier documentation:** If using prettier, their official docs are the source of truth for configurations and integration.
+- **"Effective TypeScript" by Dan Vanderkam:** while focused on TypeScript, it often covers patterns that can improve overall settings and workflows, especially when dealing with linters and formatters.
+- **VSCode documentation for extensions:** The official vscode website has detailed information on how to configure the code editor, including specific documentation about settings and how extensions are integrated. Especially the page about code actions on save.
+- **Prettier documentation:** If using prettier, their official docs are the source of truth for configurations and integration.
 
 By understanding the interaction between settings, extensions, and save triggers, and implementing the right configurations, the frustration of needing that second save can be avoided, leading to a much smoother and more efficient development experience. The examples provided and careful exploration of your configurations will likely resolve the issue, but more importantly will help you develop a more robust understanding of how vscode works under the hood.

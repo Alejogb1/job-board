@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-aiosqlite-queries-while-waitfor-is-running"
 ---
 
-Let's tackle this. It’s a scenario I encountered a few years back while building a data pipeline that involved near-real-time updates to a local sqlite database. The core issue, if I understand correctly, lies in integrating asynchronous database operations with coroutines that are themselves subject to timeouts or cancellation via `asyncio.wait_for()`. The challenge stems from the nature of asyncio’s event loop: everything essentially runs within that single thread, and blocking operations, like a long-running database query, can stall the entire loop, defeating the purpose of asynchronous programming.
+. It’s a scenario I encountered a few years back while building a data pipeline that involved near-real-time updates to a local sqlite database. The core issue, if I understand correctly, lies in integrating asynchronous database operations with coroutines that are themselves subject to timeouts or cancellation via `asyncio.wait_for()`. The challenge stems from the nature of asyncio’s event loop: everything essentially runs within that single thread, and blocking operations, like a long-running database query, can stall the entire loop, defeating the purpose of asynchronous programming.
 
 The typical usage pattern, where you simply execute a `aiosqlite` query and `await` its result, works seamlessly for most cases. However, when you wrap a call to a coroutine with `asyncio.wait_for()`, you introduce the possibility of a `TimeoutError` or cancellation. The crux of the matter is how to ensure that a database query, initiated within this timed context, behaves gracefully in these situations without disrupting the database connection or leaving operations in an indeterminate state. Specifically, we don't want to have open transactions left dangling if the `wait_for()` times out.
 
@@ -132,14 +132,15 @@ if __name__ == "__main__":
   asyncio.run(main())
 ```
 
-In this scenario, we've simulated a long-running query with `asyncio.sleep()`. We created the query as a task and explicitly cancelled it after one second. The `long_running_query` function catches the `asyncio.CancelledError` and handles it cleanly. The database connection will be properly closed thanks to the `async with` statement even during cancellation. This illustrates the need to handle both timeout *and* cancellation situations.
+In this scenario, we've simulated a long-running query with `asyncio.sleep()`. We created the query as a task and explicitly cancelled it after one second. The `long_running_query` function catches the `asyncio.CancelledError` and handles it cleanly. The database connection will be properly closed thanks to the `async with` statement even during cancellation. This illustrates the need to handle both timeout _and_ cancellation situations.
 
-These examples highlight that the primary concern is structured resource management and proper exception handling within `asyncio` and `aiosqlite`. You aren't fighting against the event loop; you're working *with* it. The `async with` statement simplifies resource management significantly, making this less error prone.
+These examples highlight that the primary concern is structured resource management and proper exception handling within `asyncio` and `aiosqlite`. You aren't fighting against the event loop; you're working _with_ it. The `async with` statement simplifies resource management significantly, making this less error prone.
 
 For deeper understanding, I recommend looking into the following resources:
-*   **"Programming Asynchronous I/O with Python" by Caleb Hattingh:** This book offers a very in-depth look at async io principles and practical implementation details.
-*  **The official `asyncio` documentation:** Python’s official documentation is well-maintained and very helpful. Review the `asyncio.wait_for` and `asyncio.Task` documentation.
-*   **The `aiosqlite` documentation:** Refer to the specific documentation regarding transactions and resource management patterns. Pay close attention to context management.
-* **"Concurrency with Modern Python" by Matthew Fowler:** This provides a great conceptual understanding of concurrency in Python, covering different approaches, including async io.
+
+- **"Programming Asynchronous I/O with Python" by Caleb Hattingh:** This book offers a very in-depth look at async io principles and practical implementation details.
+- **The official `asyncio` documentation:** Python’s official documentation is well-maintained and very helpful. Review the `asyncio.wait_for` and `asyncio.Task` documentation.
+- **The `aiosqlite` documentation:** Refer to the specific documentation regarding transactions and resource management patterns. Pay close attention to context management.
+- **"Concurrency with Modern Python" by Matthew Fowler:** This provides a great conceptual understanding of concurrency in Python, covering different approaches, including async io.
 
 This problem, while seemingly complex, boils down to following the correct patterns for asynchronous programming and paying close attention to the error handling and transaction management. You'll find that once you master these patterns, working with async databases within complex async applications becomes much smoother and more predictable.

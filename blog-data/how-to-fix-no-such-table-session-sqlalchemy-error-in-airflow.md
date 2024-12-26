@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-fix-no-such-table-session-sqlalchemy-error-in-airflow"
 ---
 
-, let's tackle this "no such table: session" error in Airflow, something I've certainly tripped over more than once in my career. It's one of those frustratingly common issues that often stem from subtle discrepancies in how database connections and schema initialization are handled. It's definitely not an 'easy fix,' but understanding the underlying mechanisms makes it quite manageable.
+, "no such table: session" error in Airflow, something I've certainly tripped over more than once in my career. It's one of those frustratingly common issues that often stem from subtle discrepancies in how database connections and schema initialization are handled. It's definitely not an 'easy fix,' but understanding the underlying mechanisms makes it quite manageable.
 
 Essentially, this error pops up when SQLAlchemy, the library Airflow utilizes for database interactions, can’t find the `session` table within the database it’s trying to connect to. This table is foundational for Airflow; it's where various metadata, especially regarding webserver session data, is stored. This usually means one of two main things, or sometimes, a combination of both: either the database hasn't been correctly initialized with the necessary schema, or Airflow is pointing towards the wrong database entirely. It might even be related to an inconsistent configuration between the webserver and the scheduler, but let's break it down.
 

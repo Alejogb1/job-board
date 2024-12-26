@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-a-keras-model-within-a-custom-loss-function"
 ---
 
-, let's tackle this one. I've certainly had my share of encounters with custom loss functions and the desire to pull specific elements from the model during the loss calculation, so I think I can provide a clear path forward here. It's a common requirement when you're moving beyond straightforward regression or classification and into more specialized tasks.
+, one. I've certainly had my share of encounters with custom loss functions and the desire to pull specific elements from the model during the loss calculation, so I think I can provide a clear path forward here. It's a common requirement when you're moving beyond straightforward regression or classification and into more specialized tasks.
 
 The core challenge is that, fundamentally, a Keras loss function, at its base, should accept two inputs: `y_true` (the true values or labels) and `y_pred` (the model's predictions). Directly accessing the model _within_ that function isn't a standard operation, since loss functions are supposed to be stateless. Think of them as just a way to quantify the difference between what the model output and what you intended. However, there are ways to get the model’s internal representation and use it in the loss function by carefully combining Keras' functional api.
 
@@ -60,7 +60,7 @@ def content_loss(y_true, y_pred, intermediate_prediction):
 In this example:
 
 1. We define a custom model that is outputting both prediction and an intermediate feature map.
-2. We define a custom loss function that takes _three_ inputs: y_true, y_pred and _intermediate_prediction_. This function has now access to the intermediate feature map.
+2. We define a custom loss function that takes _three_ inputs: y*true, y_pred and \_intermediate_prediction*. This function has now access to the intermediate feature map.
 3. In `content_loss` we can perform operations on `intermediate_prediction`, and combine the result with loss calculated from `y_true` and `y_pred`.
 
 Let's look at how you use it:

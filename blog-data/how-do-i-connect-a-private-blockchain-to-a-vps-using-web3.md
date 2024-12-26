@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-connect-a-private-blockchain-to-a-vps-using-web3"
 ---
 
-Let's tackle this directly, shall we? I've seen this scenario play out more times than I can easily recall, often during the initial phases of proof-of-concept builds. Connecting a private blockchain to a virtual private server (vps) using web3 isn't fundamentally complex, but a few nuances can definitely trip you up. It's about understanding the network configurations, establishing the correct rpc endpoint communication, and properly configuring your web3 client. Let me walk you through it, as I've done countless times before with various projects.
+directly, shall we? I've seen this scenario play out more times than I can easily recall, often during the initial phases of proof-of-concept builds. Connecting a private blockchain to a virtual private server (vps) using web3 isn't fundamentally complex, but a few nuances can definitely trip you up. It's about understanding the network configurations, establishing the correct rpc endpoint communication, and properly configuring your web3 client. Let me walk you through it, as I've done countless times before with various projects.
 
 The first crucial step revolves around the network accessibility of your private blockchain. Typically, these blockchains don't automatically open themselves to the public internet. They're often firewalled off or running on a local network. Think of a proof-of-authority network built for internal process management – you don't want external access to it, and it’s a common use case for this kind of work. Your vps needs a clear path to communicate with the blockchain's nodes, typically through a designated rpc endpoint.
 
@@ -44,7 +44,7 @@ Here, you're using the `Web3.HTTPProvider` to establish a connection to your nod
 **Example 2: Javascript using web3.js**
 
 ```javascript
-const Web3 = require('web3');
+const Web3 = require("web3");
 
 // Replace with your blockchain node's RPC endpoint
 const rpc_endpoint = "http://192.168.1.100:8545"; // Example IP and port
@@ -52,16 +52,17 @@ const rpc_endpoint = "http://192.168.1.100:8545"; // Example IP and port
 // Connect to the blockchain
 const web3 = new Web3(new Web3.providers.HttpProvider(rpc_endpoint));
 
-web3.eth.getBlockNumber()
-  .then(blockNumber => {
+web3.eth
+  .getBlockNumber()
+  .then((blockNumber) => {
     console.log("Connected to blockchain!");
     console.log("Latest block number:", blockNumber);
-    return web3.eth.getBlock('latest');
+    return web3.eth.getBlock("latest");
   })
-  .then(latestBlock => {
-      console.log("Latest block hash:", latestBlock.hash);
+  .then((latestBlock) => {
+    console.log("Latest block hash:", latestBlock.hash);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error("An error occurred:", error);
   });
 ```
@@ -99,7 +100,7 @@ func main() {
         log.Fatal("Failed to get latest block number:", err)
     }
 	fmt.Printf("Latest block number: %d\n", blockNumber)
-    
+
 	// Retrieve the latest block
 	block, err := client.BlockByNumber(context.Background(), nil) // nil means latest
 	if err != nil {
@@ -107,7 +108,7 @@ func main() {
     }
 
 	fmt.Printf("Latest block hash: %x\n", block.Hash())
-	
+
 
     // Example: Get balance
     accountAddress := common.HexToAddress("0xYourAccountAddress") // Replace with actual address
@@ -115,7 +116,7 @@ func main() {
     if err != nil {
         log.Fatalf("Failed to get balance: %v", err)
     }
-	
+
 	fmt.Printf("Balance of address %s: %d wei\n", accountAddress.Hex(), balance)
 }
 ```

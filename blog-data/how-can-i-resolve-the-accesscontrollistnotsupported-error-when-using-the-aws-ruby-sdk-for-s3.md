@@ -10,7 +10,7 @@ The core issue boils down to this: AWS, over time, has deprecated the use of Acc
 
 To resolve this, we need to adjust how the SDK handles permissions, specifically by avoiding actions that require modifying the ACL directly if it’s not compatible with the bucket's configurations. This usually means instructing the sdk to not even consider an acl operation.
 
-Let's tackle this with a practical lens. Imagine a scenario where I was trying to upload an image to a legacy S3 bucket using a script that worked for other newer buckets, and it kept throwing that dreaded error. Here’s how I systematically addressed it, starting with code examples.
+with a practical lens. Imagine a scenario where I was trying to upload an image to a legacy S3 bucket using a script that worked for other newer buckets, and it kept throwing that dreaded error. Here’s how I systematically addressed it, starting with code examples.
 
 **Example 1: Explicitly Disabling ACLs on Upload**
 

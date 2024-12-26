@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-snowflakeoperator-sessions-be-reused"
 ---
 
-Let's tackle this. The question of whether SnowflakeOperator sessions can be reused is a common one, and it touches on some core concepts of how Airflow interacts with external systems, particularly in an environment like Snowflake. I've had my share of encounters with this during past projects, especially when optimizing large data pipelines, and I can tell you the short answer is: not directly, in the way one might initially hope or expect.
+. The question of whether SnowflakeOperator sessions can be reused is a common one, and it touches on some core concepts of how Airflow interacts with external systems, particularly in an environment like Snowflake. I've had my share of encounters with this during past projects, especially when optimizing large data pipelines, and I can tell you the short answer is: not directly, in the way one might initially hope or expect.
 
 To unpack that a bit more thoroughly, let's consider the design of the `SnowflakeOperator` within Apache Airflow. Each instantiation of this operator, as it's generally coded and deployed, typically creates a new database connection and session with Snowflake. This is by design; it ensures that each task execution is isolated and that any session-specific configurations or states are not accidentally shared or interfered with across tasks. This is a crucial aspect of reliability and idempotency in any workflow management system.
 
@@ -12,11 +12,11 @@ Now, where the confusion often creeps in is that the overhead of establishing th
 
 Here's a breakdown of why direct session reuse isn't straightforward and what you can do instead:
 
-*   **Session Lifecycle**: The `SnowflakeOperator` typically follows a "connect-execute-close" pattern within its `execute` method. This implies that once the query associated with a specific task has been executed, the connection object is released. The next task instance, if it needs to interact with Snowflake, will, in most common implementations, re-establish that connection. This ensures that each task is independent, as it should be in most practical cases, but it leads to repeated connection costs.
+- **Session Lifecycle**: The `SnowflakeOperator` typically follows a "connect-execute-close" pattern within its `execute` method. This implies that once the query associated with a specific task has been executed, the connection object is released. The next task instance, if it needs to interact with Snowflake, will, in most common implementations, re-establish that connection. This ensures that each task is independent, as it should be in most practical cases, but it leads to repeated connection costs.
 
-*   **Concurrency and Threading**: Airflow uses concurrency (via task concurrency limits) and often multi-threading within workers to execute tasks. Sharing a single database session across concurrent threads within an Airflow worker is not recommended, and it is generally a recipe for trouble. You'd need to carefully manage thread locks and access to the underlying connection, which complicates everything substantially and makes it significantly prone to issues.
+- **Concurrency and Threading**: Airflow uses concurrency (via task concurrency limits) and often multi-threading within workers to execute tasks. Sharing a single database session across concurrent threads within an Airflow worker is not recommended, and it is generally a recipe for trouble. You'd need to carefully manage thread locks and access to the underlying connection, which complicates everything substantially and makes it significantly prone to issues.
 
-*   **Airflow's Task Execution Model:** Airflow treats tasks as independent units of work. Each task instance is usually intended to be idempotent – that is, running it multiple times with the same parameters should yield the same result. Session sharing can compromise this behavior if the session state is modified during a task execution.
+- **Airflow's Task Execution Model:** Airflow treats tasks as independent units of work. Each task instance is usually intended to be idempotent – that is, running it multiple times with the same parameters should yield the same result. Session sharing can compromise this behavior if the session state is modified during a task execution.
 
 So, if direct session reuse with `SnowflakeOperator` isn't ideal, what are the better solutions? We have to think about techniques for connection pooling and optimizing the workflow from the top down, not just within one task.
 
@@ -24,7 +24,7 @@ Here are three concrete examples that address this challenge, with accompanying 
 
 **1. Connection Pooling with a Custom Hook:**
 
-While you cannot reuse a session *object* directly across operators, you can implement a custom hook that leverages a connection pool. This reuses database connections from a pool *underneath* the operator, reducing the overhead of establishing a new connection for every single task while still allowing each operator to appear independent. This is by far the best approach in almost all cases.
+While you cannot reuse a session _object_ directly across operators, you can implement a custom hook that leverages a connection pool. This reuses database connections from a pool _underneath_ the operator, reducing the overhead of establishing a new connection for every single task while still allowing each operator to appear independent. This is by far the best approach in almost all cases.
 
 ```python
 from airflow.providers.snowflake.hooks.snowflake import SnowflakeHook

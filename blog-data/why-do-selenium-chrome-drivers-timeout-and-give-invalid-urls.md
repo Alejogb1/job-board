@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-selenium-chrome-drivers-timeout-and-give-invalid-urls"
 ---
 
-, let's tackle this head-on. I've seen my share of Selenium Chrome drivers acting up, especially when things get a bit more complex than a simple test case. The "timeout" and "invalid URL" errors are usually symptoms of a few common underlying issues, and it's rarely a straightforward "one-size-fits-all" solution. Over my years fiddling with automated browser testing, I've encountered these gremlins more times than I care to remember, so let me share what I've learned.
+, head-on. I've seen my share of Selenium Chrome drivers acting up, especially when things get a bit more complex than a simple test case. The "timeout" and "invalid URL" errors are usually symptoms of a few common underlying issues, and it's rarely a straightforward "one-size-fits-all" solution. Over my years fiddling with automated browser testing, I've encountered these gremlins more times than I care to remember, so let me share what I've learned.
 
 The crux of the problem often revolves around the communication between your Selenium code, the `chromedriver` executable, and the actual Chrome browser instance. When this communication falters, you end up with those frustrating timeout errors or, even worse, exceptions pointing to invalid or unreachable URLs. We need to dive a bit deeper than just blaming Selenium itself.
 

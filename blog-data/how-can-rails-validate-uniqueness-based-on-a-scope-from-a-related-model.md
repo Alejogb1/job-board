@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-validate-uniqueness-based-on-a-scope-from-a-related-model"
 ---
 
-, let's tackle this. It's a common scenario, and I remember having to debug a particularly thorny instance of this issue back at _AcmeCorp_ a few years ago. We had a complex user hierarchy, and ensuring uniqueness across a specific subset of users related to another table proved… challenging, to say the least. What we're talking about here isn't just standard uniqueness; it's uniqueness within a specific context defined by a related model, often called a _scoped uniqueness_.
+, . It's a common scenario, and I remember having to debug a particularly thorny instance of this issue back at _AcmeCorp_ a few years ago. We had a complex user hierarchy, and ensuring uniqueness across a specific subset of users related to another table proved… challenging, to say the least. What we're talking about here isn't just standard uniqueness; it's uniqueness within a specific context defined by a related model, often called a _scoped uniqueness_.
 
 To be clear, standard uniqueness validation in rails, achieved with `validates :attribute_name, uniqueness: true`, only guarantees uniqueness within the scope of the table itself. We need to go further to encompass a scope derived from another model's associations.
 

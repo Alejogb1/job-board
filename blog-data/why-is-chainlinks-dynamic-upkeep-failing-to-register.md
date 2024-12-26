@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-chainlinks-dynamic-upkeep-failing-to-register"
 ---
 
-Let's tackle this issue of Chainlink dynamic upkeep failing to register, a situation I've bumped into myself more times than I'd care to recall. It's not uncommon, especially when dealing with complex smart contract interactions and evolving on-chain conditions. Based on past experiences debugging similar setups, a few typical culprits emerge. We’ll explore them in detail and walk through some practical code examples.
+issue of Chainlink dynamic upkeep failing to register, a situation I've bumped into myself more times than I'd care to recall. It's not uncommon, especially when dealing with complex smart contract interactions and evolving on-chain conditions. Based on past experiences debugging similar setups, a few typical culprits emerge. We’ll explore them in detail and walk through some practical code examples.
 
 First, let's define 'dynamic upkeep' for clarity. In the context of Chainlink, it refers to automated tasks triggered by conditions external to the smart contract itself, specifically through the `performUpkeep` and `checkUpkeep` functions on the Chainlink Keeper contracts. It’s important to realize that these don’t just magically happen; specific criteria must be met, and if those criteria aren't aligned perfectly with the keeper network expectations, failure is inevitable.
 
@@ -87,9 +87,11 @@ function complexCalculation(uint256 balance) internal pure returns (uint256) {
 }
 
 ```
+
 This deliberately inefficient example demonstrates a common problem: executing computationally intensive tasks directly within `performUpkeep`. Such operations can cause high gas usage, leading to the upkeep failure.
 
 Now let’s look at a modified approach focusing on minimizing gas usage:
+
 ```solidity
 // Corrected performUpkeep - optimized gas usage
 function performUpkeep(bytes calldata performData)

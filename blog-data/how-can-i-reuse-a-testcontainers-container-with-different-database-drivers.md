@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reuse-a-testcontainers-container-with-different-database-drivers"
 ---
 
-, let's tackle this one. I've been down this road a few times, and it’s a surprisingly common challenge when you're juggling different database drivers against the same containerized database instance. It often crops up in integration testing scenarios where you might need to validate code against various JDBC drivers or different client libraries for the same database engine. The key here is understanding how testcontainers works and designing your tests to accommodate driver flexibility without constantly rebuilding the container.
+, one. I've been down this road a few times, and it’s a surprisingly common challenge when you're juggling different database drivers against the same containerized database instance. It often crops up in integration testing scenarios where you might need to validate code against various JDBC drivers or different client libraries for the same database engine. The key here is understanding how testcontainers works and designing your tests to accommodate driver flexibility without constantly rebuilding the container.
 
 The core concept is decoupling the container lifecycle from the database access logic. You don't want the creation or teardown of the container tied directly to which driver you’re currently testing. Instead, you'll aim for a setup where the container is started once, and then you can use different drivers to interact with it throughout your testing process. This saves time and resources and offers a more consistent environment.
 

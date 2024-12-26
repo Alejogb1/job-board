@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-the-poor-accuracy-of-the-capsule-network-due-to-implementation-errors"
 ---
 
-, let's tackle this. I've certainly spent a fair bit of time debugging neural networks, including capsule nets, and the question of whether poor accuracy stems solely from implementation errors is, well, it's a layered problem. It's not always a simple 'yes' or 'no'. I recall working on a complex object recognition project some years back where we initially gravitated towards capsule networks, lured by their promise of handling viewpoint invariance so elegantly. What we found was... complicated.
+, . I've certainly spent a fair bit of time debugging neural networks, including capsule nets, and the question of whether poor accuracy stems solely from implementation errors is, well, it's a layered problem. It's not always a simple 'yes' or 'no'. I recall working on a complex object recognition project some years back where we initially gravitated towards capsule networks, lured by their promise of handling viewpoint invariance so elegantly. What we found was... complicated.
 
 Let’s be clear: flawed implementations _can_ definitely tank accuracy. That's a given in any deep learning endeavor. But to pin the blame _solely_ on implementation errors, especially with something as intricate as a capsule network, is probably a simplification. Capsule networks, by design, are more complex than standard convolutional neural networks (CNNs). They involve dynamic routing, vector outputs, and a different way of representing feature hierarchies – all of which introduce additional possibilities for both conceptual _and_ practical missteps.
 

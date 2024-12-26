@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ruby-recursively-read-files-and-folders"
 ---
 
-Let's tackle this directly. I've certainly had my fair share of needing to recursively traverse file systems in Ruby, and it's a task that, while conceptually simple, can get nuanced quickly depending on the specific requirements. The key is understanding the combination of Ruby's `Dir` and `File` classes with a properly structured recursive function. I'll break down my approach, and we'll look at some code examples, including common scenarios and edge cases.
+directly. I've certainly had my fair share of needing to recursively traverse file systems in Ruby, and it's a task that, while conceptually simple, can get nuanced quickly depending on the specific requirements. The key is understanding the combination of Ruby's `Dir` and `File` classes with a properly structured recursive function. I'll break down my approach, and we'll look at some code examples, including common scenarios and edge cases.
 
 My work on a large-scale document processing system a few years back forced me to become quite proficient with this. We had a hierarchical structure of documents stored in subfolders, and processing each one individually and their respective subfolder was a daily requirement. We had to handle millions of documents, so efficiency, and error handling was paramount. Let's begin.
 

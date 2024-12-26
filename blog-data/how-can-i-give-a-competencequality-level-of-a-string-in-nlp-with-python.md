@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-give-a-competencequality-level-of-a-string-in-nlp-with-python"
 ---
 
-, let's tackle this string competence thing. i've bumped into this a few times, and it's never as straightforward as one might hope. it's less about a single, definitive score and more about a combination of metrics. what constitutes "competence" or "quality" for a string really depends on what you're trying to achieve. are we talking about grammar? complexity? sentiment? factuality? all of the above?
+, string competence thing. i've bumped into this a few times, and it's never as straightforward as one might hope. it's less about a single, definitive score and more about a combination of metrics. what constitutes "competence" or "quality" for a string really depends on what you're trying to achieve. are we talking about grammar? complexity? sentiment? factuality? all of the above?
 
 i remember this one project i did back in my university days. we were building a chatbot, and we needed a way to filter out nonsensical user input. a simple length check wasn't enough; users could still type gibberish that was lengthy. we initially tried a purely rule-based approach which quickly became a spaghetti mess of edge cases. so, i had to learn to move away from the "if this than that" and adopt more flexible methods.
 

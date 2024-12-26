@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-plot-the-actual-vs-predicted-values-for-a-neural-network"
 ---
 
-Let's tackle this one. I remember a project a few years back where we were predicting stock prices, and visualizing the model's performance became absolutely crucial for debugging. Just staring at a loss function wasn't cutting it; we needed to see the actual vs. predicted values laid out, visually. So, how do you go about plotting these in a way that's informative? There's a bit more to it than just dumping the numbers onto a graph.
+one. I remember a project a few years back where we were predicting stock prices, and visualizing the model's performance became absolutely crucial for debugging. Just staring at a loss function wasn't cutting it; we needed to see the actual vs. predicted values laid out, visually. So, how do you go about plotting these in a way that's informative? There's a bit more to it than just dumping the numbers onto a graph.
 
-First, we need to understand the core data we're working with. You'll have two primary sets: your *actual* values (ground truth), and the *predicted* values from your neural network. These need to be aligned by index or time, depending on your problem. This usually involves making sure you predict on the same dataset on which you have the actuals so that the relationship is established between predicted and actual. The aim of this plot is to determine how closely your model is estimating the target values. A poor prediction will become visually apparent when both actual and predicted are rendered together.
+First, we need to understand the core data we're working with. You'll have two primary sets: your _actual_ values (ground truth), and the _predicted_ values from your neural network. These need to be aligned by index or time, depending on your problem. This usually involves making sure you predict on the same dataset on which you have the actuals so that the relationship is established between predicted and actual. The aim of this plot is to determine how closely your model is estimating the target values. A poor prediction will become visually apparent when both actual and predicted are rendered together.
 
 There are a few key ways to visualize this, and the best method depends on the nature of your data and your specific needs. For time-series data, a line plot is most effective. If the data isn't ordered in a meaningful way, a scatter plot or a histogram comparison might be more appropriate. We can even combine techniques if the problem demands it.
 
@@ -109,13 +109,14 @@ if __name__ == '__main__':
     predicted_hist_data = np.random.normal(55, 18, 200)
     plot_histograms(actual_hist_data, predicted_hist_data)
 ```
+
 Here, the histograms demonstrate how frequently each value appears in the actual and predicted data. Overlapping areas help to compare similarities. We use `alpha` to ensure we can see the overlapping histograms. This helps in situations where you need to determine if your model is skewed towards certain values. This approach was helpful when analyzing the model performance on classification tasks with imbalanced data sets.
 
 **Further Considerations**
 
-*   **Error Visualization:** It can also be beneficial to plot the *residuals*, which are the differences between actual and predicted values. This makes it easier to spot systematic errors, which can guide further model refinement or feature engineering. You can calculate these in Numpy with: `residuals = actual_values - predicted_values`. You could add them as an additional plot or create a histogram of them as well.
-*   **Data Transformation:** Sometimes, you might need to apply transformations (like log transforms) to both actual and predicted data before plotting. This is particularly true if the data has a large scale or is skewed.
-*   **Interactivity:** While the matplotlib examples are very useful, for some situations where you need more interactivity, consider libraries such as `plotly` or `bokeh`. These allow for zooming, panning, and interactive exploration of the visualizations.
+- **Error Visualization:** It can also be beneficial to plot the _residuals_, which are the differences between actual and predicted values. This makes it easier to spot systematic errors, which can guide further model refinement or feature engineering. You can calculate these in Numpy with: `residuals = actual_values - predicted_values`. You could add them as an additional plot or create a histogram of them as well.
+- **Data Transformation:** Sometimes, you might need to apply transformations (like log transforms) to both actual and predicted data before plotting. This is particularly true if the data has a large scale or is skewed.
+- **Interactivity:** While the matplotlib examples are very useful, for some situations where you need more interactivity, consider libraries such as `plotly` or `bokeh`. These allow for zooming, panning, and interactive exploration of the visualizations.
 
 **Resource Recommendation**
 

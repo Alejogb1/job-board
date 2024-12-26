@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-is-rabbitmq-net-core-client-using-excessive-cpu-with-manualreseteventslimwait"
 ---
 
-Let's tackle this. It’s not uncommon to see a dotnet core application utilizing RabbitMQ suddenly become a CPU hog, particularly when asynchronous operations using `ManualResetEventSlim.Wait` are in the mix. I’ve debugged this exact scenario more times than I'd like to remember, and often the culprit isn't the RabbitMQ server itself, but how the .net core client interacts with its internal mechanisms, specifically around thread management. Let's break down why this happens and explore some solutions.
+. It’s not uncommon to see a dotnet core application utilizing RabbitMQ suddenly become a CPU hog, particularly when asynchronous operations using `ManualResetEventSlim.Wait` are in the mix. I’ve debugged this exact scenario more times than I'd like to remember, and often the culprit isn't the RabbitMQ server itself, but how the .net core client interacts with its internal mechanisms, specifically around thread management. Let's break down why this happens and explore some solutions.
 
-The heart of the matter lies within the interaction between the amqp-net-client library (the core library used by many RabbitMQ .net clients) and the way asynchronous operations are managed in dotnet core. The `ManualResetEventSlim` is designed for very efficient lightweight synchronization, it is *not* designed to be abused as a polling mechanism. When you use `.Wait()` on it, it effectively parks the executing thread until the event is signaled, thus freeing resources while the thread waits. However, the tricky part is how that waiting interacts with the rabbitmq client's internal operations.
+The heart of the matter lies within the interaction between the amqp-net-client library (the core library used by many RabbitMQ .net clients) and the way asynchronous operations are managed in dotnet core. The `ManualResetEventSlim` is designed for very efficient lightweight synchronization, it is _not_ designed to be abused as a polling mechanism. When you use `.Wait()` on it, it effectively parks the executing thread until the event is signaled, thus freeing resources while the thread waits. However, the tricky part is how that waiting interacts with the rabbitmq client's internal operations.
 
 Typically, a client will have a dedicated thread (or potentially a thread pool) that manages incoming messages. When that thread receives data, it signals the `ManualResetEventSlim`. If the main application thread is using `.Wait()`, it’s then unblocked, and can process the received data. Here’s where the problem starts. If messages are coming in at a high rate, the event can frequently get reset and signaled, leading to the main thread rapidly looping on the `.Wait()` method. In many instances I have seen, when the main thread is looping on `wait()`, it is also performing other work, including allocating more threads. This leads to a very high level of CPU utilization which is the opposite of what we want when using asynchronous methods. This is not necessarily a bug, but rather a misuse of the synchronization primitive.
 
-Consider an example where a consumer is set up: the application thread registers a message handler with the rabbitmq client, starts consuming from a queue, and then enters a loop using `ManualResetEventSlim.Wait()`. If there are a lot of messages coming in, the thread is in a busy-wait state, despite using what looks like a method designed to "release the thread". The core problem is the *loop* around the `.Wait()`. Instead of waiting *once* per process, it's frequently looping and waiting. This context switching and contention, even though "slim", adds up to consume valuable CPU cycles.
+Consider an example where a consumer is set up: the application thread registers a message handler with the rabbitmq client, starts consuming from a queue, and then enters a loop using `ManualResetEventSlim.Wait()`. If there are a lot of messages coming in, the thread is in a busy-wait state, despite using what looks like a method designed to "release the thread". The core problem is the _loop_ around the `.Wait()`. Instead of waiting _once_ per process, it's frequently looping and waiting. This context switching and contention, even though "slim", adds up to consume valuable CPU cycles.
 
 Here's a basic, problematic snippet to illustrate this, focusing on the conceptual issue instead of a fully functioning consumer, since the goal is to highlight the improper usage of `ManualResetEventSlim`:
 
@@ -41,9 +41,10 @@ public class ProblematicConsumer
     }
 }
 ```
+
 In this simplified model, the `StartConsuming` method continually loops, waiting on the event and then resetting it. The continuous cycle of waiting, signaling, and resetting contributes to the high CPU usage. The `SignalEvent()` method would, ideally, be triggered when there's data available from RabbitMQ, but the crucial issue is the loop in which `.Wait()` is called.
 
-The solution isn't to ditch `ManualResetEventSlim` entirely. It's still useful, but we must use it correctly. Specifically, instead of calling `.Wait()` in a loop, we should await an asynchronous operation that *handles* receiving messages. The rabbitmq client already provides asynchronous message consumption; you shouldn't need to create your own synchronous loop with `ManualResetEventSlim` unless it's used *once* for a blocking action.
+The solution isn't to ditch `ManualResetEventSlim` entirely. It's still useful, but we must use it correctly. Specifically, instead of calling `.Wait()` in a loop, we should await an asynchronous operation that _handles_ receiving messages. The rabbitmq client already provides asynchronous message consumption; you shouldn't need to create your own synchronous loop with `ManualResetEventSlim` unless it's used _once_ for a blocking action.
 
 Here's a more appropriate asynchronous approach using .net tasks and `TaskCompletionSource`, that avoids looping on `.Wait()`:
 
@@ -135,7 +136,7 @@ public class AsynchronousRabbitMQConsumer
 }
 ```
 
-This full implementation avoids any explicit busy waiting. Instead, it fully utilizes the asynchronous event handlers provided by the rabbitmq client library. The consumer's event handler is called when a message is available, and this handler is itself asynchronous (`async`), allowing further improvements.  This approach provides the most efficiency since no explicit loops are created by the consumer.
+This full implementation avoids any explicit busy waiting. Instead, it fully utilizes the asynchronous event handlers provided by the rabbitmq client library. The consumer's event handler is called when a message is available, and this handler is itself asynchronous (`async`), allowing further improvements. This approach provides the most efficiency since no explicit loops are created by the consumer.
 
 For further reading on this topic, I would strongly suggest looking at "Concurrency in C# Cookbook" by Stephen Cleary. This will provide a deeper understanding of the asynchronous mechanisms in .net and help avoid issues with manual synchronization. Another excellent resource is "Programming with C# 10" by Ian Griffiths which goes into the core C# constructs and also how to write performant applications. Finally, the official documentation from RabbitMQ itself will also outline best practices when using the client.
 

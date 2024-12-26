@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-unknown-alias-default-error-in-psychbadalias"
 ---
 
-Let's tackle this one. I've seen this particular error pop up more than a few times over the years, and it’s usually a telltale sign of something amiss in how you’re handling aliases during yaml processing with ruby's `psych` library. It's not a particularly *difficult* issue to resolve, once you understand the nuances of how `psych` manages aliases, but it can be frustrating at first encounter.
+one. I've seen this particular error pop up more than a few times over the years, and it’s usually a telltale sign of something amiss in how you’re handling aliases during yaml processing with ruby's `psych` library. It's not a particularly _difficult_ issue to resolve, once you understand the nuances of how `psych` manages aliases, but it can be frustrating at first encounter.
 
 Essentially, the “Unknown alias: default” error, thrown specifically by `Psych::BadAlias`, stems from attempting to reference an alias that either doesn't exist or has been encountered out of order during the parsing process. `Psych`, like other yaml parsers, allows for the use of anchors and aliases to avoid repeating the same data structure multiple times in a document. An anchor (`&some_anchor`) marks a particular node in the yaml tree, while an alias (`*some_anchor`) references that previously marked node. The parser processes the yaml document sequentially, and this sequential nature is crucial to understanding the problem. The error occurs when `psych` tries to resolve an alias (`*default`, in your case) before it has encountered a corresponding anchor (`&default`).
 
@@ -45,7 +45,7 @@ This ruby code, when executed, would output:
 Error: Unknown alias: default
 ```
 
-The fix is quite simple, you re-order the yaml to ensure the anchor is defined *before* the alias is used. Corrected yaml looks like this:
+The fix is quite simple, you re-order the yaml to ensure the anchor is defined _before_ the alias is used. Corrected yaml looks like this:
 
 ```yaml
 my_config:
@@ -77,7 +77,7 @@ application:
       debug: false
 ```
 
-This snippet may *appear* to be correct on first glance, since `&default_dev` is defined before `*default_dev`, but this also makes an assumption about how `<<` (merge keys) works. The `<<:` syntax in yaml, when used with an alias, essentially inlines the content of that alias into the current node. The *intent* may be to have `prod` inherit everything from `dev` and override some specific fields. But in this setup, the `*default_dev` will simply expand into `prod` at the merge stage, it won't be a reference to the `dev` settings object. We aren't running into a `Psych::BadAlias` error in *this* specific case. However if we changed `prod` to try and access it directly later on using an alias it would fail. Let's see an example that uses a nested structure that *does* produce this error:
+This snippet may _appear_ to be correct on first glance, since `&default_dev` is defined before `*default_dev`, but this also makes an assumption about how `<<` (merge keys) works. The `<<:` syntax in yaml, when used with an alias, essentially inlines the content of that alias into the current node. The _intent_ may be to have `prod` inherit everything from `dev` and override some specific fields. But in this setup, the `*default_dev` will simply expand into `prod` at the merge stage, it won't be a reference to the `dev` settings object. We aren't running into a `Psych::BadAlias` error in _this_ specific case. However if we changed `prod` to try and access it directly later on using an alias it would fail. Let's see an example that uses a nested structure that _does_ produce this error:
 
 ```yaml
 app_config:
@@ -134,7 +134,7 @@ This now correctly merges the `global_settings` into each service.
 
 **Scenario 3: Incorrect File Handling or Data Stream Issues**
 
-Lastly, it's worth mentioning that this error *can* arise when dealing with complex data streams, sometimes when you’re manipulating data in memory, and then parsing it or if you’re reading from a file in chunks, with one chunk containing the alias but not the anchor. I've encountered this in scenarios involving large configuration files where sections are processed asynchronously. This situation is trickier because the root cause may not be obvious in the yaml itself, rather in how it is loaded.
+Lastly, it's worth mentioning that this error _can_ arise when dealing with complex data streams, sometimes when you’re manipulating data in memory, and then parsing it or if you’re reading from a file in chunks, with one chunk containing the alias but not the anchor. I've encountered this in scenarios involving large configuration files where sections are processed asynchronously. This situation is trickier because the root cause may not be obvious in the yaml itself, rather in how it is loaded.
 
 ```ruby
 require 'psych'
@@ -184,6 +184,6 @@ To prevent this, you must ensure that the full yaml document is available when p
 
 **Recommendations**
 
-For a deeper understanding of yaml and its nuances, I recommend consulting *The YAML Specification*, which provides the formal definition of the language. A good reference for `Psych` is the ruby documentation, especially the sections related to parsing yaml and handling aliases. There are several textbooks on parsing and compiler theory which could help you understand the underlying processes, such as *Compilers: Principles, Techniques, and Tools* by Aho, Lam, Sethi, and Ullman. Additionally, exploring related libraries such as `libyaml` (which `Psych` is based on) could offer further insight.
+For a deeper understanding of yaml and its nuances, I recommend consulting _The YAML Specification_, which provides the formal definition of the language. A good reference for `Psych` is the ruby documentation, especially the sections related to parsing yaml and handling aliases. There are several textbooks on parsing and compiler theory which could help you understand the underlying processes, such as _Compilers: Principles, Techniques, and Tools_ by Aho, Lam, Sethi, and Ullman. Additionally, exploring related libraries such as `libyaml` (which `Psych` is based on) could offer further insight.
 
 In conclusion, the "Unknown alias: default" error is generally a symptom of improper yaml structure, particularly relating to the order of anchors and aliases, or when trying to alias data that has been merged. Always ensure that anchors are defined before they are referenced, and carefully review the overall document structure when debugging this issue. A good approach is to validate your yaml files against a schema if possible to catch errors before they manifest in your code.

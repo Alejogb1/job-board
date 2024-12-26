@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-a-scalar-constraint-issue-in-pyomo"
 ---
 
-, let's tackle this scalar constraint issue in pyomo. I've seen this come up more than a few times over the years, and it usually boils down to a misunderstanding of how pyomo handles indexed vs. scalar components within an optimization model. Let me unpack that a bit, based on how I've approached these situations in the past, and offer some concrete solutions.
+, scalar constraint issue in pyomo. I've seen this come up more than a few times over the years, and it usually boils down to a misunderstanding of how pyomo handles indexed vs. scalar components within an optimization model. Let me unpack that a bit, based on how I've approached these situations in the past, and offer some concrete solutions.
 
 Essentially, the "scalar constraint issue" manifests when pyomo expects an indexed constraint (meaning it operates over a set) but you’ve inadvertently defined a scalar one. Or, conversely, when you treat a constraint that _should_ be scalar as an indexed one. This leads to errors like "unindexed component cannot be accessed using an index" or similar complaints during model creation or solution. The crux of the problem is the discrepancy in dimensionality.
 

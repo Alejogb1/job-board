@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-airflow-gitsync-not-syncing-dags-when-using-the-community-helm-chart"
 ---
 
-Let's tackle this. I've seen this particular issue pop up more times than I care to remember, especially in environments using the community helm chart for airflow. It's frustrating, because it *should* be a smooth process, but various factors can conspire to disrupt the gitsync. Fundamentally, the issue usually boils down to a disconnect somewhere along the path between the git repository containing your DAGs and the airflow scheduler's ability to read them.
+. I've seen this particular issue pop up more times than I care to remember, especially in environments using the community helm chart for airflow. It's frustrating, because it _should_ be a smooth process, but various factors can conspire to disrupt the gitsync. Fundamentally, the issue usually boils down to a disconnect somewhere along the path between the git repository containing your DAGs and the airflow scheduler's ability to read them.
 
 From my experience, and after countless debugging sessions across various teams, this isn't a single root cause problem. Instead, it’s often a confluence of several potential issues. Let's dive into the main culprits, structured for clarity, and then we'll look at some code examples.
 
@@ -31,7 +31,6 @@ dags:
     path: "/opt/airflow/dags"
     sshKeySecret: "git-ssh-secret"
     knownHostsSecret: "git-known-hosts"
-
 ```
 
 Here, `mydagsreppo` is a simple typo. This leads to a failure which will not throw a very explicit error message, and the DAG folder within airflow will remain empty. Now, a corrected configuration would be:
@@ -62,14 +61,15 @@ volumes:
     persistentVolumeClaim:
       claimName: my-airflow-dags-pvc
 ```
+
 If the filesystem on your `my-airflow-dags-pvc` (created on persistent storage) has, by chance, a restrictive permission structure, like setting the owner of the mounted directory to `root` (which happens sometimes, particularly with older kubernetes provisions), then airflow, which usually runs under a less-privileged user (like `airflow`), will not have permission to read the synced DAG files. The git sync might succeed as the git-sync sidecar will run as root, but airflow’s scheduler will fail to read those dags.
 
 A possible solution is ensuring you've set the correct ownership on the `persistentVolumeClaim` files, or setting the `securityContext` in the pod spec such that the airflow process can gain access via group ownership. For example:
 
 ```yaml
 securityContext:
-    runAsUser: 1000 #airflow user
-    fsGroup: 1000 #airflow group
+  runAsUser: 1000 #airflow user
+  fsGroup: 1000 #airflow group
 ```
 
 This snippet is inside the `airflow.scheduler` and `airflow.webserver` section. It ensures that user id `1000` is able to access the mounted volume. This usually resolves the problem.
@@ -79,25 +79,26 @@ This snippet is inside the `airflow.scheduler` and `airflow.webserver` section. 
 Suppose you are using the default helm chart version but with a very low resource request. Let’s assume your git repository has a large number of DAGs and, possibly, includes some submodules which are not shallowly cloned.
 
 ```yaml
-  gitSync:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
+gitSync:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
 ```
+
 When the git-sync tries to recursively clone this larger repository with submodules and doesn’t have enough memory it might crash or become unresponsive. Also, there might be an issue with the git configuration itself, if not configured correctly, such as having git lfs, which wasn’t accounted for.
 
 A solution would be increasing resources:
 
 ```yaml
-  gitSync:
-    resources:
-      requests:
-        cpu: 500m # increase CPU limit
-        memory: 512Mi # increased memory limit
+gitSync:
+  resources:
+    requests:
+      cpu: 500m # increase CPU limit
+      memory: 512Mi # increased memory limit
 ```
 
-This shows that resources in the git-sync configuration can directly affect performance. Additionally, sometimes you may find that the *default* image used for git-sync might be the culprit itself if you are using an old helm chart version. Checking the git-sync image for the helm chart and updating the version, if required, can often be the solution.
+This shows that resources in the git-sync configuration can directly affect performance. Additionally, sometimes you may find that the _default_ image used for git-sync might be the culprit itself if you are using an old helm chart version. Checking the git-sync image for the helm chart and updating the version, if required, can often be the solution.
 
 These examples hopefully clarify where things often go wrong. Debugging this requires methodical investigation:
 
@@ -107,6 +108,6 @@ These examples hopefully clarify where things often go wrong. Debugging this req
 4.  **Network tests:** Within the Kubernetes cluster, try to manually clone the git repository from inside one of the airflow pods to rule out network connectivity issues.
 5.  **Resource limitations:** Observe the resource consumption of the `git-sync` sidecar container. Increase resource requests and limits if necessary.
 
-For further reading, I'd recommend the *Kubernetes in Action* book by Marko Lukša to understand the various internals of Kubernetes and its deployment mechanisms. The *Pro Git* book by Scott Chacon and Ben Straub provides very good insight into how git works internally, which is often crucial for debugging git issues. Furthermore, the official airflow documentation, especially the documentation around the helm chart options, and official git documentation, are incredibly useful. I would advise being up to date on both the git version and git-sync container image used by the helm chart to ensure you're not battling with compatibility issues.
+For further reading, I'd recommend the _Kubernetes in Action_ book by Marko Lukša to understand the various internals of Kubernetes and its deployment mechanisms. The _Pro Git_ book by Scott Chacon and Ben Straub provides very good insight into how git works internally, which is often crucial for debugging git issues. Furthermore, the official airflow documentation, especially the documentation around the helm chart options, and official git documentation, are incredibly useful. I would advise being up to date on both the git version and git-sync container image used by the helm chart to ensure you're not battling with compatibility issues.
 
 These steps, born out of quite a bit of hard-earned experience, should get you moving in the right direction. Remember, debugging these sorts of issues is a process of elimination. Good luck!

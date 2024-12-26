@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-two-connected-directed-acyclic-graphs-dags-be-visualized-in-a-single-graph"
 ---
 
-Let's tackle this. The short answer is yes, absolutely, though the method depends heavily on what you're trying to achieve with the visualization. You're essentially asking about representing two separate sets of directed relationships within a single visual space, maintaining the acyclic property of each set. I've faced this exact scenario a few times, particularly when dealing with complex data pipelines that had, let's say, independent preprocessing and postprocessing phases. Treating them as a single, overarching DAG often simplifies certain analytical tasks even if they operate in distinct logical domains.
+. The short answer is yes, absolutely, though the method depends heavily on what you're trying to achieve with the visualization. You're essentially asking about representing two separate sets of directed relationships within a single visual space, maintaining the acyclic property of each set. I've faced this exact scenario a few times, particularly when dealing with complex data pipelines that had, let's say, independent preprocessing and postprocessing phases. Treating them as a single, overarching DAG often simplifies certain analytical tasks even if they operate in distinct logical domains.
 
 The challenge lies in conveying that distinction visually while preserving the clarity of each DAG. Simply merging the nodes and edges, without careful planning, leads to an unreadable mess, possibly even introducing spurious connections that violate the acyclic nature of the original graphs. We need strategies to separate the visual representation of the two DAGs yet keep them together in one frame.
 
@@ -29,6 +29,7 @@ postprocess_dag = nx.DiGraph()
 postprocess_dag.add_nodes_from(['transformed_data_p', 'model_output', 'report'])
 postprocess_dag.add_edges_from([('transformed_data_p', 'model_output'), ('model_output', 'report')])
 ```
+
 Here, I created two directed acyclic graphs, `preprocess_dag`, and `postprocess_dag`, representing distinct stages of a data processing pipeline. I have also included a node called ‘transformed_data_p’ which is identical in name to the output of the `preprocess_dag` but in reality can represent something else with the same name. This creates a dependency between DAGs. Now, let's try visualizing them in a single plot.
 
 ```python
@@ -55,11 +56,13 @@ plt.title('Combined DAG Visualization with Spatial Separation')
 plt.show()
 
 ```
+
 In the above code, `spring_layout` generates positions for the nodes in each graph. Then, the second graph was shifted horizontally to visually separate it. I’ve added specific coloring for different DAGs, and added a dashed edge between the outputs of the preprocess and the beginning of the post process dag. This method does a decent job when graphs are relatively simple. However, the layout could still be improved. We may also consider graph drawing algorithms that explicitly support hierarchal layouts or node grouping which is usually easier to follow.
 
 Now, suppose we require greater clarity and want to indicate that the nodes 'transformed_data' from `preprocess_dag` and 'transformed_data_p' from `postprocess_dag` are logically related though they exist in different DAGs. It’s not ideal to show them connected with an edge since they are not really part of the same dag.
 
 In order to show a relationship between those, I may consider a visual technique such as node grouping by surrounding them in a box or similar construct. However, for this example, I will add an intermediate visual object, a “connector node” and introduce a slightly different visualization approach with a hierarchical layout which makes it more understandable when the complexity of the DAGs increase:
+
 ```python
 import networkx as nx
 import matplotlib.pyplot as plt

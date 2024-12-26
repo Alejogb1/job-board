@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-my-docker-ruby-on-rails-container-load-the-bundle-executable"
 ---
 
-Let's tackle this, shall we? It’s a familiar sting – that feeling when your meticulously crafted Docker setup decides it doesn’t want to play nicely with your Ruby on Rails application, specifically when the bundle executable decides to go AWOL. I’ve definitely been there, a few times, actually, across different projects, from smaller internal tools to production-facing APIs. The root causes, while varied, often boil down to a few key culprits. The fact that you’re facing this suggests a mismatch, usually within the Docker image itself, between what you expect and what's actually present. Let's unpack the usual suspects.
+, shall we? It’s a familiar sting – that feeling when your meticulously crafted Docker setup decides it doesn’t want to play nicely with your Ruby on Rails application, specifically when the bundle executable decides to go AWOL. I’ve definitely been there, a few times, actually, across different projects, from smaller internal tools to production-facing APIs. The root causes, while varied, often boil down to a few key culprits. The fact that you’re facing this suggests a mismatch, usually within the Docker image itself, between what you expect and what's actually present. Let's unpack the usual suspects.
 
 First, and perhaps most common, is the issue of **incorrect working directories**. Docker containers, by default, start in a root-level directory inside the container filesystem. If your `Gemfile` and `Gemfile.lock` are located in a subdirectory within your project and you're running the `bundle` command without explicitly navigating to that directory, you're effectively asking the command to look for files where they don’t exist. This often manifests as `bundle: command not found` or similar errors related to missing dependencies.
 
@@ -81,7 +81,7 @@ RUN bundle install
 CMD ["rails", "server", "-b", "0.0.0.0"]
 ```
 
-If this path was modified, or the necessary directories were removed from the path, it will be necessary to adjust your PATH settings. Typically, in official ruby images, the path where bundler puts the executables includes `/usr/local/bundle/bin` which can be checked using `ruby -e 'puts Gem.paths.bin_dirs'`.  The solution is to ensure that this path is part of the `$PATH` variable.  If, for some reason, you've altered it, you could modify the Dockerfile by adding a statement that restores the original path where bundler executables are located, for example, like this:
+If this path was modified, or the necessary directories were removed from the path, it will be necessary to adjust your PATH settings. Typically, in official ruby images, the path where bundler puts the executables includes `/usr/local/bundle/bin` which can be checked using `ruby -e 'puts Gem.paths.bin_dirs'`. The solution is to ensure that this path is part of the `$PATH` variable. If, for some reason, you've altered it, you could modify the Dockerfile by adding a statement that restores the original path where bundler executables are located, for example, like this:
 
 ```dockerfile
 FROM ruby:3.2.2

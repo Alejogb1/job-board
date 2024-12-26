@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-accurate-is-this-lstm-neural-networks-prediction"
 ---
 
-Let's tackle this accuracy question, something I've grappled with countless times during model deployment, and it's never a simple yes or no answer. When assessing an LSTM's prediction accuracy, we're not just looking at a single metric. It's a multi-faceted evaluation, requiring us to understand the intricacies of both the model and the data. One of my early projects involved predicting stock prices, using LSTMs, and the learning curve was steep. I quickly realized that "accuracy" is context-dependent and what we really want is reliable performance under various conditions.
+accuracy question, something I've grappled with countless times during model deployment, and it's never a simple yes or no answer. When assessing an LSTM's prediction accuracy, we're not just looking at a single metric. It's a multi-faceted evaluation, requiring us to understand the intricacies of both the model and the data. One of my early projects involved predicting stock prices, using LSTMs, and the learning curve was steep. I quickly realized that "accuracy" is context-dependent and what we really want is reliable performance under various conditions.
 
 First off, we need to establish what kind of prediction we are making. Is it a classification task, where we're assigning categories, or a regression task, where we are predicting continuous values? The metrics we choose will differ accordingly. For classification tasks, we often look at metrics like accuracy (the proportion of correctly classified instances), precision (the proportion of true positives among all predicted positives), recall (the proportion of true positives that are correctly predicted), and F1-score (the harmonic mean of precision and recall). For regression tasks, mean squared error (mse), root mean squared error (rmse), and mean absolute error (mae) are more common. In some situations, we might also calculate more specific performance indicators that target particular aspects of our work. This is precisely why understanding our problem is more important than just applying metrics generically.
 
@@ -12,7 +12,7 @@ Now, let's assume we're dealing with time series data, a common use case for LST
 
 Another crucial aspect is data splitting. A typical approach is to divide our data into training, validation, and test sets. The training set is used to train the model; the validation set is used to tune hyperparameters and identify overfitting. The test set is used to evaluate the final performance of the model on unseen data. If we have any sort of time dependency, we should avoid random split to make sure that no future data appears in the training phase. Using a rolling window split ensures the model learns from the past to predict the future, which is how it will be used in reality, and that the split is done along the temporal axis.
 
-Here's an example using python and tensorflow to illustrate this split, assuming we have already processed and normalized our data into *time_series_data*:
+Here's an example using python and tensorflow to illustrate this split, assuming we have already processed and normalized our data into _time_series_data_:
 
 ```python
 import numpy as np
@@ -36,7 +36,7 @@ def rolling_window_split(time_series_data, window_size, validation_ratio=0.2, te
             data_x.append(data[i:(i+window)])
             data_y.append(data[i+window])
        return np.array(data_x), np.array(data_y)
-    
+
     x_train, y_train = create_dataset(train_data, window_size)
     x_val, y_val = create_dataset(val_data, window_size)
     x_test, y_test = create_dataset(test_data, window_size)

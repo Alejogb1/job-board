@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-does-tensorflow-handle-indexing"
 ---
 
-Let's tackle this – indexing in TensorFlow, it's a topic I've spent more than a few late nights exploring. I remember once, debugging a particularly complex multi-dimensional convolutional network where the output was all but garbage. Tracing the issue back, it wasn't a network architecture problem, but a subtle misstep in how I was indexing into a tensor. It highlighted, rather painfully, the importance of a solid grasp on this foundational concept.
+– indexing in TensorFlow, it's a topic I've spent more than a few late nights exploring. I remember once, debugging a particularly complex multi-dimensional convolutional network where the output was all but garbage. Tracing the issue back, it wasn't a network architecture problem, but a subtle misstep in how I was indexing into a tensor. It highlighted, rather painfully, the importance of a solid grasp on this foundational concept.
 
 At its core, TensorFlow's approach to indexing, much like NumPy upon which it is heavily influenced, relies on a system of integers that specify locations within a tensor. A tensor, at its most basic, can be conceived of as a multi-dimensional array. This means that each element within a tensor is accessed using a sequence of indices, one index for each dimension. The first index points to a location along the first dimension, the second to a location along the second, and so on. It’s critical to understand that indexing in TensorFlow is zero-based, meaning the first element in a dimension is at index zero, not one.
 
 However, TensorFlow goes beyond this simplistic notion by offering sophisticated techniques for indexing and slicing. We're not just constrained to picking out individual elements; we can extract sub-tensors, modify regions, and perform advanced operations all through the indexing mechanism. The key methods we typically use are:
 
-*   **Basic Indexing:** Using integers or lists of integers to access individual elements or sub-tensors directly.
-*   **Slicing:** Employing slice notation (e.g., `start:stop:step`) to extract regions of tensors.
-*   **Advanced Indexing:** Utilizing integer arrays or boolean arrays to perform more complex selections.
+- **Basic Indexing:** Using integers or lists of integers to access individual elements or sub-tensors directly.
+- **Slicing:** Employing slice notation (e.g., `start:stop:step`) to extract regions of tensors.
+- **Advanced Indexing:** Utilizing integer arrays or boolean arrays to perform more complex selections.
 
 Let’s delve into the practical aspects with some code examples.
 
@@ -43,7 +43,7 @@ sub_tensor = tensor_1[0:2, 1:3] # Extracts rows 0 and 1, columns 1 and 2
 print(f"Sub-tensor: {sub_tensor}") # Output: Sub-tensor: [[2 3] [5 6]]
 ```
 
-This example illustrates how we use integers to access single values and the `:` notation to perform slicing along particular dimensions. Note that `start:stop` in slice notation goes up to but *does not include* the stop index. The `[:]` means selecting all indices in the particular dimension.
+This example illustrates how we use integers to access single values and the `:` notation to perform slicing along particular dimensions. Note that `start:stop` in slice notation goes up to but _does not include_ the stop index. The `[:]` means selecting all indices in the particular dimension.
 
 **Example 2: Advanced Indexing with Integer Arrays**
 

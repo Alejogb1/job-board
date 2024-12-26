@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-configure-mocha-tests-to-run-automatically-from-packagejson"
 ---
 
-Let's tackle this. I remember a particularly challenging project a few years back, a complex microservices architecture, where we needed to streamline our testing workflow. Automating mocha tests from `package.json` was crucial for consistent builds and fast feedback loops. Setting this up might seem straightforward initially, but a few nuances can catch you out. It's all about configuring the `scripts` section correctly. Let's break this down.
+. I remember a particularly challenging project a few years back, a complex microservices architecture, where we needed to streamline our testing workflow. Automating mocha tests from `package.json` was crucial for consistent builds and fast feedback loops. Setting this up might seem straightforward initially, but a few nuances can catch you out. It's all about configuring the `scripts` section correctly. Let's break this down.
 
 The key to running mocha tests automatically through `package.json` resides within the `scripts` property. Essentially, you define custom commands that npm (or yarn, pnpm, etc.) can execute. When you run, say, `npm test`, npm looks for a `test` script in your `package.json` file and executes whatever command you've defined there.
 
@@ -46,7 +46,7 @@ However, you might sometimes need to deal with more complex setups. For instance
 
 ```json
 {
- "name": "my-project",
+  "name": "my-project",
   "version": "1.0.0",
   "scripts": {
     "test": "npm run test:unit && npm run test:integration",
@@ -67,9 +67,9 @@ From experience, I've found that it’s best to start with the least complex set
 
 For deepening your understanding of these concepts, I highly recommend the following resources:
 
-*   **"Effective JavaScript" by David Herman:** This book delves into various aspects of Javascript and can provide a deeper conceptual framework for better design practices and test implementation, which inevitably benefits the test automation setups. The sections on javascript modules and asynchronous code are particularly useful.
-*   **The official mocha documentation:** This is, of course, indispensable. The official mocha docs should be your primary resource, exploring various options, configuration settings and best practices. It's constantly updated with all the new features.
-*   **"Test-Driven Development: By Example" by Kent Beck:** Although not specific to Javascript testing with mocha, this is essential to understand the mindset and best practices in testing. The patterns and principles outlined in this book are fundamental to designing good testing suites and can provide valuable insights into how to structure your tests for clarity and maintainability.
-*   **"Node.js Design Patterns" by Mario Casciaro and Luciano Mammino:** This book contains several sections that directly or indirectly touch on testing strategies and how they relate to overall software architecture, which informs your testing configuration design.
+- **"Effective JavaScript" by David Herman:** This book delves into various aspects of Javascript and can provide a deeper conceptual framework for better design practices and test implementation, which inevitably benefits the test automation setups. The sections on javascript modules and asynchronous code are particularly useful.
+- **The official mocha documentation:** This is, of course, indispensable. The official mocha docs should be your primary resource, exploring various options, configuration settings and best practices. It's constantly updated with all the new features.
+- **"Test-Driven Development: By Example" by Kent Beck:** Although not specific to Javascript testing with mocha, this is essential to understand the mindset and best practices in testing. The patterns and principles outlined in this book are fundamental to designing good testing suites and can provide valuable insights into how to structure your tests for clarity and maintainability.
+- **"Node.js Design Patterns" by Mario Casciaro and Luciano Mammino:** This book contains several sections that directly or indirectly touch on testing strategies and how they relate to overall software architecture, which informs your testing configuration design.
 
 By leveraging these resources and the methods described above, you should be well-equipped to configure your mocha tests to run automatically via `package.json`. The key takeaway here is to keep it simple, organized and efficient. Start with a basic command and add options as your project demands. Always verify your setup in your particular environment, and ensure consistent execution across all development and deployment stages.

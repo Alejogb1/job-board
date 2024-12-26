@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-assertequal-in-the-rails-console"
 ---
 
-Let's tackle this from a pragmatic angle, shall we? Having spent what feels like an eternity debugging Rails applications, the `assert_equal` family of methods has been a frequent companion, though perhaps not always directly in the console as initially intended for tests. While it’s not directly a built-in method that you’d typically use to, say, verify data in your interactive console session, we can get it to work – with some nuance.
+from a pragmatic angle, shall we? Having spent what feels like an eternity debugging Rails applications, the `assert_equal` family of methods has been a frequent companion, though perhaps not always directly in the console as initially intended for tests. While it’s not directly a built-in method that you’d typically use to, say, verify data in your interactive console session, we can get it to work – with some nuance.
 
 The core issue is that `assert_equal` and its siblings (`assert_not_equal`, `assert_nil`, `assert_not_nil`, etc.) are primarily tools from the `ActiveSupport::TestCase` module. They are designed for creating unit and integration tests, rather than for ad-hoc checks in the Rails console. By default, they aren't readily available in your console environment. So, the key is to make them available, and we do this by mimicking a testing context. It’s not quite as streamlined as directly invoking them, but it is very effective once you've set it up.
 
@@ -72,6 +72,7 @@ user = User.find_by(email: 'test@example.com')
 assert_check("User name check", 'Test User', user.name)
 
 ```
+
 This makes the checks much clearer.
 
 The critical thing to understand is that these assertions do not halt the Rails console like they would in a traditional test. The console still executes each line, just logging results.

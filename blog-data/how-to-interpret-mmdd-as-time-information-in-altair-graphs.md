@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-interpret-mmdd-as-time-information-in-altair-graphs"
 ---
 
-Let's tackle this, shall we? I recall a particular project involving time-series data back in 2018; the source data for the project, bizarrely enough, stored dates as 'MM_DD' strings without any year information. When we tried plotting it using Altair, the initial results were, as you might imagine,… unconventional. The graphs were interpreting ‘MM_DD’ as, well, just numbers without a temporal component. We ended up spending a good chunk of time figuring out how to properly coax Altair into treating this string representation as time information. Here’s what we learned, and how you can solve this very practical problem.
+, shall we? I recall a particular project involving time-series data back in 2018; the source data for the project, bizarrely enough, stored dates as 'MM_DD' strings without any year information. When we tried plotting it using Altair, the initial results were, as you might imagine,… unconventional. The graphs were interpreting ‘MM_DD’ as, well, just numbers without a temporal component. We ended up spending a good chunk of time figuring out how to properly coax Altair into treating this string representation as time information. Here’s what we learned, and how you can solve this very practical problem.
 
 The challenge arises because Altair, at its core, expects datetime objects or numerical representations of dates/times when dealing with temporal axes. When you feed it a string like ‘MM_DD’, it defaults to treating it as categorical or numerical data, which is often not the desired behavior. To correct this, we need to pre-process the data to include the year information, then explicitly tell Altair how to parse it correctly.
 
@@ -43,7 +43,7 @@ chart = alt.Chart(df).mark_line().encode(
 chart.show()
 ```
 
-In this example, we've crafted a `to_datetime_fixed_year` function that prepends a constant year (2024 in this case) to the original string, effectively turning ‘01-15’ into ‘2024-01-15’ and then converting that into a proper pandas datetime object. Crucially, we specify the axis format as '%m-%d’ in Altair's `alt.Axis` settings. This ensures that the plotted axis *displays* only the month and day, despite the data actually containing a full date, which is essential for Altair’s internal processing. We are not changing the underlying time but how it's displayed on the chart.
+In this example, we've crafted a `to_datetime_fixed_year` function that prepends a constant year (2024 in this case) to the original string, effectively turning ‘01-15’ into ‘2024-01-15’ and then converting that into a proper pandas datetime object. Crucially, we specify the axis format as '%m-%d’ in Altair's `alt.Axis` settings. This ensures that the plotted axis _displays_ only the month and day, despite the data actually containing a full date, which is essential for Altair’s internal processing. We are not changing the underlying time but how it's displayed on the chart.
 
 **Example 2: Using a base year and epoch time**
 
@@ -116,7 +116,7 @@ chart.show()
 
 This function, `to_epoch_time_optimized`, is a more efficient approach if you don't need a fully formed date object during the conversion process. You may find this useful in contexts where you need to squeeze performance or work outside of the pandas ecosystem. Again, we use `alt.Axis(format='%m-%d')` to manage the axis display, showing only month and day.
 
-It's also important to note that the way you choose your 'base' or 'fixed' year *can* impact the look of your graph, especially if you have multiple periods with similar MM-DD values that might span actual calendar years. In that situation, careful use of epoch time can be helpful.
+It's also important to note that the way you choose your 'base' or 'fixed' year _can_ impact the look of your graph, especially if you have multiple periods with similar MM-DD values that might span actual calendar years. In that situation, careful use of epoch time can be helpful.
 
 For a more in-depth understanding of date formatting in python, I'd suggest looking at the official Python documentation on the `datetime` module, specifically the `strftime` and `strptime` methods. The pandas documentation also details how pandas implements datetimes, which is what Altair uses as well. Additionally, the Altair documentation contains precise information on the various formatting options available for `alt.Axis`.
 

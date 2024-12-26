@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-optimize-max-pooling-across-images-with-varying-sizes-and-shapes"
 ---
 
-Right then, let's tackle this. I recall a particularly challenging project a few years back involving medical imaging where we had to process a mountain of scans, all shapes and sizes, using convolutional neural networks. The bottleneck, as it often is, came down to optimizing max pooling operations. The naive implementations just wouldn't cut it, leading to unacceptable processing times. Dealing with variable input dimensions, as you've pointed out, requires some careful thought.
+Right then, . I recall a particularly challenging project a few years back involving medical imaging where we had to process a mountain of scans, all shapes and sizes, using convolutional neural networks. The bottleneck, as it often is, came down to optimizing max pooling operations. The naive implementations just wouldn't cut it, leading to unacceptable processing times. Dealing with variable input dimensions, as you've pointed out, requires some careful thought.
 
 The fundamental problem with max pooling on varying image sizes is that the straightforward, kernel-sliding implementation needs to be generalized. You can't simply define a fixed-size pool and expect it to work gracefully on inputs that are arbitrarily smaller. Furthermore, performance suffers if you’re constantly recalculating pooling parameters or padding all inputs to a common size. This can be particularly wasteful with very small images where the actual pooling might be redundant given the image’s dimensions.
 
@@ -21,7 +21,7 @@ def dynamic_max_pool(input_array, output_size):
 
     stride_height = input_height // output_height
     stride_width = input_width // output_width
-    
+
     if stride_height == 0:
       stride_height = 1
     if stride_width == 0:
@@ -38,9 +38,9 @@ def dynamic_max_pool(input_array, output_size):
             y_end = y_start + pool_height
             x_start = x_out * stride_width
             x_end = x_start + pool_width
-            
+
             output[y_out, x_out] = np.max(input_array[y_start:y_end, x_start:x_end])
-            
+
     return output
 
 # Example Usage
@@ -67,12 +67,12 @@ import numpy as np
 def adaptive_max_pool(input_array, output_size):
     input_height, input_width = input_array.shape
     output_height, output_width = output_size
-    
+
     height_ratio = float(input_height) / output_height
     width_ratio = float(input_width) / output_width
 
     output = np.zeros(output_size)
-    
+
     for y_out in range(output_height):
         for x_out in range(output_width):
             y_start = int(y_out * height_ratio)
@@ -85,7 +85,7 @@ def adaptive_max_pool(input_array, output_size):
             x_end = min(x_end, input_width)
 
             output[y_out, x_out] = np.max(input_array[y_start:y_end, x_start:x_end])
-            
+
     return output
 
 # Example Usage

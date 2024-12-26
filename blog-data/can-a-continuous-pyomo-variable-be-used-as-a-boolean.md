@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "can-a-continuous-pyomo-variable-be-used-as-a-boolean"
 ---
 
-Let's tackle this one head-on, shall we? It's not quite as straightforward as "yes" or "no," and like many things in optimization, it involves a bit of nuanced handling. I’ve personally encountered this scenario numerous times, especially when crafting models for resource allocation problems in my past roles. I recall one particularly complex supply chain model where we initially struggled with exactly this – trying to represent binary decisions with continuous variables. The short answer is: no, a continuous `pyomo.Var` cannot *directly* act as a boolean in the sense of taking on only values 0 or 1. However, we can effectively *simulate* boolean behavior using clever modeling techniques and constraints.
+one head-on, shall we? It's not quite as straightforward as "yes" or "no," and like many things in optimization, it involves a bit of nuanced handling. I’ve personally encountered this scenario numerous times, especially when crafting models for resource allocation problems in my past roles. I recall one particularly complex supply chain model where we initially struggled with exactly this – trying to represent binary decisions with continuous variables. The short answer is: no, a continuous `pyomo.Var` cannot _directly_ act as a boolean in the sense of taking on only values 0 or 1. However, we can effectively _simulate_ boolean behavior using clever modeling techniques and constraints.
 
 The fundamental issue stems from the mathematical definition of continuous variables. They are designed to take any value within a given range, not just discrete values like 0 and 1. Pyomo, being a powerful tool for mathematical optimization, respects these definitions. If you define a variable as `pyomo.Var(domain=pyomo.Reals)`, for example, you're telling the solver that it can explore any value on the real number line within any bounds you specify. This directly contradicts the boolean notion of 'on' or 'off,' 'true' or 'false,' represented by 1 or 0 respectively.
 
-So, how do we bridge this gap? Instead of trying to force a square peg into a round hole, we use *indicator variables* along with appropriate constraints. The core idea is to introduce a *new* variable that *is* binary, usually defined using `domain=pyomo.Binary`, and then link this binary variable to our continuous variable using logical constraints. Let’s illustrate this with a practical example.
+So, how do we bridge this gap? Instead of trying to force a square peg into a round hole, we use _indicator variables_ along with appropriate constraints. The core idea is to introduce a _new_ variable that _is_ binary, usually defined using `domain=pyomo.Binary`, and then link this binary variable to our continuous variable using logical constraints. Let’s illustrate this with a practical example.
 
 Imagine a simplified resource allocation problem. We have a variable `production_level` which is a continuous variable representing the amount of a product to manufacture. We also have an associated decision variable `factory_is_active`, which dictates whether the factory is running or not. If the factory is off, we want `production_level` to be forced to zero; if the factory is on, `production_level` can assume any value up to its capacity. Here's how we can model this in Pyomo:
 
@@ -56,7 +56,7 @@ print('Factory is active : ', pyo.value(model.factory_is_active))
 print('Production level: ', pyo.value(model.production_level))
 ```
 
-In this snippet, `factory_is_active` acts as our binary variable. When it’s 0, the constraint `production_level <= model.factory_is_active * factory_capacity` effectively forces `production_level` to zero, since the right hand side becomes zero. When `factory_is_active` is 1, the constraint becomes `production_level <= factory_capacity`, allowing `production_level` to vary up to the maximum capacity. This illustrates how we *indirectly* control a continuous variable using a boolean counterpart. Note the inclusion of a non-negativity constraint which can sometimes be vital. Without it, depending on the solver, the production could become negative if the cost is low enough. This is a good example of needing a well-defined model.
+In this snippet, `factory_is_active` acts as our binary variable. When it’s 0, the constraint `production_level <= model.factory_is_active * factory_capacity` effectively forces `production_level` to zero, since the right hand side becomes zero. When `factory_is_active` is 1, the constraint becomes `production_level <= factory_capacity`, allowing `production_level` to vary up to the maximum capacity. This illustrates how we _indirectly_ control a continuous variable using a boolean counterpart. Note the inclusion of a non-negativity constraint which can sometimes be vital. Without it, depending on the solver, the production could become negative if the cost is low enough. This is a good example of needing a well-defined model.
 
 Let’s look at another case involving thresholds. Suppose we have a variable called `temperature` (continuous) and we want to activate a cooling system (binary) only if the temperature exceeds a certain threshold, say 25 degrees celsius.
 
@@ -97,7 +97,7 @@ print('Cooling system = ', pyo.value(model.cooling_system_active))
 
 ```
 
-Here, `cooling_system_active` becomes 1 (active) *only if* the temperature exceeds the threshold, and this constraint makes sure it will be zero otherwise. The big M method as it’s called here is common when dealing with threshold or logical constraints, and this is another way to control variables. Setting `big_m` to an appropriate value is vital for the model to work correctly.
+Here, `cooling_system_active` becomes 1 (active) _only if_ the temperature exceeds the threshold, and this constraint makes sure it will be zero otherwise. The big M method as it’s called here is common when dealing with threshold or logical constraints, and this is another way to control variables. Setting `big_m` to an appropriate value is vital for the model to work correctly.
 
 For a final illustration, consider a scenario where we want to model a minimum level of production that kicks in only when we decide to produce something. The model is similar to the factory model but with a minimum and maximum level.
 

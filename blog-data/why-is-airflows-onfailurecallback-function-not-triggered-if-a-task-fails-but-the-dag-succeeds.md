@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-airflows-onfailurecallback-function-not-triggered-if-a-task-fails-but-the-dag-succeeds"
 ---
 
-, let's tackle this peculiar behavior with Airflow's `on_failure_callback`. I remember facing this exact issue when we were migrating a hefty ETL pipeline to Airflow a few years back; it was baffling initially, as we expected every task failure to trigger the callback regardless of overall dag success. It took some thorough investigation to fully grasp the mechanics at play.
+, peculiar behavior with Airflow's `on_failure_callback`. I remember facing this exact issue when we were migrating a hefty ETL pipeline to Airflow a few years back; it was baffling initially, as we expected every task failure to trigger the callback regardless of overall dag success. It took some thorough investigation to fully grasp the mechanics at play.
 
 The core of the matter lies in the distinction between task states and dag states, and how Airflow orchestrates the execution flow. When a task within a dag encounters a failure, such as a python exception, the task's individual state is marked as "failed." This transition _does_ indeed trigger the various task-level listeners like `on_failure_callback` if they're defined on that _specific task_. However, and this is the critical part, it doesn't necessarily translate into the entire dag failing.
 
@@ -57,7 +57,7 @@ with DAG(
     task_a >> task_b >> task_c
 ```
 
-In this scenario, the `failure_callback_func` _will_ execute when task_b fails, due to it being specified within the `task_b` operator. The DAG will _still_ be marked as successful because, despite task_b failing, task_c is not dependent on its success. The workflow completes without any further impediments.
+In this scenario, the `failure_callback_func` _will_ execute when task*b fails, due to it being specified within the `task_b` operator. The DAG will \_still* be marked as successful because, despite task_b failing, task_c is not dependent on its success. The workflow completes without any further impediments.
 
 Let's explore a variation. Let's say we change the dag so that `task_c` now depends on the _successful_ completion of `task_b`. In this case, the dag would indeed be marked as failed. Here’s that updated code:
 

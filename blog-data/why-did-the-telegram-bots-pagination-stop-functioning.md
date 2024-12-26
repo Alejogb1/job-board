@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-the-telegram-bots-pagination-stop-functioning"
 ---
 
-, let's tackle this one. A non-functioning Telegram bot pagination – I've been down that rabbit hole more times than I care to recall. From my experience, pagination issues with Telegram bots usually don't stem from one single source, but rather a confluence of factors, often subtly interacting in ways that aren't immediately obvious. It’s rarely a case of “one thing broke.” More often, it’s like peeling back the layers of an onion.
+, one. A non-functioning Telegram bot pagination – I've been down that rabbit hole more times than I care to recall. From my experience, pagination issues with Telegram bots usually don't stem from one single source, but rather a confluence of factors, often subtly interacting in ways that aren't immediately obvious. It’s rarely a case of “one thing broke.” More often, it’s like peeling back the layers of an onion.
 
 Let's explore a few likely culprits, based on past experiences, and I'll include some code snippets to illustrate the concepts. I distinctly remember a situation a couple of years back. I was working on a notification bot that pulled data from a third-party API, and its pagination, which had been working fine, suddenly just… stopped. Users would only see the first page of results, and clicking "next" or "previous" buttons did nothing. After a good chunk of debugging, it turned out the issue wasn't the Telegram API _itself_, but rather a combination of my caching strategy, how I was handling offset calculations, and subtle changes in the upstream API's response format.
 

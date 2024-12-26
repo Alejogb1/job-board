@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-prediction-result-vary-each-time-i-run-the-code"
 ---
 
-Let's tackle this head-on. I’ve seen this exact scenario countless times across various machine learning projects, and that subtle, yet frustrating, variation in predictions from run to run is almost always traceable to a few key factors. It's not a bug per se, but rather a consequence of the stochastic nature of several components within the machine learning pipeline. So, let's break it down.
+head-on. I’ve seen this exact scenario countless times across various machine learning projects, and that subtle, yet frustrating, variation in predictions from run to run is almost always traceable to a few key factors. It's not a bug per se, but rather a consequence of the stochastic nature of several components within the machine learning pipeline. So, let's break it down.
 
 First, and arguably the most common culprit, is the random initialization of model parameters. Most machine learning algorithms, especially neural networks, initialize their weights and biases to random values before training. This is crucial because if all neurons started with the same weight, they would learn the same features, rendering the network rather useless. Because this initialization is random, different runs will almost always produce slightly different starting points in the parameter space. This alone can lead to varied prediction results, especially if the model hasn't converged to a consistent solution.
 
@@ -99,7 +99,7 @@ print(f"Run 4 Predictions (Seed 42): {predictions4[:3].flatten()}")
 
 ```
 
-Here, even with setting the seeds within tensorflow and numpy, you will notice that the first two outputs, run without a specific seed, show variance and that setting a seed makes the runs reproducible, but even this does not eliminate *all* potential variation. For example, while the model’s weights initialised the same due to the seed, the underlying CUDA libraries might use other random processes, hence the slight variations even across runs with fixed seeds if you’re running on a GPU. The goal is typically to reduce this variation as much as practically possible.
+Here, even with setting the seeds within tensorflow and numpy, you will notice that the first two outputs, run without a specific seed, show variance and that setting a seed makes the runs reproducible, but even this does not eliminate _all_ potential variation. For example, while the model’s weights initialised the same due to the seed, the underlying CUDA libraries might use other random processes, hence the slight variations even across runs with fixed seeds if you’re running on a GPU. The goal is typically to reduce this variation as much as practically possible.
 
 **Example 3: PyTorch with Data Loaders**
 
@@ -167,13 +167,13 @@ So, how can we manage this variation?
 3.  **Average Multiple Runs:** It's a good practice to train your model multiple times using the same seed and average the predictions. This often produces a more robust result.
 4.  **Optimize Hyperparameters**: The optimizer (e.g. adam, sgd) and their parameters can impact stability. Experimenting with the learning rate, batch size and other parameters can often reduce variations and result in models that converge reliably.
 5.  **Batch Normalization:** Batch norm can help with model stability and generalization. It works by normalizing the input to each layer within the network, reducing the sensitivity of internal layer outputs to variations in the input data.
-6. **Use an ensemble:** Rather than training one model, you could train multiple and take the average or majority vote of their prediction. This approach can lead to more consistent outputs.
-7. **Use deterministic CUDA functions (where appropriate):** CUDA can sometimes lead to variations in calculation. Ensure you’re using deterministic CUDA operations, though this can lead to a decrease in computational efficiency.
+6.  **Use an ensemble:** Rather than training one model, you could train multiple and take the average or majority vote of their prediction. This approach can lead to more consistent outputs.
+7.  **Use deterministic CUDA functions (where appropriate):** CUDA can sometimes lead to variations in calculation. Ensure you’re using deterministic CUDA operations, though this can lead to a decrease in computational efficiency.
 
 For more information, I recommend reading the following:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book offers an exhaustive explanation of deep learning foundations, including optimizer dynamics and the impact of randomness in training.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book provides practical insights on managing randomness with working examples in scikit-learn, TensorFlow and Keras.
-*   **Research Papers on Optimization Algorithms:** Papers focusing on specific optimization algorithms (e.g., Adam, RMSprop) often discuss their stochastic properties and how they affect model convergence. Look for papers with titles related to "stochastic optimization," "batch normalization," or "model convergence."
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book offers an exhaustive explanation of deep learning foundations, including optimizer dynamics and the impact of randomness in training.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book provides practical insights on managing randomness with working examples in scikit-learn, TensorFlow and Keras.
+- **Research Papers on Optimization Algorithms:** Papers focusing on specific optimization algorithms (e.g., Adam, RMSprop) often discuss their stochastic properties and how they affect model convergence. Look for papers with titles related to "stochastic optimization," "batch normalization," or "model convergence."
 
 The variations you’re seeing are not bugs, but fundamental aspects of stochastic learning. Understanding these causes is the first step to mitigating them. By strategically setting random seeds, training for long enough, or by averaging multiple runs you can significantly reduce this variation and create a more robust, predictable system.

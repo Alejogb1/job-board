@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-dataproc-job-messages-displayed-in-airflow"
 ---
 
-, let's tackle this one. I've definitely been in the trenches with Dataproc and Airflow integration before, and the job message display issue is a common stumbling block. It’s frustrating, especially when you're relying on those messages for debugging and monitoring. Let me break down why this occurs and how to address it, drawing from past projects where I've encountered this exact scenario.
+, one. I've definitely been in the trenches with Dataproc and Airflow integration before, and the job message display issue is a common stumbling block. It’s frustrating, especially when you're relying on those messages for debugging and monitoring. Let me break down why this occurs and how to address it, drawing from past projects where I've encountered this exact scenario.
 
 The fundamental issue lies in how Dataproc job execution and Airflow's operator interactions are structured. Dataproc jobs, fundamentally, are managed externally to Airflow. When you submit a job using Airflow's `DataprocSubmitJobOperator`, Airflow triggers the job creation process on the Google Cloud side, then essentially goes into a monitoring loop. It’s not actively capturing the streaming output of the job _during_ its execution. Instead, Airflow polls the Dataproc api for the job's status and final logs after the job completes or fails. Job messages, which we typically see in the Dataproc web console or using the gcloud sdk, are often part of the job's _runtime_ output. This isn't directly piped back to Airflow by default. Airflow primarily cares about the final state: success or failure and logs.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-json-data-before-an-airflow-dag-runs"
 ---
 
-, let's tackle this. I’ve definitely been down this road before, a few times actually, and it’s a surprisingly common challenge. The core issue is accessing json data _before_ airflow even kicks off a dag, meaning before any tasks are scheduled and executed. This implies we need to think outside the box a bit, moving beyond the usual airflow operators. It's less about dag _execution_ and more about dag _definition_ and how we provide those definitions with the necessary data.
+, . I’ve definitely been down this road before, a few times actually, and it’s a surprisingly common challenge. The core issue is accessing json data _before_ airflow even kicks off a dag, meaning before any tasks are scheduled and executed. This implies we need to think outside the box a bit, moving beyond the usual airflow operators. It's less about dag _execution_ and more about dag _definition_ and how we provide those definitions with the necessary data.
 
 The fundamental problem is that airflow dags are, at their core, python scripts. They are parsed and translated into task graphs, but this all happens _before_ the actual scheduling process. Therefore, if we want to inject json data into our dag before it's even scheduled, we have to intercept that process. Here’s how I've generally approached this, which has worked well in my experience, especially when dealing with dynamic configurations or parameters that frequently change.
 

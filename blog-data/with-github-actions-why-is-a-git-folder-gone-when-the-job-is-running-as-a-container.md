@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-github-actions-why-is-a-git-folder-gone-when-the-job-is-running-as-a-container"
 ---
 
-, let's tackle this git folder disappearance act within github actions containers. i've bumped into this particular situation more than once, and it always comes down to a fundamental understanding of how containers and git repos interact in the actions runner environment.
+, git folder disappearance act within github actions containers. i've bumped into this particular situation more than once, and it always comes down to a fundamental understanding of how containers and git repos interact in the actions runner environment.
 
 it seems like the user is expecting the `.git` folder, with all its history, to be readily available inside a container launched by github actions, but finds that it’s missing. that’s a common point of confusion, and it stems from the way actions executes your workflows in a containerized setting.
 

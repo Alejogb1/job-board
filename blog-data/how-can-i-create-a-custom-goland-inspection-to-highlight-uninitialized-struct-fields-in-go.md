@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-create-a-custom-goland-inspection-to-highlight-uninitialized-struct-fields-in-go"
 ---
 
-Let's tackle this. I remember a particularly thorny project a few years back where uninitialized struct fields were silently wreaking havoc, leading to some unpredictable behavior that took far too long to track down. A custom GoLand inspection to highlight these issues early would have been invaluable. So, while it's not built-in, creating one isn’t too complex, but requires a grasp of Go’s abstract syntax tree (AST) and the GoLand plugin API.
+. I remember a particularly thorny project a few years back where uninitialized struct fields were silently wreaking havoc, leading to some unpredictable behavior that took far too long to track down. A custom GoLand inspection to highlight these issues early would have been invaluable. So, while it's not built-in, creating one isn’t too complex, but requires a grasp of Go’s abstract syntax tree (AST) and the GoLand plugin API.
 
-First, let’s clarify what we mean by “uninitialized struct fields.” In Go, if you declare a struct variable without explicitly assigning values to its fields, those fields are initialized with their zero values (e.g., `0` for integers, `""` for strings, `false` for booleans, and `nil` for pointers, slices, maps, functions, and channels). This isn't always a problem, of course. Sometimes, the zero value is perfectly acceptable and even intended. The issue we’re targeting is when a field *should* have a specific, non-zero value but is left to its default, leading to logical errors.
+First, let’s clarify what we mean by “uninitialized struct fields.” In Go, if you declare a struct variable without explicitly assigning values to its fields, those fields are initialized with their zero values (e.g., `0` for integers, `""` for strings, `false` for booleans, and `nil` for pointers, slices, maps, functions, and channels). This isn't always a problem, of course. Sometimes, the zero value is perfectly acceptable and even intended. The issue we’re targeting is when a field _should_ have a specific, non-zero value but is left to its default, leading to logical errors.
 
 GoLand’s plugin architecture allows us to write custom inspections by leveraging its IntelliJ platform. We’ll primarily be dealing with two key components: the PSI (Program Structure Interface) that represents the source code as a tree structure and the inspection API, which allows us to define checks and highlight issues.
 
@@ -73,7 +73,7 @@ public class UninitializedStructFieldInspection extends LocalInspectionTool {
                         return e.getText();
                 else
                         return null;});
-        
+
        structType.getStructBody().getFieldDeclarationList().forEach(fieldDeclaration -> {
             if (fieldDeclaration.getFieldDefinitionList().isEmpty()) return;
             String fieldName = fieldDeclaration.getFieldDefinitionList().get(0).getText();
@@ -85,6 +85,7 @@ public class UninitializedStructFieldInspection extends LocalInspectionTool {
     }
 }
 ```
+
 This code snippet focuses on identifying `GoStructLiteral` elements (our struct literals), resolving the underlying type of the struct (using `resolveType`), and retrieving the `GoStructType` information, which contains details about its fields. The `checkFields` method would be called from within this code block.
 
 **Snippet 2: Checking Initialized Fields**
@@ -98,7 +99,7 @@ private void checkFields(@NotNull GoStructLiteral literal, GoStructType structTy
                         return e.getText();
                 else
                         return null;});
-        
+
        structType.getStructBody().getFieldDeclarationList().forEach(fieldDeclaration -> {
             if (fieldDeclaration.getFieldDefinitionList().isEmpty()) return;
             String fieldName = fieldDeclaration.getFieldDefinitionList().get(0).getText();
@@ -109,6 +110,7 @@ private void checkFields(@NotNull GoStructLiteral literal, GoStructType structTy
         });
     }
 ```
+
 This snippet goes inside the `buildVisitor` method. Here we are getting the actual fields which have been initialised by the literal from the `GoStructLiteral` component using the `GoElementKey`. Then, we take each field definition from the `GoStructType` and ensure that each of them have been initialised, and if not then register it to the `ProblemsHolder`.
 
 **Snippet 3: Registering a Problem**
@@ -116,6 +118,7 @@ This snippet goes inside the `buildVisitor` method. Here we are getting the actu
 ```java
  holder.registerProblem(literal, "Uninitialized field: '" + fieldName + "'", ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
 ```
+
 This snippet from within `checkFields` demonstrates how to mark a specific location within the code with a problem. `holder` is a `ProblemsHolder` object that provides functionality to mark a piece of code as a problem to the user. `ProblemHighlightType.GENERIC_ERROR_OR_WARNING` allows us to specify the type of the problem, such as warning or error.
 
 Building this plugin requires setting up an IntelliJ plugin development environment and having the Go plugin's API readily available. Go through the official IntelliJ plugin documentation; it is the most reliable and accurate source of information for setting this up. Additionally, the `Structure and Interpretation of Computer Programs` (Abelson, Sussman & Sussman) is highly valuable for grasping the foundational concepts of language structure and representation, which underpins understanding ASTs and PSI. Finally, the Go language specification will be crucial for thoroughly understanding the language semantics we're attempting to analyze. I recommend going through the specification when you are attempting to cover additional language features.

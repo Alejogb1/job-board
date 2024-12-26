@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-bert-use-the-tanh-activation-function-instead-of-gelu"
 ---
 
-Let's tackle this head-on. I remember a particularly thorny project a few years back, involving a custom language model for medical text. We were experimenting with various activation functions, and the seemingly simple choice between tanh and GELU became surprisingly pivotal. The conventional wisdom at the time leaned heavily on ReLU and its variants for efficiency, but that project really highlighted how crucial it is to understand the nuances of activation functions within specific architectures like BERT.
+head-on. I remember a particularly thorny project a few years back, involving a custom language model for medical text. We were experimenting with various activation functions, and the seemingly simple choice between tanh and GELU became surprisingly pivotal. The conventional wisdom at the time leaned heavily on ReLU and its variants for efficiency, but that project really highlighted how crucial it is to understand the nuances of activation functions within specific architectures like BERT.
 
 The short answer to why BERT originally used tanh instead of GELU is rooted in historical context and architectural considerations, not necessarily a categorical superiority of tanh in all cases. BERT, released in 2018, predates the widespread adoption and empirical validation of GELU. While GELU is now the go-to for many modern transformers, including later iterations of some BERT-inspired models, its dominance is a more recent phenomenon.
 
@@ -185,8 +185,9 @@ print("Output using GELU")
 print(output_gelu.shape)
 
 ```
+
 Here we see two transformers blocks implemented with different activation functions, demonstrating how straightforward it is to incorporate these activation functions within existing architectures.
 
-The takeaway here isn't that tanh is *better* or *worse* than GELU— but that each has different properties that affect the performance, training stability and overall architecture design. Early on, the transformer architecture leaned on what was familiar. Now, with broader research and the benefits of GELU becoming apparent, most modern variants of BERT are using it instead, or even other more recent alternatives. The choice isn't static and reflects an ongoing process of refinement in the field.
+The takeaway here isn't that tanh is _better_ or _worse_ than GELU— but that each has different properties that affect the performance, training stability and overall architecture design. Early on, the transformer architecture leaned on what was familiar. Now, with broader research and the benefits of GELU becoming apparent, most modern variants of BERT are using it instead, or even other more recent alternatives. The choice isn't static and reflects an ongoing process of refinement in the field.
 
 If you're looking to dive deeper into this, I'd recommend starting with the original transformer paper, "Attention is All You Need," by Vaswani et al. Then, for a good understanding of activation functions, the "Deep Learning" book by Goodfellow, Bengio, and Courville provides a comprehensive background. Finally, the original GELU paper by Hendrycks and Gimpel provides a detailed look at GELU. These resources will put the historical and theoretical context behind these activation functions. It will also highlight why models sometimes rely on one particular function over another in certain circumstances. It was a practical choice, not necessarily an inherent superiority.

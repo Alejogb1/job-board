@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-20-encapsulate-dags-in-classes-using-the-taskflow-api"
 ---
 
-Let's tackle this one; it's a question I've seen pop up a fair bit, and it’s often an indicator of a developer moving towards more robust and maintainable Airflow deployments. I remember a particularly complex project a couple of years back involving multiple data integrations that really highlighted the need for better DAG organization. The sheer volume of code in those monolithic DAG files was making even basic updates a perilous venture. That's where class-based DAG encapsulation really shone, and the Taskflow API in Airflow 2.0 makes it much more elegant than previous iterations. So, let’s break down how you can approach this.
+one; it's a question I've seen pop up a fair bit, and it’s often an indicator of a developer moving towards more robust and maintainable Airflow deployments. I remember a particularly complex project a couple of years back involving multiple data integrations that really highlighted the need for better DAG organization. The sheer volume of code in those monolithic DAG files was making even basic updates a perilous venture. That's where class-based DAG encapsulation really shone, and the Taskflow API in Airflow 2.0 makes it much more elegant than previous iterations. So, let’s break down how you can approach this.
 
 The key here is transitioning from procedural DAG definitions to a more object-oriented approach. Instead of a sprawling set of globally defined tasks and operators, we wrap related tasks and their configurations within a class. This encapsulates logical units of work, promoting reusability and reducing the chance of name clashes, while improving overall code readability. The Taskflow API, with decorators like `@task` and `@dag`, is central to this process.
 
@@ -180,6 +180,7 @@ pipeline2 = pipeline_manager.build_pipeline("csv_pipeline",data2)
 pipeline2()
 
 ```
+
 Here, the `SubTaskLibrary` defines common data manipulation tasks, and the `PipelineManager` constructs DAGs with these shared tasks. This approach is particularly useful when you have pipelines that perform similar operations but on slightly different data or with different parameters. The DAGs are built dynamically, demonstrating how to create multiple different workflows with shared logic. This approach is ideal if you have a large number of workflows with similar requirements.
 
 For further reading, I'd recommend "Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian Rutger de Ruiter, for a comprehensive understanding of Airflow, including DAG structure and design patterns. The official Apache Airflow documentation is also essential, particularly the sections on the Taskflow API and custom operators. I’d also suggest looking into "Designing Data-Intensive Applications" by Martin Kleppmann, which while not strictly about airflow, will help you understand best practices when constructing complex data pipelines.

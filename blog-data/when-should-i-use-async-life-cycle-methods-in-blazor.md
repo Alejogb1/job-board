@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "when-should-i-use-async-life-cycle-methods-in-blazor"
 ---
 
-Let's tackle this. It's not uncommon for developers, particularly those newer to Blazor, to find themselves at a crossroads when deciding whether to embrace asynchronous lifecycle methods. I’ve certainly been there. In my early days with Blazor, before .net 5 came along and refined the lifecycle quite a bit, i sometimes found myself chasing elusive bugs arising from incorrectly mixing synchronous and asynchronous operations within these key component hooks. So, let’s break down when using the async variations really matters, and why you wouldn't always want to reach for them by default.
+. It's not uncommon for developers, particularly those newer to Blazor, to find themselves at a crossroads when deciding whether to embrace asynchronous lifecycle methods. I’ve certainly been there. In my early days with Blazor, before .net 5 came along and refined the lifecycle quite a bit, i sometimes found myself chasing elusive bugs arising from incorrectly mixing synchronous and asynchronous operations within these key component hooks. So, let’s break down when using the async variations really matters, and why you wouldn't always want to reach for them by default.
 
-The core of the matter lies in the inherently non-blocking nature of asynchronous operations. Blazor's rendering pipeline is primarily single-threaded, operating on the user interface (ui) thread. Blocking this ui thread with long-running synchronous operations leads to a frozen interface, an unresponsive application, and a poor user experience. Thus, if we have any work that could potentially cause a delay—data fetching from a database or external api, heavy file operations, time-consuming calculations—that *needs* to be handled asynchronously to avoid blocking the ui.
+The core of the matter lies in the inherently non-blocking nature of asynchronous operations. Blazor's rendering pipeline is primarily single-threaded, operating on the user interface (ui) thread. Blocking this ui thread with long-running synchronous operations leads to a frozen interface, an unresponsive application, and a poor user experience. Thus, if we have any work that could potentially cause a delay—data fetching from a database or external api, heavy file operations, time-consuming calculations—that _needs_ to be handled asynchronously to avoid blocking the ui.
 
 The synchronous lifecycle methods (e.g., `OnInitialized`, `OnParametersSet`) are ideal for quick, lightweight operations. Things like setting default property values, simple logic based on parameters, and other fast-executing code belong here. But let’s say we need data to render our component. If we try to pull that data synchronously, perhaps from some database, inside `OnInitialized`, that operation will stall our ui thread until completion.
 
@@ -147,6 +147,7 @@ else
 
 }
 ```
+
 In this scenario, `OnParametersSetAsync` is crucial. When the `Id` parameter changes, we need to re-fetch data. By making it async, our ui is not frozen while we await for both asynchronous operations in parallel. Also using the `Task.WhenAll` pattern allows us to load multiple pieces of data asynchronously, which improves performance because it does not lock in to one operation at a time, reducing total load time.
 
 As a general guideline, use `OnInitializedAsync` and `OnParametersSetAsync` when you have i/o bound or otherwise long-running operations, like network calls or file access. For quick operations, stick with their synchronous counterparts. While, as mentioned, proper error handling and context management is crucial when working with asynchronous code, these examples demonstrate the basic principle.

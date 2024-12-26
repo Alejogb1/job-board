@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-docker-compose-environment-variables-in-portainer"
 ---
 
-, let's tackle this one. I've certainly spent my share of time navigating the complexities of docker orchestration, and the interplay between docker compose, environment variables, and tools like Portainer is a common point of friction. It's not always immediately obvious how to get these pieces working harmoniously, but it's definitely achievable with a clear understanding of the underlying mechanisms.
+, one. I've certainly spent my share of time navigating the complexities of docker orchestration, and the interplay between docker compose, environment variables, and tools like Portainer is a common point of friction. It's not always immediately obvious how to get these pieces working harmoniously, but it's definitely achievable with a clear understanding of the underlying mechanisms.
 
 The core issue here boils down to how environment variables are propagated when using docker compose alongside a container management system like Portainer. When you're running `docker-compose up` directly from your command line, the shell’s environment variables are often implicitly available to the compose file. However, when Portainer takes over orchestration, it’s running in a different context. This means those local shell environment variables are not automatically inherited. Think of it like separate sandboxes – one where you run commands, and one where Portainer lives. They don't natively share information unless we explicitly configure it.
 

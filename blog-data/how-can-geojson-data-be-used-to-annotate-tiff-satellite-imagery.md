@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-geojson-data-be-used-to-annotate-tiff-satellite-imagery"
 ---
 
-, let's tackle this. Geojson and tiff imagery, a classic pairing for spatial analysis, and one I've spent quite a bit of time on, especially back in my days working on agricultural yield mapping projects. It's not always straightforward, but understanding the core concepts makes the process manageable.
+, . Geojson and tiff imagery, a classic pairing for spatial analysis, and one I've spent quite a bit of time on, especially back in my days working on agricultural yield mapping projects. It's not always straightforward, but understanding the core concepts makes the process manageable.
 
 The crux of the issue lies in bridging two very different worlds: vector data (geojson, representing discrete features like polygons) and raster data (tiff images, representing continuous fields like satellite imagery). To annotate, we're essentially using the geojson to define areas of interest on the tiff. We’re not directly painting the geojson on the tiff; instead, we leverage the georeferencing metadata within both files to align and interpret the geojson data spatially in relation to the image pixels.
 

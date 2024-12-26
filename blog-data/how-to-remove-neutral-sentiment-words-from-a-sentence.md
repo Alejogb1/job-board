@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-remove-neutral-sentiment-words-from-a-sentence"
 ---
 
-Let's tackle this problem, shall we? I've actually encountered this exact scenario multiple times, particularly during my tenure working on natural language processing (NLP) projects focused on sentiment analysis. Identifying and removing what we often term 'neutral-sentiment words'—or sometimes 'stop words' in a broader context, though we're getting a bit more nuanced here—is a crucial preprocessing step when you want to focus on the truly impactful parts of a text. It isn't as simple as just having a predefined list; the context can drastically change whether a word is truly neutral or holds some sentiment.
+problem, shall we? I've actually encountered this exact scenario multiple times, particularly during my tenure working on natural language processing (NLP) projects focused on sentiment analysis. Identifying and removing what we often term 'neutral-sentiment words'—or sometimes 'stop words' in a broader context, though we're getting a bit more nuanced here—is a crucial preprocessing step when you want to focus on the truly impactful parts of a text. It isn't as simple as just having a predefined list; the context can drastically change whether a word is truly neutral or holds some sentiment.
 
 The core idea revolves around filtering out words that don't typically contribute to positive or negative sentiment. These often include articles (a, an, the), prepositions (of, in, to), conjunctions (and, but, or), and frequently used pronouns (I, he, she, it, they). But there’s a level of subtlety beyond that. For instance, "it" might be neutral in "it is raining," but it could be part of a negative sentiment in, say, "it's terrible." Therefore, understanding the lexical context is essential. That said, let’s focus on handling the common and largely unambiguous cases where we can safely assume neutrality.
 
@@ -35,6 +35,7 @@ filtered_sentence = remove_neutral_words_basic(sentence)
 print(f"Original: {sentence}")
 print(f"Filtered: {filtered_sentence}")
 ```
+
 This first example showcases the use of nltk's stopwords and word_tokenize methods to demonstrate the removal process. Notice I converted the sentence to lowercase before tokenizing to ensure consistent matching. Also, `nltk.download()` is included in case nltk resources aren't locally available.
 
 **Snippet 2: Custom Stop Word List and Punctuation Removal**

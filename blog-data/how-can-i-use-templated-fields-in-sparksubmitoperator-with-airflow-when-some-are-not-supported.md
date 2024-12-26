@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-use-templated-fields-in-sparksubmitoperator-with-airflow-when-some-are-not-supported"
 ---
 
-Let's tackle this. I've encountered similar scenarios numerous times, particularly when integrating older Spark deployments with more contemporary Airflow workflows. The SparkSubmitOperator, while powerful, does sometimes present challenges with its templating engine, particularly when dealing with arguments it doesn't inherently recognize as templatable. The crux of the issue isn't that templating *can't* happen, but rather that the operator only directly supports templating on a predefined set of parameters.
+. I've encountered similar scenarios numerous times, particularly when integrating older Spark deployments with more contemporary Airflow workflows. The SparkSubmitOperator, while powerful, does sometimes present challenges with its templating engine, particularly when dealing with arguments it doesn't inherently recognize as templatable. The crux of the issue isn't that templating _can't_ happen, but rather that the operator only directly supports templating on a predefined set of parameters.
 
-The key to overcoming this limitation is understanding where Airflow’s templating engine interacts with the operator, and exploiting that interface. Basically, Airflow uses Jinja2 for rendering templates, and it does so *before* passing the parameters to the underlying system call that triggers `spark-submit`. Thus, the problem isn't that templating *as a concept* fails, but the operator might not interpret the parameter that we want to be templated. I’ve seen this manifest as the application of default values when the template failed.
+The key to overcoming this limitation is understanding where Airflow’s templating engine interacts with the operator, and exploiting that interface. Basically, Airflow uses Jinja2 for rendering templates, and it does so _before_ passing the parameters to the underlying system call that triggers `spark-submit`. Thus, the problem isn't that templating _as a concept_ fails, but the operator might not interpret the parameter that we want to be templated. I’ve seen this manifest as the application of default values when the template failed.
 
 My experience tells me there are primarily two approaches here, each with its use cases: the first leveraging the `application_args` parameter, and the second involving a more hands-on approach with the `conf` parameter. Let me explain these, and demonstrate with some example code.
 
@@ -73,7 +73,7 @@ with DAG(
 
 Here we set `spark.my_temp_dir` using a templated string. The templated value `/tmp/2023-01-01/spark_temp` would only exist for that date, and be a different path for the next. Within your Spark application (in PySpark or Scala), you would then fetch this property:
 
-*PySpark example within spark_app.py:*
+_PySpark example within spark_app.py:_
 
 ```python
 from pyspark import SparkContext, SparkConf
@@ -85,7 +85,7 @@ print(f"The temporary directory is: {temp_dir_location}")
 # ... your application logic using temp_dir_location ...
 ```
 
-*Scala example within spark_app.scala:*
+_Scala example within spark_app.scala:_
 
 ```scala
 import org.apache.spark.{SparkConf, SparkContext}
@@ -108,8 +108,8 @@ This approach requires slightly more effort in your Spark application to retriev
 
 **When to choose each approach:**
 
-*   Use `application_args` when your parameter is directly an input for your application and not intended for Spark configurations or execution environment, this is the more common approach.
-*   Use `conf` when the parameter isn’t directly an application argument, needs to influence spark's setup, or needs to be a more dynamic configuration. This is the more advanced, but also more flexible approach.
+- Use `application_args` when your parameter is directly an input for your application and not intended for Spark configurations or execution environment, this is the more common approach.
+- Use `conf` when the parameter isn’t directly an application argument, needs to influence spark's setup, or needs to be a more dynamic configuration. This is the more advanced, but also more flexible approach.
 
 **Further Reading**
 

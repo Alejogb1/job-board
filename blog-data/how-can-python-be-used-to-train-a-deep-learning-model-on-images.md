@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-python-be-used-to-train-a-deep-learning-model-on-images"
 ---
 
-, let's tackle this one. I’ve seen this pattern countless times over the years, especially when migrating from more traditional machine learning approaches to deep learning. Training deep learning models on images using Python is indeed a multi-faceted task, and it's not always as straightforward as some tutorials might suggest. It's crucial to understand the underlying mechanics to get things running smoothly, and more importantly, to be able to debug and optimize effectively.
+, one. I’ve seen this pattern countless times over the years, especially when migrating from more traditional machine learning approaches to deep learning. Training deep learning models on images using Python is indeed a multi-faceted task, and it's not always as straightforward as some tutorials might suggest. It's crucial to understand the underlying mechanics to get things running smoothly, and more importantly, to be able to debug and optimize effectively.
 
 The general process can be broadly broken down into a few key areas: data loading and preprocessing, model definition, model training, and finally, evaluation. Python excels at orchestrating all of these stages, thanks to its powerful libraries specifically tailored for machine learning and deep learning, such as TensorFlow and PyTorch. Both frameworks offer similar functionalities, but I've personally found TensorFlow's `tf.data` API more intuitive for managing large image datasets and complex preprocessing pipelines.
 

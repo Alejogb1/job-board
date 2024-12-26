@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-swift-non-actor-isolated-closures-causing-issues"
 ---
 
-Let's tackle this one. I recall a rather frustrating debugging session back in my days working on a large scale mobile application, which involved a very similar issue. We were aggressively adopting swift's concurrency model, and initially, things looked incredibly promising. However, subtle bugs started creeping in that seemed almost impossible to pinpoint. The root cause, more often than not, was indeed how non-actor isolated closures interacted with the broader concurrency landscape. It's a topic that often gets glossed over but can lead to severe headaches if not understood well.
+one. I recall a rather frustrating debugging session back in my days working on a large scale mobile application, which involved a very similar issue. We were aggressively adopting swift's concurrency model, and initially, things looked incredibly promising. However, subtle bugs started creeping in that seemed almost impossible to pinpoint. The root cause, more often than not, was indeed how non-actor isolated closures interacted with the broader concurrency landscape. It's a topic that often gets glossed over but can lead to severe headaches if not understood well.
 
 The fundamental problem arises from the implicit contract surrounding closures in swift, particularly those that are not explicitly actor-isolated. When a closure is not marked as `@MainActor` or part of an actor's isolated context, it defaults to being non-isolated. The term "non-isolated" might seem straightforward, but its behavior within a concurrent system isn't always intuitive. Effectively, it means the closure doesn’t inherently belong to any specific execution context. It can be invoked from any thread, any actor, and at any time, without guarantees of mutual exclusivity, which is a real problem when we start interacting with shared mutable state.
 
@@ -146,6 +146,7 @@ class MyViewController: UIViewController {
     }
 }
 ```
+
 Here we mark `updateLabelText` with `@MainActor` to indicate that this function must run on the main thread. The compiler now forces you to call this asynchronously and will not compile the code if you forget the await. This allows you to update UIKit from a global queue and the compiler ensures it is done safely from the main thread. Note the call site also had to change to accommodate this.
 
 The key lesson is that not all code needs actor isolation. If a closure doesn’t access shared mutable state, then a non-isolated closure is perfectly safe. It's about identifying when such isolation is required. If you have a closure that is going to update shared variables it must execute from within an isolated context, either an actor, or `@MainActor`.

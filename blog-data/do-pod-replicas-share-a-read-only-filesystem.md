@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "do-pod-replicas-share-a-read-only-filesystem"
 ---
 
-Let's tackle this one. I’ve seen a fair number of deployments where this question comes up, usually mid-troubleshooting when things aren't quite behaving as expected. So, do pod replicas share a read-only filesystem? The short answer is: _typically_, no, they do not share a read-only filesystem directly between them in the way one might initially assume. There's more nuance involved, and understanding it is critical for designing robust and predictable containerized applications.
+one. I’ve seen a fair number of deployments where this question comes up, usually mid-troubleshooting when things aren't quite behaving as expected. So, do pod replicas share a read-only filesystem? The short answer is: _typically_, no, they do not share a read-only filesystem directly between them in the way one might initially assume. There's more nuance involved, and understanding it is critical for designing robust and predictable containerized applications.
 
 When we talk about containerized applications in kubernetes, particularly when using pod replicas, each replica effectively gets its own ephemeral filesystem. This is foundational to how containerization provides isolation. The base image pulled for the container, as declared in your container manifest, does often present as read-only, but that’s more about image immutability during the container creation process than anything else. The containers, and by extension, their pods, get a _copy_ of this base image layered with a writable layer on top. This copy is separate for each pod replica, not shared.
 

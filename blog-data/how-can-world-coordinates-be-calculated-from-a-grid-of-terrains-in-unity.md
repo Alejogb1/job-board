@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-world-coordinates-be-calculated-from-a-grid-of-terrains-in-unity"
 ---
 
-Let's tackle this, shall we? I've certainly spent my fair share of time elbow-deep in Unity's coordinate systems. Calculating world coordinates from a grid of terrains, while seemingly straightforward, can quickly spiral into a debugging exercise if not approached systematically. I recall a project years back, involving procedural terrain generation for a strategy game; we initially stumbled with some quirky placement issues, all stemming from misunderstandings of how the grid, terrain, and world coordinate spaces interplay. Here's how I’d approach this, drawing on that experience, and offering some solid code examples.
+, shall we? I've certainly spent my fair share of time elbow-deep in Unity's coordinate systems. Calculating world coordinates from a grid of terrains, while seemingly straightforward, can quickly spiral into a debugging exercise if not approached systematically. I recall a project years back, involving procedural terrain generation for a strategy game; we initially stumbled with some quirky placement issues, all stemming from misunderstandings of how the grid, terrain, and world coordinate spaces interplay. Here's how I’d approach this, drawing on that experience, and offering some solid code examples.
 
-The primary challenge lies in the fact that a grid of terrains doesn't inherently possess a one-to-one correspondence with the world coordinate system. Your grid might represent individual terrain tiles, each of which lives within its *local* coordinate space relative to its terrain object. The world coordinates, conversely, are the absolute positions within the game environment. To transition effectively between these spaces, you need to apply a series of transformations.
+The primary challenge lies in the fact that a grid of terrains doesn't inherently possess a one-to-one correspondence with the world coordinate system. Your grid might represent individual terrain tiles, each of which lives within its _local_ coordinate space relative to its terrain object. The world coordinates, conversely, are the absolute positions within the game environment. To transition effectively between these spaces, you need to apply a series of transformations.
 
 Essentially, we're reverse-engineering the process that Unity implicitly handles when you create terrain objects and place them in the world. You need to account for: the grid position, the terrain's size, the terrain's origin point within the world, and any rotation that might be applied to the terrain object itself.
 
@@ -55,6 +55,7 @@ public class TerrainWorldCalculator : MonoBehaviour
     }
 }
 ```
+
 This is a simple case. The code takes the `gridOriginWorldPosition` and offsets it according to the provided grid indices and terrain dimensions. It assumes your terrain is perfectly flat. For more realistic scenarios, we need to handle elevation within the terrain itself.
 
 Here's an adaptation to handle terrain height. This assumes you have a reference to your terrain object:
@@ -154,7 +155,7 @@ public class TerrainWorldCalculatorRotated : MonoBehaviour
         //calculate local position in terrain space for height lookup
         float localX = worldPosition.x - currentTerrain.transform.position.x;
         float localZ = worldPosition.z - currentTerrain.transform.position.z;
-        
+
         // Add terrain height at calculated local position
         worldPosition.y = currentTerrain.SampleHeight(new Vector3(localX, 0, localZ)) + currentTerrain.transform.position.y;
 
