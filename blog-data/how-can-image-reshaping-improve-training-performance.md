@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-image-reshaping-improve-training-performance"
 ---
 
-, let’s tackle this. It’s a topic I’ve spent a fair amount of time on, particularly back in my days working on a large-scale object detection project for aerial imagery analysis. Image reshaping, when approached strategically, can indeed have a notable impact on training performance, especially in deep learning models. It’s not merely about resizing or cropping; it’s about optimizing the input data for the model’s architecture and learning capacity.
+It’s a topic I’ve spent a fair amount of time on, particularly back in my days working on a large-scale object detection project for aerial imagery analysis. Image reshaping, when approached strategically, can indeed have a notable impact on training performance, especially in deep learning models. It’s not merely about resizing or cropping; it’s about optimizing the input data for the model’s architecture and learning capacity.
 
 The fundamental idea rests on data preprocessing, specifically ensuring that the input images are in a format conducive to the learning process. Deep learning models often have very specific requirements regarding input dimensions. Mismatches here can lead to either suboptimal learning or even outright errors. But more importantly, reshaping can address practical issues of data scarcity and computational efficiency. It allows us to generate more training examples without capturing new images. This is huge because gathering and annotating image datasets can be costly and time-consuming.
 

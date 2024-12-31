@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-modify-an-openai-gym-environments-attributes"
 ---
 
-, let’s tackle this. From personal experience, I've seen quite a few folks stumble over this exact issue, and it usually boils down to a fundamental misunderstanding of how OpenAI Gym environments are structured, specifically their design for safety and reproducibility in reinforcement learning experiments.
+From personal experience, I've seen quite a few folks stumble over this exact issue, and it usually boils down to a fundamental misunderstanding of how OpenAI Gym environments are structured, specifically their design for safety and reproducibility in reinforcement learning experiments.
 
 The short answer is: you're encountering this problem because gym environments are designed to be _immutable_ from the outside once they are instantiated. You shouldn't be directly altering their internal attributes. It's not a bug, but rather a feature built to ensure reliable simulation of the environment state across different runs. Think of it as a safety net, preventing unintended modifications from altering the environment's intended behavior.
 

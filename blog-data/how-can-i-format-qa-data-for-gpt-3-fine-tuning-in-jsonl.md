@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-format-qa-data-for-gpt-3-fine-tuning-in-jsonl"
 ---
 
-, shall we? I recall a project back in '19 where we were pushing the limits of natural language understanding, leveraging early models that, frankly, paled in comparison to the likes of GPT-3. We were constantly tinkering with data formats to squeeze every ounce of performance out of those systems. Formatting Q&A data correctly for fine-tuning, specifically in jsonl, is a critical step, and it’s something that I've had to troubleshoot more times than I care to remember.
+? I recall a project back in '19 where we were pushing the limits of natural language understanding, leveraging early models that, frankly, paled in comparison to the likes of GPT-3. We were constantly tinkering with data formats to squeeze every ounce of performance out of those systems. Formatting Q&A data correctly for fine-tuning, specifically in jsonl, is a critical step, and it’s something that I've had to troubleshoot more times than I care to remember.
 
 The key here, fundamentally, is structure. Jsonl, or JSON Lines, requires each line to be a valid json object, and for GPT-3 fine-tuning, those objects need specific keys that the model expects. Think of it like feeding a machine specific instructions – if the instructions are garbled, the machine won't perform correctly. In a Q&A context, the most crucial fields are usually 'prompt' and 'completion'. These represent the question and answer, respectively, forming the core input for supervised learning.
 

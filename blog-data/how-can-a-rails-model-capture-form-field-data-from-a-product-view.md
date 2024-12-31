@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-rails-model-capture-form-field-data-from-a-product-view"
 ---
 
-, let’s tackle this. It's a question I've seen pop up countless times, and frankly, the elegant solution often lies just outside the immediate, conventional approach. I recall a project, back in the early days of Rails 3, where we had a complex product configurator, and pushing data back from the view to the model felt like… well, let’s just say ‘challenging’ is an understatement. So, let's break down how to capture form field data from a product view into a Rails model effectively, avoiding the common pitfalls.
+It's a question I've seen pop up countless times, and frankly, the elegant solution often lies just outside the immediate, conventional approach. I recall a project, back in the early days of Rails 3, where we had a complex product configurator, and pushing data back from the view to the model felt like… well, let’s just say ‘challenging’ is an understatement. So, let's break down how to capture form field data from a product view into a Rails model effectively, avoiding the common pitfalls.
 
 The core issue is that the view’s html form elements aren't directly bound to the model in the way one might initially expect. You don't magically connect the `<input>` tag to a model's attribute. Instead, we utilize the power of Rails' form helpers and controller logic to mediate this transfer of data. The process involves routing the form data to a specific controller action, where we instantiate or find a model instance, and then update its attributes using the submitted parameters. It’s fundamentally about separating presentation from the application logic.
 

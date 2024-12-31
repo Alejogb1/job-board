@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-djangos-objectfilterxcontains--210922143300-produce-an-error"
 ---
 
-, one. I've definitely seen this sort of thing crop up a few times, especially when dealing with large datasets and trying to perform complex queries in Django. The core of the problem lies in understanding the underlying database interactions and how Django translates your queries into SQL.
+I've definitely seen this sort of thing crop up a few times, especially when dealing with large datasets and trying to perform complex queries in Django. The core of the problem lies in understanding the underlying database interactions and how Django translates your queries into SQL.
 
 The specific error you're encountering with `object.filter(X__contains = 210922143300)` isn’t directly about the size of the number itself, but rather about how `__contains` is implemented in the Django ORM, and what data types it expects to work with. I recall one particular project, a system managing high-volume sensor data, where a similar issue stumped the team for an afternoon. We were trying to filter by specific identifiers within a text field, naively assuming `__contains` would behave like a generic string search, but that assumption quickly led to headaches.
 

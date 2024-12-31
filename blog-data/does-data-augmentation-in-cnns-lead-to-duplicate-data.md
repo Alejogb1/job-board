@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-data-augmentation-in-cnns-lead-to-duplicate-data"
 ---
 
-directly, shall we? I remember a project back in my early days, developing an image recognition system for industrial defects. We had this pristine, small dataset of maybe a few hundred examples. The initial results were… let's just say, not impressive. Overfitting was rampant. That's when we explored data augmentation techniques extensively, and it forced us to confront exactly this question: are we just creating duplicates? The short answer is no, not in the way most people might initially assume, but there are nuances.
+directly? I remember a project back in my early days, developing an image recognition system for industrial defects. We had this pristine, small dataset of maybe a few hundred examples. The initial results were… let's just say, not impressive. Overfitting was rampant. That's when we explored data augmentation techniques extensively, and it forced us to confront exactly this question: are we just creating duplicates? The short answer is no, not in the way most people might initially assume, but there are nuances.
 
 The core principle of data augmentation, within the context of convolutional neural networks (CNNs), isn’t about cloning existing data; rather, it's about generating _new_ training examples from the existing ones, which, importantly, increases the diversity of examples that the model sees. It introduces controlled variations that aim to reflect the real-world transformations that an object might undergo.
 

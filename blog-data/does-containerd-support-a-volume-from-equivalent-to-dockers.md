@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-containerd-support-a-volume-from-equivalent-to-dockers"
 ---
 
-Let’s tackle this with a bit of context, shall we? I recall a particularly frustrating project a couple of years back. We were migrating our container orchestration from a predominantly docker-based setup to one leveraging containerd more directly, aiming for increased flexibility and a finer level of control. One of the stumbling blocks was indeed this very issue: how to replicate the behavior of docker’s `volume-from` using containerd. The short answer is: containerd doesn’t offer a direct equivalent of `volume-from` out of the box. This doesn’t mean the functionality is impossible; it just requires a different approach, one rooted in a more granular understanding of container storage and management.
+Let’s tackle this with a bit of context? I recall a particularly frustrating project a couple of years back. We were migrating our container orchestration from a predominantly docker-based setup to one leveraging containerd more directly, aiming for increased flexibility and a finer level of control. One of the stumbling blocks was indeed this very issue: how to replicate the behavior of docker’s `volume-from` using containerd. The short answer is: containerd doesn’t offer a direct equivalent of `volume-from` out of the box. This doesn’t mean the functionality is impossible; it just requires a different approach, one rooted in a more granular understanding of container storage and management.
 
 When you use `volume-from` in Docker, you're essentially telling the Docker daemon to share the volumes of an existing container with the new one. These volumes could be either named volumes or anonymous volumes. Containerd operates at a lower level, focusing on the underlying mechanics of running containers, whereas Docker provides a more user-friendly, higher-level interface. Consequently, containerd doesn’t abstract away these complexities to the same degree. Containerd doesn’t enforce concepts like the association of volume mounts at container level as docker does. Instead it relies on the underlying storage mechanism and its configuration.
 
@@ -74,7 +74,7 @@ func main() {
     if err != nil{
         log.Fatal(err)
     }
-	
+
 	statusC, err := task.Wait(ctx)
 	if err != nil {
 		log.Fatal(err)
@@ -121,7 +121,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    
+
 	// Create the shared directory.
 	err = os.MkdirAll("/namedvolume", 0755)
 	if err != nil {
@@ -218,6 +218,7 @@ func main() {
 
 }
 ```
+
 Here, both `container1` and `container2` are given a bind mount pointing to the same location on the host `/namedvolume` this achieves the same effect of shared volumes that Docker provides. Notice the `ro` option indicates that all mounts to this volume are read only.
 
 **Example 3: Sharing the mount namespace of another container (advanced use):**
@@ -295,7 +296,7 @@ func main() {
         log.Fatal(err)
     }
 
-	
+
     pid := taskinfo.Pid
 
 	mountNsPath := fmt.Sprintf("/proc/%d/ns/mnt", pid)
@@ -342,8 +343,8 @@ func main() {
 }
 ```
 
-In this example, after running `container1`, we obtain its pid and build the path to the mount namespace, `/proc/<pid>/ns/mnt`. Then, we use this path as a source for a bind mount in `container2`, effectively sharing the mount namespace. This allows `container2` to see the mounts of `container1`.  Again, this method is quite complex and requires intimate knowledge of underlying linux namespace mechanisms.
+In this example, after running `container1`, we obtain its pid and build the path to the mount namespace, `/proc/<pid>/ns/mnt`. Then, we use this path as a source for a bind mount in `container2`, effectively sharing the mount namespace. This allows `container2` to see the mounts of `container1`. Again, this method is quite complex and requires intimate knowledge of underlying linux namespace mechanisms.
 
-To delve deeper into container storage and related concepts, I would strongly suggest looking at *Linux Kernel Development* by Robert Love for understanding the underlying mechanisms of namespaces and mounts. Also, *Programming in Go* by Mark Summerfield will help understand more deeply the interaction of the client library with containerd. And, of course, the official containerd documentation is invaluable.
+To delve deeper into container storage and related concepts, I would strongly suggest looking at _Linux Kernel Development_ by Robert Love for understanding the underlying mechanisms of namespaces and mounts. Also, _Programming in Go_ by Mark Summerfield will help understand more deeply the interaction of the client library with containerd. And, of course, the official containerd documentation is invaluable.
 
 In summary, while containerd doesn’t directly replicate docker’s `volume-from`, it provides the necessary mechanisms to achieve similar results with explicit mount configurations. The key takeaway is to understand the underlying concepts of mounts, namespaces, and container storage to leverage containerd effectively.

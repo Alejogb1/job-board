@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-pull-images-from-ecr-in-portainer-or-share-credentials"
 ---
 
-. I've seen this issue crop up more than a few times in environments I've managed, so I have some firsthand experience tackling the complexities of ECR, Portainer, and credential management. The short answer is: it's usually about how Portainer attempts to authenticate with ECR and the restrictions in place for security best practices. But let's go into the weeds a bit, shall we?
+. I've seen this issue crop up more than a few times in environments I've managed, so I have some firsthand experience tackling the complexities of ECR, Portainer, and credential management. The short answer is: it's usually about how Portainer attempts to authenticate with ECR and the restrictions in place for security best practices. But let's go into the weeds a bit?
 
 The core challenge revolves around the fact that Portainer, by default, doesn't magically inherit or understand your local AWS credentials. ECR, being a service within the AWS ecosystem, requires proper authentication using AWS access keys or IAM roles. When you attempt to pull an image, Portainer needs a way to verify that it has the authorization to access the specified ECR repository. If the credentials aren't correctly configured, you will inevitably get errors.
 

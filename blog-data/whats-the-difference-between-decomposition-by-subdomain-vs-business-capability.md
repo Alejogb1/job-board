@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-the-difference-between-decomposition-by-subdomain-vs-business-capability"
 ---
 
-, . I've spent a fair amount of time knee-deep in architectural debates, and the distinction between decomposing systems by subdomain versus business capability is something that often comes up, particularly when you're scaling and trying to build manageable, maintainable software. It’s a critical decision point with serious implications for team structure and overall architecture health.
+I've spent a fair amount of time knee-deep in architectural debates, and the distinction between decomposing systems by subdomain versus business capability is something that often comes up, particularly when you're scaling and trying to build manageable, maintainable software. It’s a critical decision point with serious implications for team structure and overall architecture health.
 
 The core difference, at a high level, is the focus: subdomain decomposition aligns itself with the _problem space_, while business capability decomposition aligns more with the _solution space_. This distinction, though seemingly subtle, leads to vastly different architectural outcomes.
 

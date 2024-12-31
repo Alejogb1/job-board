@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-notify-on-airflow-after-two-consecutive-task-failures"
 ---
 
-, let’s tackle this. Notifying on two consecutive task failures in Apache Airflow is a common need, and frankly, one I've run into a fair few times during my career managing data pipelines. The default retry mechanisms can sometimes mask recurring issues, and a more targeted alert system is often necessary to really understand what’s going on. It's about moving beyond just handling a single failure to spotting patterns that might indicate something deeper. I’ll walk you through how I’ve approached this, providing some practical code examples and context.
+Notifying on two consecutive task failures in Apache Airflow is a common need, and frankly, one I've run into a fair few times during my career managing data pipelines. The default retry mechanisms can sometimes mask recurring issues, and a more targeted alert system is often necessary to really understand what’s going on. It's about moving beyond just handling a single failure to spotting patterns that might indicate something deeper. I’ll walk you through how I’ve approached this, providing some practical code examples and context.
 
 The challenge here isn't about Airflow’s capacity for retries – it’s about _context_. Airflow, by default, retries tasks based on the `retries` and `retry_delay` parameters defined in your DAG. However, those retries often happen sequentially. If you want to be alerted specifically _after_ a second _consecutive_ failure, you need a bit more control and logic. The problem with a single failure alert is that it may not be critical, especially if configured to retry. We need to wait to see if a problem persists.
 

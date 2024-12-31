@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-error-using-searchkick-elasticsearch-on-rails-macos-124-ethon-libcurl-initialized-objc36397-nsnumber-initialize"
 ---
 
-, let’s tackle this. it looks like you’re bumping into a classic combo of searchkick and elasticsearch playing a bit rough on your mac, and that objc message is a definite clue. i’ve seen this rodeo before, so let's break it down.
+it looks like you’re bumping into a classic combo of searchkick and elasticsearch playing a bit rough on your mac, and that objc message is a definite clue. i’ve seen this rodeo before, so let's break it down.
 
 the core problem stems from a conflict in how ruby is interacting with the underlying libraries that searchkick relies on – specifically, libcurl, which is often the go-to for making network requests, and elasticsearch which is basically a fancy search database. the `objc[36397]: +[number initialize]` thing is the mac os x objc runtime letting you know that something is happening under the hood with the foundation framework's number class. it's usually a side-effect of threading or library initialization issues, not necessarily a core part of your problem.
 

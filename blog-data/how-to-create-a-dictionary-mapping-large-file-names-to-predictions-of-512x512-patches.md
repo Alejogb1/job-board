@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-create-a-dictionary-mapping-large-file-names-to-predictions-of-512x512-patches"
 ---
 
-, let’s tackle this. I’ve definitely bumped into this type of challenge before – dealing with massive image files and their associated predictions. The core issue is efficiently managing the mapping between large filenames and the predictions generated from their smaller patches. Let's break it down into actionable steps and consider the practicalities.
+I’ve definitely bumped into this type of challenge before – dealing with massive image files and their associated predictions. The core issue is efficiently managing the mapping between large filenames and the predictions generated from their smaller patches. Let's break it down into actionable steps and consider the practicalities.
 
 Essentially, we're aiming to construct a dictionary where the keys are file paths (strings) representing large image files, and the values are structured data representing 512x512 patch predictions. This structured data needs to account for all patches within that large image. Simply storing a list of individual prediction tensors for each patch is rarely scalable or particularly useful. We’d need more context on each prediction. I've found that typically the context requires the coordinates or position of the patch within the original image and the prediction output itself, which could be a tensor or a list of labels, probabilities, or embeddings, depending on your use case.
 

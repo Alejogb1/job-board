@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-mlnet-models-be-trained-from-multiple-folders"
 ---
 
-, one. I've actually dealt with scenarios exactly like this in a past project involving image classification for a client's retail catalog, where data was neatly organized (or not so neatly at times) into different product categories, each stored in a separate folder. So, the question of training ML.NET models from multiple folders isn't just theoretical; it's a very real, practical challenge.
+I've actually dealt with scenarios exactly like this in a past project involving image classification for a client's retail catalog, where data was neatly organized (or not so neatly at times) into different product categories, each stored in a separate folder. So, the question of training ML.NET models from multiple folders isn't just theoretical; it's a very real, practical challenge.
 
 The short answer is: yes, you absolutely can train ML.NET models from data spread across multiple folders, but it requires a bit more orchestration than simply pointing to a single data source. The key here is understanding how ML.NET manages data and the flexibility it offers through its data loading mechanisms. You're not confined to a single csv file or database connection. The system allows you to define data loading pipelines that can piece together data from disparate locations.
 

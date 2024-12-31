@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-doesnt-ganache-connect-to-the-network"
 ---
 
-ah, ganache and network connectivity issues, a tale as old as time, or at least as old as local blockchain development. i've seen this one crop up more times than i've had lukewarm coffee during late night debugging sessions. and believe me, that's a lot. let's break down the usual suspects, shall we?
+ah, ganache and network connectivity issues, a tale as old as time, or at least as old as local blockchain development. i've seen this one crop up more times than i've had lukewarm coffee during late night debugging sessions. and believe me, that's a lot. let's break down the usual suspects?
 
 first off, the most common gotcha is a mismatch in network configurations. you'd be surprised how many times i've spent staring blankly at logs only to realize i was connecting to the wrong port. it’s usually something small, and often frustrating. you might have ganache running on port `7545` and your application is trying to connect to the default `8545` or vice-versa. double-check your `truffle-config.js`, or whichever config file you're using to specify your provider. i even once spent half a day pulling my hair out because the config was pointing to a remote network and not my local ganache instance (whoops!). it happens to the best of us. here's how i typically configure my network settings:
 
@@ -13,9 +13,9 @@ first off, the most common gotcha is a mismatch in network configurations. you'd
 module.exports = {
   networks: {
     development: {
-      host: "127.0.0.1",     // or "localhost"
+      host: "127.0.0.1", // or "localhost"
       port: 7545,
-      network_id: "*",     // match any network id
+      network_id: "*", // match any network id
     },
   },
 };
@@ -27,7 +27,7 @@ now, if the port is right, lets look at another aspect: network ids. when ganach
 
 ```javascript
 //  script to get the current network id of the running provider
-const Web3 = require('web3');
+const Web3 = require("web3");
 const providerUrl = "http://127.0.0.1:7545"; // or whatever port
 const web3 = new Web3(providerUrl);
 
@@ -53,17 +53,16 @@ now lets talk about code examples. how exactly are you trying to connect your ap
 const { ethers } = require("ethers");
 
 async function connectToGanache() {
-    const provider = new ethers.JsonRpcProvider("http://127.0.0.1:7545");
+  const provider = new ethers.JsonRpcProvider("http://127.0.0.1:7545");
 
-    try {
-        const network = await provider.getNetwork();
-        console.log("Connected to network:", network);
-        const blockNumber = await provider.getBlockNumber();
-        console.log("Current Block:", blockNumber);
-
-    } catch (error) {
-        console.error("Failed to connect:", error);
-    }
+  try {
+    const network = await provider.getNetwork();
+    console.log("Connected to network:", network);
+    const blockNumber = await provider.getBlockNumber();
+    console.log("Current Block:", blockNumber);
+  } catch (error) {
+    console.error("Failed to connect:", error);
+  }
 }
 connectToGanache();
 ```

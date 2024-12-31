@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-using-any-ignite-filter-throw-an-exception-in-the-query"
 ---
 
-, let’s tackle this. I've seen this issue crop up more times than I care to remember, typically when someone’s just getting their hands dirty with Apache Ignite’s query capabilities. The frustrating “filter throws an exception” situation almost always boils down to how Ignite handles data distribution and processing in a distributed environment, and it’s not immediately obvious why a seemingly innocuous filter can suddenly break things.
+I've seen this issue crop up more times than I care to remember, typically when someone’s just getting their hands dirty with Apache Ignite’s query capabilities. The frustrating “filter throws an exception” situation almost always boils down to how Ignite handles data distribution and processing in a distributed environment, and it’s not immediately obvious why a seemingly innocuous filter can suddenly break things.
 
 In my past experience, particularly with a large-scale financial trading platform, we encountered this almost daily. The platform relied heavily on Ignite’s ability to process large volumes of market data in real-time. We had a complex network of caches, each holding different facets of market information, and queries that spanned multiple nodes were commonplace. The situation often arose when developers, freshly introduced to Ignite, attempted to filter query results using custom methods without fully understanding the distributed implications. So, it wasn't some bug within Ignite; rather, it was often the way we were using it.
 

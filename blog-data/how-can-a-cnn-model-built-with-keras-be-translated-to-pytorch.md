@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-cnn-model-built-with-keras-be-translated-to-pytorch"
 ---
 
-, let’s tackle this. Transitioning a convolutional neural network (CNN) from Keras to PyTorch is a task I've frequently encountered in my work, particularly when dealing with projects that need to leverage the specific strengths of each framework. It's not a matter of simply swapping libraries; there are nuances in how models are defined and managed that require a structured approach.
+Transitioning a convolutional neural network (CNN) from Keras to PyTorch is a task I've frequently encountered in my work, particularly when dealing with projects that need to leverage the specific strengths of each framework. It's not a matter of simply swapping libraries; there are nuances in how models are defined and managed that require a structured approach.
 
 First, it's important to recognize that both Keras (typically running on TensorFlow in most cases) and PyTorch are fundamentally about describing and training neural networks. Keras, with its high-level API, excels at rapid prototyping and easy-to-understand syntax. PyTorch, on the other hand, gives you more granular control, which is beneficial when dealing with highly specialized models or research-oriented applications. This control often comes with a learning curve, which is why a direct translation isn't always trivial.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-custom-multi-agent-environments-for-deep-rl-and-maddpg"
 ---
 
-, one. The creation of custom multi-agent environments for deep reinforcement learning, specifically with MADDPG (Multi-Agent Deep Deterministic Policy Gradient) in mind, isn't a walk in the park, but it's certainly a solvable challenge. I've spent quite some time down this rabbit hole, having once been tasked with simulating collaborative autonomous drones for a disaster response scenario. It taught me a lot about the nuances involved.
+The creation of custom multi-agent environments for deep reinforcement learning, specifically with MADDPG (Multi-Agent Deep Deterministic Policy Gradient) in mind, isn't a walk in the park, but it's certainly a solvable challenge. I've spent quite some time down this rabbit hole, having once been tasked with simulating collaborative autonomous drones for a disaster response scenario. It taught me a lot about the nuances involved.
 
 First, we need to move beyond thinking of environments as mere static backdrops. In multi-agent RL, the environment _is_ the dynamic stage upon which the agents interact, and their combined actions fundamentally alter its state. Therefore, designing a useful environment requires careful consideration of its structure, dynamics, and observability, especially when dealing with MADDPG, which inherently operates within a partially-observable setting for each individual agent.
 

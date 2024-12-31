@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-docker-containers-be-launched-using-images-from-a-remote-server"
 ---
 
-, one. I recall a rather complex deployment scenario a few years back involving a distributed microservices architecture where we absolutely needed to pull our docker images from a private registry, not just a local build. That experience certainly hammered home the importance of a solid understanding of remote image pulls, and it's not as straightforward as just typing `docker run`. So, here’s a detailed breakdown of how to launch docker containers using images from a remote server, covering a few important practicalities along the way.
+I recall a rather complex deployment scenario a few years back involving a distributed microservices architecture where we absolutely needed to pull our docker images from a private registry, not just a local build. That experience certainly hammered home the importance of a solid understanding of remote image pulls, and it's not as straightforward as just typing `docker run`. So, here’s a detailed breakdown of how to launch docker containers using images from a remote server, covering a few important practicalities along the way.
 
 The core concept, at its heart, is simple: you're telling the docker daemon to fetch a docker image from a location that isn't local, then use it to create a container. But the devil, as always, is in the details, and in this case, those details mainly revolve around authentication and image naming conventions.
 

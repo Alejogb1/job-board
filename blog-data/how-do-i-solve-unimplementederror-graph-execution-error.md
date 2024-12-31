@@ -6,9 +6,9 @@ id: "how-do-i-solve-unimplementederror-graph-execution-error"
 
 Ah, the dreaded `UnimplementedError: Graph execution error`. I've spent many late nights staring at that particular error message, and I can confidently say it's a multi-layered beast. It's less a single problem and more a symptom of a deeper issue in your computational graph, usually when working with libraries like TensorFlow or PyTorch, and often, but not always, during deployment or integration. So, let’s break down how to go about systematically eliminating this pesky error.
 
-First, let’s clarify what this error *isn’t*. It’s not typically an indication of faulty hardware or a fundamentally incorrect algorithm. Instead, it usually signifies a mismatch between what you’ve designed your computational graph to do and what the underlying execution engine (like TensorFlow’s runtime or PyTorch's backend) can actually process on the target hardware or software configuration.
+First, let’s clarify what this error _isn’t_. It’s not typically an indication of faulty hardware or a fundamentally incorrect algorithm. Instead, it usually signifies a mismatch between what you’ve designed your computational graph to do and what the underlying execution engine (like TensorFlow’s runtime or PyTorch's backend) can actually process on the target hardware or software configuration.
 
-The phrase "UnimplementedError" is key. It means that a certain operation or type of execution you're requesting isn't yet implemented for the particular context in which your graph is running. This could be due to several factors. It could be an unsupported hardware instruction set, a missing library dependency, an issue with tensor types or shapes, a version mismatch between your library and your runtime, or even the use of a feature or operation only meant for a specific kind of device, such as a GPU, but being run on a CPU environment without proper mapping or fallback mechanisms. It's also possible that the framework may not have the necessary implementation for a specific operation for the given data type or structure. Let’s delve into specific scenarios and fixes, shall we?
+The phrase "UnimplementedError" is key. It means that a certain operation or type of execution you're requesting isn't yet implemented for the particular context in which your graph is running. This could be due to several factors. It could be an unsupported hardware instruction set, a missing library dependency, an issue with tensor types or shapes, a version mismatch between your library and your runtime, or even the use of a feature or operation only meant for a specific kind of device, such as a GPU, but being run on a CPU environment without proper mapping or fallback mechanisms. It's also possible that the framework may not have the necessary implementation for a specific operation for the given data type or structure. Let’s delve into specific scenarios and fixes?
 
 **Scenario 1: Operation Not Supported on the Target Device**
 
@@ -54,6 +54,7 @@ model_good(tf.random.normal((1,10))) # this should be fine in most environments
 print("Model with supported operations executed successfully.")
 
 ```
+
 This demonstrates how a particular activation function, even if it is valid in the development environment, could trigger the `UnimplementedError` when deployed to a target environment that doesn’t support it. It also shows the fix: ensure your model architecture only uses widely supported operations.
 
 **Scenario 2: Type and Shape Mismatches in Graph Operations**
@@ -63,6 +64,7 @@ Another common culprit is inconsistencies in tensor data types or shapes within 
 The solution involves meticulously checking all tensor shapes and types at every step of the process, making sure that each layer and operation receives the expected data type and structure. This sometimes requires inserting explicit casting operations to ensure compatibility.
 
 Here’s a code example showing how this can go wrong and how to fix it:
+
 ```python
 import tensorflow as tf
 
@@ -96,6 +98,7 @@ model_good_types(tf.random.normal((1,10))) # this should run smoothly
 
 print("Model with corrected types executed successfully")
 ```
+
 In this snippet, the first model attempts to use int32 inputs and then cast them to float32, but there could be operations inside the dense layer that can't work with integer values leading to execution failure. The second model enforces float32 input types from the start, which is consistent with the layers that process it, preventing the error.
 
 **Scenario 3: Version Mismatches and Dependency Issues**
@@ -158,5 +161,5 @@ print("Model with version aware code executed successfully.")
 
 This simple example shows that the choice of operations can depend on your TensorFlow version, which is a very common cause of graph execution issues.
 
-In general, addressing the `UnimplementedError` requires a thorough understanding of your computational graph and the limitations of the target environment. I highly suggest working your way through the official documentation for TensorFlow or PyTorch, depending on your library of choice, and the documentation for the compute device you're targeting. For a more theoretical understanding of computational graphs, I recommend reading *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville – it provides a solid foundation on the theory of backpropagation and graph execution and should provide a deeper insight into what's actually going on underneath the hood.
+In general, addressing the `UnimplementedError` requires a thorough understanding of your computational graph and the limitations of the target environment. I highly suggest working your way through the official documentation for TensorFlow or PyTorch, depending on your library of choice, and the documentation for the compute device you're targeting. For a more theoretical understanding of computational graphs, I recommend reading _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville – it provides a solid foundation on the theory of backpropagation and graph execution and should provide a deeper insight into what's actually going on underneath the hood.
 These three scenarios will resolve, or at the least, make clearer how to tackle the core of the issue that is causing your error. Good luck, and may your graph execution be error-free!

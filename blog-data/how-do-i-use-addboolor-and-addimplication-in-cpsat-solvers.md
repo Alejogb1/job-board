@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-addboolor-and-addimplication-in-cpsat-solvers"
 ---
 
-, let’s tackle this. It's been a while since I’ve directly implemented constraint programming at this level, but the intricacies of `AddBoolOr` and `AddImplication` in cp-sat solvers are definitely something I’ve spent considerable time with in past projects—specifically, a scheduling system for a high-throughput manufacturing line where optimizing for both resource allocation and task dependencies was crucial. It wasn't pretty at times, and I certainly learned a few things the hard way, so hopefully this helps.
+It's been a while since I’ve directly implemented constraint programming at this level, but the intricacies of `AddBoolOr` and `AddImplication` in cp-sat solvers are definitely something I’ve spent considerable time with in past projects—specifically, a scheduling system for a high-throughput manufacturing line where optimizing for both resource allocation and task dependencies was crucial. It wasn't pretty at times, and I certainly learned a few things the hard way, so hopefully this helps.
 
 Essentially, these two methods are your bread and butter when expressing logical relationships between boolean variables within the constraint programming domain, allowing you to construct fairly complex constraints. Let's break them down individually before looking at code.
 

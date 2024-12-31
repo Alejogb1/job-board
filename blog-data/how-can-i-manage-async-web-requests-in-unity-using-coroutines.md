@@ -8,7 +8,7 @@ id: "how-can-i-manage-async-web-requests-in-unity-using-coroutines"
 
 The core challenge we face in Unity is that `UnityWebRequest` operations, by default, block the main thread while waiting for a response. This isn't acceptable for any real-time application, where rendering and game logic need to continue uninterrupted. Fortunately, coroutines come to our rescue, allowing us to write asynchronous code that can pause and resume execution, effectively letting the main thread breathe.
 
-My initial experiences with this were, shall we say, less than elegant. I recall a project back in the early Unity 5 days where we weren't leveraging coroutines correctly, leading to noticeable stalls whenever the game had to pull data from a server. It wasn’t pretty, and it was a painful learning experience. That’s why I tend to stress the importance of proper implementation.
+My initial experiences with this were say, less than elegant. I recall a project back in the early Unity 5 days where we weren't leveraging coroutines correctly, leading to noticeable stalls whenever the game had to pull data from a server. It wasn’t pretty, and it was a painful learning experience. That’s why I tend to stress the importance of proper implementation.
 
 Essentially, a coroutine in Unity is a function that can suspend its execution and return control back to Unity, only to be resumed later. When we use a coroutine with `UnityWebRequest`, we can start the request and then yield control back to the main thread, allowing other parts of the game to continue executing. When the request finishes, the coroutine is resumed, and we can process the response.
 

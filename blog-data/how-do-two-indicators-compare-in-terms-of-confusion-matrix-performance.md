@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-two-indicators-compare-in-terms-of-confusion-matrix-performance"
 ---
 
-, let’s tackle this. Over the years, I've definitely encountered situations where comparing indicator performance through confusion matrices became crucial, particularly when dealing with nuanced detection or classification problems. It’s not always as straightforward as comparing simple accuracy scores, especially when dealing with imbalanced datasets. To accurately assess and compare two indicators using their respective confusion matrices, we need to look beyond superficial metrics. Let's break it down step-by-step.
+Over the years, I've definitely encountered situations where comparing indicator performance through confusion matrices became crucial, particularly when dealing with nuanced detection or classification problems. It’s not always as straightforward as comparing simple accuracy scores, especially when dealing with imbalanced datasets. To accurately assess and compare two indicators using their respective confusion matrices, we need to look beyond superficial metrics. Let's break it down step-by-step.
 
 First, understand what a confusion matrix provides. Essentially, it's a table that describes the performance of a classification model. For a binary classification problem, we have four cells: True Positives (TP), False Positives (FP), True Negatives (TN), and False Negatives (FN). For multi-class classification, the structure expands, representing predictions versus actual values for all classes. The values within this matrix allow us to calculate various performance metrics, which are key for comparison.
 

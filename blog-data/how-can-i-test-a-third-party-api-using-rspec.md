@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-test-a-third-party-api-using-rspec"
 ---
 
-, shall we? I remember a project a few years back involving a complex integration with a nascent payment gateway. We had to be extremely meticulous, and that meant robust testing of their API. RSpec, as you likely know, is invaluable for this. It’s not just about verifying data types; we need to ensure the full interaction lifecycle behaves as intended. We need to simulate not only happy paths but also error conditions, timeouts, and various edge cases.
+? I remember a project a few years back involving a complex integration with a nascent payment gateway. We had to be extremely meticulous, and that meant robust testing of their API. RSpec, as you likely know, is invaluable for this. It’s not just about verifying data types; we need to ensure the full interaction lifecycle behaves as intended. We need to simulate not only happy paths but also error conditions, timeouts, and various edge cases.
 
 First, let’s establish a foundational principle: avoid direct calls to the third-party API within your core tests. That’s a recipe for fragility and dependency nightmares. We should isolate our testing logic from the network, ensuring our test suite runs predictably and quickly. We accomplish this through stubbing and mocking.
 

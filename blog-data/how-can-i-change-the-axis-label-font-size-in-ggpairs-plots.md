@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-change-the-axis-label-font-size-in-ggpairs-plots"
 ---
 
-, let’s tackle this. I remember a particularly frustrating project a few years back, involving genomic data visualization. We were using `ggpairs` quite heavily for exploratory analysis, and the default axis label sizes were just… inadequate, shall we say. The labels would overlap, making the plots practically unusable. So, believe me, I've been down this road, and it can be trickier than it seems at first glance.
+I remember a particularly frustrating project a few years back, involving genomic data visualization. We were using `ggpairs` quite heavily for exploratory analysis, and the default axis label sizes were just… inadequate say. The labels would overlap, making the plots practically unusable. So, believe me, I've been down this road, and it can be trickier than it seems at first glance.
 
 The challenge with `ggpairs` isn't that you can't modify axis labels; it's that you need to understand the underlying structure to reach the correct levers. You're not directly modifying the axes of a single ggplot object, because `ggpairs` is generating a grid of them. Thus, the standard `theme` arguments you might instinctively reach for don't always apply directly. Instead, we need to tap into the `lower`, `upper`, and `diag` arguments, which control the subplots and their characteristics.
 

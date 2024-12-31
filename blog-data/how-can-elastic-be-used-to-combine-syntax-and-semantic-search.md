@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-elastic-be-used-to-combine-syntax-and-semantic-search"
 ---
 
-, let’s tackle this. I’ve seen my share of search implementations, and the blend of syntax and semantics is often where things get…interesting. It’s not just about keyword matching or some fancy natural language processing (nlp) bolt-on. It’s about understanding the user's _intent_ in conjunction with the _structure_ of their query and the data itself.
+I’ve seen my share of search implementations, and the blend of syntax and semantics is often where things get…interesting. It’s not just about keyword matching or some fancy natural language processing (nlp) bolt-on. It’s about understanding the user's _intent_ in conjunction with the _structure_ of their query and the data itself.
 
 In my past life, managing the backend search infrastructure for a content platform with millions of articles, we ran into this problem head-on. Pure keyword-based searches were returning a lot of noise, and relying solely on pre-trained embeddings proved too computationally expensive and sometimes not granular enough for our specific needs. We had to devise a hybrid approach combining the strengths of both.
 

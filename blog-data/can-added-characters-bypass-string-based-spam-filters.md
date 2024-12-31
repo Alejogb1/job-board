@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-added-characters-bypass-string-based-spam-filters"
 ---
 
-from the trenches, shall we? I've seen this exact scenario play out more times than I care to remember, particularly in my early days building email systems and later, during a stint focused on web application security. The short answer is: absolutely, added characters can and very often _do_ bypass string-based spam filters. It's a game of cat and mouse, and the spammers are often infuriatingly innovative.
+from the trenches? I've seen this exact scenario play out more times than I care to remember, particularly in my early days building email systems and later, during a stint focused on web application security. The short answer is: absolutely, added characters can and very often _do_ bypass string-based spam filters. It's a game of cat and mouse, and the spammers are often infuriatingly innovative.
 
 The fundamental weakness lies within the simplicity of string matching itself. A string-based filter operates by scanning incoming text for specific predefined strings. If a match is found, the message is flagged as spam. This method is effective against the most rudimentary attempts, but it's woefully inadequate when facing even slightly more sophisticated techniques.
 

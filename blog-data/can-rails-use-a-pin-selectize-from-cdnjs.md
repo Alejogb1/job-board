@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-rails-use-a-pin-selectize-from-cdnjs"
 ---
 
-, let's get into this. The question of whether Rails can use a Pin Selectize from cdnjs is actually pretty straightforward, but like most things in web development, it requires a bit of careful configuration. I remember a particularly hairy project back in '17, a dashboard overhaul for a logistics company, where we leaned heavily on cdn-hosted libraries to speed up development. Selectize was a key component for us. So, from that experience, I can definitely walk you through how it’s done and some common pitfalls.
+, The question of whether Rails can use a Pin Selectize from cdnjs is actually pretty straightforward, but like most things in web development, it requires a bit of careful configuration. I remember a particularly hairy project back in '17, a dashboard overhaul for a logistics company, where we leaned heavily on cdn-hosted libraries to speed up development. Selectize was a key component for us. So, from that experience, I can definitely walk you through how it’s done and some common pitfalls.
 
 Essentially, yes, Rails can absolutely leverage Selectize (or any similar JavaScript library) hosted on a Content Delivery Network (CDN) like cdnjs. The crucial part is integrating it into your Rails application correctly, avoiding asset pipeline conflicts, and ensuring it plays nicely with the rest of your setup.
 

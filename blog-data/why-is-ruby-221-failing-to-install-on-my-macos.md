@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-ruby-221-failing-to-install-on-my-macos"
 ---
 
-ruby installation issue, shall we? It's not uncommon to run into snags like this, particularly when dealing with older versions. I remember a similar situation back when I was maintaining a legacy rails application—we were stuck on an older ruby for dependency reasons and the build server, a macOS machine, kept throwing fits. Ruby 2.2.1, in particular, is an antique by today's standards and poses a few specific challenges when trying to install it on a modern macOS system.
+ruby installation issue? It's not uncommon to run into snags like this, particularly when dealing with older versions. I remember a similar situation back when I was maintaining a legacy rails application—we were stuck on an older ruby for dependency reasons and the build server, a macOS machine, kept throwing fits. Ruby 2.2.1, in particular, is an antique by today's standards and poses a few specific challenges when trying to install it on a modern macOS system.
 
 The core problem, more often than not, revolves around the system's build environment and its incompatibility with the requirements of Ruby 2.2.1. Ruby, like many compiled languages, relies on system libraries and build tools which have evolved significantly since 2.2.1's release. We're not just talking about a simple case of "it's too old"; it's more about missing dependencies, outdated compiler versions, and potential conflicts with security features built into modern macOS.
 

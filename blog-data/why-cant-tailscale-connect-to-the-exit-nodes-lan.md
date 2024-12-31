@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-tailscale-connect-to-the-exit-nodes-lan"
 ---
 
-Let's dissect this Tailscale exit node connectivity issue, shall we? It's a common stumbling block, and over the years, I've seen it crop up in various forms, each time requiring a slightly different approach. The core problem, as you’re experiencing, is that while your Tailscale clients connect to the exit node itself, they can't seem to reach the devices on the exit node's local area network (LAN). This usually isn’t a problem with Tailscale itself, but rather how routing and network address translation (NAT) are configured within that local network.
+Let's dissect this Tailscale exit node connectivity issue? It's a common stumbling block, and over the years, I've seen it crop up in various forms, each time requiring a slightly different approach. The core problem, as you’re experiencing, is that while your Tailscale clients connect to the exit node itself, they can't seem to reach the devices on the exit node's local area network (LAN). This usually isn’t a problem with Tailscale itself, but rather how routing and network address translation (NAT) are configured within that local network.
 
 My first encounter with this was back when I was setting up a home lab and wanted remote access to my NAS. The Tailscale connection worked flawlessly to the box running the exit node, but I couldn't ping, access, or otherwise communicate with the NAS on the same LAN. This initially led me down a few rabbit holes, but after some focused investigation, the pattern became clear.
 
@@ -30,6 +30,7 @@ sudo iptables -t nat -A POSTROUTING -o <your_lan_interface> -j MASQUERADE
 # and saving your rules. For example:
 # sudo netfilter-persistent save
 ```
+
 Replace `<your_lan_interface>` with the actual network interface name connected to your LAN (e.g., `eth0`, `wlan0`). `sysctl` temporarily enables forwarding; this requires a more permanent method like editing `/etc/sysctl.conf` if you need it to survive a reboot. The second `iptables` line is what really allows the traffic from tailscale network to be seen as local and handled on the LAN side.
 
 **2. Subnet Routes via Tailscale:**
@@ -42,6 +43,7 @@ Assuming your local LAN is on `192.168.1.0/24`, the tailscale configuration on t
 # On the exit node
 tailscale up --advertise-routes=192.168.1.0/24 --accept-routes
 ```
+
 `--advertise-routes` tells Tailscale to announce the `192.168.1.0/24` route to the Tailnet. The `--accept-routes` command is necessary to enable any routes advertised by other nodes on your tailnet.
 
 After this change, the traffic from your tailscale clients will be routed through the exit node to the LAN, with client IPs preserved in routing on the LAN side. No NAT required in this scenario. This assumes your LAN router will correctly respond to packets from IPs outside of your `192.168.1.0/24` subnet but on the same interface. Some residential routers might drop packets from outside the configured subnet.
@@ -67,6 +69,7 @@ sudo iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
 # Tailscale command advertising both subnets and accepting routes
 tailscale up --advertise-routes=192.168.1.0/24,192.168.2.0/24 --accept-routes
 ```
+
 In this setup, we enable forwarding and then specify that traffic to either of our LAN subnets going out through their specific interfaces will be treated with NAT, plus advertise routes for both on the tailscale network.
 
 It’s important to note that these approaches work best in controlled environments, such as home labs or small business networks. In larger, more complex environments, things get a bit more interesting. You may require more specific routes, firewall rules on your LAN, or even changes on your router if it's dropping packets from unexpected source addresses, so a thorough understanding of the network is essential. For these more intricate cases, consulting networking documentation and gaining experience working with the particular hardware you are using is vital.

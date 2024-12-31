@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-tie-embeddings-between-a-torchnnembedding-and-torchnnembeddingbag"
 ---
 
-, let’s tackle this. I remember a project a few years back, involved heavily optimized natural language processing on resource-constrained devices. We were experimenting with various forms of embedding layers to squeeze maximum performance, and this exact problem of tying `torch.nn.Embedding` and `torch.nn.EmbeddingBag` came up. It's not immediately obvious, but definitely solvable with a bit of careful planning.
+I remember a project a few years back, involved heavily optimized natural language processing on resource-constrained devices. We were experimenting with various forms of embedding layers to squeeze maximum performance, and this exact problem of tying `torch.nn.Embedding` and `torch.nn.EmbeddingBag` came up. It's not immediately obvious, but definitely solvable with a bit of careful planning.
 
 Essentially, you're aiming to share the underlying weight matrix between these two different kinds of embedding layers in PyTorch. Think of it as having one source of truth for your word embeddings, which both layers can tap into. The motivation behind this, as I experienced, is often memory efficiency and maintaining consistency between contexts where you need individual token embeddings (`torch.nn.Embedding`) and those where you need to aggregate embeddings over a sequence (`torch.nn.EmbeddingBag`).
 

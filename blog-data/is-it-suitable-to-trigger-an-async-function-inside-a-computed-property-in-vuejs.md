@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-it-suitable-to-trigger-an-async-function-inside-a-computed-property-in-vuejs"
 ---
 
-Ah, the classic async in computed property conundrum. I've certainly seen my share of debugging sessions stemming from this exact scenario. this carefully, shall we? It’s not that it’s absolutely forbidden, but it's definitely a road fraught with potential problems, and usually a sign that the code needs a bit of refactoring.
+Ah, the classic async in computed property conundrum. I've certainly seen my share of debugging sessions stemming from this exact scenario. this carefully? It’s not that it’s absolutely forbidden, but it's definitely a road fraught with potential problems, and usually a sign that the code needs a bit of refactoring.
 
 Computed properties, at their core, are designed for synchronous calculations. They’re meant to derive values based on their dependencies and should return immediately. When you throw asynchronous operations into the mix, such as fetching data or handling timeouts, you're fundamentally misusing their intended purpose and potentially inviting all kinds of reactive issues.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-scan-a-docker-images-file-paths-using-blackduck"
 ---
 
-, let’s tackle this. I’ve spent considerable time working with Black Duck and container security, so I can shed some light on how to effectively scan Docker image file paths. It's not as straightforward as, say, scanning a source code repository, but it's entirely achievable and crucial for maintaining a secure application environment.
+I’ve spent considerable time working with Black Duck and container security, so I can shed some light on how to effectively scan Docker image file paths. It's not as straightforward as, say, scanning a source code repository, but it's entirely achievable and crucial for maintaining a secure application environment.
 
 The fundamental idea when working with container images in Black Duck is that you're not directly looking at the filesystem as you would on a running system. Instead, you’re analyzing the image layers and their content. Black Duck, when performing its scan, breaks down the image into these layers and identifies the components present within. The 'file path' information you’re after, therefore, comes as a byproduct of this analysis, not as a primary input.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-display-wandb-training-progress-from-a-specific-run-folder"
 ---
 
-, one. I've been down this road a few times, particularly when working on large-scale distributed training jobs that require very granular monitoring. The issue of effectively displaying wandb training progress from a specific run folder isn't just about seeing metrics; it's about building a workflow that's resilient, repeatable, and, frankly, sane.
+I've been down this road a few times, particularly when working on large-scale distributed training jobs that require very granular monitoring. The issue of effectively displaying wandb training progress from a specific run folder isn't just about seeing metrics; it's about building a workflow that's resilient, repeatable, and, frankly, sane.
 
 The core problem is this: wandb's primary interface, the web UI, is designed around the concept of _active_ runs—those that are actively sending data. When a training run is complete, or perhaps a container crashed, and you're left with the remnants of a run folder, directly displaying that information in a live manner, as you would a live, running experiment, isn't readily available. We need to leverage wandb's api and, depending on our needs, other libraries to extract, parse, and visualize that historical data.
 

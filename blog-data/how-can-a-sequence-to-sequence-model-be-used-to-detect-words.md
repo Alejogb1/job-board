@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-sequence-to-sequence-model-be-used-to-detect-words"
 ---
 
-, let’s tackle this. I’ve actually worked on a project a few years back involving noisy sensor data that demanded similar sequence handling, so the word detection problem using sequence-to-sequence models feels quite familiar. It's not as straightforward as, say, a simple classification task, but the power of these models really shines when dealing with variable-length sequences, which is exactly what words are.
+I’ve actually worked on a project a few years back involving noisy sensor data that demanded similar sequence handling, so the word detection problem using sequence-to-sequence models feels quite familiar. It's not as straightforward as, say, a simple classification task, but the power of these models really shines when dealing with variable-length sequences, which is exactly what words are.
 
 Essentially, the core idea revolves around transforming an input sequence – in our case, a sequence of some representation of speech or text (phonemes, characters, etc.) – into an output sequence that indicates word boundaries. This is not about just recognizing individual words, although it certainly implies it, but rather identifying _where_ words start and end in a continuous stream of data. This can take the form of adding flags, or transforming the representation to indicate the boundaries.
 

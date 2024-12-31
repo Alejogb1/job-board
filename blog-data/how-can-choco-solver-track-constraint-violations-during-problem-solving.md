@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-choco-solver-track-constraint-violations-during-problem-solving"
 ---
 
-, one. I've spent a fair amount of time elbows deep in constraint programming, particularly with tools like Choco Solver, and constraint violation tracking is something that comes up repeatedly, especially as problem complexity escalates. It's not just about finding a solution; it's often crucial to understand _why_ a solution fails, or where we're hitting the walls during search. The framework handles much of the low-level mechanics for you, but let's explore how we can leverage its capabilities to gain insights.
+I've spent a fair amount of time elbows deep in constraint programming, particularly with tools like Choco Solver, and constraint violation tracking is something that comes up repeatedly, especially as problem complexity escalates. It's not just about finding a solution; it's often crucial to understand _why_ a solution fails, or where we're hitting the walls during search. The framework handles much of the low-level mechanics for you, but let's explore how we can leverage its capabilities to gain insights.
 
 Choco Solver doesn't simply hand you solutions; it operates through a process of constraint propagation and search. The ‘violation’ we're interested in isn't always as straightforward as a blatant ‘constraint failed’; it’s often more about identifying _areas_ where the solution space is severely narrowed or where domains become empty due to over-constraint. Tracking these occurrences is vital for debugging and for strategies aimed at problem reformulation, which, in my experience, is sometimes the only way to handle intractable problems.
 

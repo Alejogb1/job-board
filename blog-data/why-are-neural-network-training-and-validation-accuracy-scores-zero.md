@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-neural-network-training-and-validation-accuracy-scores-zero"
 ---
 
-, let’s tackle this. It's a frustrating situation, staring at those zero accuracy scores after hours of training, isn't it? I've definitely been there, more times than I care to recall. What we are witnessing essentially signifies that the model isn't learning anything useful, and there are several common culprits. Let’s break them down.
+It's a frustrating situation, staring at those zero accuracy scores after hours of training, isn't it? I've definitely been there, more times than I care to recall. What we are witnessing essentially signifies that the model isn't learning anything useful, and there are several common culprits. Let’s break them down.
 
 One crucial area to examine first, which many developers often gloss over, is data preprocessing. I recall a project where we were working with image classification. Everything seemed fine, the network architecture was solid (at least on paper), yet, both training and validation accuracies were stuck at zero. After several frustrating days, the issue was traced back to the input data. We had forgotten to normalize the pixel values properly, leaving them in the raw, [0, 255] range. This resulted in extremely large gradients, which were causing the weights of the neural network to essentially explode and converge on random values. Zero accuracy wasn't surprising in that context.
 

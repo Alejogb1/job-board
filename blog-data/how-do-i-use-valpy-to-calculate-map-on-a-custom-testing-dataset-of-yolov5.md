@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-use-valpy-to-calculate-map-on-a-custom-testing-dataset-of-yolov5"
 ---
 
-Let's dive into this, shall we? I remember a project back in '21 involving a highly specific object detection task for an autonomous inspection system; we had to roll our own validation and, well, *val.py* in YOLOv5 was our go-to. Getting it to play nicely with custom data can be a bit nuanced, so let me walk you through the process, focusing on clarity and pragmatism.
+Let's dive into this? I remember a project back in '21 involving a highly specific object detection task for an autonomous inspection system; we had to roll our own validation and, well, _val.py_ in YOLOv5 was our go-to. Getting it to play nicely with custom data can be a bit nuanced, so let me walk you through the process, focusing on clarity and pragmatism.
 
-Essentially, *val.py*, as you likely know, is the script within the YOLOv5 repository designed for evaluating a trained model. It's primarily built for COCO dataset validation, but its architecture is flexible enough to handle custom datasets. The key lies in properly configuring the script to understand the structure and format of *your* annotations and images. We're not modifying the core validation logic itself—rather, we're providing the necessary context.
+Essentially, _val.py_, as you likely know, is the script within the YOLOv5 repository designed for evaluating a trained model. It's primarily built for COCO dataset validation, but its architecture is flexible enough to handle custom datasets. The key lies in properly configuring the script to understand the structure and format of _your_ annotations and images. We're not modifying the core validation logic itself—rather, we're providing the necessary context.
 
-The crux of the issue often boils down to the `--data` flag within *val.py*. Instead of pointing to a default COCO dataset configuration file, you need to direct it to a yaml file that describes *your* dataset. This yaml file needs to specify:
+The crux of the issue often boils down to the `--data` flag within _val.py_. Instead of pointing to a default COCO dataset configuration file, you need to direct it to a yaml file that describes _your_ dataset. This yaml file needs to specify:
 
-1.  **The location of your training, validation (and optionally, test) image directories.** This is crucial; *val.py* will be attempting to load image paths from these locations.
+1.  **The location of your training, validation (and optionally, test) image directories.** This is crucial; _val.py_ will be attempting to load image paths from these locations.
 2.  **The paths to your annotation files.** YOLOv5 expects these annotations in a specific format (one text file per image, each line defining a bounding box), usually under the "labels" directory.
 3.  **The number of classes, and optionally, a mapping of indices to class names.**
 
@@ -49,13 +49,13 @@ my_dataset/
 Your `data.yaml` file, which you'd pass via the `--data` flag, could look like this:
 
 ```yaml
-train: my_dataset/images/train  # train images
-val: my_dataset/images/val   # val images
-test: my_dataset/images/test  # test images (optional)
+train: my_dataset/images/train # train images
+val: my_dataset/images/val # val images
+test: my_dataset/images/test # test images (optional)
 
 nc: 3 # number of classes.
 
-names: ['class_a', 'class_b', 'class_c'] #optional.
+names: ["class_a", "class_b", "class_c"] #optional.
 ```
 
 **Code Snippet 1: Creating a data.yaml file**
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     create_data_yaml(train_path, val_path, test_path, num_classes, class_names)
 ```
 
-After creating `data.yaml` (and ensuring the labels are correctly formatted according to the YOLOv5 specification—normalized bounding box coordinates and class index), you can then execute *val.py*.
+After creating `data.yaml` (and ensuring the labels are correctly formatted according to the YOLOv5 specification—normalized bounding box coordinates and class index), you can then execute _val.py_.
 
 The basic command, assuming your trained model is located at `runs/train/exp/weights/best.pt`, would be:
 
@@ -96,9 +96,9 @@ python val.py --data data.yaml --weights runs/train/exp/weights/best.pt --task t
 
 The `--task test` flag will use the `test` dataset defined in your `data.yaml`. If omitted or changed to `val`, it uses the `val` dataset. The batch-size will depend on the resources you have and the size of images.
 
-The script will then compute mAP, precision, recall, and other relevant metrics on *your* dataset.
+The script will then compute mAP, precision, recall, and other relevant metrics on _your_ dataset.
 
-Now, consider a scenario where your annotations are in a different format, for instance, a CSV file. While it's not the standard for YOLOv5, you can pre-process the CSV file into the YOLOv5 expected text format before running *val.py*. This was a common issue we encountered when ingesting annotations from legacy systems.
+Now, consider a scenario where your annotations are in a different format, for instance, a CSV file. While it's not the standard for YOLOv5, you can pre-process the CSV file into the YOLOv5 expected text format before running _val.py_. This was a common issue we encountered when ingesting annotations from legacy systems.
 
 **Code Snippet 2: CSV Annotation Preprocessing to YOLOv5 Format**
 
@@ -144,7 +144,7 @@ if __name__ == "__main__":
      convert_csv_to_yolov5(csv_path, output_dir)
 ```
 
-Finally, let's tackle the situation where your images might have different resolutions than those used in training. *val.py* will resize the images, according to the model input dimension, before evaluation. To influence this process, you can specify the `--img` flag followed by the desired input dimension. For example, using  `--img 640`, will evaluate the model on resized images of `640 x 640`.
+Finally, let's tackle the situation where your images might have different resolutions than those used in training. _val.py_ will resize the images, according to the model input dimension, before evaluation. To influence this process, you can specify the `--img` flag followed by the desired input dimension. For example, using `--img 640`, will evaluate the model on resized images of `640 x 640`.
 
 **Code Snippet 3: Running val.py with custom input resolution**
 

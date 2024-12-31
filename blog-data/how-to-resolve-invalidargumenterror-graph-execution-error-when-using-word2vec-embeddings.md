@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-invalidargumenterror-graph-execution-error-when-using-word2vec-embeddings"
 ---
 
-Ah, the dreaded `InvalidArgumentError: Graph execution error` when working with word2vec. I've seen that particular beast rear its head more times than I care to remember, usually at the most inopportune moment, of course. It's almost always a symptom of some underlying discrepancy between what your word2vec model expects and what you're actually feeding it. this, shall we? Over the years, I’ve refined my approach to tracking down this error, and I’d be happy to share what I've learned.
+Ah, the dreaded `InvalidArgumentError: Graph execution error` when working with word2vec. I've seen that particular beast rear its head more times than I care to remember, usually at the most inopportune moment, of course. It's almost always a symptom of some underlying discrepancy between what your word2vec model expects and what you're actually feeding it. this? Over the years, I’ve refined my approach to tracking down this error, and I’d be happy to share what I've learned.
 
 The core issue with this `InvalidArgumentError` within a word2vec context usually boils down to two primary culprits: either your input data isn't compatible with the model's vocabulary, or the data itself is malformed, corrupt, or out of the expected format. Essentially, the graph—the computational representation of your neural network—is attempting to perform an operation using data it can't process, and that results in the error. The devil, as they say, is often in the details.
 

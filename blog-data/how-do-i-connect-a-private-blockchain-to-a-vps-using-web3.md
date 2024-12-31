@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-connect-a-private-blockchain-to-a-vps-using-web3"
 ---
 
-directly, shall we? I've seen this scenario play out more times than I can easily recall, often during the initial phases of proof-of-concept builds. Connecting a private blockchain to a virtual private server (vps) using web3 isn't fundamentally complex, but a few nuances can definitely trip you up. It's about understanding the network configurations, establishing the correct rpc endpoint communication, and properly configuring your web3 client. Let me walk you through it, as I've done countless times before with various projects.
+directly? I've seen this scenario play out more times than I can easily recall, often during the initial phases of proof-of-concept builds. Connecting a private blockchain to a virtual private server (vps) using web3 isn't fundamentally complex, but a few nuances can definitely trip you up. It's about understanding the network configurations, establishing the correct rpc endpoint communication, and properly configuring your web3 client. Let me walk you through it, as I've done countless times before with various projects.
 
 The first crucial step revolves around the network accessibility of your private blockchain. Typically, these blockchains don't automatically open themselves to the public internet. They're often firewalled off or running on a local network. Think of a proof-of-authority network built for internal process management – you don't want external access to it, and it’s a common use case for this kind of work. Your vps needs a clear path to communicate with the blockchain's nodes, typically through a designated rpc endpoint.
 

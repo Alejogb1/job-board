@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-remove-special-characters-in-jinja-templates-in-airflow"
 ---
 
-, let’s tackle this. Dealing with special characters in Jinja templates within Airflow is something I've encountered more times than I care to count, particularly when integrating with systems that have... let’s say, _less-than-ideal_ data hygiene. It's a fairly common pain point, and the solution isn’t always immediately obvious. It often boils down to understanding the layers of processing involved—Airflow, Jinja, and whatever underlying data you’re pulling in.
+Dealing with special characters in Jinja templates within Airflow is something I've encountered more times than I care to count, particularly when integrating with systems that have... let’s say, _less-than-ideal_ data hygiene. It's a fairly common pain point, and the solution isn’t always immediately obvious. It often boils down to understanding the layers of processing involved—Airflow, Jinja, and whatever underlying data you’re pulling in.
 
 The core issue, typically, arises from the fact that Jinja is designed to render strings, not sanitize or transform them. It will faithfully print what you give it, special characters and all. When you're piping data into a template, especially data coming from external APIs or databases, you’re bound to hit character encoding inconsistencies or other oddities that Jinja will happily render without protest.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-k-fold-cross-validation-be-used-to-evaluate-keras-neural-networks"
 ---
 
-, let’s tackle this. I’ve spent considerable time refining model evaluations, and k-fold cross-validation with Keras is a bread-and-butter technique, though it often needs a little finesse to get it just right. I recall one particularly tricky project involving time-series data where naive validation would have completely misled us. K-fold saved the day there, uncovering subtle overfitting issues that were not immediately apparent.
+I’ve spent considerable time refining model evaluations, and k-fold cross-validation with Keras is a bread-and-butter technique, though it often needs a little finesse to get it just right. I recall one particularly tricky project involving time-series data where naive validation would have completely misled us. K-fold saved the day there, uncovering subtle overfitting issues that were not immediately apparent.
 
 So, let’s break down how to use k-fold cross-validation effectively with Keras neural networks. At its core, k-fold cross-validation is a technique to robustly estimate the performance of a machine learning model on unseen data. Rather than relying on a single train/test split (which can be heavily influenced by the specific data chosen), k-fold partitions the dataset into _k_ equally sized subsets, or folds. The model is then trained on _k-1_ folds and evaluated on the remaining fold. This process is repeated _k_ times, with each fold acting as the validation set exactly once.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-nas-not-showing-up-in-azure-ml-datasets"
 ---
 
-Right, let's get into this. I've spent a fair amount of time debugging pipelines, and the vanishing NA mystery in Azure ML datasets is a recurring theme, so I'm quite familiar with the potential culprits. The issue is rarely a single, simple error; it's usually a combination of subtle factors related to data loading, type inference, and how Azure ML handles missing values under the hood.
+Right, I've spent a fair amount of time debugging pipelines, and the vanishing NA mystery in Azure ML datasets is a recurring theme, so I'm quite familiar with the potential culprits. The issue is rarely a single, simple error; it's usually a combination of subtle factors related to data loading, type inference, and how Azure ML handles missing values under the hood.
 
 The apparent disappearance of NAs, or null values, isn't that they're actually gone; it’s more about how they're interpreted and visualized within the Azure Machine Learning (Azure ML) environment. Most often, what appears as a missing value in your source data might be represented differently after ingestion into an Azure ML dataset. This difference in representation can lead to confusion and the impression that NAs have vanished altogether.
 

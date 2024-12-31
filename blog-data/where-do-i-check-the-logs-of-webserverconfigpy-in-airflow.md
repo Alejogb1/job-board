@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "where-do-i-check-the-logs-of-webserverconfigpy-in-airflow"
 ---
 
-Let's talk about those elusive logs in Airflow, specifically when dealing with issues arising from your `webserver_config.py`. From my experience, troubleshooting misconfigurations in Airflow's webserver is, shall we say, an exercise in patience and methodical investigation. I've spent my fair share of late nights tracing errors back to seemingly innocuous settings within that configuration file, so I’ve developed some specific strategies for locating those crucial log messages.
+Let's talk about those elusive logs in Airflow, specifically when dealing with issues arising from your `webserver_config.py`. From my experience, troubleshooting misconfigurations in Airflow's webserver is say, an exercise in patience and methodical investigation. I've spent my fair share of late nights tracing errors back to seemingly innocuous settings within that configuration file, so I’ve developed some specific strategies for locating those crucial log messages.
 
-Firstly, it’s crucial to understand that the `webserver_config.py` file primarily influences how the Airflow webserver *starts up* and behaves generally, rather than the individual task execution logs you might be more familiar with. Errors or warnings stemming from this file are generally captured at a system-level, meaning they won't be directly interwoven with dag run logs. Instead, these logs are typically found where the webserver process itself logs its activities.
+Firstly, it’s crucial to understand that the `webserver_config.py` file primarily influences how the Airflow webserver _starts up_ and behaves generally, rather than the individual task execution logs you might be more familiar with. Errors or warnings stemming from this file are generally captured at a system-level, meaning they won't be directly interwoven with dag run logs. Instead, these logs are typically found where the webserver process itself logs its activities.
 
 The precise location of these logs can vary based on how you’ve deployed Airflow, particularly when it involves Docker or other containerization technologies. However, the underlying principle remains consistent: we're looking for the logs associated with the process that's actually executing the `airflow webserver` command. I've typically worked with environments that utilized systemd, containerized deployments with Docker, and occasionally more straightforward setups running directly on virtual machines. Let's break down how logs tend to appear in each of those:
 
@@ -34,7 +34,7 @@ Replace `<container_id_or_name>` with the identifier of your specific Airflow we
 
 If you're running the `airflow webserver` command directly (outside of systemd or Docker), the logs are often sent to your terminal by default. In this setup, logs might also get redirected to a file depending on how you initiated the process or how the underlying python logging module is configured within your environment. If you have customized the Python logging using the settings in your `airflow.cfg`, those settings will also dictate where the output lands.
 
-Here's an example of what *not* to do if you're directly starting the process (and why systemd/Docker are preferable):
+Here's an example of what _not_ to do if you're directly starting the process (and why systemd/Docker are preferable):
 
 ```bash
 nohup airflow webserver &

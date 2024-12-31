@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-cross-origin-deployment-issues-between-heroku-and-netlify"
 ---
 
-, let’s tackle this. I’ve seen my share of cross-origin headaches, particularly when integrating different platforms like Heroku and Netlify. This issue, often manifesting as CORS (Cross-Origin Resource Sharing) errors, typically arises when your client-side application hosted on one origin (e.g., Netlify) tries to access resources from a server hosted on a different origin (e.g., Heroku). It’s a security mechanism built into web browsers, designed to protect users from malicious scripts. However, in legitimate use cases, it can be quite frustrating if not handled correctly.
+I’ve seen my share of cross-origin headaches, particularly when integrating different platforms like Heroku and Netlify. This issue, often manifesting as CORS (Cross-Origin Resource Sharing) errors, typically arises when your client-side application hosted on one origin (e.g., Netlify) tries to access resources from a server hosted on a different origin (e.g., Heroku). It’s a security mechanism built into web browsers, designed to protect users from malicious scripts. However, in legitimate use cases, it can be quite frustrating if not handled correctly.
 
 I recall one project a few years back, a single-page application using React that interacted with a backend API on Heroku. We initially deployed the front-end on Netlify and, lo and behold, faced a barrage of CORS errors. The browser, quite rightly, was blocking the requests. It took a bit of debugging, but we ultimately implemented a robust solution. Let me walk you through the main approaches and some specific implementations you might find useful.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-django-filefield-using-custom-storage-still-using-the-default-googlecloudstorage"
 ---
 
-, let's dissect this Django `FileField` and custom storage quandary, shall we? It's a situation I’ve encountered more times than I care to recall, usually late on a Friday. You've meticulously crafted your custom storage backend, believing you've decoupled from Google Cloud Storage (GCS), only to find the files stubbornly persisting there. I’ve even seen cases where it partially works, leading to even more confusion. This often boils down to a few common culprits, and we can walk through them systematically.
+, let's dissect this Django `FileField` and custom storage quandary? It's a situation I’ve encountered more times than I care to recall, usually late on a Friday. You've meticulously crafted your custom storage backend, believing you've decoupled from Google Cloud Storage (GCS), only to find the files stubbornly persisting there. I’ve even seen cases where it partially works, leading to even more confusion. This often boils down to a few common culprits, and we can walk through them systematically.
 
 The core issue usually revolves around how Django's settings, the model definitions, and custom storage classes interact. My experience suggests the problem isn't typically with GCS itself, or necessarily with how your custom storage _should_ work, but rather with how Django interprets your setup. We need to ensure everything is talking the same language, if you will. Let's consider the usual suspects, starting with the most likely.
 

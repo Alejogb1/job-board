@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-gcp-composer-dataproc-submit-job-auth-credential-not-found"
 ---
 
-Let's address this "GCP| Composer Dataproc submit job| Auth credential not found" issue, shall we? I’ve seen this particular error pop up more times than I care to remember, and it usually boils down to a few common culprits, which aren't always immediately apparent. It isn’t usually a direct coding mistake but rather a misconfiguration of authentication between your composer environment and the dataproc cluster. My experience, particularly around late 2019, when we were heavily scaling our data pipelines, involved constant tweaking of these settings. So, let me walk you through the common causes and their solutions, based on what I’ve encountered, making sure to include practical code examples to bring the abstract into something concrete.
+Let's address this "GCP| Composer Dataproc submit job| Auth credential not found" issue? I’ve seen this particular error pop up more times than I care to remember, and it usually boils down to a few common culprits, which aren't always immediately apparent. It isn’t usually a direct coding mistake but rather a misconfiguration of authentication between your composer environment and the dataproc cluster. My experience, particularly around late 2019, when we were heavily scaling our data pipelines, involved constant tweaking of these settings. So, let me walk you through the common causes and their solutions, based on what I’ve encountered, making sure to include practical code examples to bring the abstract into something concrete.
 
 The core issue here is that when your Composer DAG attempts to submit a job to Dataproc, the underlying execution doesn't have the necessary credentials to authenticate with the Dataproc api. The "auth credential not found" error essentially means the service account your composer environment or airflow worker is using doesn't have the required permissions (IAM bindings) or the correct service account key files for google application default credentials aren’t available to it.
 
@@ -16,10 +16,10 @@ If, during the creation of your composer environment, you didn't explicitly prov
 
 1.  Navigate to the composer environment page in your google cloud console.
 2.  Look for the “environments” panel.
-3. Click on your environment to go to the details page.
-4. In the configuration pane, you will see which service account is associated with your composer environment. It's critical to make sure this service account has the Dataproc Worker (or equivalent custom role) role. If it's the default compute engine service account (ending with “@developer.gserviceaccount.com”), it is very likely the cause.
-5. Navigate to the "IAM" section of the project.
-6. Look for the service account under "principals" and ensure it has the necessary "Dataproc Worker" permissions bound.
+3.  Click on your environment to go to the details page.
+4.  In the configuration pane, you will see which service account is associated with your composer environment. It's critical to make sure this service account has the Dataproc Worker (or equivalent custom role) role. If it's the default compute engine service account (ending with “@developer.gserviceaccount.com”), it is very likely the cause.
+5.  Navigate to the "IAM" section of the project.
+6.  Look for the service account under "principals" and ensure it has the necessary "Dataproc Worker" permissions bound.
 
 If the service account doesn't have these roles, you’ll need to update its IAM bindings. You can do this through the console or via the gcloud cli. That’s the most common cause when interacting with dataproc directly from airflow, especially if you have a "minimal permissions" setup.
 

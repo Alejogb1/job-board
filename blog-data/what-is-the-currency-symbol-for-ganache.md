@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-currency-symbol-for-ganache"
 ---
 
-, one. It’s a question that often comes up when diving into local blockchain development, and I remember my first encounter with it quite vividly – it was during a project attempting to simulate a complex decentralized exchange, long before the current crop of user-friendly tooling existed. So, the short answer, if you're looking for the quick fix, is that Ganache doesn't have its own specific currency symbol. It uses ether (eth) as its default currency unit. However, the underlying mechanism and its configuration are where things get interesting, and where your understanding can be truly beneficial.
+It’s a question that often comes up when diving into local blockchain development, and I remember my first encounter with it quite vividly – it was during a project attempting to simulate a complex decentralized exchange, long before the current crop of user-friendly tooling existed. So, the short answer, if you're looking for the quick fix, is that Ganache doesn't have its own specific currency symbol. It uses ether (eth) as its default currency unit. However, the underlying mechanism and its configuration are where things get interesting, and where your understanding can be truly beneficial.
 
 Now, this concept requires a bit more explanation. Ganache, as many of us know, is a personal blockchain simulator, primarily used for development. It spins up a local Ethereum environment, letting you deploy and test smart contracts without interacting with the main Ethereum network. Crucially, what's being simulated isn't a new blockchain or token, but rather a version of the _Ethereum_ blockchain. That means it inherits its fundamental characteristics, including the currency: ether.
 

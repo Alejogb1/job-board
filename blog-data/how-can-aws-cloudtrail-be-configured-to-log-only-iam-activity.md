@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-aws-cloudtrail-be-configured-to-log-only-iam-activity"
 ---
 
-, one. It's a common need, filtering out the noise from CloudTrail to focus specifically on iam actions. From my own experience, working on environments with a high volume of cloud activity, I've often had to fine-tune CloudTrail configurations. A full, unfiltered log can be a firehose of information, making it challenging to isolate the relevant events, particularly for security audits or compliance tracking related to iam.
+It's a common need, filtering out the noise from CloudTrail to focus specifically on iam actions. From my own experience, working on environments with a high volume of cloud activity, I've often had to fine-tune CloudTrail configurations. A full, unfiltered log can be a firehose of information, making it challenging to isolate the relevant events, particularly for security audits or compliance tracking related to iam.
 
 The default behavior of CloudTrail is to log all api activity across your aws account, or organization, if configured that way. This includes calls made by the aws console, cli, sdks, and other aws services. While comprehensive, it can make focusing on IAM related activity a bit like searching for a needle in a haystack. So, to log _only_ iam actions, we need to leverage CloudTrail's "data events" and "management events" filters combined with a bit of understanding how those are structured.
 

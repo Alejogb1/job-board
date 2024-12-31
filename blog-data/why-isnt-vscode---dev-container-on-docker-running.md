@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-vscode---dev-container-on-docker-running"
 ---
 
-, shall we? I’ve definitely spent my share of late nights staring at unresponsive dev containers in vscode, so you’re not alone. It's rarely a single, straightforward issue; usually, it's a confluence of factors. Let me walk you through the typical suspects and some debugging strategies, based on my experience wrestling (pardon, addressing) with these configurations in the past.
+? I’ve definitely spent my share of late nights staring at unresponsive dev containers in vscode, so you’re not alone. It's rarely a single, straightforward issue; usually, it's a confluence of factors. Let me walk you through the typical suspects and some debugging strategies, based on my experience wrestling (pardon, addressing) with these configurations in the past.
 
 First, we need to appreciate that a vscode dev container running on docker involves multiple moving parts. Docker itself has to be running and accessible, the container image needs to be valid and buildable, and vscode needs to be able to communicate correctly with both. So, let's break down common failure points from the docker daemon perspective to vscode's configuration itself.
 

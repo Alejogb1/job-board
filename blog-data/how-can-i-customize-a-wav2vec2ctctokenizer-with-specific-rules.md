@@ -4,19 +4,19 @@ date: "2024-12-23"
 id: "how-can-i-customize-a-wav2vec2ctctokenizer-with-specific-rules"
 ---
 
-Let’s tackle this, shall we? It's not unusual to encounter scenarios where the default tokenization behavior of pre-trained models, particularly Wav2Vec2 with its connectionist temporal classification (CTC) tokenizer, doesn't quite fit the nuances of your specific audio data. I’ve certainly been there, having worked on a project several years back involving heavily accented speech recognition, where the standard tokenizer struggled with certain phonetic patterns. So, instead of just accepting the defaults, let’s explore how you can customize a Wav2Vec2CTCTokenizer with specific rules.
+Let’s tackle this? It's not unusual to encounter scenarios where the default tokenization behavior of pre-trained models, particularly Wav2Vec2 with its connectionist temporal classification (CTC) tokenizer, doesn't quite fit the nuances of your specific audio data. I’ve certainly been there, having worked on a project several years back involving heavily accented speech recognition, where the standard tokenizer struggled with certain phonetic patterns. So, instead of just accepting the defaults, let’s explore how you can customize a Wav2Vec2CTCTokenizer with specific rules.
 
 Fundamentally, the Wav2Vec2CTCTokenizer, like most tokenizers, is built around the idea of converting raw input, in this case, audio, into a sequence of discrete units or tokens that the model can understand. The pre-trained tokenizer is trained to capture a specific distribution of sounds from its training dataset. When you encounter datasets that deviate from this distribution, customizations become essential. Customization, in this context, isn't about rewriting the whole tokenizer from scratch. Instead, we're usually talking about modifying the vocabulary (the set of possible tokens) and/or the tokenization rules (how the input is converted to those tokens).
 
 One of the primary customization points is modifying the `vocab.json` and `merges.txt` files, which are the foundation of many tokenizers. You'd typically find these within the tokenizer directory after downloading one, say, from Hugging Face's model hub. The `vocab.json` file maps token strings to token ids, and `merges.txt` contains byte-pair encodings (bpe), if used by the tokenizer. Changing these will alter how the tokenizer views the world and what patterns it'll map to its internal representation. We're not going to delve too deep into the theory behind bpe since it is a large area of study in itself; however, being aware it exists and its function is very important for the tokenizer.
 
-The challenge, however, is that directly editing those files and re-initializing the tokenizer often breaks it, or at least drastically reduces its effectiveness. Pre-trained models rely heavily on the token mappings they were trained with; changing them will affect the model's ability to map inputs to meaningful representations. The trick is to *add* new tokens in a way that preserves the meaning of the existing ones and then use these new tokens appropriately in your processing pipeline. This can be accomplished by carefully identifying the missing tokens from your training data, constructing the files appropriately, and properly integrating the tokenizer back into the model’s preprocessing pipeline. This is very important since it impacts the performance of the overall model.
+The challenge, however, is that directly editing those files and re-initializing the tokenizer often breaks it, or at least drastically reduces its effectiveness. Pre-trained models rely heavily on the token mappings they were trained with; changing them will affect the model's ability to map inputs to meaningful representations. The trick is to _add_ new tokens in a way that preserves the meaning of the existing ones and then use these new tokens appropriately in your processing pipeline. This can be accomplished by carefully identifying the missing tokens from your training data, constructing the files appropriately, and properly integrating the tokenizer back into the model’s preprocessing pipeline. This is very important since it impacts the performance of the overall model.
 
 Let's get to the code examples. Assume you are using the `transformers` library.
 
 **Example 1: Adding Custom Tokens**
 
-Suppose your dataset has audio that uses specific non-standard symbols. Let’s say, we need to add "SPK1" and "SPK2" to denote speaker labels for a diarization task. We can't just add these to our dictionary because the tokenizer will not know what to do with this data. It expects to take as input raw audio, not speaker tokens. We can't replace data with this data because then the model will fail. The approach is to add these as new tokens to the vocab and then, during preprocessing, we add these *after* tokenizing the data to indicate the speaker label. In essence, we're not tokenizing these, but rather tagging the *output* of the tokenization.
+Suppose your dataset has audio that uses specific non-standard symbols. Let’s say, we need to add "SPK1" and "SPK2" to denote speaker labels for a diarization task. We can't just add these to our dictionary because the tokenizer will not know what to do with this data. It expects to take as input raw audio, not speaker tokens. We can't replace data with this data because then the model will fail. The approach is to add these as new tokens to the vocab and then, during preprocessing, we add these _after_ tokenizing the data to indicate the speaker label. In essence, we're not tokenizing these, but rather tagging the _output_ of the tokenization.
 
 ```python
 from transformers import Wav2Vec2CTCTokenizer
@@ -48,7 +48,7 @@ example_token_ids_with_speaker_tag = example_token_ids + [tokenizer.vocab["SPK1"
 print(example_token_ids_with_speaker_tag)
 
 #Note that it would be up to your model to understand how these tokens are used. You are adding tokens that are outside
-#of the scope of the actual model. In this case, we add it to the end of the token id list, but where you put it 
+#of the scope of the actual model. In this case, we add it to the end of the token id list, but where you put it
 #will depend on the actual architecture.
 ```
 
@@ -89,7 +89,7 @@ In the example, we implement a simple `custom_normalization` function. This func
 
 **Example 3: Token Overriding (With Caution)**
 
-This is the most advanced and is rarely needed; it's something that might be used with truly unusual situations where you *must* modify the tokenization itself, but it is very risky. For instance, if the default tokenizer breaks down a very common word in your dataset into sub-word units and causes issues with model performance, we could consider making the entire word a single token, but remember that the underlying model hasn't seen this mapping. However, if the issue is severe enough, we may consider it. The approach would require the tokenizer to be modified before we ever trained the model and retrain the model to learn the mappings.
+This is the most advanced and is rarely needed; it's something that might be used with truly unusual situations where you _must_ modify the tokenization itself, but it is very risky. For instance, if the default tokenizer breaks down a very common word in your dataset into sub-word units and causes issues with model performance, we could consider making the entire word a single token, but remember that the underlying model hasn't seen this mapping. However, if the issue is severe enough, we may consider it. The approach would require the tokenizer to be modified before we ever trained the model and retrain the model to learn the mappings.
 
 ```python
 from transformers import Wav2Vec2CTCTokenizer
@@ -120,21 +120,21 @@ def custom_tokenize(text, tokenizer):
     # Split the sentence into individual words.
     words = text.split()
     token_ids = []
-    
+
     for word in words:
          if word == new_token:
             token_ids.append(vocab[new_token])
          else:
             token_ids.extend(tokenizer.encode(word))
     return token_ids
-    
+
 custom_ids = custom_tokenize(example_text, tokenizer)
 
 print(f"Custom encoding: {custom_ids}")
 print(f"Decoded custom id:{tokenizer.decode(custom_ids)}")
 ```
 
-This code modifies the tokenizer such that anytime the word `audio` appears, it is converted to its new id directly. Note that this is a *very* strong assumption to make since it completely overwrites any subword tokenization and assumes the model will work well with that mapping. You can also think of the `custom_tokenize` function as an advanced form of pre-processing, where you modify what *comes out* of the tokenizer in terms of token ids.
+This code modifies the tokenizer such that anytime the word `audio` appears, it is converted to its new id directly. Note that this is a _very_ strong assumption to make since it completely overwrites any subword tokenization and assumes the model will work well with that mapping. You can also think of the `custom_tokenize` function as an advanced form of pre-processing, where you modify what _comes out_ of the tokenizer in terms of token ids.
 
 **Additional Notes**
 

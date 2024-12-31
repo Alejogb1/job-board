@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-cant-i-come-to-a-solution-using-neat-python"
 ---
 
-well, looks like you're hitting a wall with neat-python. i've been there, trust me. it's a powerful library, but it can be a real headache if you don't have the knobs dialed in correctly. from what you've said, it sounds like you are not getting any working solutions, meaning the fitness is not improving. let's break this down like we are debugging some nasty piece of code, shall we?
+well, looks like you're hitting a wall with neat-python. i've been there, trust me. it's a powerful library, but it can be a real headache if you don't have the knobs dialed in correctly. from what you've said, it sounds like you are not getting any working solutions, meaning the fitness is not improving. let's break this down like we are debugging some nasty piece of code?
 
 first off, it's super common to see neat not converge, especially if you're just getting started. the core issue with evolutionary algorithms, and neat in particular, is that they are massively sensitive to their configuration. it's not like training a neural network where you often see some steady progress, it's more like trying to find a specific grain of sand in the entire desert.
 
@@ -14,7 +14,7 @@ another big one is the complexity of your problem space relative to the network'
 
 you might also be encountering the dreaded "stagnation" problem. this happens when a population of genomes gets stuck in a local optimum, meaning that they are all sort of similar to each other and none of them are particularly good. there are many neat parameters that directly influence this, like the compatibility threshold, mutation rates and population size. a good place to start tweaking these is the config file.
 
-speaking of the config file, i've seen a lot of folks ignore this critical part and just go with the defaults. don't do this, the defaults are there to start but they are not the best parameters for your specific problem. this is one of the places where your "debugging" time should be spent. the neat documentation has decent descriptions of what those parameters do, but you are better reading the original paper, "evolving neural networks through augmenting topologies". you'll get a very deep understanding of every single parameter and how it works. it will be a bit tough but it’s worth it, it helped me a lot. 
+speaking of the config file, i've seen a lot of folks ignore this critical part and just go with the defaults. don't do this, the defaults are there to start but they are not the best parameters for your specific problem. this is one of the places where your "debugging" time should be spent. the neat documentation has decent descriptions of what those parameters do, but you are better reading the original paper, "evolving neural networks through augmenting topologies". you'll get a very deep understanding of every single parameter and how it works. it will be a bit tough but it’s worth it, it helped me a lot.
 
 let's look at some code examples. first, here's a very simple fitness function example (replace it with your actual task, or simplify to see progress):
 

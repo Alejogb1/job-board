@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-connect-github-to-intellij"
 ---
 
-, let’s tackle this. Connecting GitHub to IntelliJ, while seemingly straightforward, can sometimes present a few minor hiccups if you're not quite familiar with the process. I remember years ago, during a particularly intense project deadline, I spent a solid half hour troubleshooting what turned out to be a simple credential caching issue. It's one of those things that once you’ve seen it, you never forget. So, let's walk through the best practices for setting this up, with a focus on clarity and avoiding common pitfalls.
+Connecting GitHub to IntelliJ, while seemingly straightforward, can sometimes present a few minor hiccups if you're not quite familiar with the process. I remember years ago, during a particularly intense project deadline, I spent a solid half hour troubleshooting what turned out to be a simple credential caching issue. It's one of those things that once you’ve seen it, you never forget. So, let's walk through the best practices for setting this up, with a focus on clarity and avoiding common pitfalls.
 
 Essentially, there are two main methods you’d typically use: using the built-in git integration and connecting via an external tool like the GitHub CLI (although the latter is more of a workaround for specific scenarios). In most cases, IntelliJ's direct integration is the optimal path because it allows you to manage your git repositories, commit changes, push updates, and even handle pull requests directly within the IDE.
 

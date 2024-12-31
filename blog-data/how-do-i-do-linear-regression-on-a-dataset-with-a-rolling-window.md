@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-do-linear-regression-on-a-dataset-with-a-rolling-window"
 ---
 
-, let’s tackle this. I remember a project back in my early days involving time series analysis of sensor data – a real headache at times, especially with data drift. Linear regression was a key piece, but applying it across a constantly shifting window added a layer of complexity. Let's break down how to perform linear regression on a dataset with a rolling window, and i'll share some practical techniques I've learned over the years.
+I remember a project back in my early days involving time series analysis of sensor data – a real headache at times, especially with data drift. Linear regression was a key piece, but applying it across a constantly shifting window added a layer of complexity. Let's break down how to perform linear regression on a dataset with a rolling window, and i'll share some practical techniques I've learned over the years.
 
 At its core, linear regression aims to model the relationship between a dependent variable and one or more independent variables using a linear equation. The standard least squares method works perfectly if the underlying relationship remains constant. However, when dealing with temporal data or non-stationary phenomena, this assumption can fail. That’s where a rolling window approach comes in; we’re essentially saying that the relationship between our variables might be valid only over a specific short period, and that relationship might change over time.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-nltk-be-used-to-remove-non-english-words-from-a-csv-file"
 ---
 
-, . I've actually bumped into this exact scenario a few times over the years, particularly when dealing with datasets that were cobbled together from various sources—think user-generated content aggregated from all corners of the internet. Cleaning up the text data became a crucial first step, and getting rid of non-English words, or rather, words that aren't likely to be English, is definitely part of that process.
+I've actually bumped into this exact scenario a few times over the years, particularly when dealing with datasets that were cobbled together from various sources—think user-generated content aggregated from all corners of the internet. Cleaning up the text data became a crucial first step, and getting rid of non-English words, or rather, words that aren't likely to be English, is definitely part of that process.
 
 The challenge, of course, isn't quite as straightforward as a simple dictionary lookup. Languages evolve, new words are constantly being introduced, and relying on a static list would leave us with significant gaps. We also have to consider things like proper nouns, which might not be in the standard nltk dictionaries, or words that have been 'english-ized', for lack of a better term, that started as loan words. Therefore, we need a nuanced approach that combines a few techniques. We'll be using nltk's language identification capabilities and then filtering based on that.
 

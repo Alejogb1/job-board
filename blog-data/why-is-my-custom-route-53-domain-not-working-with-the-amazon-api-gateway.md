@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-custom-route-53-domain-not-working-with-the-amazon-api-gateway"
 ---
 
-, let’s unpack this domain issue, shall we? I’ve seen variations of this problem crop up more times than I care to count over the years, and it usually boils down to a handful of common misconfigurations. The fact that your custom Route 53 domain isn’t resolving to your API Gateway endpoint can be frustrating, but it’s almost always a fixable issue once we systematically trace the signal path.
+, let’s unpack this domain issue? I’ve seen variations of this problem crop up more times than I care to count over the years, and it usually boils down to a handful of common misconfigurations. The fact that your custom Route 53 domain isn’t resolving to your API Gateway endpoint can be frustrating, but it’s almost always a fixable issue once we systematically trace the signal path.
 
 Let's assume, for the moment, that the API Gateway itself is correctly deployed and reachable with its default api endpoint. That’s step one. If _that's_ not working, we have a deeper issue that needs to be addressed first (and I recommend starting with Cloudwatch logs associated with your API Gateway to trace the requests). Focusing on your specific domain not working, there are three primary areas to investigate which often introduce the problem. Let’s examine them with the level of detail this deserves.
 

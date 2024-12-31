@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-alternative-labels-can-be-used-with-the-clip-model"
 ---
 
-from a slightly different angle than a typical textbook explanation, shall we? I've spent a good portion of my career elbow-deep in multimodal models, particularly CLIP, and the label discussion is always fascinating because it really shows how much we can bend the "rules" of predefined categories. In a nutshell, we're not shackled to the labels as presented in the original training data. That's the beauty of CLIP – it learns a joint embedding space where text and images reside together, allowing for much more flexible comparisons.
+from a slightly different angle than a typical textbook explanation? I've spent a good portion of my career elbow-deep in multimodal models, particularly CLIP, and the label discussion is always fascinating because it really shows how much we can bend the "rules" of predefined categories. In a nutshell, we're not shackled to the labels as presented in the original training data. That's the beauty of CLIP – it learns a joint embedding space where text and images reside together, allowing for much more flexible comparisons.
 
 Specifically, when talking about alternative labels, we are venturing into areas where we don't rely on pre-defined class names such as ‘cat’ or ‘dog’. Instead, we exploit the model's understanding of semantic relationships within the text embedding space. We can generate new text descriptions which act as our “labels”. This can open up a wide range of possibilities for retrieval and classification that are far beyond the original label space.
 

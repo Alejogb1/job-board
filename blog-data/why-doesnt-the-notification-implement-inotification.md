@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-doesnt-the-notification-implement-inotification"
 ---
 
-, one. It's a common point of confusion, and I've certainly spent my fair share of time debugging similar scenarios in the trenches. Specifically, the question at hand is: why doesn’t a typical notification implementation directly implement an interface like `INotification`? To understand this, we need to move beyond the surface and examine the underlying architectural patterns at play.
+It's a common point of confusion, and I've certainly spent my fair share of time debugging similar scenarios in the trenches. Specifically, the question at hand is: why doesn’t a typical notification implementation directly implement an interface like `INotification`? To understand this, we need to move beyond the surface and examine the underlying architectural patterns at play.
 
 In many systems, notifications aren’t just simple data carriers; they often involve a complex lifecycle. Think about it. Notifications usually need to be dispatched to multiple handlers, might require asynchronous processing, and could potentially trigger cascading events. Directly implementing a basic interface on the core notification payload would lock it into a very rigid structure and dramatically limit its flexibility, especially as the system evolves. It would be akin to using a single pipe for all your plumbing needs, rather than a system with varying diameters, valves, and connections.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-the-chaincode-build-fail-in-hyperledger-fabric-on-kubernetes"
 ---
 
-Let's explore that, shall we? I recall a particularly frustrating deployment back in my early days with Hyperledger Fabric, circa 2019. We were moving our network to a Kubernetes cluster, and the chaincode build failures became a recurring nightmare. The error messages were often cryptic, leaving us in a debugging loop. It's not a straightforward “one size fits all” answer, but having grappled with those issues firsthand, I can offer some detailed, practically-oriented explanations and solutions.
+Let's explore that? I recall a particularly frustrating deployment back in my early days with Hyperledger Fabric, circa 2019. We were moving our network to a Kubernetes cluster, and the chaincode build failures became a recurring nightmare. The error messages were often cryptic, leaving us in a debugging loop. It's not a straightforward “one size fits all” answer, but having grappled with those issues firsthand, I can offer some detailed, practically-oriented explanations and solutions.
 
 The root causes behind chaincode build failures in Hyperledger Fabric on Kubernetes usually stem from a combination of environmental mismatches, misconfigurations, and sometimes, surprisingly basic oversight. The process involves building the chaincode in a container environment that mirrors the peer nodes, and this is where things tend to go wrong.
 
@@ -30,6 +30,7 @@ require (
 	github.com/golang/protobuf v1.5.2
 )
 ```
+
 This seemingly small version difference with the Fabric's SDK can lead to compile time or runtime errors.
 
 **Solution**:
@@ -47,6 +48,7 @@ require (
 )
 
 ```
+
 Remember, checking the release notes and official Fabric documentation for compatible versions is absolutely essential.
 
 **Snippet 2: Dockerfile Example (Incompatible build environment)**
@@ -82,6 +84,7 @@ WORKDIR /opt/chaincode
 COPY --from=builder /opt/chaincode/chaincode .
 CMD ["chaincode"]
 ```
+
 By using the Fabric peer image, we ensured a consistent environment. This is paramount to prevent issues arising from subtle differences between build and execution environments.
 
 **Snippet 3: Resource Limit Issue (Kubernetes configuration)**
@@ -104,13 +107,14 @@ spec:
         app: chaincode-builder
     spec:
       containers:
-      - name: chaincode-builder
-        image: my-chaincode-builder-image
-        resources:
-          requests:
-            cpu: "500m" # Initial setting: not enough!
-            memory: "1Gi" # Initial setting: not enough!
+        - name: chaincode-builder
+          image: my-chaincode-builder-image
+          resources:
+            requests:
+              cpu: "500m" # Initial setting: not enough!
+              memory: "1Gi" # Initial setting: not enough!
 ```
+
 **Solution:**
 
 Adjust the pod resources to match the chaincode requirements
@@ -131,13 +135,14 @@ spec:
         app: chaincode-builder
     spec:
       containers:
-      - name: chaincode-builder
-        image: my-chaincode-builder-image
-        resources:
-          requests:
-            cpu: "1" # Increased cpu request
-            memory: "2Gi" # Increased memory request
+        - name: chaincode-builder
+          image: my-chaincode-builder-image
+          resources:
+            requests:
+              cpu: "1" # Increased cpu request
+              memory: "2Gi" # Increased memory request
 ```
+
 Increasing the requested CPU and memory, in this case, significantly stabilized the build process. It’s crucial to monitor resource usage during the build phase and adjust resource settings as needed.
 
 To delve deeper into these aspects, I highly recommend exploring the official Hyperledger Fabric documentation, specifically the sections on chaincode packaging and deployment, and also Kubernetes resource management. "Kubernetes in Action" by Marko Luksa is also an excellent resource for understanding resource management in Kubernetes. Furthermore, studying "The Go Programming Language" by Alan A. A. Donovan and Brian W. Kernighan is essential for developing robust chaincode in Go. Also, for general best practices, the CNCF documentation is an invaluable resource for running containerized applications in Kubernetes.

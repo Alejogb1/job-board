@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-key-value-pairs-from-complex-json-objects-using-jq-and-map"
 ---
 
-, shall we? I've certainly spent my fair share of evenings navigating deeply nested json structures, so I can relate to the need for precision when pulling out specific data points. Using `jq` alongside `map` is an effective way to achieve that, and it’s something that’s saved me countless hours over the years. I remember one project where we were receiving real-time sensor data streams encoded in json, and the structure was… well, let's just say _unconventional_. `jq` became my close companion then.
+? I've certainly spent my fair share of evenings navigating deeply nested json structures, so I can relate to the need for precision when pulling out specific data points. Using `jq` alongside `map` is an effective way to achieve that, and it’s something that’s saved me countless hours over the years. I remember one project where we were receiving real-time sensor data streams encoded in json, and the structure was… well, let's just say _unconventional_. `jq` became my close companion then.
 
 The crux of the matter lies in understanding how `jq` operates as a filter and how `map` enables us to apply transformations across arrays. You’re essentially crafting a mini-program to describe _what_ data you want, rather than _how_ to find it. It’s a declarative approach, which makes it very powerful for json processing.
 

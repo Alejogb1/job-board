@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-problems-with-using-a-fully-convolutional-neural-network-fcrn-in-building-net-construction"
 ---
 
-, one. I've seen my fair share of architectural plans that promised the moon with cutting-edge tech, only to crash into reality pretty hard. And, yes, fully convolutional neural networks (FCRNs) definitely fall into that category when you're talking about practical, real-world net construction—the kind of net that's meant for catching fish, not training models.
+I've seen my fair share of architectural plans that promised the moon with cutting-edge tech, only to crash into reality pretty hard. And, yes, fully convolutional neural networks (FCRNs) definitely fall into that category when you're talking about practical, real-world net construction—the kind of net that's meant for catching fish, not training models.
 
 The main issues, as I've encountered them, revolve around a few core mismatches between what an FCRN is designed for and what you actually _need_ in a reliable, functional net. The core problem stems from how FCRNs treat data. These networks are, by their very design, geared towards spatially consistent data— think images. They learn patterns based on the pixel relationships, the context within a visual field. But nets, as in fishing nets, aren't remotely like that. They're structures, engineered using material properties, knot strengths, and spatial configurations that are drastically different. You might see some parallels if you look at a 3D scan of the net mesh, but those parallels are often superficial.
 

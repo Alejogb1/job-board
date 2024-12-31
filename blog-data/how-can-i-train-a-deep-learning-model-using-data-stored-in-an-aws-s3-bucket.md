@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-train-a-deep-learning-model-using-data-stored-in-an-aws-s3-bucket"
 ---
 
-, . S3 and deep learning models - it’s a combo I’ve certainly danced with more than a few times. Actually, I recall a project back in 2019 where we were analyzing satellite imagery; the dataset was massive, and storing it all locally just wasn't viable. Leveraging S3 was a necessity, not a luxury. Getting the training process working seamlessly with that setup required a deep dive into data loading and pipelining, which is precisely what I'll elaborate on here.
+S3 and deep learning models - it’s a combo I’ve certainly danced with more than a few times. Actually, I recall a project back in 2019 where we were analyzing satellite imagery; the dataset was massive, and storing it all locally just wasn't viable. Leveraging S3 was a necessity, not a luxury. Getting the training process working seamlessly with that setup required a deep dive into data loading and pipelining, which is precisely what I'll elaborate on here.
 
 The core challenge when training a deep learning model with data stored in S3 revolves around efficiently streaming the data to your training environment. You don’t want to download the entire dataset locally before you can even begin. That defeats the purpose of cloud storage and makes the whole process painstakingly slow. You need a method that can fetch data in chunks, on-demand, and without becoming a performance bottleneck.
 
@@ -129,11 +129,11 @@ Finally, it's worth briefly mentioning Amazon SageMaker. SageMaker provides opti
 
 For a more comprehensive grasp, I’d highly suggest delving into the following:
 
-*   **"Deep Learning with Python" by François Chollet:** This book provides excellent coverage on data generators and working with datasets in keras and TensorFlow.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** Covers in-depth how to use `tf.data` for optimized data pipelines, a core part of this exercise.
-*   **The official TensorFlow documentation:** For the latest on TF datasets, data pipelines, and custom dataset creation.
-*   **The official PyTorch documentation:** For guidance on creating custom `Dataset` objects and `DataLoader` for pytorch based models.
-*   **AWS Boto3 documentation:** Essential for understanding how to interact with s3 programmatically in a secure and efficient way.
-*  **Amazon SageMaker documentation:** For those working in SageMaker. The documentation is very detailed and provides many code examples for data ingestion from various sources including S3.
+- **"Deep Learning with Python" by François Chollet:** This book provides excellent coverage on data generators and working with datasets in keras and TensorFlow.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** Covers in-depth how to use `tf.data` for optimized data pipelines, a core part of this exercise.
+- **The official TensorFlow documentation:** For the latest on TF datasets, data pipelines, and custom dataset creation.
+- **The official PyTorch documentation:** For guidance on creating custom `Dataset` objects and `DataLoader` for pytorch based models.
+- **AWS Boto3 documentation:** Essential for understanding how to interact with s3 programmatically in a secure and efficient way.
+- **Amazon SageMaker documentation:** For those working in SageMaker. The documentation is very detailed and provides many code examples for data ingestion from various sources including S3.
 
 In my experience, choosing between these approaches depends largely on the complexity of your data loading process and the scale of your dataset. For smaller datasets, a custom data generator may be perfectly fine. But when you start getting into larger scale projects, leveraging libraries like tensorflow datasets or exploring managed platforms such as SageMaker can often save considerable time and headaches down the line.

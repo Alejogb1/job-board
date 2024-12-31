@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-install-lightgbm-for-custom-predictions"
 ---
 
-, let’s tackle this. I've spent a fair bit of time wrestling with machine learning deployments, and the nuances of getting LightGBM running smoothly for custom prediction workflows is something I've navigated more than once. It's not just about installing the package; it’s about ensuring it integrates cleanly into your existing infrastructure and prediction pipeline. So, let's break this down practically.
+I've spent a fair bit of time wrestling with machine learning deployments, and the nuances of getting LightGBM running smoothly for custom prediction workflows is something I've navigated more than once. It's not just about installing the package; it’s about ensuring it integrates cleanly into your existing infrastructure and prediction pipeline. So, let's break this down practically.
 
 The core challenge often isn't the installation itself, but the environment it’s installed into, and subsequently, how the model interacts with the rest of your system. Let me walk you through the typical considerations, as well as what I would recommend to avoid common pitfalls.
 

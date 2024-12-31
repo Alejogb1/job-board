@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-the-environment-from-a-docker-compose-file-with-portainer"
 ---
 
-Let’s address this directly, shall we? It’s a common scenario: you’ve defined your multi-container application using docker-compose, and now you’re looking to leverage Portainer's management capabilities without losing the environment variables you so carefully configured. I’ve dealt with this quite a few times, particularly back when we were migrating our monolithic application to microservices. The trick is understanding how Portainer interacts with existing docker setups, including docker-compose configurations, and what tools it offers for environment variable management.
+Let’s address this directly? It’s a common scenario: you’ve defined your multi-container application using docker-compose, and now you’re looking to leverage Portainer's management capabilities without losing the environment variables you so carefully configured. I’ve dealt with this quite a few times, particularly back when we were migrating our monolithic application to microservices. The trick is understanding how Portainer interacts with existing docker setups, including docker-compose configurations, and what tools it offers for environment variable management.
 
 The core challenge lies in the fact that docker-compose typically defines environments directly in the `docker-compose.yml` file, either explicitly or via environment files (`.env`). Portainer, on the other hand, has its own interface for container creation and management, which may not immediately recognize the environment definitions from your compose file. This can feel like a disconnect initially, but it's manageable once you understand the mechanics involved.
 
@@ -79,7 +79,6 @@ services:
     environment:
       - DATABASE_URL=postgres://user:password@db:5432/mydb
       - API_KEY=some_secret_key
-
 ```
 
 The steps to deploy this through Portainer are exactly as described in Example 1, except the content of the new stack is provided above. Portainer will parse the compose file, and the `backend` container will inherit the `DATABASE_URL` and `API_KEY` variables as intended.
@@ -116,7 +115,7 @@ services:
 
 The deployment in Portainer will proceed normally, with the `worker` container having `USER_ID` set to `1000`.
 
-It's critical to note that while you can edit environment variables directly within the Portainer UI *after* the stack is deployed, these changes won't persist if you redeploy the stack without updating the compose file. Portainer reads the docker-compose definition each time a stack is updated, so it will override any changes you made directly from the container UI. To have persistent changes, you will always need to update your original compose files or use the `env` section like illustrated above.
+It's critical to note that while you can edit environment variables directly within the Portainer UI _after_ the stack is deployed, these changes won't persist if you redeploy the stack without updating the compose file. Portainer reads the docker-compose definition each time a stack is updated, so it will override any changes you made directly from the container UI. To have persistent changes, you will always need to update your original compose files or use the `env` section like illustrated above.
 
 For further reading, I would recommend exploring the official docker-compose documentation. Specifically, the sections on environment variables and `.env` files. Also, consult the Portainer documentation related to stacks, as it will cover more advanced features and edge cases. For a general understanding of Docker and its underlying mechanisms, I highly suggest "Docker Deep Dive" by Nigel Poulton. It's a great resource that has helped many of us grasp the core concepts effectively.
 

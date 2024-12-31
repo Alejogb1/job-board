@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-downsampling-and-then-upsampling-a-signal-alter-its-original-length"
 ---
 
-one, shall we? It's a common source of confusion, especially when you’re diving into signal processing, and I’ve certainly seen my share of headaches caused by assumptions about length changes during resampling. The short answer is: yes, downsampling followed by upsampling can absolutely alter the original length, but it's more complex than a simple ‘yes’ or ‘no.’ The specific outcome depends heavily on the _factors_ involved in both processes and how they're implemented. This isn't always intuitive, so let's break it down.
+one? It's a common source of confusion, especially when you’re diving into signal processing, and I’ve certainly seen my share of headaches caused by assumptions about length changes during resampling. The short answer is: yes, downsampling followed by upsampling can absolutely alter the original length, but it's more complex than a simple ‘yes’ or ‘no.’ The specific outcome depends heavily on the _factors_ involved in both processes and how they're implemented. This isn't always intuitive, so let's break it down.
 
 From my own experiences, I recall a particularly frustrating project where I was analyzing sensor data in real-time. We needed to reduce the data rate for network transfer, so naturally, we downsampled. Then, for post-processing analysis, we upsampled back to a higher rate. We made a naive assumption that the final length would match the original. The resulting time domain analysis was… a mess. It didn’t match. It was during that debacle that I learned to pay incredibly close attention to the math involved, and since then, I've been meticulous about checking my work.
 

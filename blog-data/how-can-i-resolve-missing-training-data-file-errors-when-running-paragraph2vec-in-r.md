@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-missing-training-data-file-errors-when-running-paragraph2vec-in-r"
 ---
 
-, . Dealing with missing training data files during `paragraph2vec` model training is, unfortunately, a common hiccup, and I've certainly seen my share of it across various projects. It’s usually not a coding flaw in the implementation itself, but rather a symptom of how the data pipelines or file paths are handled. It's frustrating, I know, but let’s break it down. The issue almost always boils down to the `paragraph2vec` algorithm not being able to locate the text data it needs to learn the document embeddings.
+Dealing with missing training data files during `paragraph2vec` model training is, unfortunately, a common hiccup, and I've certainly seen my share of it across various projects. It’s usually not a coding flaw in the implementation itself, but rather a symptom of how the data pipelines or file paths are handled. It's frustrating, I know, but let’s break it down. The issue almost always boils down to the `paragraph2vec` algorithm not being able to locate the text data it needs to learn the document embeddings.
 
 When we talk about "missing" files, it’s crucial to first disambiguate what exactly we're looking at. Are we talking about the _initial raw text file_, the _preprocessed tokenized files_, or potentially even a _vocabulary file_ that `paragraph2vec` or related libraries sometimes require? I’ve found that diagnosing this correctly is the first half of the battle won.
 

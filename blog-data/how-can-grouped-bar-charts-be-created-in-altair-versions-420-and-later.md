@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-grouped-bar-charts-be-created-in-altair-versions-420-and-later"
 ---
 
-Let’s tackle grouped bar charts in Altair, shall we? It's a visualization challenge I've encountered numerous times over the years, especially when representing complex datasets. My experience, going back to the early days of Altair’s rapid evolution, has shown me how flexible it can be, though you do need to grasp the underlying principles to get precisely what you want.
+Let’s tackle grouped bar charts in Altair? It's a visualization challenge I've encountered numerous times over the years, especially when representing complex datasets. My experience, going back to the early days of Altair’s rapid evolution, has shown me how flexible it can be, though you do need to grasp the underlying principles to get precisely what you want.
 
 The core concept behind creating a grouped bar chart in Altair, versions 4.2.0 onwards, involves layering multiple bar marks, each offset slightly to avoid overlap and thus create the visual groupings. There isn't a dedicated "grouped" bar mark type, rather, you compose it. The trick lies in how you transform your data and then instruct Altair on how to map the data to the chart's axes. Essentially, you're using encodings to create the visual separation between the groups.
 
@@ -34,7 +34,7 @@ chart = alt.Chart(data).mark_bar(
 chart
 ```
 
-In this example, the `column` encoding is the key. Rather than offsetting each bar within a single x axis category, this approach uses subcharts, each with it's own x axis.  The key here is understanding that Altair's grammar of graphics enables separation between layers.
+In this example, the `column` encoding is the key. Rather than offsetting each bar within a single x axis category, this approach uses subcharts, each with it's own x axis. The key here is understanding that Altair's grammar of graphics enables separation between layers.
 
 Now, let's consider another scenario where I need to compare the performance of several products across multiple regions. This requires a different approach, using explicit `xOffset` within `mark_bar`, as follows:
 

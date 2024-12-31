@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-ruby-regex-modify-user-input-in-regional-languages"
 ---
 
-, let’s tackle this. I remember vividly an incident back in the early 2010s when I was working on a multi-lingual e-commerce platform, and we ran into some very peculiar issues with user input in Ruby. It felt like the regex engine had a mind of its own. The core problem wasn't necessarily a 'bug' in Ruby itself, but a confluence of factors related to character encodings, normalization, and how regular expressions are implemented. Let me break it down for you.
+I remember vividly an incident back in the early 2010s when I was working on a multi-lingual e-commerce platform, and we ran into some very peculiar issues with user input in Ruby. It felt like the regex engine had a mind of its own. The core problem wasn't necessarily a 'bug' in Ruby itself, but a confluence of factors related to character encodings, normalization, and how regular expressions are implemented. Let me break it down for you.
 
 The primary reason Ruby regex sometimes seems to modify user input, especially in regional languages, stems from the complexities of handling text that isn't simple ASCII. When we're dealing with languages beyond basic English, we encounter a variety of challenges such as: different character sets (like utf-8, iso-8859, etc.), composite characters (like accented letters or ligatures), and the subtleties of character normalization.
 

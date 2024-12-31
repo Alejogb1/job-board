@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-limit-curve-fits-using-lmfit-constrained-by-the-sum-of-parameters"
 ---
 
-, let’s tackle this. It’s a common challenge when fitting models to data, particularly when your parameters are physically meaningful and their relationship is constrained. I've bumped into this situation several times, especially when working with spectral decompositions where, say, you might know that the integrated areas under individual peaks must sum to a known quantity. Simply fitting each peak independently can lead to physically nonsensical results if you’re not careful. lmfit offers elegant tools to address these types of constraints, so it’s not as thorny as it might first appear.
+It’s a common challenge when fitting models to data, particularly when your parameters are physically meaningful and their relationship is constrained. I've bumped into this situation several times, especially when working with spectral decompositions where, say, you might know that the integrated areas under individual peaks must sum to a known quantity. Simply fitting each peak independently can lead to physically nonsensical results if you’re not careful. lmfit offers elegant tools to address these types of constraints, so it’s not as thorny as it might first appear.
 
 The core of the issue lies in how you define the parameters and the model function itself. Instead of treating each parameter as entirely free, you leverage lmfit's ability to define interdependent parameters. We’ll do this by expressing one or more parameters in terms of the others. I'll show you this with a few different approaches. We’ll move from a basic example to a more advanced one to highlight the flexibility.
 

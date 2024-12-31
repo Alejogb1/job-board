@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-multiple-images-be-specified-for-an-init-container"
 ---
 
-, one. The question of whether you can specify multiple images for an init container is something I've bumped into more than once in my years working with Kubernetes. It's a nuanced issue, and the short answer is, no, not _directly_, in the way you might imagine. An init container, by design, is meant to execute a series of single-containerized tasks sequentially before the main application container starts. It isn't structured to pull and run multiple images in parallel or as a single multi-image entity. However, there are effective workarounds, which we will unpack in detail.
+The question of whether you can specify multiple images for an init container is something I've bumped into more than once in my years working with Kubernetes. It's a nuanced issue, and the short answer is, no, not _directly_, in the way you might imagine. An init container, by design, is meant to execute a series of single-containerized tasks sequentially before the main application container starts. It isn't structured to pull and run multiple images in parallel or as a single multi-image entity. However, there are effective workarounds, which we will unpack in detail.
 
 From my experience managing sprawling microservices architectures, especially in high-throughput environments, init containers are invaluable for setting up the necessary pre-conditions. These might include fetching configurations, migrating databases, or preparing volumes. The typical structure of a pod specification, as you likely know, allows for only one _image_ definition within an init container's _container_ specification.
 

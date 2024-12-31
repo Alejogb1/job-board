@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-data-failing-to-return-from-the-array"
 ---
 
-, . I've spent more late nights than I care to remember debugging exactly this kind of issue – data stubbornly refusing to materialize from an array. It's one of those foundational problems that can manifest in incredibly varied ways, often throwing up layers of indirection that seem almost deliberately designed to frustrate. Before we delve into specifics, understand that the core challenge always boils down to either an issue in _how_ we're accessing the array or with the array's _contents_ themselves.
+I've spent more late nights than I care to remember debugging exactly this kind of issue – data stubbornly refusing to materialize from an array. It's one of those foundational problems that can manifest in incredibly varied ways, often throwing up layers of indirection that seem almost deliberately designed to frustrate. Before we delve into specifics, understand that the core challenge always boils down to either an issue in _how_ we're accessing the array or with the array's _contents_ themselves.
 
 From my experience, there's rarely a single, magic bullet solution. It’s usually a process of elimination, systematically checking assumptions about the data, and tracing the code execution. The feeling of finally uncovering the culprit, though, is… well, let's just say it makes the debugging hours almost worthwhile.
 

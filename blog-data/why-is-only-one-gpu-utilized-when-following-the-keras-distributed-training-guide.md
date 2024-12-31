@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-only-one-gpu-utilized-when-following-the-keras-distributed-training-guide"
 ---
 
-, . It's a common frustration, and I remember banging my head against this wall quite a bit when I was first setting up distributed training systems a few years back for a deep learning project that was pushing the boundaries of our hardware. It's incredibly demoralizing to see only one GPU sweating away while the others are just… idle. So, let me break down why you might be facing this, and we can then explore some potential solutions with code.
+It's a common frustration, and I remember banging my head against this wall quite a bit when I was first setting up distributed training systems a few years back for a deep learning project that was pushing the boundaries of our hardware. It's incredibly demoralizing to see only one GPU sweating away while the others are just… idle. So, let me break down why you might be facing this, and we can then explore some potential solutions with code.
 
 The core issue isn't usually a bug in Keras’s distributed training itself, but rather often boils down to a misunderstanding of how distributed strategies are activated and configured. Specifically, when it comes to TensorFlow and Keras’s `tf.distribute` strategies, the single most common pitfall is not properly initializing or scoping the strategy when defining your model and optimizer. The guide, while generally comprehensive, often assumes a certain level of background knowledge that a newcomer might not possess.
 

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-use-the-ups-api-within-a-shopify-script-editor"
 ---
 
-Let's approach this from a practical angle, shall we? I recall a project a few years back where we needed to integrate real-time UPS shipping calculations directly into a custom Shopify checkout, bypassing the limitations of Shopify’s built-in carrier options. It was a challenge, but it highlighted some key aspects of interacting with external APIs from within the Shopify Script Editor. The core issue here is that the Shopify Script Editor operates within a very constrained environment. You don't have direct access to network requests like you would in a typical server-side application. This requires a bit of creative thinking and a solid understanding of what the editor *can* do.
+Let's approach this from a practical angle? I recall a project a few years back where we needed to integrate real-time UPS shipping calculations directly into a custom Shopify checkout, bypassing the limitations of Shopify’s built-in carrier options. It was a challenge, but it highlighted some key aspects of interacting with external APIs from within the Shopify Script Editor. The core issue here is that the Shopify Script Editor operates within a very constrained environment. You don't have direct access to network requests like you would in a typical server-side application. This requires a bit of creative thinking and a solid understanding of what the editor _can_ do.
 
-First, let's be absolutely clear: you can't make direct HTTP requests to the UPS API from the Shopify Script Editor. The environment doesn't allow it. The script editor runs client-side JavaScript within the Liquid template context and, more recently, via custom functions on the new Shopify functions platform. Neither of those environments give you the kind of access needed for a full-fledged API interaction. So, the goal is not to make those API calls *directly* from the editor; instead, we need to use the editor to *inform* another mechanism that *can* make those calls.
+First, let's be absolutely clear: you can't make direct HTTP requests to the UPS API from the Shopify Script Editor. The environment doesn't allow it. The script editor runs client-side JavaScript within the Liquid template context and, more recently, via custom functions on the new Shopify functions platform. Neither of those environments give you the kind of access needed for a full-fledged API interaction. So, the goal is not to make those API calls _directly_ from the editor; instead, we need to use the editor to _inform_ another mechanism that _can_ make those calls.
 
 What does this look like, practically speaking? Essentially, you'll use the script editor to gather the data required for the UPS API call (think shipment origin, destination, package dimensions, weight, etc.), then use that data to adjust either what is shown to the user or send data to a back-end service that handles the request. This data could be passed to a meta-field or even a webhook, which then triggers the API call. From there, the result of the UPS API (like shipping rates) can be stored and made accessible for presentation to the end-user.
 
@@ -33,37 +33,34 @@ if (!shippingAddress) {
 // Sample data for package details (replace with actual logic to determine size/weight)
 // Could also use a custom app to manage this data if you are dealing with products with many dimensions
 let packageDetails = {
-    weight: 10, // Weight in pounds, could come from product weight attributes or be calculated
-    length: 10, // Length in inches
-    width: 10,  // Width in inches
-    height: 10 // Height in inches
+  weight: 10, // Weight in pounds, could come from product weight attributes or be calculated
+  length: 10, // Length in inches
+  width: 10, // Width in inches
+  height: 10, // Height in inches
 };
 
-
 let upsData = {
-    destination: {
-      city: shippingAddress.city,
-      state: shippingAddress.provinceCode,
-      zip: shippingAddress.zip,
-      country: shippingAddress.countryCode,
-    },
+  destination: {
+    city: shippingAddress.city,
+    state: shippingAddress.provinceCode,
+    zip: shippingAddress.zip,
+    country: shippingAddress.countryCode,
+  },
   origin: {
     // Your shop's origin address - keep it consistent
     city: "YOUR_CITY",
     state: "YOUR_STATE",
     zip: "YOUR_ZIP",
-    country: "YOUR_COUNTRY"
+    country: "YOUR_COUNTRY",
   },
-  packages: [packageDetails]
+  packages: [packageDetails],
 };
 
 // Now store in a cart meta field (this meta field will be added to the checkout)
 cart.metafields = cart.metafields || {};
 cart.metafields.ups_request_data = JSON.stringify(upsData);
 
-
 output.cart = cart;
-
 ```
 
 In this snippet, the script collects shipping information and package specifics. It then stores this object within a metafield, using `JSON.stringify`. This data can now be accessed elsewhere.
@@ -113,7 +110,7 @@ This Python snippet sets up a Flask web server to receive webhooks from Shopify.
 
 **Example 3: Handling and displaying the rates**
 
-Back in the shopify storefront, a simple bit of liquid or javascript can be used to display the results from the server app. This is dependent on *how* you decided to send the data back to the storefront, but typically, you would use something like meta fields or the custom checkout fields available on shopify plus.
+Back in the shopify storefront, a simple bit of liquid or javascript can be used to display the results from the server app. This is dependent on _how_ you decided to send the data back to the storefront, but typically, you would use something like meta fields or the custom checkout fields available on shopify plus.
 
 ```liquid
 // Assuming a metafield called "ups_rates_data" is present on the cart
@@ -141,17 +138,17 @@ This snippet will attempt to retrieve a `ups_rates_data` metafield from the cart
 
 **Key takeaways and considerations**
 
-*   **Indirect API interaction:** Remember, no direct calls from the Script Editor. The editor’s job is data collection and signaling other systems.
-*   **Security:** Never include API keys or sensitive information directly in front-end code. These must be managed securely, ideally using environment variables in your server-side application.
-*   **Error Handling:** The example python script has a simple error handling example. You need to implement proper error handling both at the server level (webhook handler) and when displaying data to the user.
-*   **Shopify Admin API**: If you are working with Shopify, it's crucial that you understand how to use the Shopify Admin API, to modify meta fields, add shipping rates and so on. You'll often be using this API to manage cart, checkout and product details. The official documentation is your best friend here.
-*   **Webhook limitations**: Keep in mind webhooks might have limitations on the amount of data that can be sent at one go. Consider batching or only sending necessary data.
+- **Indirect API interaction:** Remember, no direct calls from the Script Editor. The editor’s job is data collection and signaling other systems.
+- **Security:** Never include API keys or sensitive information directly in front-end code. These must be managed securely, ideally using environment variables in your server-side application.
+- **Error Handling:** The example python script has a simple error handling example. You need to implement proper error handling both at the server level (webhook handler) and when displaying data to the user.
+- **Shopify Admin API**: If you are working with Shopify, it's crucial that you understand how to use the Shopify Admin API, to modify meta fields, add shipping rates and so on. You'll often be using this API to manage cart, checkout and product details. The official documentation is your best friend here.
+- **Webhook limitations**: Keep in mind webhooks might have limitations on the amount of data that can be sent at one go. Consider batching or only sending necessary data.
 
 **Recommended resources:**
 
-*   **Shopify Documentation:** The official Shopify documentation for Script Editor, Metafields, Webhooks, and the Shopify Admin API. This is the first place to look for definitive guidance.
-*   **"Building Shopify Apps" by Chris Ruz:** A hands-on book that provides a good explanation of Shopify app development, including aspects relevant to server-side API interactions and how to use webhooks effectively.
-*   **"RESTful Web APIs" by Leonard Richardson and Mike Amundsen:** If you're unfamiliar with REST API design patterns, this book will provide you with a solid understanding of how APIs operate and the best practices.
-*   **UPS Developer Documentation**: The official documentation for UPS's APIs. This will provide detailed information on the required data structure, endpoints and authentication methods.
+- **Shopify Documentation:** The official Shopify documentation for Script Editor, Metafields, Webhooks, and the Shopify Admin API. This is the first place to look for definitive guidance.
+- **"Building Shopify Apps" by Chris Ruz:** A hands-on book that provides a good explanation of Shopify app development, including aspects relevant to server-side API interactions and how to use webhooks effectively.
+- **"RESTful Web APIs" by Leonard Richardson and Mike Amundsen:** If you're unfamiliar with REST API design patterns, this book will provide you with a solid understanding of how APIs operate and the best practices.
+- **UPS Developer Documentation**: The official documentation for UPS's APIs. This will provide detailed information on the required data structure, endpoints and authentication methods.
 
 Integrating external APIs with Shopify scripts requires careful design and a segmented approach. You cannot sidestep Shopify's architectural constraints. Your solution must leverage its system limitations by working in conjunction with a back-end server and webhooks. By using the Script Editor for data preparation, webhooks for signaling API calls, and careful server-side logic, you can achieve fairly complex custom behavior that is transparent to the user and is as fast and reliable as possible.

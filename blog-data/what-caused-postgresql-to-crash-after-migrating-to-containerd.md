@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-caused-postgresql-to-crash-after-migrating-to-containerd"
 ---
 
-this, shall we? It’s not uncommon for migrations, particularly those involving critical infrastructure like databases, to reveal unexpected issues. The shift from a traditional Docker runtime to containerd, as you’ve described, can introduce subtle changes in the execution environment which, in certain edge cases, can manifest as a crash in something like PostgreSQL. From experience, I've seen a few recurring patterns related to this type of situation that are worth exploring. This isn't about blame; it's about systematically tracing potential root causes.
+this? It’s not uncommon for migrations, particularly those involving critical infrastructure like databases, to reveal unexpected issues. The shift from a traditional Docker runtime to containerd, as you’ve described, can introduce subtle changes in the execution environment which, in certain edge cases, can manifest as a crash in something like PostgreSQL. From experience, I've seen a few recurring patterns related to this type of situation that are worth exploring. This isn't about blame; it's about systematically tracing potential root causes.
 
 The move to containerd itself isn’t inherently problematic; it’s generally more streamlined and performant than Docker’s daemon-based approach. However, the devil, as they say, is in the details. Containerd relies on a different set of underlying primitives for resource management, networking, and particularly, signal handling, which are crucial for the stability of a stateful service like PostgreSQL. Here are a few areas I would investigate first, based on problems I’ve encountered while migrating similar setups:
 

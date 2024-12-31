@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-intermediate-layer-outputs-handled-in-pytorch"
 ---
 
-, one. I recall back in my early days working on a complex neural network for image segmentation – a project that almost sent me back to Fortran, I swear – I spent a solid week debugging why my gradients were vanishing like morning mist. The problem, as it turned out, stemmed from a misunderstanding of how PyTorch manages intermediate layer outputs during backpropagation. It’s a vital aspect to comprehend for anyone venturing beyond basic tutorials.
+I recall back in my early days working on a complex neural network for image segmentation – a project that almost sent me back to Fortran, I swear – I spent a solid week debugging why my gradients were vanishing like morning mist. The problem, as it turned out, stemmed from a misunderstanding of how PyTorch manages intermediate layer outputs during backpropagation. It’s a vital aspect to comprehend for anyone venturing beyond basic tutorials.
 
 Essentially, in PyTorch, when you define a model using `torch.nn.Module` and its subclasses, the framework cleverly constructs a dynamic computation graph as your data flows forward through the layers. This graph isn't just a passive representation of the operations; it's actively tracking all computations. The intermediate outputs of each layer are implicitly stored, or, more precisely, they are retained as nodes within this graph. These nodes store the output tensor _and_ the operations that generated them. This is pivotal because during backpropagation, when the gradients are calculated, the framework needs access to these stored values to correctly chain the derivatives using the chain rule.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-create-a-record-from-another-controller-in-rails"
 ---
 
-, so you're trying to create a record in one rails controller from another, eh? i've been there, more times than i’d like to remember. it's one of those things that seems simple on the surface but can quickly turn into a tangled mess if you’re not careful. i remember back in the day, when i was first learning rails, i tried doing this and ended up with a controller that was basically a swiss army knife – it was doing everything and nothing well. let’s avoid that, shall we?
+, so you're trying to create a record in one rails controller from another, eh? i've been there, more times than i’d like to remember. it's one of those things that seems simple on the surface but can quickly turn into a tangled mess if you’re not careful. i remember back in the day, when i was first learning rails, i tried doing this and ended up with a controller that was basically a swiss army knife – it was doing everything and nothing well. let’s avoid that?
 
 the core issue here is decoupling. controllers ideally should be focused on handling requests and responses, not directly interacting with the database through active record models unless it’s part of their own crud operation. so, directly creating a record from another controller is generally not the recommended approach because we want to keep our logic nicely separated and our models doing what they should.
 

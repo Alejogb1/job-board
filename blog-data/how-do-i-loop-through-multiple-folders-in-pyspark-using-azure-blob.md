@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-loop-through-multiple-folders-in-pyspark-using-azure-blob"
 ---
 
-Let's address this challenge, shall we? It’s a scenario I've encountered numerous times in past data engineering projects, especially when dealing with large, distributed datasets stored across multiple containers or folders in Azure Blob Storage. The key isn't merely about iterating; it's about doing so efficiently within the distributed processing paradigm of PySpark, avoiding potential performance bottlenecks that stem from improper data access patterns. We’re talking about orchestrating a distributed read, something that requires careful consideration of how Spark's execution model interacts with the storage layer.
+Let's address this challenge? It’s a scenario I've encountered numerous times in past data engineering projects, especially when dealing with large, distributed datasets stored across multiple containers or folders in Azure Blob Storage. The key isn't merely about iterating; it's about doing so efficiently within the distributed processing paradigm of PySpark, avoiding potential performance bottlenecks that stem from improper data access patterns. We’re talking about orchestrating a distributed read, something that requires careful consideration of how Spark's execution model interacts with the storage layer.
 
 My experience stems from a project where I needed to process sensor data, which was segmented into folders based on date and sensor type. We used Azure Blob Storage heavily, and the volume of data grew substantially. Early on, we learned the hard way that looping naively through folders would kill performance, leading to job failures and much head-scratching. The main issue arises because each folder access could trigger a separate job or stage within Spark if not handled correctly, forcing the scheduler to manage hundreds or even thousands of individual read operations. This, of course, results in massive inefficiencies, making it crucial to design a more optimal approach.
 
@@ -35,6 +35,7 @@ df.printSchema()
 spark.stop()
 
 ```
+
 In this example, we directly provide the pattern `wasbs://mycontainer@mystorageaccount.blob.core.windows.net/data/year=*/month=*/part-*.parquet`. Spark will expand this pattern to list all files within the specified folders that match the given file pattern, which in this case is all `.parquet` files starting with `part-` inside all the months of all the years under the `/data` folder within the specified blob storage. Using wildcards reduces the number of steps required to load data, leading to much more performant and efficient operations. It is very important to specify the correct file type.
 
 Now, let’s assume we need to be more selective and only read data from, say, the year 2023. We can use another pattern for that:
@@ -82,10 +83,11 @@ df_specific_months.printSchema()
 spark.stop()
 
 ```
+
 In this last example, we generate a list of paths explicitly and then use the splat operator `*` to pass the list of files as arguments to the `spark.read.parquet` method. This approach gives us granular control over the paths and allows us to be more dynamic with our data selection.
 
 While these examples illustrate common approaches, it’s worth noting that there are nuances and best practices to consider. For instance, always optimize the partitioning and bucketing of your data to reduce the number of files Spark needs to read. Furthermore, understanding the data skew within your data can impact performance significantly. If a particular folder contains significantly more data than others, consider strategies to avoid it being the cause of bottleneck.
 
-For a deep dive into file I/O and optimization in Spark, I highly recommend the following resources: *“Spark: The Definitive Guide”* by Bill Chambers and Matei Zaharia. It covers the fundamentals of Spark’s architecture and optimization strategies. For a deeper understanding of storage options and integration with Azure, look into the Azure documentation on data engineering and specifically Azure Blob Storage and its integration with Spark. Finally, the official Apache Spark documentation is an essential resource and should always be reviewed before starting any project.
+For a deep dive into file I/O and optimization in Spark, I highly recommend the following resources: _“Spark: The Definitive Guide”_ by Bill Chambers and Matei Zaharia. It covers the fundamentals of Spark’s architecture and optimization strategies. For a deeper understanding of storage options and integration with Azure, look into the Azure documentation on data engineering and specifically Azure Blob Storage and its integration with Spark. Finally, the official Apache Spark documentation is an essential resource and should always be reviewed before starting any project.
 
 In summary, looping through folders naively in PySpark with Azure Blob isn't the way. Instead, leveraging file glob patterns with Spark's reader functionality offers a parallelized and efficient way to process your data. By understanding how Spark distributes its workload and by optimizing our file access patterns, we can achieve substantial performance improvements and maintain a highly efficient data pipeline.

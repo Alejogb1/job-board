@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-it-possible-to-get-the-architecture-of-a-neural-network-built-with-tensorflow-and-pytorch-using-static-analysis"
 ---
 
-this question. The idea of extracting neural network architectures via static analysis from TensorFlow and PyTorch models is not a straightforward task, yet it's one that I’ve encountered a few times in my career, particularly when dealing with complex, legacy systems where the original model definition code has, shall we say, "gone missing". It’s a common pain point, and while a perfect, 100% reliable solution might be akin to chasing a unicorn, we can definitely get some very useful information.
+this question. The idea of extracting neural network architectures via static analysis from TensorFlow and PyTorch models is not a straightforward task, yet it's one that I’ve encountered a few times in my career, particularly when dealing with complex, legacy systems where the original model definition code has say, "gone missing". It’s a common pain point, and while a perfect, 100% reliable solution might be akin to chasing a unicorn, we can definitely get some very useful information.
 
 First, let's clarify what we mean by "static analysis." We're talking about examining the code (or in this case, the serialized model representation) without actually executing it. This contrasts with dynamic analysis, which would involve running the model and observing its behavior, which is often easier for capturing architecture but less desirable in this scenario. Why not run the model? Well, there are multiple valid reasons; for instance, you might only have access to a saved model file, not the full source code used to generate it, or you might be working in a constrained environment that prohibits execution.
 

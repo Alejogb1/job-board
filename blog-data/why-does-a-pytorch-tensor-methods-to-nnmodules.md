@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-a-pytorch-tensor-methods-to-nnmodules"
 ---
 
-, let's get into this. i've seen this question pop up in various forms, and it usually comes down to a misunderstanding of how pytorch’s architecture is structured. it’s a common trip-up, and honestly, i fell for it myself when i first started.
+, i've seen this question pop up in various forms, and it usually comes down to a misunderstanding of how pytorch’s architecture is structured. it’s a common trip-up, and honestly, i fell for it myself when i first started.
 
 the core of the confusion lies in the seemingly magical way pytorch allows tensor methods to be called on `nn.module` instances. it looks like a duck, quacks like a duck, but it's definitely not just a duck. you see, you have your tensors, which are the basic data containers, and then you have modules, which are the building blocks of neural networks. logically, you'd expect that if you want to manipulate a tensor that's inside a module, you’d need to extract the tensor first, then apply the method. but pytorch enables this direct access that feels a bit too convenient, or as some might say, too "pythonic."
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-deep-learning-be-applied-to-3d-point-cloud-data"
 ---
 
-, . Point cloud data. Been there, implemented that, debugged the inevitable headaches that come with it. It's definitely a field where 'theoretical understanding' needs to meet 'real-world messiness', and deep learning provides a powerful bridge for that. So, how _do_ we get those neural networks to make sense of these scattered 3D coordinates? It's not quite as straightforward as feeding in a neatly arranged image.
+Point cloud data. Been there, implemented that, debugged the inevitable headaches that come with it. It's definitely a field where 'theoretical understanding' needs to meet 'real-world messiness', and deep learning provides a powerful bridge for that. So, how _do_ we get those neural networks to make sense of these scattered 3D coordinates? It's not quite as straightforward as feeding in a neatly arranged image.
 
 First things first, what _is_ a point cloud? It’s a set of data points in three-dimensional space, typically defined by x, y, and z coordinates. Sometimes you'll also have additional attributes like color or intensity, depending on how it was captured (LiDAR, depth cameras, etc.). Unlike images, there's no inherent grid structure here. Each point is independent, which presents a challenge when you think about applying traditional convolutional networks, designed to exploit spatial relationships in structured data.
 

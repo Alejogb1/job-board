@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-download-dag-files-from-a-github-repository"
 ---
 
-, shall we? It’s a common need, and I’ve certainly navigated this particular landscape many times, especially during my stint managing cloud workflows a few years back. You’re looking to pull Directed Acyclic Graph (DAG) files from a GitHub repository, which, while conceptually straightforward, can involve a few practical considerations that I’ve learned to appreciate over time.
+? It’s a common need, and I’ve certainly navigated this particular landscape many times, especially during my stint managing cloud workflows a few years back. You’re looking to pull Directed Acyclic Graph (DAG) files from a GitHub repository, which, while conceptually straightforward, can involve a few practical considerations that I’ve learned to appreciate over time.
 
 Essentially, you’re trying to get files that define your workflows, often for tools like Apache Airflow or similar orchestration systems. These files are typically Python scripts but could also be YAML or other formats, depending on your specific setup. You'll usually want these files in your local environment, or perhaps on a server, so that the orchestration tool can pick them up and execute your pipelines.
 

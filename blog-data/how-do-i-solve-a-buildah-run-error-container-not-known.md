@@ -34,7 +34,7 @@ buildah commit my_image $image_name
 buildah rm $container_name
 ```
 
-In this case, we are _explicitly_ removing the container, but it also can be removed when a command fails due to a syntax issue, incorrect command arguments or other issues. Let’s fix that, shall we? The correct way is to make sure you're always referencing the correct current container and to avoid reusing the same name across separate steps.
+In this case, we are _explicitly_ removing the container, but it also can be removed when a command fails due to a syntax issue, incorrect command arguments or other issues. Let’s fix that? The correct way is to make sure you're always referencing the correct current container and to avoid reusing the same name across separate steps.
 
 ```bash
 #!/bin/bash

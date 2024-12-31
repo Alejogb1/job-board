@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-form-for-a-hasmany-through-association-in-rails-61-involving-three-tables"
 ---
 
-, let’s tackle this. I’ve certainly been down this road before, and it’s a common scenario when you’re dealing with relational databases in Rails, especially when introducing that `has_many :through` association. The trick is understanding how Rails handles nested attributes and then translating that into a workable form.
+I’ve certainly been down this road before, and it’s a common scenario when you’re dealing with relational databases in Rails, especially when introducing that `has_many :through` association. The trick is understanding how Rails handles nested attributes and then translating that into a workable form.
 
 Let's assume for a moment you’re building a system for a university and you have three tables. First, `students`. Second, `courses`. And third, an intermediary `enrollments` table that links students to courses, indicating which student is enrolled in which course. Here, `enrollments` is your joining table, crucial for the `has_many :through` relationship.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-a-menu-bar-and-toolbar-to-a-qdialog"
 ---
 
-, let’s tackle this. I’ve encountered this exact scenario multiple times over the years, often when needing to create a complex dialog that requires more than just basic input fields. Implementing a menu bar and toolbar within a `QDialog`, while not directly supported out-of-the-box, isn't as daunting as it might initially seem. The key is understanding how Qt’s layout system and widget hierarchy work, and then leveraging a few container widgets to achieve the desired effect.
+I’ve encountered this exact scenario multiple times over the years, often when needing to create a complex dialog that requires more than just basic input fields. Implementing a menu bar and toolbar within a `QDialog`, while not directly supported out-of-the-box, isn't as daunting as it might initially seem. The key is understanding how Qt’s layout system and widget hierarchy work, and then leveraging a few container widgets to achieve the desired effect.
 
 The fundamental challenge is that a `QDialog` doesn’t inherently provide slots for a menu bar or a toolbar like a `QMainWindow` does. `QMainWindow` structures itself to accommodate these elements, but `QDialog` is designed to be a simpler, more focused window. Therefore, we need to essentially build that structure within our dialog. My past experience, particularly developing custom data entry interfaces, led me to adopt this general approach: employing vertical and horizontal layouts, and carefully placing container widgets where necessary.
 

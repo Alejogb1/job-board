@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-declare-a-file-path-within-a-callback-function"
 ---
 
-, let's get into this. I've seen this particular issue pop up more times than I care to recall, especially in asynchronous environments. It usually stems from a misunderstanding of scope and variable lifetimes within callback contexts. When you're working with file systems and callbacks, you need to be particularly mindful of how paths are handled, or you’ll quickly end up with a debugging session that stretches on longer than it should. I'll lay out the core problem, illustrate with a few code snippets, and then recommend some solid resources to solidify your understanding.
+, I've seen this particular issue pop up more times than I care to recall, especially in asynchronous environments. It usually stems from a misunderstanding of scope and variable lifetimes within callback contexts. When you're working with file systems and callbacks, you need to be particularly mindful of how paths are handled, or you’ll quickly end up with a debugging session that stretches on longer than it should. I'll lay out the core problem, illustrate with a few code snippets, and then recommend some solid resources to solidify your understanding.
 
 The root of the problem is typically that callback functions don’t execute immediately. They get placed on an event queue and are only invoked later when the asynchronous operation completes. The variable holding your file path at the time the callback _definition_ occurs may not hold the same value at the time the callback _execution_ occurs. This is a classic closure issue. The callback 'closes over' the variable, but it might not get the _value_ you were expecting. This is true for path variables or any other variable for that matter.
 
@@ -30,7 +30,7 @@ def process_multiple_files(directory):
 process_multiple_files("./test_directory")
 ```
 
-In this python example, let's assume you have a directory called “test_directory” with some text files inside. If you run the above code, it seems like it should print each file path. However, because of the delayed execution of callback, the `path` variable within the lambda will _always_ refer to the last value it had in the loop’s scope. You might find it printing the same (last) file multiple times. We need a different strategy.
+In this python example, let's assume you have a directory called “test*directory” with some text files inside. If you run the above code, it seems like it should print each file path. However, because of the delayed execution of callback, the `path` variable within the lambda will \_always* refer to the last value it had in the loop’s scope. You might find it printing the same (last) file multiple times. We need a different strategy.
 
 The solution lies in using either immediately executed functions (IIFEs), closures, or, more simply, the built in mechanisms that languages provide for parameter passing. In Python, for example, default parameter values are evaluated when the function is _defined,_ not when it’s called. This can capture the variable's _value_ at the time of definition. Let’s modify our previous snippet:
 

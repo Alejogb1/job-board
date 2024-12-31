@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-the-perceptron-algorithm-converging-properly"
 ---
 
-, let’s tackle this. I’ve certainly spent my fair share of late nights debugging perceptron issues, and I can tell you, it’s rarely a single, obvious cause. The apparent simplicity of the algorithm can be deceptive, and the reasons for non-convergence can range from subtle implementation quirks to fundamental problems with the dataset itself.
+I’ve certainly spent my fair share of late nights debugging perceptron issues, and I can tell you, it’s rarely a single, obvious cause. The apparent simplicity of the algorithm can be deceptive, and the reasons for non-convergence can range from subtle implementation quirks to fundamental problems with the dataset itself.
 
 I remember one particularly frustrating project back when I was working on a rudimentary image recognition system. The core of it relied on a perceptron, and I was absolutely baffled when it wouldn’t converge, despite what seemed like a perfectly reasonable dataset. We spent days examining the code, tweaking the learning rate, and questioning the sanity of the universe in general. What eventually emerged was a combination of a few factors, which, I've found, are surprisingly common. Let's delve into those and how to approach them.
 

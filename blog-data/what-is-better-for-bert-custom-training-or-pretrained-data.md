@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-better-for-bert-custom-training-or-pretrained-data"
 ---
 
-head-on, shall we? I've seen this "custom training versus pretrained" debate play out more times than I care to remember. It's not a simple 'this one wins' situation, particularly with something as nuanced as Bert. My experience, having spent a solid chunk of my career elbows-deep in NLP and transformer architectures, strongly suggests that the ideal approach depends _heavily_ on your specific problem and available resources. You can't just declare one superior without proper context.
+head-on? I've seen this "custom training versus pretrained" debate play out more times than I care to remember. It's not a simple 'this one wins' situation, particularly with something as nuanced as Bert. My experience, having spent a solid chunk of my career elbows-deep in NLP and transformer architectures, strongly suggests that the ideal approach depends _heavily_ on your specific problem and available resources. You can't just declare one superior without proper context.
 
 So, let’s break down the factors and why things are often less black and white than many tutorials might suggest. The initial inclination for many is to think that custom training, given its name, is the way to go, but that's a shortcut to disappointment if you don't fully consider the pretraining advantage.
 

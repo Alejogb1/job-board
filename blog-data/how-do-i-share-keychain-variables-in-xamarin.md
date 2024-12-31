@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-share-keychain-variables-in-xamarin"
 ---
 
-Let's delve into the specifics, shall we? Sharing keychain variables across different applications or even within different parts of the same app in Xamarin can indeed present some unique challenges, but it’s a scenario I've encountered countless times during my years of mobile development. It's not as straightforward as accessing shared preferences, and there are nuances related to security that must be handled with careful consideration.
+Let's delve into the specifics? Sharing keychain variables across different applications or even within different parts of the same app in Xamarin can indeed present some unique challenges, but it’s a scenario I've encountered countless times during my years of mobile development. It's not as straightforward as accessing shared preferences, and there are nuances related to security that must be handled with careful consideration.
 
 The fundamental hurdle lies in the way keychains are designed. They're primarily intended to store credentials and other sensitive data associated with a specific application. This is a security feature, ensuring one app can't casually pry into another’s secrets. However, situations arise when you need to legitimately share this data. For instance, you might have a suite of apps that need access to the same user login token, or you might want to enable seamless authentication across your entire ecosystem.
 
@@ -50,7 +50,7 @@ public static class KeychainService
                     Service = service,
                     Account = key
                 };
-               
+
                 var updateAttributes = new SecRecord(SecKind.GenericPassword)
                 {
                     ValueData = encodedValue,
@@ -98,7 +98,7 @@ public static class KeychainService
 }
 ```
 
-This code defines a static class with methods to save and load strings. The vital part is that both `SaveString` and `LoadString` accept an `accessGroup` parameter. To make this work, you *must* modify the entitlements file of both applications to include the same `access-groups` entry, like so:
+This code defines a static class with methods to save and load strings. The vital part is that both `SaveString` and `LoadString` accept an `accessGroup` parameter. To make this work, you _must_ modify the entitlements file of both applications to include the same `access-groups` entry, like so:
 
 ```xml
 <key>keychain-access-groups</key>
@@ -184,7 +184,7 @@ public static class SecureKeychainService
                  SecStatusCode updateStatusCode = SecKeyChain.Update(updateQuery, updateAttributes);
                return updateStatusCode == SecStatusCode.Success;
             }
-           
+
         }
         catch (Exception ex)
         {
@@ -213,7 +213,7 @@ public static class SecureKeychainService
                 try
                 {
                     var encryptedValue = match.ValueData.ToArray();
-                   
+
                     var decryptedValue = Encoding.UTF8.GetString(SecretBox.Open(encryptedValue, new byte[SecretBox.NonceBytes], encryptionKey));
                     return decryptedValue;
 

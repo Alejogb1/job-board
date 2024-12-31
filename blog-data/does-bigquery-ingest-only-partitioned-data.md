@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-bigquery-ingest-only-partitioned-data"
 ---
 
-, let's get into this. The question of whether BigQuery _only_ ingests partitioned data is a common point of confusion, and it’s something I've seen trip up even seasoned data engineers. To cut to the chase: no, BigQuery does not _only_ ingest partitioned data, but partitioning is a very strong recommendation for almost every use case involving sizeable datasets. Let me break down why.
+, The question of whether BigQuery _only_ ingests partitioned data is a common point of confusion, and it’s something I've seen trip up even seasoned data engineers. To cut to the chase: no, BigQuery does not _only_ ingest partitioned data, but partitioning is a very strong recommendation for almost every use case involving sizeable datasets. Let me break down why.
 
 In my experience, working with various data pipelines, I’ve encountered scenarios where initially we weren't partitioning our ingested data. We’d start with relatively small datasets, and everything seemed perfectly adequate. We relied on BigQuery’s powerful query engine to churn through the data. However, as the datasets grew, query performance started taking a noticeable hit. The cost also increased dramatically. It was a direct, visceral lesson on the importance of thoughtful partitioning strategies.
 

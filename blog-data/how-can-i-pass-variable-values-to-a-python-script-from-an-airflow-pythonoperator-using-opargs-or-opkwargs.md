@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pass-variable-values-to-a-python-script-from-an-airflow-pythonoperator-using-opargs-or-opkwargs"
 ---
 
-, let’s tackle this. Passing values into your Python scripts from an Airflow `PythonOperator` is a core task, and while it might seem straightforward, subtle nuances can trip you up. I’ve certainly had my share of debugging sessions where I’ve overlooked something simple, so let me share some insights drawn from those experiences.
+Passing values into your Python scripts from an Airflow `PythonOperator` is a core task, and while it might seem straightforward, subtle nuances can trip you up. I’ve certainly had my share of debugging sessions where I’ve overlooked something simple, so let me share some insights drawn from those experiences.
 
 The `PythonOperator` in Airflow gives you two primary mechanisms to feed external data into the python callable it executes: `op_args` and `op_kwargs`. The choice between them often comes down to how you prefer to structure your function’s input: positional arguments (`op_args`) or keyword arguments (`op_kwargs`). Let’s break down how they function and when to favor one over the other.
 

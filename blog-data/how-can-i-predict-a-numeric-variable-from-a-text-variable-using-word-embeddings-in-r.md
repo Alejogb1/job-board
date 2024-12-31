@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-predict-a-numeric-variable-from-a-text-variable-using-word-embeddings-in-r"
 ---
 
-, let’s tackle this. I’ve been down this road more than a few times, dealing with text-to-numeric prediction problems. It’s a common challenge in various fields, from sentiment analysis predicting a numeric rating to predicting financial indicators from news articles. The core technique you’re going to lean on is, as you mentioned, word embeddings. These aren't just random numbers assigned to words; they capture semantic meaning by representing words as vectors in a high-dimensional space.
+I’ve been down this road more than a few times, dealing with text-to-numeric prediction problems. It’s a common challenge in various fields, from sentiment analysis predicting a numeric rating to predicting financial indicators from news articles. The core technique you’re going to lean on is, as you mentioned, word embeddings. These aren't just random numbers assigned to words; they capture semantic meaning by representing words as vectors in a high-dimensional space.
 
 Think of it this way: traditionally, representing words as simple one-hot encodings is a disaster for anything beyond the simplest tasks. The curse of dimensionality hits you hard, and relationships between words are completely lost. "King" and "Queen," for example, would be equidistant from "chair" in the vector space. Word embeddings, on the other hand, learn these relationships. Words with similar meanings will have vector representations that are closer to each other. So, our goal here is to use these learned representations to build a predictive model for your numeric target.
 

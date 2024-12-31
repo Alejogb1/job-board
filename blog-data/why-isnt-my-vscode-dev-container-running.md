@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-my-vscode-dev-container-running"
 ---
 
-, let's get into this. You're facing a frustrating but common issue: your vscode dev container refuses to cooperate. I’ve been there more times than I care to remember, and the root cause can be surprisingly diverse. It’s rarely a single, obvious culprit, so let's explore a systematic approach to troubleshooting this. My experience, particularly on projects involving complex microservice architectures and custom toolchains, has taught me that methodical checking is key.
+, You're facing a frustrating but common issue: your vscode dev container refuses to cooperate. I’ve been there more times than I care to remember, and the root cause can be surprisingly diverse. It’s rarely a single, obvious culprit, so let's explore a systematic approach to troubleshooting this. My experience, particularly on projects involving complex microservice architectures and custom toolchains, has taught me that methodical checking is key.
 
 First off, let's establish that a dev container isn't just a fancy virtual machine. It’s a containerized development environment defined by a configuration file (`devcontainer.json` and possibly a `Dockerfile`). The failure often arises from issues in this configuration, network configurations, resource limits or even local machine settings. Before you dive deeper, make sure you've installed the remote - containers extension in vscode. It's the backbone of dev container functionality.
 

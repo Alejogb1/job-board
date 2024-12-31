@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-it-possible-to-create-hotel-room-ticket-nfts"
 ---
 
-, . From my experience building distributed systems for various travel platforms, I can offer a detailed perspective on the feasibility of hotel room ticket nfts, along with practical considerations. It's not just a matter of "can it be done," but also _how_ it can be done effectively and what the implications are.
+From my experience building distributed systems for various travel platforms, I can offer a detailed perspective on the feasibility of hotel room ticket nfts, along with practical considerations. It's not just a matter of "can it be done," but also _how_ it can be done effectively and what the implications are.
 
 The short answer is, yes, it is technically feasible to create hotel room ticket nfts. The longer answer, though, involves understanding the intricacies of both nft technology and hotel booking systems, and that's where things get interesting.
 

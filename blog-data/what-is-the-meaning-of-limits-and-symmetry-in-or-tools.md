@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-meaning-of-limits-and-symmetry-in-or-tools"
 ---
 
-, one. I've spent quite a bit of time in the trenches with optimization problems, and the concepts of limits and symmetry, especially within the context of OR-Tools, are fundamental to making real progress. They're not just abstract mathematical ideas; they directly impact the practicality and performance of our solutions. Let's break down what they mean and how they function in practice, drawing from experiences I’ve had over the years.
+I've spent quite a bit of time in the trenches with optimization problems, and the concepts of limits and symmetry, especially within the context of OR-Tools, are fundamental to making real progress. They're not just abstract mathematical ideas; they directly impact the practicality and performance of our solutions. Let's break down what they mean and how they function in practice, drawing from experiences I’ve had over the years.
 
 The core idea behind limits in OR-Tools revolves around controlling the computational resources used by the solver. Without limits, optimization algorithms could potentially run indefinitely or consume excessive memory, essentially turning into resource hogs. We typically work with two primary types of limits: time limits and solution limits.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tweets-be-classified-and-clustered"
 ---
 
-, . It's a topic I've spent a fair amount of time on, having once been deeply involved in building a social media analysis platform for a client in the media monitoring sector. The core challenge, as you've probably guessed, lies in the inherent noisiness and unstructured nature of tweet data. How can we extract meaningful insights by classifying and clustering these 280-character bursts of information? Let’s break it down.
+It's a topic I've spent a fair amount of time on, having once been deeply involved in building a social media analysis platform for a client in the media monitoring sector. The core challenge, as you've probably guessed, lies in the inherent noisiness and unstructured nature of tweet data. How can we extract meaningful insights by classifying and clustering these 280-character bursts of information? Let’s break it down.
 
 Classifying and clustering tweets, in essence, involves processing natural language data to group them into categories or clusters based on shared characteristics. Classification is typically a supervised learning task where you train a model on labeled data to predict the category of a new tweet (e.g., sentiment: positive, negative, neutral; topic: politics, sports, technology). Clustering, on the other hand, is unsupervised learning where the algorithm discovers groupings of similar tweets without prior knowledge of the categories.
 

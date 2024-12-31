@@ -6,7 +6,7 @@ id: "why-do-i-get-attributeerror-nonetype-when-using-pytorch-in-azure-ml-studio"
 
 . The infamous `AttributeError: 'NoneType' object has no attribute` – it’s a rite of passage for many working with python, and when it surfaces in the context of pytorch within azure ml studio, it often points to a specific class of issues. I’ve seen this particular error rear its head countless times in my years, usually during some late-night debugging sessions. Typically, this error means you’re attempting to access a member of an object that isn’t actually instantiated— it's `none`. In the pytorch and azure ml studio landscape, this often stems from problems related to data loading, model definition, or how these components are marshalled through the azure ml pipelines.
 
-Let's break down some common scenarios and how to address them, based on experiences that are, shall we say, 'inspired by' real-world incidents.
+Let's break down some common scenarios and how to address them, based on experiences that are say, 'inspired by' real-world incidents.
 
 First, consider the data loading pipeline. Frequently, the issue surfaces because the pytorch `dataloader` isn't behaving as you expect. Imagine we've built a system to train an image classifier. Our code might look something like this:
 

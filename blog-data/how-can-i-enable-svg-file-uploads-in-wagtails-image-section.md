@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-enable-svg-file-uploads-in-wagtails-image-section"
 ---
 
-Let's dive into this, shall we? Handling svg uploads in wagtail’s image section is something I’ve encountered a few times, particularly on projects where we needed vector graphics for crisp display across various screen resolutions. It's a bit of a departure from the standard image formats, and wagtail, out-of-the-box, defaults to handling raster formats primarily. My first experience was, if I’m honest, more about hacking around the edges than a systematic solution. I quickly realized that for a reliable and maintainable implementation, we needed to understand wagtail’s internal image handling mechanisms and extend them appropriately.
+Let's dive into this? Handling svg uploads in wagtail’s image section is something I’ve encountered a few times, particularly on projects where we needed vector graphics for crisp display across various screen resolutions. It's a bit of a departure from the standard image formats, and wagtail, out-of-the-box, defaults to handling raster formats primarily. My first experience was, if I’m honest, more about hacking around the edges than a systematic solution. I quickly realized that for a reliable and maintainable implementation, we needed to understand wagtail’s internal image handling mechanisms and extend them appropriately.
 
 The core challenge revolves around wagtail’s `Image` model and its associated validators. By default, it checks for known raster image formats, specifically those within the `PIL` (Pillow) image library's capabilities, and svg falls outside this scope. The initial, naive approach might be to simply bypass these validations. However, that’s neither robust nor good practice because it leaves the door open to uploading all sorts of non-image files masquerading as svgs. So, let’s walk through a more structured approach.
 
@@ -111,6 +111,7 @@ This `SvgRendition` model will render the svg files using the original svg’s u
 
 WAGTAILIMAGES_RENDITION_MODEL = "your_app_name.get_svg_rendition_model"
 ```
+
 Replace `your_app_name` with the actual name of the application where you defined these models.
 
 The final piece is handling the serving of these svg's. Typically, wagtail generates resized renditions, but for svgs, we generally want to serve the original file and potentially use css for sizing. We'll create a custom serve view for the rendition model:
@@ -139,6 +140,7 @@ urlpatterns = [
     path("rendition/<int:rendition_id>/", ServeSvgRendition.as_view(), name="wagtailimages_serve_svg_rendition"),
 ]
 ```
+
 This custom view retrieves the corresponding `SvgRendition` object and returns the original file via a `FileResponse` with the correct mime type. We also need to register this view with a custom url pattern. Please note that this pattern must correspond with the value we gave to the `get_view_name` method within the `SvgRendition` model.
 
 Finally, in order to ensure that our custom `CustomImage` model is used by wagtail, we also need to set this in our app settings, in your settings.py
@@ -146,15 +148,16 @@ Finally, in order to ensure that our custom `CustomImage` model is used by wagta
 ```python
 WAGTAILIMAGES_IMAGE_MODEL = 'your_app_name.CustomImage'
 ```
+
 Again replacing `your_app_name` with your app's name.
 
 Putting it all together: we've effectively extended wagtail’s image handling to accept svg files, validated the files, created a custom rendition model that serves the original file, and wired up a dedicated view for serving these svg files.
 
 A few key things to bear in mind:
 
-*   **Security:** Always validate the svg files server-side, do not just rely on the client. Malicious svgs can contain embedded scripts that can compromise the client's browser. Consider additional sanitization if your security posture requires it.
-*   **Scalability:** This method is suitable for most use cases. But if you have a very high throughput of svg uploads, consider techniques like caching or dedicated image servers.
-*   **File Handling:**  Be mindful of file system permissions. Ensure that the user running the django application has appropriate read access to the storage location for the images.
+- **Security:** Always validate the svg files server-side, do not just rely on the client. Malicious svgs can contain embedded scripts that can compromise the client's browser. Consider additional sanitization if your security posture requires it.
+- **Scalability:** This method is suitable for most use cases. But if you have a very high throughput of svg uploads, consider techniques like caching or dedicated image servers.
+- **File Handling:** Be mindful of file system permissions. Ensure that the user running the django application has appropriate read access to the storage location for the images.
 
-For further reading, I highly recommend “*Programming in HTML5 with JavaScript and CSS3*” by David Geary for understanding the intricacies of svg and how to best use it within web development contexts. For a more thorough grasp of file handling and mime types within python, reviewing the documentation of the `magic` library alongside the standard `io` library is invaluable. For a deep understanding of how django handles files and media storage, refer to the official Django documentation related to files and storage. Additionally, Wagtail’s official documentation and source code are fundamental for truly grasping how its image handling is implemented and how you can extend it.
+For further reading, I highly recommend “_Programming in HTML5 with JavaScript and CSS3_” by David Geary for understanding the intricacies of svg and how to best use it within web development contexts. For a more thorough grasp of file handling and mime types within python, reviewing the documentation of the `magic` library alongside the standard `io` library is invaluable. For a deep understanding of how django handles files and media storage, refer to the official Django documentation related to files and storage. Additionally, Wagtail’s official documentation and source code are fundamental for truly grasping how its image handling is implemented and how you can extend it.
 This approach, in my experience, provides a solid foundation for managing svg uploads in Wagtail. It strikes a good balance between security, functionality, and maintainability. Remember that these code snippets serve as a foundational starting point, and you should adapt them to fit the specific needs and context of your application.

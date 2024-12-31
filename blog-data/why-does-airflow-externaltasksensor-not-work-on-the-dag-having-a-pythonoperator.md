@@ -6,7 +6,7 @@ id: "why-does-airflow-externaltasksensor-not-work-on-the-dag-having-a-pythonoper
 
 ah, i see the problem you're having. it's a classic, and one i've definitely banged my head against a few times back in the day when i was first starting with airflow. the external task sensor and python operator interaction can be a bit, let's say, _unintuitive_ at first glance.
 
-basically, the issue isn’t that the _sensor_ itself is broken. it’s more about understanding how airflow schedules and executes tasks, and how the external task sensor behaves specifically. this, shall we?
+basically, the issue isn’t that the _sensor_ itself is broken. it’s more about understanding how airflow schedules and executes tasks, and how the external task sensor behaves specifically. this?
 
 first, the external task sensor. it's designed to wait for a task in _another_ dag to reach a specific state, typically ‘success’ or ‘finished’. it's not just looking at whether the _code_ for the task has run; it's looking for the airflow system’s record of that task reaching a completion state. this record is what airflow uses to keep track of what’s been done and what still needs doing.
 

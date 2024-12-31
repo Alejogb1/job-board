@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-ckeditor-to-wagtail-blocks"
 ---
 
-, let’s tackle this. Implementing CKEditor within Wagtail blocks is a common scenario, and it often feels like a puzzle at first. I’ve certainly been there, spending hours tweaking configurations and digging through documentation. It’s not always as straightforward as dropping in a single line of code, but the process, once understood, is quite manageable. The crux of the issue revolves around seamlessly integrating a rich text editor into Wagtail’s block structure, which involves understanding the interplay between Wagtail’s `StreamField` and its blocks, and how CKEditor fits into that ecosystem.
+Implementing CKEditor within Wagtail blocks is a common scenario, and it often feels like a puzzle at first. I’ve certainly been there, spending hours tweaking configurations and digging through documentation. It’s not always as straightforward as dropping in a single line of code, but the process, once understood, is quite manageable. The crux of the issue revolves around seamlessly integrating a rich text editor into Wagtail’s block structure, which involves understanding the interplay between Wagtail’s `StreamField` and its blocks, and how CKEditor fits into that ecosystem.
 
 First, it’s essential to recognize that Wagtail offers several built-in block types, but CKEditor isn’t one of them out-of-the-box. This means we'll be leveraging Wagtail's flexibility to create a custom block that uses CKEditor. We accomplish this by utilizing Wagtail’s ability to incorporate custom forms and widgets. Specifically, we will use a `TextBlock` with a custom form widget that swaps the default textarea for a CKEditor instance.
 

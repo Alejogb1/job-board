@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-edit-the-airflowcfg-file-in-azure"
 ---
 
-, . I've been around the block a few times with Apache Airflow, particularly when it comes to deploying it in cloud environments like Azure. Editing the `airflow.cfg` file, while seemingly straightforward, can present a unique set of challenges when you're operating within the confines of a managed service or cloud deployment model. I’ve certainly had my share of moments trying to get a configuration tweak working as intended within Azure’s infrastructure.
+I've been around the block a few times with Apache Airflow, particularly when it comes to deploying it in cloud environments like Azure. Editing the `airflow.cfg` file, while seemingly straightforward, can present a unique set of challenges when you're operating within the confines of a managed service or cloud deployment model. I’ve certainly had my share of moments trying to get a configuration tweak working as intended within Azure’s infrastructure.
 
 The most crucial thing to understand is that _how_ you edit `airflow.cfg` depends heavily on _where_ and _how_ you've deployed Airflow in Azure. It’s not always as simple as navigating to a server and modifying a file. Often, it's more about utilizing configuration management tools or environment-specific settings. Let's explore some common scenarios and how to address them.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensorflow-lite-handle-concurrent-api-calls"
 ---
 
-, let’s tackle this. Concurrent api calls with tensorflow lite, particularly when it comes to the mobile and embedded space, can present a few interesting challenges. I’ve seen this issue play out on a few different projects, notably a real-time object detection app targeting low-power devices and a separate project involving edge inference for sensor data. Both required careful consideration of how we manage multiple requests against a single tflite interpreter.
+Concurrent api calls with tensorflow lite, particularly when it comes to the mobile and embedded space, can present a few interesting challenges. I’ve seen this issue play out on a few different projects, notably a real-time object detection app targeting low-power devices and a separate project involving edge inference for sensor data. Both required careful consideration of how we manage multiple requests against a single tflite interpreter.
 
 The core problem arises from the fact that a standard tflite interpreter instance, as typically created, isn't inherently thread-safe. This means that attempting to simultaneously run inference from multiple threads against a single interpreter object will often result in undefined behavior, race conditions, and, quite frequently, crashes. I’ve debugged this type of scenario enough to confidently say that avoiding shared mutable state is paramount here.
 

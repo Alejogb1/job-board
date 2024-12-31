@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-device-jwt-access-be-revoked-using-a-denylist-strategy"
 ---
 
-device JWT revocation via a denylist, shall we? This is a scenario I’ve encountered several times, often in the context of IoT platforms where the lifecycle of a device is a bit more… dynamic than your average user account. A simple expiration policy on JWTs isn't always enough; you frequently need to forcibly invalidate a token _before_ its natural expiration, particularly if a device is compromised or decommissioned.
+device JWT revocation via a denylist? This is a scenario I’ve encountered several times, often in the context of IoT platforms where the lifecycle of a device is a bit more… dynamic than your average user account. A simple expiration policy on JWTs isn't always enough; you frequently need to forcibly invalidate a token _before_ its natural expiration, particularly if a device is compromised or decommissioned.
 
 The core idea behind a denylist strategy is straightforward: we maintain a list of JWT identifiers (typically, the `jti` claim) that are explicitly considered invalid. When a request arrives with a JWT, we must check that its `jti` is _not_ present in the denylist before considering it valid. This provides an additional layer of control beyond the token's inherent expiration date. It does introduce a state management aspect that requires careful handling, of course, but it’s a robust approach for handling premature revocation.
 

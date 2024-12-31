@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensorflows-applygradients-function-be-used-with-multiple-loss-functions"
 ---
 
-, let’s tackle this. The question about using TensorFlow's `apply_gradients()` with multiple loss functions is something I’ve definitely grappled with, particularly back in the days when we were trying to fuse several distinct objectives into a single model for a rather ambitious image processing project. It's not as straightforward as simply summing losses, though that's often a good starting point. The nuances lie in how you manage the gradients from these different losses and how you actually apply them to your trainable variables.
+The question about using TensorFlow's `apply_gradients()` with multiple loss functions is something I’ve definitely grappled with, particularly back in the days when we were trying to fuse several distinct objectives into a single model for a rather ambitious image processing project. It's not as straightforward as simply summing losses, though that's often a good starting point. The nuances lie in how you manage the gradients from these different losses and how you actually apply them to your trainable variables.
 
 First off, it's crucial to understand that `apply_gradients()` is the workhorse for updating model weights based on calculated gradients. These gradients are derived from your loss functions. When you have a single loss, the process is fairly linear. But introduce multiple losses, and you need a strategy to combine their gradients in a meaningful way before feeding them to `apply_gradients()`. Simply taking the sum of all losses isn't always optimal, as it can lead to one loss dominating the others, particularly if their scales differ significantly.
 

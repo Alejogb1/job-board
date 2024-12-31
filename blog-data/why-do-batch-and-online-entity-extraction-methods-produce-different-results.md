@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-batch-and-online-entity-extraction-methods-produce-different-results"
 ---
 
-Let's get into this. It's a topic I've seen trip up quite a few teams, and it's not always immediately obvious why the discrepancies occur between batch and online entity extraction. I remember specifically one project, a real-time fraud detection system several years back, where we spent way too long debugging these very inconsistencies. What seemed like a minor variation at the design stage turned out to be a critical flaw when the system went live.
+It's a topic I've seen trip up quite a few teams, and it's not always immediately obvious why the discrepancies occur between batch and online entity extraction. I remember specifically one project, a real-time fraud detection system several years back, where we spent way too long debugging these very inconsistencies. What seemed like a minor variation at the design stage turned out to be a critical flaw when the system went live.
 
 The core issue lies in the fundamental differences in how these two modes of processing handle data, and how these differences impact the underlying machine learning models. Batch processing, as the name suggests, works on a static dataset. We’re essentially processing a large collection of documents, tweets, articles – whatever – all at once. This allows for the application of techniques that require complete or near-complete information about the whole corpus. This includes things like global context, lookups, co-occurrence analysis, and more complex, computationally expensive model iterations. These types of processing, which can take quite a bit of time and resources, often leads to higher extraction recall and accuracy, due to the extensive analysis possible on the entire batch. It enables the system to make informed decisions about entity boundaries, types, and relationships.
 
@@ -13,6 +13,7 @@ In contrast, online entity extraction – sometimes referred to as streaming or 
 Let me offer a couple of practical examples, using python-like pseudocode, to further illustrate this. Imagine extracting company names from a collection of news articles:
 
 **Batch Processing Example:**
+
 ```python
 import nltk
 from nltk import word_tokenize, pos_tag, ne_chunk
@@ -50,6 +51,7 @@ In this example, we have access to all the articles at once; this allows us to g
 Now, consider the online equivalent:
 
 **Online (Real-Time) Processing Example:**
+
 ```python
 import nltk
 from nltk import word_tokenize, pos_tag, ne_chunk
@@ -87,6 +89,7 @@ Here, each article is processed individually. The online method fails to consist
 Now let's consider a slightly more advanced case, where we look at the extraction of product names in a stream of customer reviews. We will see the limitations of online processing more distinctly:
 
 **Context-Aware Batch Processing:**
+
 ```python
 from collections import Counter
 
@@ -113,7 +116,8 @@ reviews = [
 extracted_products = batch_extract_product_names(reviews)
 print(f"Batch extraction (product names): {extracted_products}")
 ```
-This is a simplified representation of more advanced techniques, including term frequency and co-occurrence which we only have access to using batch processing. The output in the batch process would highlight *Galaxy s23* and *iphone 15*, it captures not only the product, but the fact that they are likely products. Let's contrast this with the online approach:
+
+This is a simplified representation of more advanced techniques, including term frequency and co-occurrence which we only have access to using batch processing. The output in the batch process would highlight _Galaxy s23_ and _iphone 15_, it captures not only the product, but the fact that they are likely products. Let's contrast this with the online approach:
 
 **Limited-Context Online Processing:**
 
@@ -138,6 +142,7 @@ for review in reviews:
   print(f"Online extraction from '{review}': {extracted_products}")
 
 ```
+
 This online method struggles with identifying products effectively since it lacks the context. Because it does not have any notion of term frequency across different documents it misses extracting the product names with similar efficiency to the batch process. In this instance, "camera" is extracted from all documents.
 
 The point here isn't to suggest one method is superior, but rather to highlight that they are suited for different use cases. Batch is for comprehensive analysis when time and resources are available; online is for low-latency processing, where quick answers are crucial.

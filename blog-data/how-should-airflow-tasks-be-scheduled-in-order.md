@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-should-airflow-tasks-be-scheduled-in-order"
 ---
 
-, let’s tackle this. Scheduling Airflow tasks, especially when dependencies are involved, isn't a one-size-fits-all scenario. I've seen more than a few pipelines come to grief because someone glossed over the nuances of task orchestration. From my experience building large data platforms, achieving predictable execution boils down to meticulous planning and a solid understanding of Airflow’s core scheduling mechanics.
+Scheduling Airflow tasks, especially when dependencies are involved, isn't a one-size-fits-all scenario. I've seen more than a few pipelines come to grief because someone glossed over the nuances of task orchestration. From my experience building large data platforms, achieving predictable execution boils down to meticulous planning and a solid understanding of Airflow’s core scheduling mechanics.
 
 The fundamental challenge with task order lies in adhering to the directed acyclic graph (dag) you define. Airflow isn’t just randomly firing off tasks; it’s adhering to the dependencies you establish with `set_upstream` or `set_downstream`, and since Airflow 2.0, using bitshift operations like `>>` and `<<` is common practice. The scheduler reads this graph and ensures tasks only execute after their dependencies are met. However, that dependency declaration only handles explicit requirements—the _logical_ order. You also have to consider timing which is a separate facet.
 

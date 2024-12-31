@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-enable-a-button-only-if-at-least-one-checkbox-is-checked-using-stimulus-js"
 ---
 
-, let’s tackle this. I’ve seen this kind of interaction come up quite a bit in my years developing web apps, and it's a great use case for Stimulus. It’s all about dynamically enabling and disabling elements based on the state of other elements, and Stimulus handles it pretty elegantly. Let's dive in.
+I’ve seen this kind of interaction come up quite a bit in my years developing web apps, and it's a great use case for Stimulus. It’s all about dynamically enabling and disabling elements based on the state of other elements, and Stimulus handles it pretty elegantly. Let's dive in.
 
 The core idea is to create a Stimulus controller that monitors the state of your checkboxes and manipulates the button accordingly. We'll use the controller's `connect()` lifecycle method to initially set up our targets, and then listen for changes to the checkboxes. When a change occurs, the controller will re-evaluate if any checkbox is checked and will enable/disable the button.
 

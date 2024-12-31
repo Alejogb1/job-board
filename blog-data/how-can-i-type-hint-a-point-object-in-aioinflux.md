@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-type-hint-a-point-object-in-aioinflux"
 ---
 
-, let’s tackle this. Type hinting `Point` objects when using `aioinflux` is a common sticking point, and frankly, it's understandable. Having battled with this myself on a rather large sensor data pipeline, I’ve found that approaching it systematically, rather than relying on guesswork, saves a good deal of headache.
+Type hinting `Point` objects when using `aioinflux` is a common sticking point, and frankly, it's understandable. Having battled with this myself on a rather large sensor data pipeline, I’ve found that approaching it systematically, rather than relying on guesswork, saves a good deal of headache.
 
 The core challenge here is that `aioinflux`’s `Point` class doesn't provide a directly importable type hint. The library uses `namedtuple`-like structures to construct points, but it doesn't expose a specific type that you can directly use in your function signatures or type variables. This absence forces us to be a bit more creative when providing type annotations for functions that accept or return these point objects.
 

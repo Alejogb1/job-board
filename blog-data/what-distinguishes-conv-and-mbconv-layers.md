@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-distinguishes-conv-and-mbconv-layers"
 ---
 
-, one. Having spent a fair bit of my career elbows-deep in deep learning architectures, I've certainly encountered and wrestled with the nuances between convolutional (conv) layers and the more nuanced mobile inverted bottleneck convolution (mbconv) layers. It’s a distinction that goes beyond just a simple layer change; it's about optimization, efficiency, and pushing the boundaries of what's possible on resource-constrained devices.
+Having spent a fair bit of my career elbows-deep in deep learning architectures, I've certainly encountered and wrestled with the nuances between convolutional (conv) layers and the more nuanced mobile inverted bottleneck convolution (mbconv) layers. It’s a distinction that goes beyond just a simple layer change; it's about optimization, efficiency, and pushing the boundaries of what's possible on resource-constrained devices.
 
 So, what _specifically_ sets them apart? At their core, a standard conv layer performs a linear transformation, applying a set of learnable filters (kernels) across the input feature maps. This process essentially extracts spatial features. The parameters in a convolutional layer are primarily the filter weights and biases. Mathematically, it's a relatively straightforward operation: given an input _x_ and a filter _w_, the output _y_ is roughly _y = w_ _ x + b_ where _b_ is the bias. The size of the output feature map is determined by the input size, kernel size, stride, and padding. It's a workhorse, used extensively, and I've personally implemented countless variations.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-an-integer-linear-program-ilp-be-formulated-to-find-the-maximum-weight-cycle-in-a-directed-graph"
 ---
 
-, let’s tackle this. I've seen this problem pop up a few times, most notably when I was working on network optimization for a distributed system a few years back. We needed to find the most 'valuable' path that looped back on itself, where 'value' was represented by link weights. It’s not a trivial problem, and a solid formulation using integer linear programming (ILP) is crucial for finding an optimal solution, especially when heuristics don't cut it.
+I've seen this problem pop up a few times, most notably when I was working on network optimization for a distributed system a few years back. We needed to find the most 'valuable' path that looped back on itself, where 'value' was represented by link weights. It’s not a trivial problem, and a solid formulation using integer linear programming (ILP) is crucial for finding an optimal solution, especially when heuristics don't cut it.
 
 The core challenge with formulating a maximum-weight cycle problem as an ILP lies in capturing the 'cycle' property itself. We can’t just look for any random path; we need a closed loop. Let's break down how we can express this mathematically and then translate it into an ILP.
 

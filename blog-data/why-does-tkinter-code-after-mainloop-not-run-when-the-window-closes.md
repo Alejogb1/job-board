@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-tkinter-code-after-mainloop-not-run-when-the-window-closes"
 ---
 
-, one. I remember a particular project, back when I was first getting deep into GUI development with Python and Tkinter. We were building a simple data visualization tool, and I had some post-processing code that stubbornly refused to execute after the main window was closed. It was frustrating, but it forced me to really understand the nuances of `mainloop()`. So, let's break down why this happens and how to manage it effectively.
+I remember a particular project, back when I was first getting deep into GUI development with Python and Tkinter. We were building a simple data visualization tool, and I had some post-processing code that stubbornly refused to execute after the main window was closed. It was frustrating, but it forced me to really understand the nuances of `mainloop()`. So, let's break down why this happens and how to manage it effectively.
 
 The core issue stems from how Tkinter’s `mainloop()` function operates. It’s not just a call to display a window; it’s essentially a blocking loop that manages the entire lifecycle of the application's graphical user interface. Think of it as the central nervous system of your Tkinter app. When you call `root.mainloop()` (assuming `root` is your main Tkinter window), the program enters an event loop, constantly listening for and processing user interactions such as clicks, key presses, and window resizing events.
 

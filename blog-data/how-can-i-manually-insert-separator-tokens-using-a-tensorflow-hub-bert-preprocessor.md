@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-manually-insert-separator-tokens-using-a-tensorflow-hub-bert-preprocessor"
 ---
 
-, let’s tackle this. I’ve seen a similar need arise a few times, particularly when dealing with complex document structures that a default BERT preprocessor doesn’t quite handle as we'd like. The goal, as I understand it, is to inject specific separator tokens manually during the text preprocessing stage, instead of relying solely on the preprocessor’s default behavior. This usually surfaces when you need finer-grained control over how sequences are segmented before going into your BERT model.
+I’ve seen a similar need arise a few times, particularly when dealing with complex document structures that a default BERT preprocessor doesn’t quite handle as we'd like. The goal, as I understand it, is to inject specific separator tokens manually during the text preprocessing stage, instead of relying solely on the preprocessor’s default behavior. This usually surfaces when you need finer-grained control over how sequences are segmented before going into your BERT model.
 
 The standard BERT preprocessors, such as those available on TensorFlow Hub, are designed for typical sentence or paragraph-based input. They insert separator tokens ([SEP]) automatically, generally at logical breaks (e.g., the end of a sentence in a single-sentence input, or between segments in a pair-sentence task). However, when working with, say, structured text where you have specific boundaries beyond simple sentences (like sections of legal documents or specific question/answer pairs embedded in longer context), the default behavior can sometimes result in less-than-ideal segmentations for your application. This is where manual insertion comes into play.
 

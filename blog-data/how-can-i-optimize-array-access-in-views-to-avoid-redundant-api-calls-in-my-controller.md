@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-optimize-array-access-in-views-to-avoid-redundant-api-calls-in-my-controller"
 ---
 
-Let’s tackle this, shall we? Array access within views often becomes a performance bottleneck, especially when those accesses trigger repeated calls back to your controller. I’ve personally encountered this issue more times than I care to remember, particularly in complex web applications with intricate data structures. The crux of the matter is that each access, if not carefully handled, can initiate a separate, unnecessary API or data retrieval event, leading to significant delays and increased server load. It's an efficiency sink that needs addressing early.
+Let’s tackle this? Array access within views often becomes a performance bottleneck, especially when those accesses trigger repeated calls back to your controller. I’ve personally encountered this issue more times than I care to remember, particularly in complex web applications with intricate data structures. The crux of the matter is that each access, if not carefully handled, can initiate a separate, unnecessary API or data retrieval event, leading to significant delays and increased server load. It's an efficiency sink that needs addressing early.
 
 The core problem arises when the view attempts to directly access or manipulate data without any form of caching or pre-processing. In such scenarios, every time the view needs a piece of information, it makes a direct request, often triggering a database query or external service call. This pattern is inefficient, as it leads to numerous redundant fetches of identical data, especially when a single view renders multiple elements based on the same array. There are better ways.
 

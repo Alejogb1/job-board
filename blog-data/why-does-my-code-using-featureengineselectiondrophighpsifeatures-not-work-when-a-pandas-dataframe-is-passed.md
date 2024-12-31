@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-code-using-featureengineselectiondrophighpsifeatures-not-work-when-a-pandas-dataframe-is-passed"
 ---
 
-, one. I've definitely been down that road with `feature_engine` and dataframes. It's usually not a problem with the `DropHighPSIFeatures` class itself, but rather the way the input dataframe is structured or understood by the library. Let me walk you through it based on a few experiences I've had.
+I've definitely been down that road with `feature_engine` and dataframes. It's usually not a problem with the `DropHighPSIFeatures` class itself, but rather the way the input dataframe is structured or understood by the library. Let me walk you through it based on a few experiences I've had.
 
 The core issue, in my experience, typically boils down to a mismatch in expectations concerning the format of the input data, specifically column types and how the feature engine library handles these. `DropHighPSIFeatures` calculates the population stability index (psi) across different datasets, and it expects numeric data for those calculations. If your dataframe contains non-numeric data, especially those with object datatypes—which is common when pandas automatically infers datatypes from a CSV or other sources—it’s very likely to stumble.
 

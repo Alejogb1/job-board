@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "can-static-analysis-determine-neural-network-architecture-from-tf-and-pytorch"
 ---
 
-, let’s tackle this. The idea of statically analyzing TensorFlow or PyTorch model definitions to infer their architecture – it’s something I've spent a fair amount of time considering, especially back when I was trying to reverse-engineer some complex models without access to their initial blueprints. It’s a fascinating problem with several layers of complexity, and, honestly, the answer isn't a simple yes or no. It leans more towards ‘mostly yes, but with significant caveats.’
+The idea of statically analyzing TensorFlow or PyTorch model definitions to infer their architecture – it’s something I've spent a fair amount of time considering, especially back when I was trying to reverse-engineer some complex models without access to their initial blueprints. It’s a fascinating problem with several layers of complexity, and, honestly, the answer isn't a simple yes or no. It leans more towards ‘mostly yes, but with significant caveats.’
 
 Here’s my perspective, drawing on both theoretical understanding and practical experience:
 

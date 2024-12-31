@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-seeds-leverage-existing-s3-images"
 ---
 
-Let's dive straight in, shall we? The idea of efficiently seeding a rails application with existing s3 images isn't just a hypothetical exercise; it's a practical challenge I've encountered multiple times during development and maintenance phases. Back in the day, during a large e-commerce platform migration, we faced the exact scenario – thousands of product images already residing happily in our s3 bucket. Re-uploading them during each database reset was, frankly, ludicrous.
+Let's dive straight in? The idea of efficiently seeding a rails application with existing s3 images isn't just a hypothetical exercise; it's a practical challenge I've encountered multiple times during development and maintenance phases. Back in the day, during a large e-commerce platform migration, we faced the exact scenario – thousands of product images already residing happily in our s3 bucket. Re-uploading them during each database reset was, frankly, ludicrous.
 
 The core issue revolves around preventing needless data transfers. We've got our images stored remotely; re-downloading them only to re-upload them via active storage, or similar, during seeding operations is a wasteful process, both in terms of time and bandwidth. We need to essentially 'point' our database to the existing s3 image urls, rather than creating completely new uploads. Let's break down how to achieve this using a combination of active storage and ruby's powerful scripting capabilities.
 
@@ -55,9 +55,21 @@ However, in practice, the above example’s consistent naming convention is not 
 
 ```json
 [
-  { "name": "Product 1", "description": "A great product.", "s3_url": "https://your-bucket.s3.your-region.amazonaws.com/images/image1.jpg" },
-  { "name": "Product 2", "description": "Another excellent product", "s3_url": "https://your-bucket.s3.your-region.amazonaws.com/assets/img2.png" },
-    { "name": "Product 3", "description": "The best product", "s3_url": "https://your-bucket.s3.your-region.amazonaws.com/public/image3.jpeg" }
+  {
+    "name": "Product 1",
+    "description": "A great product.",
+    "s3_url": "https://your-bucket.s3.your-region.amazonaws.com/images/image1.jpg"
+  },
+  {
+    "name": "Product 2",
+    "description": "Another excellent product",
+    "s3_url": "https://your-bucket.s3.your-region.amazonaws.com/assets/img2.png"
+  },
+  {
+    "name": "Product 3",
+    "description": "The best product",
+    "s3_url": "https://your-bucket.s3.your-region.amazonaws.com/public/image3.jpeg"
+  }
 ]
 ```
 
@@ -97,6 +109,7 @@ products_data.each do |product_data|
   puts "Product #{product.id} seeded with s3 image"
 end
 ```
+
 This script does a similar job of making a head request, but this time, the s3 urls are pulled directly from the json file. This way you can easily control the seed data and the associated s3 image. If your json or yaml data includes information about content type, then you can use that instead of making a hard assumption as I did here for `image/jpeg`.
 
 Finally, there’s a third scenario where you need to generate the s3 urls from a function or external service. This is more complex and often encountered with system migrations or when the bucket is not directly controlled by the application. Let's say we have a hypothetical service generating a map of `product_id` to an `s3_url`:
@@ -115,6 +128,7 @@ end
 ```
 
 The seeds.rb file in this scenario would look something like this:
+
 ```ruby
 # seeds.rb
 require 'open-uri'
@@ -148,6 +162,7 @@ require './lib/image_service' # Or wherever your service class resides
   puts "Product #{product.id} seeded with s3 image"
 end
 ```
+
 In this case, you call a method of your hypothetical service, and the logic and code is encapsulated in the `ImageService` class instead of being directly hardcoded in the `seeds.rb` file.
 
 In all these examples, the core principle is to use `ActiveStorage::Blob.create_before_direct_upload!` to construct the blob based on existing s3 resources and then to attach this blob to your active storage attachment. This avoids unnecessary file downloads and uploads, making your seed process far more efficient. Remember to always perform the necessary error handling and validations that the script needs, so it can handle various situations, such as the s3 image not existing or any other error during the execution of your code.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-a-vecboxdyn-trait-from-prematurely-dropping-a-variable"
 ---
 
-, . It's a common pitfall, and I've definitely seen my share of head-scratching moments when dealing with `Vec<Box<dyn Trait>>` and unexpected drops. The core issue stems from how rust manages ownership and lifetimes, especially when combined with trait objects and dynamic dispatch.
+It's a common pitfall, and I've definitely seen my share of head-scratching moments when dealing with `Vec<Box<dyn Trait>>` and unexpected drops. The core issue stems from how rust manages ownership and lifetimes, especially when combined with trait objects and dynamic dispatch.
 
 The immediate problem you're facing, I'd wager, isn't actually _dropping_ per se, but rather the unexpected deallocation of resources pointed to by the boxed trait objects stored in your vector. Typically, when a `Vec` goes out of scope, it drops all of its contained elements. For primitive types, this means the memory is simply reclaimed. However, when you're dealing with `Box<dyn Trait>`, it's a little more nuanced because the `Box` manages a _heap allocation_, not merely a value on the stack, and dropping the `Box` also deallocates that memory.
 

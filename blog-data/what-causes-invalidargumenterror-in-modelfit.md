@@ -10,7 +10,7 @@ First and foremost, let's consider the data you're feeding into `model.fit()`. T
 
 Another facet of data-related errors stems from the data itself, particularly with batch processing. Suppose you're loading data with a generator function that's intended to yield batches of data. If your generator has a logical error or encounters problematic data that results in a batch with an incorrect shape _after_ the initial check, `InvalidArgumentError` will rear its head. For instance, consider a dataset with variable length sequences. Let's say you're padding sequences to the max length, and due to some edge-case in your padding logic, you have sequences exceeding your intended max length, _intermittently_. The model sees batches with differing length, and `InvalidArgumentError`. I’ve encountered this several times – it can be really tricky to pin down without careful inspection of the data generator.
 
-Let’s get into some code, shall we? Here’s a simplified example of the incorrect shape issue I described:
+Let’s get into some code? Here’s a simplified example of the incorrect shape issue I described:
 
 ```python
 import tensorflow as tf

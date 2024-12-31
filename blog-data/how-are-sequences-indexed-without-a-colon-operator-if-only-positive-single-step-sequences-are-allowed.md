@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-sequences-indexed-without-a-colon-operator-if-only-positive-single-step-sequences-are-allowed"
 ---
 
-, let’s tackle this. Indexing sequences without a colon operator, limiting ourselves to positive, single-step progressions, it's a scenario that might initially feel a bit restrictive, but it forces a deeper understanding of the underlying mechanics at play. I've actually encountered this in a past project involving custom data processing pipelines where memory was extremely constrained, and using the conventional colon operator with its implied dynamic allocation was simply not viable. Instead of directly slicing using `a[start:end:step]`, we have to think about it as a combination of individual positional lookups.
+Indexing sequences without a colon operator, limiting ourselves to positive, single-step progressions, it's a scenario that might initially feel a bit restrictive, but it forces a deeper understanding of the underlying mechanics at play. I've actually encountered this in a past project involving custom data processing pipelines where memory was extremely constrained, and using the conventional colon operator with its implied dynamic allocation was simply not viable. Instead of directly slicing using `a[start:end:step]`, we have to think about it as a combination of individual positional lookups.
 
 The core idea is to emulate the behavior of a colon-based slice using only a single index lookup per element and, fundamentally, employing iteration to achieve the desired sequence. It all boils down to calculating indices manually, based on your desired starting point and single-step increments.
 

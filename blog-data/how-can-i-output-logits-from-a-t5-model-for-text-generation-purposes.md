@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-output-logits-from-a-t5-model-for-text-generation-purposes"
 ---
 
-Let's dive into this, shall we? It's a frequent requirement when you're working with sequence-to-sequence models like T5—accessing those raw, pre-softmax logits. It's far more common than folks new to transformers might initially think. I've certainly been there, many times, when I needed finer control over the generation process, or for purposes beyond just direct text output, like implementing custom beam search algorithms or employing techniques to explore model uncertainties.
+Let's dive into this? It's a frequent requirement when you're working with sequence-to-sequence models like T5—accessing those raw, pre-softmax logits. It's far more common than folks new to transformers might initially think. I've certainly been there, many times, when I needed finer control over the generation process, or for purposes beyond just direct text output, like implementing custom beam search algorithms or employing techniques to explore model uncertainties.
 
 The default behavior of the `T5ForConditionalGeneration` class, which you likely use, is to output text strings, sequences of token ids, or a `ModelOutput` object that already includes the decoded text. This is great for most cases, but not for us. We need to get our hands on those logits prior to the softmax function. Getting there does require a small adjustment in how you interact with the model. I'll walk you through how I generally handle it and provide a few practical examples.
 
-The core trick lies in leveraging the `return_dict=True` and manipulating the `output_attentions` and `output_hidden_states` options, if needed, but *most importantly*, bypassing the usual `generate()` method when you need direct access to the logits. Instead, you use the model directly as a function. This might seem like a subtle difference, but it provides crucial flexibility. The `generate()` method is a high-level abstraction; bypassing it allows for granular control.
+The core trick lies in leveraging the `return_dict=True` and manipulating the `output_attentions` and `output_hidden_states` options, if needed, but _most importantly_, bypassing the usual `generate()` method when you need direct access to the logits. Instead, you use the model directly as a function. This might seem like a subtle difference, but it provides crucial flexibility. The `generate()` method is a high-level abstraction; bypassing it allows for granular control.
 
 Here’s the general approach, focusing on the T5 model class:
 
@@ -18,7 +18,7 @@ Here’s the general approach, focusing on the T5 model class:
 
 3. **Direct Model Call:** This is the key step. Instead of calling `model.generate()`, you call `model()` directly with your tokenized input. This returns an output dictionary, not a string, or a decoded tensor of tokens.
 
-4. **Accessing Logits:** Within the returned dictionary, the *decoder logits* are usually present under the key 'logits'. These are the unnormalized log probabilities produced by the final linear layer of the decoder prior to the softmax.
+4. **Accessing Logits:** Within the returned dictionary, the _decoder logits_ are usually present under the key 'logits'. These are the unnormalized log probabilities produced by the final linear layer of the decoder prior to the softmax.
 
 5. **Further Processing:** Once you have the logits, you can then perform further operations, like applying softmax to obtain probabilities or applying argmax to get the most probable tokens, or do whatever else you need to achieve your specific objectives.
 
@@ -118,18 +118,19 @@ print(f"First Few Logits of Step 2: {logits_step2[0, :3, :5]}")
 
 
 ```
+
 Here we are passing the `decoder_input_ids` to the model to access the logits of specific decoder tokens. This is important to get intermediate decoder states, as discussed. As you can see the shape of the logits tensor change as you generate more tokens, with the last position of the second dimension corresponding to the logits for predicting the next token.
 
 **Further Learning**
 
 For deeper understanding, I’d recommend focusing on these resources:
 
-*   **The original Transformer paper "Attention is All You Need"**: Vaswani, Ashish; Shazeer, Noam; Parmar, Niki; Uszkoreit, Jakob; Jones, Llion; Gomez, Aidan N.; Kaiser, Łukasz; Polosukhin, Illia (2017). This sets the stage for all transformer based models like T5.
+- **The original Transformer paper "Attention is All You Need"**: Vaswani, Ashish; Shazeer, Noam; Parmar, Niki; Uszkoreit, Jakob; Jones, Llion; Gomez, Aidan N.; Kaiser, Łukasz; Polosukhin, Illia (2017). This sets the stage for all transformer based models like T5.
 
-*   **The T5 paper “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer”**: Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narayanan, Michael Matena, Yanqi Zhou, Wei Li, Peter J. Liu (2019). Here you will find more about the specific T5 architecture.
+- **The T5 paper “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer”**: Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narayanan, Michael Matena, Yanqi Zhou, Wei Li, Peter J. Liu (2019). Here you will find more about the specific T5 architecture.
 
-*   **Hugging Face documentation**: Read through the T5 model and tokenizer class documentation in detail as well as the Transformers library in general. This documentation is constantly updated with new information and examples.
+- **Hugging Face documentation**: Read through the T5 model and tokenizer class documentation in detail as well as the Transformers library in general. This documentation is constantly updated with new information and examples.
 
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin**: A comprehensive textbook that provides a good foundation for NLP and concepts about tokenization and language models in general.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin**: A comprehensive textbook that provides a good foundation for NLP and concepts about tokenization and language models in general.
 
 Remember to carefully align tokenizers and models and pay special attention to how sequence lengths, batching, and padding affect your logits. It's a powerful approach once you have a good grasp of the basics, enabling much more sophisticated interaction with these complex models.

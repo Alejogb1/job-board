@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-compare-two-text-files-for-matching-lines-in-c"
 ---
 
-, let’s tackle this. I've certainly seen my share of text file comparisons over the years, often in situations where configuration drift or log analysis were the order of the day. Comparing text files line-by-line in C# isn't overly complex, but there are nuances to consider depending on what you're after: exact matches, case-insensitive comparisons, or even fuzzy matches. For the sake of clarity, I’ll focus on exact matches and provide code for that first. I recall one particularly grueling project where we had to synchronize configuration files across a distributed system – comparing the current version with the source of truth was crucial, and the techniques we used then still serve well today.
+I've certainly seen my share of text file comparisons over the years, often in situations where configuration drift or log analysis were the order of the day. Comparing text files line-by-line in C# isn't overly complex, but there are nuances to consider depending on what you're after: exact matches, case-insensitive comparisons, or even fuzzy matches. For the sake of clarity, I’ll focus on exact matches and provide code for that first. I recall one particularly grueling project where we had to synchronize configuration files across a distributed system – comparing the current version with the source of truth was crucial, and the techniques we used then still serve well today.
 
 The core principle here involves reading both files line by line and comparing the lines as strings. Let's get straight to the code.
 

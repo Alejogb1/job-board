@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-learn-multivariate-normal-covariance-matrix-using-pytorch"
 ---
 
-, let’s tackle this. Learning a multivariate normal covariance matrix using pytorch is something I’ve had to do a fair few times, especially when working on generative models. It's a critical step when you want to model the dependencies between different variables in your data. It's not just about calculating the sample covariance; we often need to estimate it in the context of neural networks, typically as part of a larger loss function or generative process. So let’s break down how I usually approach it.
+Learning a multivariate normal covariance matrix using pytorch is something I’ve had to do a fair few times, especially when working on generative models. It's a critical step when you want to model the dependencies between different variables in your data. It's not just about calculating the sample covariance; we often need to estimate it in the context of neural networks, typically as part of a larger loss function or generative process. So let’s break down how I usually approach it.
 
 The core idea is to represent the covariance matrix as a learnable parameter within your pytorch model. This requires a few careful steps to ensure it’s positive semi-definite, which is essential for it to represent a valid covariance matrix. A common approach, and the one I’ve had most success with, involves parameterizing the matrix using its Cholesky decomposition. Before jumping to the code, let’s remember that a covariance matrix summarizes the variance of individual components and how those components vary _together_. It is fundamental in many statistical and machine learning applications.
 

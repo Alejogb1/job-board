@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-feature-vectors-in-high-dimensions-be-used-to-generate-keys"
 ---
 
-Let's dive straight into it, shall we? I've tackled this particular challenge more than a few times in various projects, and generating keys from high-dimensional feature vectors is actually more straightforward than it might initially appear. Essentially, we're talking about transforming complex data points into unique identifiers, something that has enormous implications for data indexing, search, and retrieval, particularly at scale.
+Let's dive straight into it? I've tackled this particular challenge more than a few times in various projects, and generating keys from high-dimensional feature vectors is actually more straightforward than it might initially appear. Essentially, we're talking about transforming complex data points into unique identifiers, something that has enormous implications for data indexing, search, and retrieval, particularly at scale.
 
 The core idea relies on the fact that these feature vectors, by definition, represent data points in a meaningful way within a high-dimensional space. Proximity in this space often implies similarity of the underlying data. Therefore, while the entire vector itself might be too large for use as a key directly, we can employ techniques to distill these vectors into shorter, more manageable representations that still maintain their uniqueness. The key is to preserve the distinguishing properties of each vector in this compressed form, so that different vectors produce different keys with a high probability. I recall one particularly demanding project where we were dealing with millions of image embeddings, a classic use case, and the performance was simply unacceptable without an efficient key generation mechanism.
 
@@ -108,6 +108,7 @@ print(f"Quantized key for vector3: {key3}")
 # Notice how vector1 and vector2 may be clustered to the same cluster
 # giving the same key.
 ```
+
 In this snippet, a pre-trained KMeans model maps input vectors to cluster ids. It’s crucial to pre-train the model on a representative dataset of your feature vectors. I've personally used product quantization (a variant of this method) in large-scale vector databases to significantly reduce memory requirements while preserving reasonable search accuracy. "Information Retrieval: Implementing and Evaluating Search Engines" by Stefan Büttcher, Charles L. A. Clarke, and Gordon V. Cormack provides excellent background on the concept of vector quantization and its applications.
 
 **3. Dimensionality Reduction followed by Hashing**
@@ -154,6 +155,7 @@ print(f"Hash of vector1: {hash1}")
 print(f"Hash of vector2: {hash2}")
 print(f"Hash of vector3: {hash3}")
 ```
+
 This snippet first uses a PCA model to reduce dimensions and then calculates the sha256 hash of the reduced vector after it is converted into bytes with pickle. This method is particularly effective when the underlying data has a strong linear correlation. I used this method once in a project when we had a large number of image embeddings of an extremely high dimension, and it proved to be a good way to generate unique identifiers.
 
 In summary, while these methods can generate unique or near-unique keys from high-dimensional feature vectors, it's critical to tailor the method based on your specific needs. For approximate nearest-neighbor search, LSH and vector quantization are often preferred due to their speed and efficiency. When a greater degree of uniqueness is required, the reduction followed by hashing technique can be a better fit. "The Elements of Statistical Learning" by Trevor Hastie, Robert Tibshirani, and Jerome Friedman provides a comprehensive overview of the underlying statistical foundations of these approaches. The optimal choice will always depend on balancing the need for uniqueness against the practical requirements of your application. I hope this gives you a solid base for tackling your specific use case.

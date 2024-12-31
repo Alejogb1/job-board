@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-django-mailgun-api-returning-401-forbidden"
 ---
 
-, so you're hitting a 401 forbidden with the django mailgun api, that's a classic. been there, debugged that, got the t-shirt. it's usually not mailgun itself being flaky, but rather some pesky authentication issue lurking in your django setup. let's get down to the nitty-gritty, shall we?
+, so you're hitting a 401 forbidden with the django mailgun api, that's a classic. been there, debugged that, got the t-shirt. it's usually not mailgun itself being flaky, but rather some pesky authentication issue lurking in your django setup. let's get down to the nitty-gritty?
 
 i've seen this happen more times than i'd like to recall. first time was back in, i wanna say, 2017? i was working on a small e-commerce side project, and i thought i had everything set up perfectly. emails were going to be crucial for order confirmations and all that jazz. followed the docs to the letter, or so i thought. the first few test emails worked flawlessly. i deployed, feeling like a boss, then… bam! 401s everywhere. spent half the night tracing configurations. ended up being a tiny typo in the api key. a single character. lesson learned: always double-check, triple-check, and then check again.
 

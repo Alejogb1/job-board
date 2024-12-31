@@ -10,9 +10,9 @@ my first time encountering this was back in the early days of a project building
 
 so, here's the deal. `mockmvc` itself doesn't really know about database constraints or unique indexes. it's just simulating http requests and responses. the heavy lifting for handling unique constraints happens at your service or repository layer (sometimes even at the database itself).
 
-what that means is that you can't directly tell `mockmvc`, "hey, make sure this request doesn't violate the unique constraint." instead, you have to craft your test scenarios to *cause* those violations and verify that your code handles them gracefully.
+what that means is that you can't directly tell `mockmvc`, "hey, make sure this request doesn't violate the unique constraint." instead, you have to craft your test scenarios to _cause_ those violations and verify that your code handles them gracefully.
 
-let's break this down, shall we?
+let's break this down?
 
 first, let's assume you have a typical spring boot controller that takes some data, saves it into the database, and returns a response. a simplistic example would be something like this:
 

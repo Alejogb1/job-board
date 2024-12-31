@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-it-possible-to-increase-containerd-log-limit-beyond-16k"
 ---
 
-, let's talk about container logs and their limits, specifically within the context of containerd. I remember a project back in '21 where we were dealing with a very verbose application – a real chatterbox, if you will. It was spitting out complex debug information, and we quickly hit that 16k log line limit with containerd. It wasn't pretty, and figuring out the best way around it was, shall we say, _instructive_.
+, let's talk about container logs and their limits, specifically within the context of containerd. I remember a project back in '21 where we were dealing with a very verbose application – a real chatterbox, if you will. It was spitting out complex debug information, and we quickly hit that 16k log line limit with containerd. It wasn't pretty, and figuring out the best way around it was say, _instructive_.
 
 So, the short answer is yes, it is absolutely possible to increase the log limit beyond 16k in containerd, but it's not a simple configuration knob you can just twist. This isn't about some magical runtime parameter; it's about understanding how containerd handles logging and then implementing a solution that matches your needs.
 

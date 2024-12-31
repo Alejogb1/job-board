@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-gem-native-extension-errors-occuring-in-docker-builds"
 ---
 
-, let’s tackle this. I've seen this particular headache pop up more times than I care to remember, usually in the thick of a late-night deployment. Gem native extension errors during docker builds are, frankly, a common pitfall and they usually boil down to a mismatch between the build environment inside the container and the expected runtime environment. It’s rarely a straightforward bug in the gem itself, more often a consequence of how we manage dependencies and build processes in a containerized world.
+I've seen this particular headache pop up more times than I care to remember, usually in the thick of a late-night deployment. Gem native extension errors during docker builds are, frankly, a common pitfall and they usually boil down to a mismatch between the build environment inside the container and the expected runtime environment. It’s rarely a straightforward bug in the gem itself, more often a consequence of how we manage dependencies and build processes in a containerized world.
 
 The core issue lies in the nature of native extensions. These are essentially compiled pieces of code (typically C or C++) that gems sometimes use for performance reasons or when interacting directly with the operating system. This means they're architecture and platform dependent. When a gem with a native extension is installed, it's not simply a matter of copying code; it needs to be compiled against the target system's libraries and ABI (Application Binary Interface).
 

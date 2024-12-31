@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-get-puma-worker-index-within-a-rails-request"
 ---
 
-, let’s tackle this. I've seen this come up a few times over the years, typically when someone is trying to implement some kind of per-worker caching or logging strategy in a Rails app running on Puma. It's a deceptively tricky problem because, unlike a traditional process ID which is readily available, the Puma worker index is somewhat more abstract and not exposed directly within a standard Rails request context. Getting that number accurately and reliably requires a little careful maneuvering around the internals of Puma.
+I've seen this come up a few times over the years, typically when someone is trying to implement some kind of per-worker caching or logging strategy in a Rails app running on Puma. It's a deceptively tricky problem because, unlike a traditional process ID which is readily available, the Puma worker index is somewhat more abstract and not exposed directly within a standard Rails request context. Getting that number accurately and reliably requires a little careful maneuvering around the internals of Puma.
 
 First, it’s important to understand that Puma operates in multi-process mode; it forks child processes (the workers) that handle the actual requests. Each worker has an index (starting from 0), and that’s what we’re aiming to retrieve within the context of a Rails controller, model, or any other part of the request cycle. Standard approaches involving just `Process.pid` won’t get you there, since that will only return the process id which, although unique, won’t differentiate between Puma workers spawned by the same parent process.
 

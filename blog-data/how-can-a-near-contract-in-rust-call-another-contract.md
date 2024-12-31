@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-near-contract-in-rust-call-another-contract"
 ---
 
-, let’s tackle this. Been there, done that – more times than I care to recall. Cross-contract calls in near can be a little… intricate, to put it mildly. It's certainly not a simple function invocation, but it’s absolutely crucial for building complex, modular applications. We’re basically orchestrating communication between separate, independent smart contracts, and that introduces both opportunities and challenges.
+Been there, done that – more times than I care to recall. Cross-contract calls in near can be a little… intricate, to put it mildly. It's certainly not a simple function invocation, but it’s absolutely crucial for building complex, modular applications. We’re basically orchestrating communication between separate, independent smart contracts, and that introduces both opportunities and challenges.
 
 The core mechanism for this is asynchronous callbacks. Instead of a direct synchronous call, a contract initiates a promise to another contract, and the result of that promise is delivered via a callback function. It’s this asynchronous nature that differentiates cross-contract calls from regular function calls within the same contract. The NEAR runtime, being what it is, demands this promise-based paradigm for security and atomicity.
 

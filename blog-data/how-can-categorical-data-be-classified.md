@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-categorical-data-be-classified"
 ---
 
-, let’s tackle this. Classification of categorical data is a frequent challenge, and it’s something I’ve navigated quite a bit over the years. It's not as straightforward as numerical data, because we’re dealing with labels or categories instead of continuous values. This requires specific techniques tailored to handle the unique characteristics of categorical variables. Let's explore some effective methods, building from my experience.
+Classification of categorical data is a frequent challenge, and it’s something I’ve navigated quite a bit over the years. It's not as straightforward as numerical data, because we’re dealing with labels or categories instead of continuous values. This requires specific techniques tailored to handle the unique characteristics of categorical variables. Let's explore some effective methods, building from my experience.
 
 Initially, it's vital to understand that categorical features come in a few flavors, primarily nominal and ordinal. _Nominal_ data has no inherent order (like colors: red, blue, green), while _ordinal_ data has a logical sequence (like survey responses: poor, average, good). The approach to classifying each varies.
 

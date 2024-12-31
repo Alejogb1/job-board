@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-write-to-a-jupyter-notebook-output-cell-from-vs-code"
 ---
 
-, one. I've been in the trenches with Jupyter Notebooks and VS Code for quite a while now, and dealing with output redirection – or, more specifically, _writing_ to a notebook's output cell from within VS Code – is something I’ve debugged more times than I'd care to count. It's a common sticking point, especially when you're transitioning between different development environments or trying to build more complex workflows.
+I've been in the trenches with Jupyter Notebooks and VS Code for quite a while now, and dealing with output redirection – or, more specifically, _writing_ to a notebook's output cell from within VS Code – is something I’ve debugged more times than I'd care to count. It's a common sticking point, especially when you're transitioning between different development environments or trying to build more complex workflows.
 
 The fundamental challenge isn't that it's _impossible_; rather, it's understanding that the Jupyter Notebook kernel and the VS Code editor are essentially separate processes. They communicate through a well-defined protocol (mostly ZeroMQ based), and when you execute a cell, the kernel handles that execution, generating output which it then sends back to the frontend (in this case, VS Code). Directly writing to the VS Code output _display_ from, say, a Python script running outside a notebook cell isn't how it's architected.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-call-async-functions-via-a-put-api"
 ---
 
-head-on, shall we? The question of calling asynchronous functions within the context of a PUT api handler is a common one, and thankfully, there are several established ways to manage it. I recall a project a few years back, where we were building a user management system. We had a PUT endpoint to update user details, and several of those updates required asynchronous operations—like sending email notifications, updating cached data, or triggering downstream processes. Ignoring the asynchronous nature would have led to unresponsive apis, and that’s something we absolutely wanted to avoid.
+head-on? The question of calling asynchronous functions within the context of a PUT api handler is a common one, and thankfully, there are several established ways to manage it. I recall a project a few years back, where we were building a user management system. We had a PUT endpoint to update user details, and several of those updates required asynchronous operations—like sending email notifications, updating cached data, or triggering downstream processes. Ignoring the asynchronous nature would have led to unresponsive apis, and that’s something we absolutely wanted to avoid.
 
 The core issue here stems from the non-blocking nature of asynchronous operations. When you invoke an async function, it immediately returns a promise (or a similar construct), which represents the eventual result of the operation. If your api handler returns without waiting for this promise to resolve, the api might send a response prematurely, and those asynchronous side-effects might not execute fully or at all.
 

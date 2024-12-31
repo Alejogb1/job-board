@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-securely-call-a-contract-function-eg-afoo-from-another-contracts-msgsender"
 ---
 
-directly, shall we? I've seen this particular issue crop up more times than i care to count, often during those late-night debugging sessions. The core challenge here isn't so much about _how_ to call a function from another contract, but rather ensuring that call happens securely, especially when considering `msg.sender`. It's a vital part of the security model in EVM-based environments. We’re aiming for a robust and reliable system where contracts interact predictably and without unexpected permissions escalations.
+directly? I've seen this particular issue crop up more times than i care to count, often during those late-night debugging sessions. The core challenge here isn't so much about _how_ to call a function from another contract, but rather ensuring that call happens securely, especially when considering `msg.sender`. It's a vital part of the security model in EVM-based environments. We’re aiming for a robust and reliable system where contracts interact predictably and without unexpected permissions escalations.
 
 Essentially, you're asking how a contract ‘b’ can reliably call a function ‘foo’ on contract ‘a’ while preserving the intended identity represented by `msg.sender` of contract 'b'. We need to avoid accidentally granting 'a' undue permissions or allowing it to make calls with unintended senders. In simpler terms, ‘a’ must know it was indeed ‘b’ who called the function, and not some other intermediary or malicious actor.
 

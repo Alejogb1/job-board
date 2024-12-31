@@ -16,7 +16,7 @@ Firstly, you’ll need a Stimulus controller. Let’s call it `checkbox-button-c
 
 - **Possibly Classes**: Classes may be added to buttons instead of, or in addition to, changing the `disabled` attribute; for instance, a visually distinct ‘active’ class.
 
-Let’s get into some practical examples, shall we? Assume we have a simple form with one button and one checkbox:
+Let’s get into some practical examples? Assume we have a simple form with one button and one checkbox:
 
 **Example 1: Basic Enable/Disable**
 

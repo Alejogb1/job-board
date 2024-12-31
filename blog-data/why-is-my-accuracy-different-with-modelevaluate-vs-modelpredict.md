@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-accuracy-different-with-modelevaluate-vs-modelpredict"
 ---
 
-, let’s tackle this. The discrepancy you’re seeing between `model.evaluate` and `model.predict` accuracy is a common source of confusion, and frankly, I've banged my head against the wall on this one a few times myself back in my early days building predictive models for, let's say, high-frequency trading algorithms – a domain where even minor inaccuracies could be financially disastrous. The difference isn't arbitrary; it stems from how these two functions operate and the data they use under the hood.
+The discrepancy you’re seeing between `model.evaluate` and `model.predict` accuracy is a common source of confusion, and frankly, I've banged my head against the wall on this one a few times myself back in my early days building predictive models for, let's say, high-frequency trading algorithms – a domain where even minor inaccuracies could be financially disastrous. The difference isn't arbitrary; it stems from how these two functions operate and the data they use under the hood.
 
 First, it's critical to understand that `model.evaluate` provides an _aggregate_ measure of performance over a given dataset, usually the validation or test set. It computes loss and metrics (like accuracy) across all the provided data at once and returns _scalar_ values that represent averages. This process often includes a batch-wise forward pass through the entire set, calculating losses on each batch, then averaging the results. In essence, it's designed to offer an overall view of your model's performance.
 

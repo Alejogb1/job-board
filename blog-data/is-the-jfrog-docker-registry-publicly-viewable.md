@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-the-jfrog-docker-registry-publicly-viewable"
 ---
 
-, one. I've had my share of experiences navigating various container registries, including JFrog Artifactory, and the question of public visibility is a critical one, often tripping up newcomers (and sometimes veterans, truth be told). The short answer is: it _depends_, and that "depends" hangs heavily on the configurations you, or the organization you're working with, have put in place. It isn’t an inherent property of JFrog Artifactory; rather, it's a setting.
+I've had my share of experiences navigating various container registries, including JFrog Artifactory, and the question of public visibility is a critical one, often tripping up newcomers (and sometimes veterans, truth be told). The short answer is: it _depends_, and that "depends" hangs heavily on the configurations you, or the organization you're working with, have put in place. It isn’t an inherent property of JFrog Artifactory; rather, it's a setting.
 
 When we talk about a "publicly viewable" docker registry, we’re really addressing the question of whether anonymous, unauthenticated users can pull container images (or, in some cases, merely _see_ what images are there). A default, out-of-the-box JFrog Artifactory instance is _not_ publicly viewable. Access control is baked in from the beginning. However, Artifactory is incredibly flexible, and its security configurations allow for very granular access control, which can _include_ the option for public access. So, let me elaborate from my experience – particularly a project a few years back that initially had this misconfigured.
 

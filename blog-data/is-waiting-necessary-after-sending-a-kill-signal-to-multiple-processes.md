@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-waiting-necessary-after-sending-a-kill-signal-to-multiple-processes"
 ---
 
-, one. It's a deceptively nuanced area that I’ve seen trip up even seasoned developers, myself included, back in the day when I was managing a distributed processing system for financial data. The short answer is: usually, yes, some form of waiting is prudent after sending a kill signal, especially when dealing with multiple processes, but the ‘why’ and ‘how long’ are what truly matter.
+It's a deceptively nuanced area that I’ve seen trip up even seasoned developers, myself included, back in the day when I was managing a distributed processing system for financial data. The short answer is: usually, yes, some form of waiting is prudent after sending a kill signal, especially when dealing with multiple processes, but the ‘why’ and ‘how long’ are what truly matter.
 
 The core issue revolves around the fact that sending a kill signal isn’t instantaneous. It’s an instruction to the operating system, which then has to relay that instruction to the targeted process. Furthermore, the process itself needs to respond to that signal, and how quickly and cleanly it does that varies wildly depending on the signal type and the internal state of the process.
 

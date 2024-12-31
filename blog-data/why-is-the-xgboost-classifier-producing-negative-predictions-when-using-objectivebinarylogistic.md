@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-xgboost-classifier-producing-negative-predictions-when-using-objectivebinarylogistic"
 ---
 
-, one. I recall a particularly frustrating project a few years back where the same thing happened – xgboost stubbornly returning negative predictions despite using `objective: 'binary:logistic'`. It’s a classic head-scratcher, and it usually boils down to a few key issues that aren’t immediately obvious. So, let’s break it down, step-by-step, and I’ll walk you through what I’ve learned over the years.
+I recall a particularly frustrating project a few years back where the same thing happened – xgboost stubbornly returning negative predictions despite using `objective: 'binary:logistic'`. It’s a classic head-scratcher, and it usually boils down to a few key issues that aren’t immediately obvious. So, let’s break it down, step-by-step, and I’ll walk you through what I’ve learned over the years.
 
 The core problem, when you see negative values from a classifier using `binary:logistic`, is that while _the logistic objective is meant to output probabilities_, the raw output of xgboost's internal model (before applying the sigmoid function inherent to the logistic objective) isn't constrained between 0 and 1. Think of it like this: xgboost, behind the scenes, is trying to optimize its internal parameters to best fit the training data. The `binary:logistic` objective acts as the loss function it uses, but initially, it's learning to generate _log-odds_—the logarithmic ratio of probabilities.
 

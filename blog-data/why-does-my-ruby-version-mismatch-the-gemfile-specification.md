@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-my-ruby-version-mismatch-the-gemfile-specification"
 ---
 
-Let’s dive right in, shall we? It’s frustrating, I know, staring at a seemingly simple `Gemfile` and a terminal spewing version mismatch errors. I’ve been down this rabbit hole more times than I care to recall, and the root causes can sometimes be surprisingly subtle. It's usually not about ruby being inherently malicious, but rather, a consequence of how Ruby version managers, bundler, and system environments interact. Let me unpack this, drawing on past experiences where I’ve tackled similar scenarios.
+Let’s dive right in? It’s frustrating, I know, staring at a seemingly simple `Gemfile` and a terminal spewing version mismatch errors. I’ve been down this rabbit hole more times than I care to recall, and the root causes can sometimes be surprisingly subtle. It's usually not about ruby being inherently malicious, but rather, a consequence of how Ruby version managers, bundler, and system environments interact. Let me unpack this, drawing on past experiences where I’ve tackled similar scenarios.
 
-Often, the mismatch you're seeing isn't actually about a problem with *the* `Gemfile` itself, but rather, with the environment in which bundler is operating. Think of the `Gemfile` as a blueprint and bundler as the construction crew. If the crew doesn’t have the correct tools (in this case, the right Ruby version) or isn't in the right location (the correct system ruby setup), the construction won't go smoothly.
+Often, the mismatch you're seeing isn't actually about a problem with _the_ `Gemfile` itself, but rather, with the environment in which bundler is operating. Think of the `Gemfile` as a blueprint and bundler as the construction crew. If the crew doesn’t have the correct tools (in this case, the right Ruby version) or isn't in the right location (the correct system ruby setup), the construction won't go smoothly.
 
 The primary culprit is almost always a mismatch between the Ruby version declared in your `Gemfile` and the Ruby version that's currently active in your terminal session or your system environment. This manifests in a few different ways. Let’s explore a few of them.
 

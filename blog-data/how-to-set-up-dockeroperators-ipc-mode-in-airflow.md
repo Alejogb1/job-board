@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-set-up-dockeroperators-ipc-mode-in-airflow"
 ---
 
-Right, let’s tackle this. I recall a particularly challenging project a few years back where we were dealing with a massive data pipeline, and container isolation was paramount. We needed some serious resource sharing between docker tasks within airflow, but without compromising security or creating messy network configurations. That's where a good understanding of docker's ipc mode, and specifically how it integrates with airflow's `dockeroperator`, became essential.
+Right I recall a particularly challenging project a few years back where we were dealing with a massive data pipeline, and container isolation was paramount. We needed some serious resource sharing between docker tasks within airflow, but without compromising security or creating messy network configurations. That's where a good understanding of docker's ipc mode, and specifically how it integrates with airflow's `dockeroperator`, became essential.
 
 The fundamental concept is that `ipc` in docker determines the level of inter-process communication sharing between containers. By default, each docker container operates in its own isolated namespace. This is great for security and prevents interference. However, there are scenarios, particularly when working with shared memory, like in some compute-intensive tasks, where containers need to communicate directly, and doing so through the network overhead is just wasteful.
 

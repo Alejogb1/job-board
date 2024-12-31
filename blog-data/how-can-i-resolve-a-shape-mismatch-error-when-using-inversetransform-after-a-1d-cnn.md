@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-a-shape-mismatch-error-when-using-inversetransform-after-a-1d-cnn"
 ---
 
-, let’s tackle this. Shape mismatches during inverse transformations following a 1D convolutional neural network (1D CNN) are frustrating, but they're often the result of predictable issues. I’ve definitely been down that rabbit hole more times than I’d care to count. Remember that project I had last year, analyzing sensor data streams? We were using a 1D CNN for feature extraction and then, of course, needed to reconstruct the original data, which is where we hit this exact roadblock.
+Shape mismatches during inverse transformations following a 1D convolutional neural network (1D CNN) are frustrating, but they're often the result of predictable issues. I’ve definitely been down that rabbit hole more times than I’d care to count. Remember that project I had last year, analyzing sensor data streams? We were using a 1D CNN for feature extraction and then, of course, needed to reconstruct the original data, which is where we hit this exact roadblock.
 
 The problem essentially boils down to dimensionality. A 1D CNN, particularly with pooling layers or strides, transforms input data from its original shape into a different feature space. The _inverse_transform_ operation expects its input to be the exact shape that the original _transform_ output was. When those shapes don't align, you get the dreaded mismatch error. Let’s unpack this with some specific examples and strategies to fix it.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-list-modx-articles-sharing-a-common-tag"
 ---
 
-Let's dive straight into this, shall we? I recall a particularly tricky project back in 2017. We were building a knowledge base for a medical device company using MODX Revolution, and they absolutely needed a robust way to filter articles by topic – essentially, tags. It was surprisingly complex to get it just *right*, avoiding performance bottlenecks and maintaining a clean user experience. Listing articles by a common tag in MODX, while seemingly straightforward, actually requires a thoughtful approach to get it working effectively, especially when you start dealing with larger datasets.
+Let's dive straight into this? I recall a particularly tricky project back in 2017. We were building a knowledge base for a medical device company using MODX Revolution, and they absolutely needed a robust way to filter articles by topic – essentially, tags. It was surprisingly complex to get it just _right_, avoiding performance bottlenecks and maintaining a clean user experience. Listing articles by a common tag in MODX, while seemingly straightforward, actually requires a thoughtful approach to get it working effectively, especially when you start dealing with larger datasets.
 
 The core challenge here is efficiently querying the MODX database, given that relationships between resources (articles) and tags aren't natively stored in a direct manner. Instead, tags are usually managed through a third-party extra or custom implementation. Let's assume, for the sake of clarity, that you're using a common approach: a custom template variable (TV) to store the comma-separated list of tags for each article. While not the most elegant solution – dedicated tagging extras like TagLister or more recent ones, which I'll recommend later, offer better performance and management features – it's quite often encountered, so we'll begin there.
 
@@ -47,6 +47,7 @@ foreach (explode('<br>', $resources) as $line) {
 
 return $output;
 ```
+
 This is essentially iterating through every resource, grabbing its tag TV, and checking for a match. This **won't scale** and will perform poorly even on mid-sized sites.
 
 **Step 2: Enhanced Snippet Using a where Clause with LIKE for better efficiency**
@@ -73,13 +74,14 @@ if(empty($output)) return 'No articles found';
 
 return $output;
 ```
+
 This snippet now utilizes a `LIKE` clause in the `where` parameter, which is passed down to the database to efficiently retrieve matching resources. This is a substantial improvement over the previous PHP-based filter and much faster, especially when many resources are involved. The use of trim helps with matching even if spaces exist within the tv string values.
 
 **Step 3: Leveraging a Dedicated Tagging Extra (The Recommended Approach)**
 
 Frankly, the previous approaches, although more performant than the first, are suboptimal. The ideal approach is to utilize a dedicated tagging extra, which will handle the relationship between tags and articles at the database level efficiently. The best solution will also manage tag hierarchies and relationships more effectively, and will not cause the performance issues of a custom tv approach.
 
-I've found that TagLister (a slightly older but very robust extra) and the newer, more actively developed *taggit* extra, are excellent options. I'll focus on describing the basic concept with taggit, as it's the more actively supported of the two. These extras typically create a dedicated database table that stores the associations between resources and tags, allowing for efficient and direct database queries that would not be possible with the custom tv approach. You would interact with *taggit* through its own API. Here is a conceptual way you might use a call via a snippet to get tagged results:
+I've found that TagLister (a slightly older but very robust extra) and the newer, more actively developed _taggit_ extra, are excellent options. I'll focus on describing the basic concept with taggit, as it's the more actively supported of the two. These extras typically create a dedicated database table that stores the associations between resources and tags, allowing for efficient and direct database queries that would not be possible with the custom tv approach. You would interact with _taggit_ through its own API. Here is a conceptual way you might use a call via a snippet to get tagged results:
 
 ```php
 <?php
@@ -106,21 +108,22 @@ foreach ($matchingResources as $resource) {
 
 return $output;
 ```
+
 In this approach, `taggit` manages tag associations in a database, and the `getArticlesByTags` method leverages these associations directly, optimizing database queries significantly. It's a much cleaner, more efficient method that does not rely on inefficient LIKE clauses, and is much better for a large number of resources.
 
 **Key Points to Consider**
 
-*   **Database Optimization:** While using a LIKE clause in a `where` clause is an improvement over client-side PHP filtering, it still can lead to performance issues. A dedicated tagging extra is much more efficient.
-*   **Caching:** Whichever approach you use, implementing caching of the results, even for short durations, will vastly improve the user experience. MODX's caching system can help.
-*   **User Experience:** Ensure your output formats tags and links cleanly. The snippet output examples provided are barebones. In production, you should use template chunks and properly formatted output.
-*   **Documentation:** Please reference the documentation for the specific tag extra that you decide to use. They are often the most detailed and current.
-*   **Modularity:** Aim for well-structured code that's easily maintainable. Using multiple snippets for different parts of the process is generally helpful.
+- **Database Optimization:** While using a LIKE clause in a `where` clause is an improvement over client-side PHP filtering, it still can lead to performance issues. A dedicated tagging extra is much more efficient.
+- **Caching:** Whichever approach you use, implementing caching of the results, even for short durations, will vastly improve the user experience. MODX's caching system can help.
+- **User Experience:** Ensure your output formats tags and links cleanly. The snippet output examples provided are barebones. In production, you should use template chunks and properly formatted output.
+- **Documentation:** Please reference the documentation for the specific tag extra that you decide to use. They are often the most detailed and current.
+- **Modularity:** Aim for well-structured code that's easily maintainable. Using multiple snippets for different parts of the process is generally helpful.
 
 **Recommended Resources**
 
-*   **The MODX documentation itself** should be your first port of call. The section on 'extras' and on custom template variables is fundamental.
-*   **MODX Community forums and Slack channel:** These resources provide great peer-to-peer support and examples of real-world implementations.
-*   For a deeper understanding of database querying and optimization, I recommend the book "High Performance MySQL" by Baron Schwartz, Peter Zaitsev, and Vadim Tkachenko.
-*   The taggit's github page will also provide additional details specific to the plugin.
+- **The MODX documentation itself** should be your first port of call. The section on 'extras' and on custom template variables is fundamental.
+- **MODX Community forums and Slack channel:** These resources provide great peer-to-peer support and examples of real-world implementations.
+- For a deeper understanding of database querying and optimization, I recommend the book "High Performance MySQL" by Baron Schwartz, Peter Zaitsev, and Vadim Tkachenko.
+- The taggit's github page will also provide additional details specific to the plugin.
 
-In closing, while it's possible to get articles by tag without an external extra, for any site of reasonable scale, a dedicated tagging extra such as TagLister or *taggit* will be essential. Remember to test thoroughly and optimize your code for better performance, and also always reference the official documentation for the extra you are using. The examples provided here are illustrative, but hopefully they offer a good starting point for creating robust and performant tag listings within MODX.
+In closing, while it's possible to get articles by tag without an external extra, for any site of reasonable scale, a dedicated tagging extra such as TagLister or _taggit_ will be essential. Remember to test thoroughly and optimize your code for better performance, and also always reference the official documentation for the extra you are using. The examples provided here are illustrative, but hopefully they offer a good starting point for creating robust and performant tag listings within MODX.

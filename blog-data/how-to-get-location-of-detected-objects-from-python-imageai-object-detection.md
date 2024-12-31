@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-location-of-detected-objects-from-python-imageai-object-detection"
 ---
 
-, let's get into this. seems like you're trying to extract bounding box coordinates of detected objects using imageai, and that's pretty common. i've banged my head against this particular wall a few times, so i think i can give you some pointers, and hopefully save you some hours of trial and error.
+, seems like you're trying to extract bounding box coordinates of detected objects using imageai, and that's pretty common. i've banged my head against this particular wall a few times, so i think i can give you some pointers, and hopefully save you some hours of trial and error.
 
 first off, imageai returns a list of dictionaries when it detects objects in an image. each dictionary in that list corresponds to one detected object and contains data about that object, including its bounding box. the coordinates are not returned as a single point or an easily accessed tuple. instead, they are in a rectangle-like format, stored as `x1`, `y1`, `x2`, and `y2` within the dictionary. these represent the top-left and bottom-right corners of the rectangle, respectively.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-errors-when-using-azure-text-analytics-asynchronous-client"
 ---
 
-, . Having spent a fair amount of time wrangling asynchronous operations with Azure Text Analytics, I've definitely stumbled across some of the more common pitfalls that can occur. It's one thing to get a basic synchronous call working; quite another to build a robust, asynchronous pipeline that handles the complexities of real-world data. When you introduce asynchrony, error handling becomes even more critical, and Azure's Text Analytics client is no exception. Here's a breakdown of the issues I've seen and some techniques I've used to address them.
+Having spent a fair amount of time wrangling asynchronous operations with Azure Text Analytics, I've definitely stumbled across some of the more common pitfalls that can occur. It's one thing to get a basic synchronous call working; quite another to build a robust, asynchronous pipeline that handles the complexities of real-world data. When you introduce asynchrony, error handling becomes even more critical, and Azure's Text Analytics client is no exception. Here's a breakdown of the issues I've seen and some techniques I've used to address them.
 
 First off, the primary source of errors, in my experience, stems from improper management of the asynchronous polling process. When you initiate a long-running operation, the client returns a `poller` object, which represents the ongoing analysis. Neglecting to handle its state correctly is where a lot of things can go awry.
 

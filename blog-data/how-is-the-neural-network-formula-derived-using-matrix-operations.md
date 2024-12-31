@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-is-the-neural-network-formula-derived-using-matrix-operations"
 ---
 
-, let’s tackle this. I’ve spent a fair bit of time in the trenches with neural networks, and one question that always seems to come up, and understandably so, is the nuts and bolts of how those calculations actually happen, especially when they're expressed with matrix algebra. It often feels a bit magical if you haven’t seen it broken down step-by-step. So let's demystify the core neural network formula using matrix operations.
+I’ve spent a fair bit of time in the trenches with neural networks, and one question that always seems to come up, and understandably so, is the nuts and bolts of how those calculations actually happen, especially when they're expressed with matrix algebra. It often feels a bit magical if you haven’t seen it broken down step-by-step. So let's demystify the core neural network formula using matrix operations.
 
 Frankly, the elegance of using matrix multiplication for neural networks isn't just about conciseness; it's about performance and leveraging optimized libraries. The fundamental operations inside a neural net involve repeated linear transformations followed by non-linear activation functions, and matrices become our perfect tool for managing these transformations across multiple input neurons.
 
@@ -32,7 +32,7 @@ Now, let’s look at how backpropagation affects these matrix operations. Backpr
 dW = a_previous.transpose() * dZ
 ```
 
-Here, `dZ` represents the derivative of the cost function with respect to the output ‘z’ from our layer and ‘a_previous’ represents input activations from the previous layer. When dealing with a mini-batch of examples (or training samples), a_previous is a matrix and _dZ_ is a matrix. In this context, this operation is an outer product summed across all the training examples. Similarly, for biases:
+Here, `dZ` represents the derivative of the cost function with respect to the output ‘z’ from our layer and ‘a*previous’ represents input activations from the previous layer. When dealing with a mini-batch of examples (or training samples), a_previous is a matrix and \_dZ* is a matrix. In this context, this operation is an outer product summed across all the training examples. Similarly, for biases:
 
 ```
 db = np.sum(dZ, axis=0, keepdims=True)

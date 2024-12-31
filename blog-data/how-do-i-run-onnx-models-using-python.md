@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-onnx-models-using-python"
 ---
 
-, let’s tackle this. I’ve spent a considerable amount of time deploying and optimizing models, and ONNX has become a cornerstone in many of those workflows, particularly when dealing with model portability and performance across different hardware. It's a topic I've encountered in various forms, and I can share some insights based on my experiences.
+I’ve spent a considerable amount of time deploying and optimizing models, and ONNX has become a cornerstone in many of those workflows, particularly when dealing with model portability and performance across different hardware. It's a topic I've encountered in various forms, and I can share some insights based on my experiences.
 
 Fundamentally, running an ONNX model in Python revolves around using an ONNX runtime environment. This runtime is responsible for taking the ONNX graph—which is effectively a serialized representation of your model’s architecture and trained weights—and executing it. We're not talking about training a model from scratch here, but rather taking a pre-trained model, serialized in the ONNX format, and making predictions (or inferences) with it.
 

@@ -6,7 +6,7 @@ id: "why-am-i-having-a-macos-catalina-keychain-passwords-issue"
 
 , let's talk about keychain woes on catalina. it’s a pain point, i’ve been there, seen that t-shirt, and even had a few custom ones printed. dealing with keychain issues is like trying to untangle a christmas light string while blindfolded. not fun.
 
-first off, you're not alone. macos catalina introduced some changes that, shall we say, weren't always the smoothest for keychain. the move to a more sandboxed environment and tightened security meant that some older workflows and apps that used to play nice with the keychain suddenly found themselves on the outside looking in.
+first off, you're not alone. macos catalina introduced some changes that say, weren't always the smoothest for keychain. the move to a more sandboxed environment and tightened security meant that some older workflows and apps that used to play nice with the keychain suddenly found themselves on the outside looking in.
 
 the most common problems i've encountered, and likely what you're bumping into, usually boil down to a few suspects. one big one is access control list (acl) mismatches. it's like having the wrong keys for a lock; your app tries to get to a password, but the keychain says "nope, not for you". this can manifest in apps failing to save credentials, constantly prompting for passwords, or even just silently failing when they should be saving your login info.
 

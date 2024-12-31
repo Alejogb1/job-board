@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-kaitai-struct-be-used-to-describe-tlv-data-without-creating-new-types-for-each-field"
 ---
 
-, let’s tackle this. Funny, this reminds me of that project back at CloudGen, when we were dealing with a particularly nasty proprietary protocol; tons of tlv structures all over the place. We ended up using kaitai struct, and the core of the issue you've raised was absolutely central to our approach: could we define these things without exploding into a ridiculous number of types? The short answer is yes, absolutely, kaitai struct is indeed powerful enough to handle tlv data without necessarily needing a separate type for _every_ field. The longer answer, as you might suspect, involves some nuances.
+Funny, this reminds me of that project back at CloudGen, when we were dealing with a particularly nasty proprietary protocol; tons of tlv structures all over the place. We ended up using kaitai struct, and the core of the issue you've raised was absolutely central to our approach: could we define these things without exploding into a ridiculous number of types? The short answer is yes, absolutely, kaitai struct is indeed powerful enough to handle tlv data without necessarily needing a separate type for _every_ field. The longer answer, as you might suspect, involves some nuances.
 
 The key isn't to avoid new types altogether, because that's fundamentally how kaitai struct works – defining structures as types. Rather, it’s about structuring our definitions effectively to avoid redundant type declarations for similar tlv fields. We leverage kaitai struct’s flexibility, specifically its ability to use conditional logic and parameters, to handle the variation in tlv structures gracefully.
 

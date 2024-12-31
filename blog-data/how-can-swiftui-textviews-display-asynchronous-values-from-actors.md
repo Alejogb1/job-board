@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-swiftui-textviews-display-asynchronous-values-from-actors"
 ---
 
-, shall we? It's a fairly common hurdle when diving into the world of swiftui and concurrent programming, and I’ve spent my fair share of time navigating similar situations. The core issue, as i see it, is the inherent impedance mismatch between swiftui's declarative view updates and the asynchronous nature of actor-bound data.
+? It's a fairly common hurdle when diving into the world of swiftui and concurrent programming, and I’ve spent my fair share of time navigating similar situations. The core issue, as i see it, is the inherent impedance mismatch between swiftui's declarative view updates and the asynchronous nature of actor-bound data.
 
 The challenge lies in how we efficiently and correctly present the data retrieved from an actor within a textview, ensuring that ui updates happen only when data is available, and avoiding race conditions that might occur when the actor’s state is modified concurrently from different parts of the app.
 

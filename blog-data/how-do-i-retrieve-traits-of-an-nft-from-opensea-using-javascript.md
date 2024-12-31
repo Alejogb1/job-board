@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-traits-of-an-nft-from-opensea-using-javascript"
 ---
 
-one. I remember a project a few years back where we were building an aggregator for various NFT marketplaces, and getting trait data from OpenSea proved to be... _interesting_, shall we say. It's not always as straightforward as one might initially expect, and the nuances of their api, while generally robust, require a considered approach.
+one. I remember a project a few years back where we were building an aggregator for various NFT marketplaces, and getting trait data from OpenSea proved to be... _interesting_ say. It's not always as straightforward as one might initially expect, and the nuances of their api, while generally robust, require a considered approach.
 
 The core challenge lies in understanding that OpenSea doesn't directly expose a single endpoint where you can retrieve _all_ traits of an nft from a single call using only its contract address and token id. Instead, you usually need to navigate several layers to piece together the complete picture. My experience highlighted that a combination of their 'assets' endpoint and careful data manipulation is the most effective strategy. Let's delve into the specifics.
 

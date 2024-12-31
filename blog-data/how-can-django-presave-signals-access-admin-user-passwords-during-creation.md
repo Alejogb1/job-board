@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-django-presave-signals-access-admin-user-passwords-during-creation"
 ---
 
-, . I've run into this particular scenario a handful of times over the years, and it always requires a careful dance around security and best practices. The short answer is: accessing the raw, plaintext password directly in a `pre_save` signal for a Django admin user _during creation_ is fundamentally impossible and intentionally so, for excellent security reasons. Django hashes passwords before they ever hit the database. However, there are ways to achieve what you likely need in an arguably better and far more secure way.
+I've run into this particular scenario a handful of times over the years, and it always requires a careful dance around security and best practices. The short answer is: accessing the raw, plaintext password directly in a `pre_save` signal for a Django admin user _during creation_ is fundamentally impossible and intentionally so, for excellent security reasons. Django hashes passwords before they ever hit the database. However, there are ways to achieve what you likely need in an arguably better and far more secure way.
 
 The challenge stems from how Django handles password storage. During the user creation process, specifically within `User.set_password()`, the password undergoes a one-way hashing algorithm before being saved to the `password` field in the database. The plaintext version is never exposed, even to the database itself. `pre_save` signals, triggered just before the model instance is committed to the database, will only ever see the _hashed_ version of the password. Trying to reverse that process is both practically infeasible and, quite frankly, a security nightmare.
 

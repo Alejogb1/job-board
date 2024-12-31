@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-gridsearch-lightgbm-with-time-series-data"
 ---
 
-, let’s tackle this. Gridding through hyperparameter space for LightGBM, particularly with time series data, isn't exactly a plug-and-play situation, and I've definitely had my share of learning experiences on that front. It's a common challenge and definitely worth understanding in depth. Simply treating it like a standard cross-validation problem can lead to some pretty significant issues, primarily because time series data has an inherent temporal ordering, and shuffling this data can introduce data leakage. We absolutely want to avoid that.
+Gridding through hyperparameter space for LightGBM, particularly with time series data, isn't exactly a plug-and-play situation, and I've definitely had my share of learning experiences on that front. It's a common challenge and definitely worth understanding in depth. Simply treating it like a standard cross-validation problem can lead to some pretty significant issues, primarily because time series data has an inherent temporal ordering, and shuffling this data can introduce data leakage. We absolutely want to avoid that.
 
 The core problem is this: typical k-fold cross-validation randomly splits data into folds. When your data represents a sequence of events over time, this shuffles the past with the future, which will result in highly misleading performance metrics during model validation, since the model is trained with information it wouldn't have during actual prediction scenarios. So, we need to adopt a time-aware approach. This primarily involves using what’s commonly referred to as _time-based split_ or _rolling window_ cross-validation.
 

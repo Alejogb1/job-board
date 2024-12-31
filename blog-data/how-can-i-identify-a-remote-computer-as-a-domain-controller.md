@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-identify-a-remote-computer-as-a-domain-controller"
 ---
 
-, one. Identifying a remote computer acting as a domain controller isn't always straightforward, especially when direct access isn't an option. Over the years, I've encountered this specific challenge numerous times, ranging from initial network assessments to troubleshooting complex domain-related issues. It's a task that often requires a blend of network discovery techniques and active directory querying, avoiding actions that can trigger alerts, of course. Let's delve into some dependable methods and their implementations.
+Identifying a remote computer acting as a domain controller isn't always straightforward, especially when direct access isn't an option. Over the years, I've encountered this specific challenge numerous times, ranging from initial network assessments to troubleshooting complex domain-related issues. It's a task that often requires a blend of network discovery techniques and active directory querying, avoiding actions that can trigger alerts, of course. Let's delve into some dependable methods and their implementations.
 
 The core principle here revolves around two fundamental concepts: identifying services unique to domain controllers and querying Active Directory directly using remote tools. Simply relying on a machine's name isn't enough; a server can be named "DC01" and not actually be a domain controller. We need concrete evidence.
 

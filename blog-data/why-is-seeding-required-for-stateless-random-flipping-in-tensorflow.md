@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-seeding-required-for-stateless-random-flipping-in-tensorflow"
 ---
 
-, let’s tackle this. It’s a question I’ve had to deal with more than once, and it’s a great one because it touches on some fundamental aspects of pseudo-random number generation, particularly in the context of tensorflow's operations and how that ties into reproducibility. Seeding in stateless random number generation isn't just some optional extra; it's a critical mechanism that directly addresses the deterministic nature of computation.
+It’s a question I’ve had to deal with more than once, and it’s a great one because it touches on some fundamental aspects of pseudo-random number generation, particularly in the context of tensorflow's operations and how that ties into reproducibility. Seeding in stateless random number generation isn't just some optional extra; it's a critical mechanism that directly addresses the deterministic nature of computation.
 
 Before we jump into why, let's quickly recap what we're talking about. When we say “stateless random flipping,” we're generally referring to operations where we need a random choice, say a boolean value, that’s independently drawn each time the operation is executed, but in a manner that can be completely reproduced given the same initial parameters. This contrasts with stateful methods where a generator maintains its internal state across operations, potentially yielding different random results on subsequent calls, even with identical inputs. Tensorflow, thankfully, provides mechanisms for both, but stateless operations often align more closely with functional programming principles and distributed computing where you need predictability and reproducibility.
 

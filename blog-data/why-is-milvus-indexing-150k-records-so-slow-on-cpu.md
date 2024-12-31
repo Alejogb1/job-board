@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-milvus-indexing-150k-records-so-slow-on-cpu"
 ---
 
-, let’s tackle this. I’ve seen this particular issue crop up more times than I care to remember, and it almost always boils down to a few core culprits, particularly when we’re talking about CPU-based indexing in Milvus. The seemingly simple task of indexing 150,000 records can become surprisingly slow, and understanding the bottlenecks is crucial for optimal performance. this, drawing from some past experiences I've had with similar setups.
+I’ve seen this particular issue crop up more times than I care to remember, and it almost always boils down to a few core culprits, particularly when we’re talking about CPU-based indexing in Milvus. The seemingly simple task of indexing 150,000 records can become surprisingly slow, and understanding the bottlenecks is crucial for optimal performance. this, drawing from some past experiences I've had with similar setups.
 
 First off, when Milvus indexes data, especially on CPU, it's essentially converting your high-dimensional vectors into a searchable structure. This conversion involves intricate calculations and data manipulations. These operations, while seemingly straightforward conceptually, are computationally expensive and become painfully slow when the computational resources are insufficient. When the system is bogged down with other tasks, or when the allocated CPU cores are not used optimally, the entire process can bog down.
 

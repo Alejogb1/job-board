@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-use-importmap-with-bootstrap-in-rails-7"
 ---
 
-Right, let's get into this. I recall a project back in '22, a fairly hefty internal dashboard, where we made a conscious decision to move away from the asset pipeline for managing our front-end dependencies in our Rails 7 app. Bootstrap was, naturally, a core component, and we opted for import maps as our dependency management solution. It’s a different beast than the asset pipeline, and if you’re accustomed to that workflow, there will be an adjustment period. It's worthwhile, though, offering a cleaner, less error-prone approach, especially for front-end libraries.
+Right, I recall a project back in '22, a fairly hefty internal dashboard, where we made a conscious decision to move away from the asset pipeline for managing our front-end dependencies in our Rails 7 app. Bootstrap was, naturally, a core component, and we opted for import maps as our dependency management solution. It’s a different beast than the asset pipeline, and if you’re accustomed to that workflow, there will be an adjustment period. It's worthwhile, though, offering a cleaner, less error-prone approach, especially for front-end libraries.
 
-The fundamental principle behind import maps is that they allow you to declare how browser-native `import` statements should resolve dependencies *without* relying on a bundler like webpack, esbuild, or importjs. Instead, we provide the browser with a map of identifiers (e.g., `bootstrap`) to their respective locations (e.g., `https://cdn.skypack.dev/bootstrap@5.3.2/dist/js/bootstrap.esm.min.js`). This essentially offloads the module resolution work to the browser itself. Now, applying this to Bootstrap in Rails 7 involves several key steps.
+The fundamental principle behind import maps is that they allow you to declare how browser-native `import` statements should resolve dependencies _without_ relying on a bundler like webpack, esbuild, or importjs. Instead, we provide the browser with a map of identifiers (e.g., `bootstrap`) to their respective locations (e.g., `https://cdn.skypack.dev/bootstrap@5.3.2/dist/js/bootstrap.esm.min.js`). This essentially offloads the module resolution work to the browser itself. Now, applying this to Bootstrap in Rails 7 involves several key steps.
 
 First, let’s establish the basics in your `config/importmap.rb` file. This is where we define our mappings. A typical entry would look like this:
 
@@ -14,26 +14,30 @@ First, let’s establish the basics in your `config/importmap.rb` file. This is 
 pin "bootstrap", to: "https://cdn.skypack.dev/bootstrap@5.3.2/dist/js/bootstrap.esm.min.js"
 ```
 
-This line pins the identifier "bootstrap" to the specified URL hosted by a CDN provider (I used skypack here, but you have options like jsdelivr or unpkg).  Note the `esm.min.js` – this signifies that we're pulling in the ECMAScript Module version, crucial for `import` statements. It’s minified for performance, which is almost always desirable.
+This line pins the identifier "bootstrap" to the specified URL hosted by a CDN provider (I used skypack here, but you have options like jsdelivr or unpkg). Note the `esm.min.js` – this signifies that we're pulling in the ECMAScript Module version, crucial for `import` statements. It’s minified for performance, which is almost always desirable.
 
 Now, let's discuss how we import it in our javascript files. Typically, we'd have a central entrypoint such as `app/javascript/application.js`, in this case, we'd need something like this:
 
 ```javascript
-import * as bootstrap from 'bootstrap';
+import * as bootstrap from "bootstrap";
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('Bootstrap loaded!', bootstrap); // Just a check
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Bootstrap loaded!", bootstrap); // Just a check
 });
 ```
 
 This imports the entire Bootstrap module. If you only need specific components, for example, just the tooltips, you could be more granular:
 
 ```javascript
-import { Tooltip } from 'bootstrap';
+import { Tooltip } from "bootstrap";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl));
+document.addEventListener("DOMContentLoaded", () => {
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  );
+  const tooltipList = [...tooltipTriggerList].map(
+    (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
+  );
 });
 ```
 
@@ -45,23 +49,24 @@ However, you'll notice there’s no reference to Bootstrap’s CSS in the above 
 @import "bootstrap/scss/bootstrap";
 ```
 
-Assuming you have the appropriate Bootstrap gem installed as a dependency, this should correctly import the core styles.  If you’re using a CSS framework like tailwind, consider adding a global import statement that uses the importmap directly in Javascript.
+Assuming you have the appropriate Bootstrap gem installed as a dependency, this should correctly import the core styles. If you’re using a CSS framework like tailwind, consider adding a global import statement that uses the importmap directly in Javascript.
 
 The third code snippet is slightly different as it also showcases a pattern for using additional bootstrap modules.
 
 ```javascript
-import { Modal, Collapse, Dropdown } from 'bootstrap';
-document.addEventListener('DOMContentLoaded', () => {
-    const modalElements = document.querySelectorAll('.modal');
-    modalElements.forEach(el => new Modal(el));
+import { Modal, Collapse, Dropdown } from "bootstrap";
+document.addEventListener("DOMContentLoaded", () => {
+  const modalElements = document.querySelectorAll(".modal");
+  modalElements.forEach((el) => new Modal(el));
 
-    const collapseElements = document.querySelectorAll('.collapse');
-    collapseElements.forEach(el => new Collapse(el));
-    
-    const dropdownElements = document.querySelectorAll('.dropdown');
-    dropdownElements.forEach(el => new Dropdown(el));
+  const collapseElements = document.querySelectorAll(".collapse");
+  collapseElements.forEach((el) => new Collapse(el));
+
+  const dropdownElements = document.querySelectorAll(".dropdown");
+  dropdownElements.forEach((el) => new Dropdown(el));
 });
 ```
+
 This example demonstrates how to bring in multiple components, such as `Modal`, `Collapse` and `Dropdown`. Just like the tooltip example above, you'll need to instantiate each one so they work correctly. This showcases an additional common practice; initialising multiple component types.
 
 Now, for some practical insights I've gathered through firsthand experiences. Firstly, you might encounter issues with versions. Always double-check that your pinned version in the `importmap.rb` matches the one in your stylesheet import statement and any dependencies that require it. Inconsistencies can lead to frustrating runtime errors.

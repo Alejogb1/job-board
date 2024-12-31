@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-topic-model-be-applied-to-each-row-of-a-dataframe"
 ---
 
-, . I've seen this requirement pop up in a few projects over the years, usually when dealing with unstructured text data tied to specific entities or events. The need to apply topic modeling _per row_ of a dataframe is actually quite common when your data is structured but the meaningful content lies within a text column. Let me break down how I've approached it and provide some practical examples.
+I've seen this requirement pop up in a few projects over the years, usually when dealing with unstructured text data tied to specific entities or events. The need to apply topic modeling _per row_ of a dataframe is actually quite common when your data is structured but the meaningful content lies within a text column. Let me break down how I've approached it and provide some practical examples.
 
 Fundamentally, the core challenge is that topic models like Latent Dirichlet Allocation (LDA) or Non-negative Matrix Factorization (NMF) typically operate on a corpus – a _collection_ of documents – not individual data points. So, we need to adjust our perspective, effectively treating each row’s text entry as a self-contained "document" within the scope of that particular modeling process. Think of it like this: we're not trying to find topics that span across _all_ rows; instead, we're interested in understanding the latent themes within the textual content of each record, independently.
 

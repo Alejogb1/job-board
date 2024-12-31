@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-create-a-raw-text-editor-in-django-wagtail-admin"
 ---
 
-Right then, let’s tackle this. I've spent my share of late nights battling various content management system intricacies, and creating a raw text editor directly within the Django Wagtail admin panel is a challenge I've definitely encountered—more than once, actually. It's not a standard feature out-of-the-box, naturally, but there are several ways to approach it, each with its own set of trade-offs. Let me walk you through the strategies I’ve found most effective, coupled with some practical examples.
+Right then I've spent my share of late nights battling various content management system intricacies, and creating a raw text editor directly within the Django Wagtail admin panel is a challenge I've definitely encountered—more than once, actually. It's not a standard feature out-of-the-box, naturally, but there are several ways to approach it, each with its own set of trade-offs. Let me walk you through the strategies I’ve found most effective, coupled with some practical examples.
 
 Essentially, we're trying to bypass Wagtail's rich text editing capabilities and expose a simple text area for direct text manipulation within the admin interface. This comes in handy when you need precise control over the content, or when you want to manage code snippets, configuration files, or other structured text formats without the potential for rich text editors altering the formatting unexpectedly.
 

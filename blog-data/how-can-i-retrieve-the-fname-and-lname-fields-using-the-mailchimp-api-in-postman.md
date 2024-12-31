@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-the-fname-and-lname-fields-using-the-mailchimp-api-in-postman"
 ---
 
-, let’s tackle this. I’ve definitely spent my fair share of evenings navigating the nuances of the Mailchimp API, specifically when trying to extract specific member data. The problem you're encountering, retrieving just the `FNAME` and `LNAME` fields, isn't uncommon, and luckily, it's something the API handles gracefully. It's all about understanding the query parameters and how to shape your request.
+I’ve definitely spent my fair share of evenings navigating the nuances of the Mailchimp API, specifically when trying to extract specific member data. The problem you're encountering, retrieving just the `FNAME` and `LNAME` fields, isn't uncommon, and luckily, it's something the API handles gracefully. It's all about understanding the query parameters and how to shape your request.
 
 The Mailchimp API, in its core design, tends to return a lot of data by default. If you’re not careful, you might end up downloading entire member profiles even when you only need a couple of fields. That's where field limiting comes into play. Instead of asking for _everything_ and then manually parsing out what we need on our side, we can use specific parameters within the request URL to streamline the response and save precious bandwidth and processing time.
 

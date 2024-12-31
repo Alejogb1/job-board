@@ -6,7 +6,7 @@ id: "why-does-rails-generate-minitests-instead-of-specs"
 
 , let’s unpack this. I’ve certainly been around the block a few times with Rails, and this question about minitests versus specs often comes up. It’s less about superiority and more about the inherent philosophy and historical context of Rails itself, which, from my experience, deeply influences its choices.
 
-From my recollection, way back when I was heavily involved in porting a large legacy application to Rails (it was, shall we say, an _experience_), I wrestled – no, _analyzed_ – with this exact issue. We had a team very comfortable with RSpec, and the default minitest setup felt a bit… well, _different_. It's easy to fall into the mindset that one is inherently better, but the truth is, both have their strengths and weaknesses. Rails' decision to ship with minitest by default isn't arbitrary. It’s rooted in several factors, primarily focusing on simplicity, speed, and its closer alignment with the Ruby standard library.
+From my recollection, way back when I was heavily involved in porting a large legacy application to Rails (it was say, an _experience_), I wrestled – no, _analyzed_ – with this exact issue. We had a team very comfortable with RSpec, and the default minitest setup felt a bit… well, _different_. It's easy to fall into the mindset that one is inherently better, but the truth is, both have their strengths and weaknesses. Rails' decision to ship with minitest by default isn't arbitrary. It’s rooted in several factors, primarily focusing on simplicity, speed, and its closer alignment with the Ruby standard library.
 
 Here's the crux: minitest is part of Ruby’s standard library. This means that, as soon as you have a Ruby environment, you have minitest available. There are no external dependencies to manage. This plays directly into Rails' "convention over configuration" approach. The goal is to get you up and running quickly without additional setup hurdles.
 
@@ -79,7 +79,7 @@ end
 
 We see a straightforward approach. The setup is explicit, and assertions directly check the outcome of database actions. It's all very much focused on direct, functional testing.
 
-RSpec, often combined with factory_bot for creating test objects, might use a more "behaviour-driven" approach, where you are primarily concerned with _how_ the model is used rather than its raw implementation:
+RSpec, often combined with factory*bot for creating test objects, might use a more "behaviour-driven" approach, where you are primarily concerned with \_how* the model is used rather than its raw implementation:
 
 ```ruby
 require 'rspec'

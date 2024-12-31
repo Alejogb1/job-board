@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-cloudtrail-logs-be-written-to-an-s3-bucket-in-a-different-aws-account"
 ---
 
-, let’s tackle this. It’s a common scenario, and I’ve personally navigated it more than a few times, especially in multi-account aws setups where security and centralized logging are paramount. So, can cloudtrail logs be written to an s3 bucket in a different aws account? The short answer is, emphatically, yes. But there are important caveats and configurations to understand for a successful and secure implementation. It’s not just a matter of pointing cloudtrail to a different account's bucket; there’s more to the story.
+It’s a common scenario, and I’ve personally navigated it more than a few times, especially in multi-account aws setups where security and centralized logging are paramount. So, can cloudtrail logs be written to an s3 bucket in a different aws account? The short answer is, emphatically, yes. But there are important caveats and configurations to understand for a successful and secure implementation. It’s not just a matter of pointing cloudtrail to a different account's bucket; there’s more to the story.
 
 The primary reason you'd want to do this is for centralized security and auditing. Instead of having numerous s3 buckets scattered across several aws accounts holding cloudtrail logs, it’s significantly easier to manage, monitor, and analyze logs from a single, designated “logging” account. This also strengthens security posture as logs become less accessible to potentially compromised accounts. Let's break down how this works practically and go through the permissions and configurations required.
 

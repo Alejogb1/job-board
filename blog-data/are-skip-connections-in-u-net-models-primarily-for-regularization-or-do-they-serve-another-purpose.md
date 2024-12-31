@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-skip-connections-in-u-net-models-primarily-for-regularization-or-do-they-serve-another-purpose"
 ---
 
-, shall we? It's a question that's popped up more than once in my experience, particularly when I was knee-deep in medical image segmentation projects a few years back. Specifically, we were dealing with 3d scans of the brain, and the subtle details were just getting washed out during the downsampling and upsampling phases. That's where the understanding of what skip connections truly offer became paramount.
+? It's a question that's popped up more than once in my experience, particularly when I was knee-deep in medical image segmentation projects a few years back. Specifically, we were dealing with 3d scans of the brain, and the subtle details were just getting washed out during the downsampling and upsampling phases. That's where the understanding of what skip connections truly offer became paramount.
 
 The initial assumption, especially when you're first encountering the U-Net architecture, is that skip connections act primarily as a form of regularization, and it's easy to see why that thought process prevails. After all, they reduce the vanishing gradient problem, which indirectly helps with regularization. However, reducing the vanishing gradient isn't their fundamental design intent. Their primary purpose leans more towards preserving and propagating finer-grained spatial information that would be otherwise lost during the contracting (downsampling) phase. Regularization is indeed a beneficial _side effect_, not the driving motivation.
 

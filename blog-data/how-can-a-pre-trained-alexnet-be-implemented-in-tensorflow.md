@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-pre-trained-alexnet-be-implemented-in-tensorflow"
 ---
 
-, let’s tackle this. I recall back in my early days working on a computer vision project, we needed a fast solution for image classification. AlexNet, despite its age, was a surprisingly good starting point, and reimplementing it in TensorFlow became a necessity. So, let's break down how we can implement a pre-trained AlexNet using TensorFlow, with a focus on practical considerations.
+I recall back in my early days working on a computer vision project, we needed a fast solution for image classification. AlexNet, despite its age, was a surprisingly good starting point, and reimplementing it in TensorFlow became a necessity. So, let's break down how we can implement a pre-trained AlexNet using TensorFlow, with a focus on practical considerations.
 
 The key here is not building an AlexNet from scratch, which has already been done countless times, but leveraging a pre-trained model for our tasks. TensorFlow (and Keras, its high-level API), provides excellent tools for this. Pre-trained models have already been trained on massive datasets like ImageNet and have learned to extract meaningful features from images. This makes them a powerful base for a wide array of image related tasks with transfer learning. I’m going to walk you through the process, including how to load the model, what modifications you may want to make, and how you might integrate this into your projects.
 

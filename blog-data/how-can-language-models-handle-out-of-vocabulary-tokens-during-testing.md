@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-language-models-handle-out-of-vocabulary-tokens-during-testing"
 ---
 
-, one. I remember a project back in '21, a client wanted a sentiment analysis tool that could handle product reviews spanning various niches, everything from high-end audio equipment to obscure gardening tools. The vocabulary variance was wild. We quickly learned that expecting a fixed, pre-defined vocabulary to cover all bases was simply unrealistic. Out-of-vocabulary (oov) tokens, those words the model hadn’t seen during training, are a constant challenge when deploying language models. And it's not just about obscure terms; typos, slang, and evolving language all contribute.
+I remember a project back in '21, a client wanted a sentiment analysis tool that could handle product reviews spanning various niches, everything from high-end audio equipment to obscure gardening tools. The vocabulary variance was wild. We quickly learned that expecting a fixed, pre-defined vocabulary to cover all bases was simply unrealistic. Out-of-vocabulary (oov) tokens, those words the model hadn’t seen during training, are a constant challenge when deploying language models. And it's not just about obscure terms; typos, slang, and evolving language all contribute.
 
 Essentially, oov tokens disrupt the model's established mapping from tokens to their associated vector representations. These vectors, learned during training, encode the semantic meaning of words. When the model encounters something it doesn't recognize, it's lost; it lacks a pre-calculated vector. So, how do we handle this? There’s a suite of techniques we can employ, each with its own trade-offs.
 

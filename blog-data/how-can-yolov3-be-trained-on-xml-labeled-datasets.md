@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-yolov3-be-trained-on-xml-labeled-datasets"
 ---
 
-, let's dive into training YOLOv3 with those sometimes-pesky xml-labeled datasets. This isn't quite as straightforward as using annotation formats directly supported by darknet, the framework on which yolov3 is based. I recall a project back in '19 where we were dealing with satellite imagery and the data was, shall we say, a _hodgepodge_ of annotations. We had bounding boxes galore, but all in these xml files, and darknet expects a text file per image, in a specific format. It's a process of conversion, manipulation, and verification.
+, let's dive into training YOLOv3 with those sometimes-pesky xml-labeled datasets. This isn't quite as straightforward as using annotation formats directly supported by darknet, the framework on which yolov3 is based. I recall a project back in '19 where we were dealing with satellite imagery and the data was say, a _hodgepodge_ of annotations. We had bounding boxes galore, but all in these xml files, and darknet expects a text file per image, in a specific format. It's a process of conversion, manipulation, and verification.
 
 First off, understand that the core challenge is translating the xml bounding box data into the text format required by darknet’s training procedure. This typically involves having one text file for each image, where each line in the text file represents one bounding box. A line will generally follow the format: `<class_id> <x_center> <y_center> <width> <height>`. The coordinates are normalized to range between 0 and 1, with the image's width and height serving as the maximum extents.
 

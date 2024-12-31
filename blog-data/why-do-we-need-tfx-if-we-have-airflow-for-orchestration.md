@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-do-we-need-tfx-if-we-have-airflow-for-orchestration"
 ---
 
-Let’s tackle this question head-on, shall we? I’ve seen this one come up quite a bit, and it's understandable why the confusion exists. Both Apache Airflow and TensorFlow Extended (TFX) deal with workflow orchestration, but they operate at different levels and solve distinct problems within the machine learning lifecycle. Thinking of them as interchangeable tools misses the nuances. I recall a project a few years back, a large-scale recommendation system. We initially attempted to use only Airflow for the entire pipeline, which quickly highlighted the limitations.
+Let’s tackle this question head-on? I’ve seen this one come up quite a bit, and it's understandable why the confusion exists. Both Apache Airflow and TensorFlow Extended (TFX) deal with workflow orchestration, but they operate at different levels and solve distinct problems within the machine learning lifecycle. Thinking of them as interchangeable tools misses the nuances. I recall a project a few years back, a large-scale recommendation system. We initially attempted to use only Airflow for the entire pipeline, which quickly highlighted the limitations.
 
 While Airflow excels at scheduling and managing the execution of workflows – anything from simple data movement to complex batch processes – it doesn’t intrinsically understand the unique needs of machine learning pipelines. You can absolutely use Airflow to trigger model training scripts, perform evaluations, and push models to serving infrastructure. However, Airflow, at its core, is a general-purpose workflow engine. It knows how to execute tasks based on dependencies, but it doesn’t handle the specifics of data validation, feature engineering, model analysis, and other machine learning necessities as a first-class citizen.
 
-This is precisely where TFX steps in. TFX is, fundamentally, a framework designed specifically for building and deploying production machine learning pipelines. Think of TFX not merely as an orchestrator, but as a toolbox filled with components explicitly created for ML workflows. These components, such as *ExampleGen*, *StatisticsGen*, *SchemaGen*, *Transform*, *Trainer*, *Evaluator*, and *Pusher*, are not arbitrary scripts; they are carefully crafted, well-tested building blocks, each addressing common challenges encountered in the iterative process of model development and deployment.
+This is precisely where TFX steps in. TFX is, fundamentally, a framework designed specifically for building and deploying production machine learning pipelines. Think of TFX not merely as an orchestrator, but as a toolbox filled with components explicitly created for ML workflows. These components, such as _ExampleGen_, _StatisticsGen_, _SchemaGen_, _Transform_, _Trainer_, _Evaluator_, and _Pusher_, are not arbitrary scripts; they are carefully crafted, well-tested building blocks, each addressing common challenges encountered in the iterative process of model development and deployment.
 
-One of the major differentiators is TFX’s focus on the *ML metadata (MLMD)*. MLMD serves as a central repository for all metadata generated within the pipeline – data statistics, schemas, transformed datasets, model evaluation results, etc. This persistent record is crucial for reproducibility, debugging, and auditing. Airflow, on the other hand, does not have such an integrated metadata management system. With Airflow, you’d need to manage and track this metadata separately, which introduces more manual effort and the potential for error, especially in a team setting.
+One of the major differentiators is TFX’s focus on the _ML metadata (MLMD)_. MLMD serves as a central repository for all metadata generated within the pipeline – data statistics, schemas, transformed datasets, model evaluation results, etc. This persistent record is crucial for reproducibility, debugging, and auditing. Airflow, on the other hand, does not have such an integrated metadata management system. With Airflow, you’d need to manage and track this metadata separately, which introduces more manual effort and the potential for error, especially in a team setting.
 
 To illustrate, let's look at three code snippets. First, consider a simplified Airflow DAG designed to train a model:
 
@@ -92,9 +92,9 @@ pipeline = tfx.dsl.Pipeline(
 # This is simplified and will not be fully runnable without adding this and training_module.py
 ```
 
-Even in this simplified TFX snippet, you can see that various components are explicitly geared towards a model training pipeline: data ingestion, model training, evaluation, and model pushing. These are not merely arbitrary tasks but encapsulate the common logic and best practices. Further, the TFX pipeline also makes use of the components' *outputs*, which link the workflow together and are stored in MLMD. These outputs aren't present in the Airflow example.
+Even in this simplified TFX snippet, you can see that various components are explicitly geared towards a model training pipeline: data ingestion, model training, evaluation, and model pushing. These are not merely arbitrary tasks but encapsulate the common logic and best practices. Further, the TFX pipeline also makes use of the components' _outputs_, which link the workflow together and are stored in MLMD. These outputs aren't present in the Airflow example.
 
-Finally, let's examine a component that uses *importer* to handle externally created assets. These may come from outside a typical TFX pipeline. This could include, for instance, a pre-trained model, a data schema or a vocabulary.
+Finally, let's examine a component that uses _importer_ to handle externally created assets. These may come from outside a typical TFX pipeline. This could include, for instance, a pre-trained model, a data schema or a vocabulary.
 
 ```python
 
@@ -115,7 +115,7 @@ model_importer = Importer(
 # e.g. used as input to trainer component via trainer.inputs['base_model'] = model_importer.outputs['result']
 ```
 
-This *importer* can be used to register and consume a model that wasn't produced by the TFX pipeline, showing how assets can be managed in MLMD and integrated into a wider pipeline. The benefit of this is that it also manages the version of that pre-trained model, which would otherwise be difficult to track and manage. Airflow would require extra effort to replicate this.
+This _importer_ can be used to register and consume a model that wasn't produced by the TFX pipeline, showing how assets can be managed in MLMD and integrated into a wider pipeline. The benefit of this is that it also manages the version of that pre-trained model, which would otherwise be difficult to track and manage. Airflow would require extra effort to replicate this.
 
 While it’s technically possible to achieve similar workflows using only Airflow, you'd essentially be recreating much of what TFX provides out-of-the-box. You'd be responsible for handling the complexities of data schema evolution, data validation, ensuring model lineage, and managing metadata. The result would be a more brittle, less maintainable solution.
 

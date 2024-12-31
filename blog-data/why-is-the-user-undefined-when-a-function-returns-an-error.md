@@ -8,7 +8,7 @@ id: "why-is-the-user-undefined-when-a-function-returns-an-error"
 
 The crucial thing to grasp is that JavaScript functions, by default, return 'undefined' if no explicit return statement is encountered. This isn't about the error itself; it’s about the path of execution within the function. If an error occurs and disrupts the normal flow, and the function doesn't explicitly handle that error with a specific return value, the implicit 'undefined' return takes effect.
 
-Consider this scenario. I once worked on a legacy system that had a module responsible for fetching user profiles. The initial design, shall we say, wasn't the most robust. The function looked something like this:
+Consider this scenario. I once worked on a legacy system that had a module responsible for fetching user profiles. The initial design say, wasn't the most robust. The function looked something like this:
 
 ```javascript
 function fetchUserProfile(userId) {

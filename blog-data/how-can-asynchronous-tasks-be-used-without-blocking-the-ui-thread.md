@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-asynchronous-tasks-be-used-without-blocking-the-ui-thread"
 ---
 
-Let’s dive straight into it, shall we? I’ve spent a considerable chunk of my career dealing with precisely this issue – keeping user interfaces responsive while juggling intensive background work. It's a core challenge in any application that needs to do more than just static displays. We're talking about that dreaded UI freeze, and how to avoid it by leveraging asynchronous tasks.
+Let’s dive straight into it? I’ve spent a considerable chunk of my career dealing with precisely this issue – keeping user interfaces responsive while juggling intensive background work. It's a core challenge in any application that needs to do more than just static displays. We're talking about that dreaded UI freeze, and how to avoid it by leveraging asynchronous tasks.
 
 The key thing to understand here is that the UI thread – often called the main thread – is responsible for handling all user interactions, rendering, and animations. If you execute any long-running or blocking operation directly on this thread, the UI will become unresponsive until that operation completes. This leads to a frustrating user experience characterized by freezes and the infamous "not responding" message. Asynchronous tasks, however, offer a robust solution to delegate such operations to separate threads, ensuring the UI remains responsive.
 
-Now, the crux of the matter is how we handle this asynchronous execution without creating a mess. There are several patterns and mechanisms we can employ, each with its nuances and best use cases. Before I delve into code, remember the core concept: *don't block the main thread*. This mantra will save you countless headaches. We achieve this by spawning separate execution contexts for the heavy lifting.
+Now, the crux of the matter is how we handle this asynchronous execution without creating a mess. There are several patterns and mechanisms we can employ, each with its nuances and best use cases. Before I delve into code, remember the core concept: _don't block the main thread_. This mantra will save you countless headaches. We achieve this by spawning separate execution contexts for the heavy lifting.
 
-Let’s start with the most prevalent pattern I often reach for: *using background threads and callbacks*. This involves launching a task on a secondary thread and, once finished, utilizing a callback function to update the UI. This technique, while fundamental, requires careful consideration when it comes to managing thread safety. Imagine you’re fetching data from a remote server. The actual fetching shouldn’t be on the ui thread, and then you should then update the UI with the response.
+Let’s start with the most prevalent pattern I often reach for: _using background threads and callbacks_. This involves launching a task on a secondary thread and, once finished, utilizing a callback function to update the UI. This technique, while fundamental, requires careful consideration when it comes to managing thread safety. Imagine you’re fetching data from a remote server. The actual fetching shouldn’t be on the ui thread, and then you should then update the UI with the response.
 
 Here's a simplified python example demonstrating this:
 

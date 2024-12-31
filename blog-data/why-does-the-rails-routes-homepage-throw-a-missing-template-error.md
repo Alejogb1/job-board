@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-rails-routes-homepage-throw-a-missing-template-error"
 ---
 
-Let's get into it then, shall we? I've seen this one pop up more times than i care to count over the years. A seemingly simple setup – a default route, Rails default welcome page should be, well, welcoming. But instead, we get greeted by the dreaded "missing template" error. It's a common stumbling block, often a symptom of a few underlying configuration or logic issues. I’ve debugged it across projects ranging from small personal endeavors to enterprise-level applications, and while the specifics can vary, the root causes usually boil down to the same few culprits.
+Let's get into it then? I've seen this one pop up more times than i care to count over the years. A seemingly simple setup – a default route, Rails default welcome page should be, well, welcoming. But instead, we get greeted by the dreaded "missing template" error. It's a common stumbling block, often a symptom of a few underlying configuration or logic issues. I’ve debugged it across projects ranging from small personal endeavors to enterprise-level applications, and while the specifics can vary, the root causes usually boil down to the same few culprits.
 
 The core reason, stripped down, is that Rails' routing mechanism, particularly with a default root path, expects a specific response, and when it can't find that, chaos ensues. This “specific response” is generally a rendered view template, typically located in your `app/views` directory. When you define a route such as `root to: 'welcome#index'`, Rails expects, by default, to find a file named `index.html.erb` (or an equivalent such as `.haml` or `.slim` depending on your template engine) within a `welcome` directory under `app/views`. If that specific file is absent, the application throws the missing template error. It's that simple, but the ‘why’ behind it can become nuanced with certain project structures.
 
@@ -23,69 +23,69 @@ Here are three code snippets showing different scenarios and how to address them
 
 Here’s the minimal setup causing a "missing template" error, followed by the fix:
 
-*   **Initial State (Error):**
-    *   `config/routes.rb`:
-        ```ruby
-        Rails.application.routes.draw do
-          root to: 'welcome#index'
-        end
-        ```
-    *   `app/controllers/welcome_controller.rb`:
-        ```ruby
-        class WelcomeController < ApplicationController
-          def index
-            # No explicit render call
-          end
-        end
-        ```
-    *   No `app/views/welcome/index.html.erb` file exists
+- **Initial State (Error):**
 
-*   **The Fix:**
-    *   Create `app/views/welcome/index.html.erb` with some content:
-        ```erb
-        <h1>Hello from the Index Page</h1>
-        ```
-        This will resolve the error because Rails can now locate the appropriate view.
+  - `config/routes.rb`:
+    ```ruby
+    Rails.application.routes.draw do
+      root to: 'welcome#index'
+    end
+    ```
+  - `app/controllers/welcome_controller.rb`:
+    ```ruby
+    class WelcomeController < ApplicationController
+      def index
+        # No explicit render call
+      end
+    end
+    ```
+  - No `app/views/welcome/index.html.erb` file exists
+
+- **The Fix:**
+  - Create `app/views/welcome/index.html.erb` with some content:
+    ```erb
+    <h1>Hello from the Index Page</h1>
+    ```
+    This will resolve the error because Rails can now locate the appropriate view.
 
 **Snippet 2: Explicit `render` Call**
 
 Sometimes you might not want the default view location and need to explicitly specify which view to render:
 
-*   `config/routes.rb`:
-        ```ruby
-        Rails.application.routes.draw do
-          root to: 'dashboard#show'
-        end
-        ```
-    *   `app/controllers/dashboard_controller.rb`:
-        ```ruby
-        class DashboardController < ApplicationController
-          def show
-            render template: "pages/homepage" # This will render app/views/pages/homepage.html.erb
-          end
-        end
-        ```
-     *   Assuming `app/views/pages/homepage.html.erb` exists, this will render that view and bypass the default location lookups.
+- `config/routes.rb`:
+  `ruby
+    Rails.application.routes.draw do
+      root to: 'dashboard#show'
+    end
+    `
+  - `app/controllers/dashboard_controller.rb`:
+    ```ruby
+    class DashboardController < ApplicationController
+      def show
+        render template: "pages/homepage" # This will render app/views/pages/homepage.html.erb
+      end
+    end
+    ```
+  - Assuming `app/views/pages/homepage.html.erb` exists, this will render that view and bypass the default location lookups.
 
 **Snippet 3: Redirect instead of rendering view**
 
 Another common case is that you actually want to redirect to a different page instead of rendering a template at the root route. For instance:
 
-*  `config/routes.rb`:
-        ```ruby
+- `config/routes.rb`:
+  `ruby
          Rails.application.routes.draw do
            root to: 'welcome#index'
          end
-        ```
-    *   `app/controllers/welcome_controller.rb`:
-        ```ruby
+        ` \* `app/controllers/welcome_controller.rb`:
+  `ruby
           class WelcomeController < ApplicationController
             def index
               redirect_to '/login'
             end
           end
-        ```
-In this case, no view template needs to exist since the request is redirected elsewhere.
+        `
+  In this case, no view template needs to exist since the request is redirected elsewhere.
 
 Key takeaways to troubleshoot this specific error would involve:
 

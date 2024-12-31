@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-telethon-messagemediaphoto-object-missing-the-document-attribute"
 ---
 
-, one. The absence of a ‘document’ attribute on a Telethon `MessageMediaPhoto` object can be a head-scratcher, particularly when you’re expecting it, and I’ve certainly been in that boat a few times over the years. It stems from how Telegram internally manages various forms of media, and how Telethon subsequently abstracts them. Let’s unpack this a bit because it’s not as straightforward as it might seem initially.
+The absence of a ‘document’ attribute on a Telethon `MessageMediaPhoto` object can be a head-scratcher, particularly when you’re expecting it, and I’ve certainly been in that boat a few times over the years. It stems from how Telegram internally manages various forms of media, and how Telethon subsequently abstracts them. Let’s unpack this a bit because it’s not as straightforward as it might seem initially.
 
 The core issue here isn’t a bug per se, but rather a design choice in the Telegram API, which Telethon faithfully mirrors. A `MessageMediaPhoto` object, as the name suggests, explicitly indicates that the media associated with the message is specifically a photo. When a photo is uploaded directly _as a photo_ through the client, Telegram stores it as a ‘photo’ entity, not a generic ‘document’. This contrasts with scenarios where the user sends a file, even if that file happens to be an image, in which case Telegram treats it as a 'document'.
 

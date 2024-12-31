@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-the-cant-find-training-file-error"
 ---
 
-, . I’ve seen this particular error rear its head more times than I care to count, across a variety of training pipelines. It's usually less about the magic of machine learning and more about the mundane details of file paths and resource management. The "Can't find training file" error, frustratingly general as it is, stems from a disconnect between where your training script _thinks_ the data is, and where it actually _is_. It's rarely a problem with your algorithm itself, but rather a problem of context.
+I’ve seen this particular error rear its head more times than I care to count, across a variety of training pipelines. It's usually less about the magic of machine learning and more about the mundane details of file paths and resource management. The "Can't find training file" error, frustratingly general as it is, stems from a disconnect between where your training script _thinks_ the data is, and where it actually _is_. It's rarely a problem with your algorithm itself, but rather a problem of context.
 
 My experiences, especially during the early days of scaling up a deep learning model for satellite imagery analysis, are etched in my memory. We had multiple researchers simultaneously working on various components, and data paths being mismatched was the source of no end of grief. I’ll illustrate how I approach debugging this, and I'll include some specific code snippets to make it more concrete, but first a couple of general strategies.
 

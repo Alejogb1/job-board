@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-properly-update-parent-and-child-objects-in-ruby"
 ---
 
-, let’s tackle this. I’ve certainly seen my fair share of tangled object relationships, particularly when it comes to updates in Ruby. It’s not uncommon to find yourself in a situation where a simple update cascades into a series of unintended side effects if not handled carefully. Let me walk you through some practical approaches I've found effective, drawing on experiences from projects past, and provide concrete examples to illustrate these concepts.
+I’ve certainly seen my fair share of tangled object relationships, particularly when it comes to updates in Ruby. It’s not uncommon to find yourself in a situation where a simple update cascades into a series of unintended side effects if not handled carefully. Let me walk you through some practical approaches I've found effective, drawing on experiences from projects past, and provide concrete examples to illustrate these concepts.
 
 The core issue, as I see it, boils down to maintaining data integrity across related objects. When dealing with parent-child relationships – think of something like a `Customer` and their associated `Order` objects – updating one shouldn't inadvertently corrupt the other or lead to data inconsistency. In my experience, improper handling often manifests as stale or out-of-sync data, which ultimately leads to unexpected behavior and hard-to-track bugs.
 

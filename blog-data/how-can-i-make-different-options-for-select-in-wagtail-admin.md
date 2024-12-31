@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-make-different-options-for-select-in-wagtail-admin"
 ---
 
-, one. I've seen this specific requirement pop up quite a few times in my years working with wagtail, and there are some elegant, scalable ways to approach creating diverse select options within the admin panel. It’s not a one-size-fits-all situation, which is probably why you’re asking, and frankly, that’s good—it forces you to think about your data structures carefully.
+I've seen this specific requirement pop up quite a few times in my years working with wagtail, and there are some elegant, scalable ways to approach creating diverse select options within the admin panel. It’s not a one-size-fits-all situation, which is probably why you’re asking, and frankly, that’s good—it forces you to think about your data structures carefully.
 
 The core challenge here revolves around how wagtail's admin interface integrates with django forms and how we can leverage those interfaces to customize the options available in a `<select>` element when editing a wagtail page or snippet. We essentially need to manipulate the form field definition. We can accomplish this in a few ways, each with different implications for flexibility and maintainability. I'll walk you through three methods that I've found effective in past projects, each targeting different levels of complexity and customization.
 

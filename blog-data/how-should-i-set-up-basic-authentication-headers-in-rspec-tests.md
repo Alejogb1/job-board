@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-should-i-set-up-basic-authentication-headers-in-rspec-tests"
 ---
 
-let's get into this. so, you're trying to nail down how to properly set up basic authentication headers within your rspec tests, and i get it. i’ve been there, spinning my wheels on seemingly simple auth setups, especially when you're trying to keep those tests clean and readable. it's one of those things that seems straightforward but can quickly become a bit of a nuisance if you’re not careful.
+so, you're trying to nail down how to properly set up basic authentication headers within your rspec tests, and i get it. i’ve been there, spinning my wheels on seemingly simple auth setups, especially when you're trying to keep those tests clean and readable. it's one of those things that seems straightforward but can quickly become a bit of a nuisance if you’re not careful.
 
 from what i see, this is often a recurring issue, especially when you're dealing with apis that rely on basic auth. i remember back when i was working on a project for this small startup that was all about real-time data processing, i got stuck on this exact point. their api was using basic auth for everything, and while it seemed easy in principle, getting the tests right was just a mess. the problem was that i was trying to shoehorn all auth setup into the test itself, making the tests super long and repetitive. it wasn't scalable at all, and it was incredibly hard to maintain when the auth structure needed a small tweak. i learned the hard way that having a proper setup is critical for maintainability and avoiding repetition. it all comes down to keeping the tests focused on what they should test, not the authentication setup.
 
@@ -28,6 +28,7 @@ describe 'my api endpoint' do
   end
 end
 ```
+
 this snippet shows the most direct method. we encode the username and password using base64, and then include this encoded string in the authorization header of our `get` request. it’s simple and does the job. but what if you have several tests relying on the same setup? that’s where the `let` block shines.
 this allows for more reuse and less repetition.
 
@@ -72,6 +73,7 @@ RSpec.configure do |config|
   config.include AuthHelper
 end
 ```
+
 and in your actual test file:
 
 ```ruby

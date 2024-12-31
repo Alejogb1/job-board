@@ -8,7 +8,7 @@ id: "how-to-extract-value-of-tags-from-cloudtrail-logs-using-athena"
 
 first things first, let's talk structure. cloudtrail logs are delivered in json format, and typically they are stored in s3. athena then reads these s3 objects like tables, allowing us to use standard sql queries. this is great, but the json structure adds a layer of complexity. the crucial thing to grasp is that the tags you are after, aren’t just lying flat in the document. they’re usually nested within some json object, like `requestparameters` or `resources` and then again within `tags`. so, we need to navigate through this json tree properly using athena's json functions.
 
-now, let's get down to the code examples, shall we? i'm assuming you've already set up your athena table pointing to your cloudtrail logs. if not, there are plenty of tutorials that will walk you through that process. i personally learned it from the aws documentation, its not the easiest read, but is very complete. i would recommend "aws big data analytics" book by shiva reddy, it really helps you with all the athena nuances.
+now, let's get down to the code examples? i'm assuming you've already set up your athena table pointing to your cloudtrail logs. if not, there are plenty of tutorials that will walk you through that process. i personally learned it from the aws documentation, its not the easiest read, but is very complete. i would recommend "aws big data analytics" book by shiva reddy, it really helps you with all the athena nuances.
 
 **example 1: extracting tags from `requestparameters`**
 

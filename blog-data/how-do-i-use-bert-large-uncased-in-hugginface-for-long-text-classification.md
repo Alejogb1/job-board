@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-bert-large-uncased-in-hugginface-for-long-text-classification"
 ---
 
-, let’s tackle this. I’ve spent quite a bit of time dealing with long text classification using transformer models, and bert-large-uncased presents some specific challenges, especially when you start exceeding those typical input length limitations. It’s not simply about throwing a longer text at the model and hoping for the best. There are practical considerations that we need to address systematically.
+I’ve spent quite a bit of time dealing with long text classification using transformer models, and bert-large-uncased presents some specific challenges, especially when you start exceeding those typical input length limitations. It’s not simply about throwing a longer text at the model and hoping for the best. There are practical considerations that we need to address systematically.
 
 The core issue stems from bert's architecture. The original bert-large-uncased model, as trained, handles sequences with a maximum length of 512 tokens. Exceed this limit, and you'll encounter errors. The naive approach of truncating is usually a bad idea, as vital context might be discarded, severely impacting classification accuracy. Think of it as throwing away the second half of a detective novel – you might miss key clues. Over the years, I've seen countless projects that suffer because of simple truncation, and it always leads to suboptimal results.
 

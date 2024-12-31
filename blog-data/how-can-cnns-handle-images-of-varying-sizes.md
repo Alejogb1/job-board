@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cnns-handle-images-of-varying-sizes"
 ---
 
-, let’s tackle this. I've seen this come up more often than you’d expect, especially back when I was optimizing models for embedded systems where memory constraints were a serious concern. Handling variable image sizes in convolutional neural networks (cnns) isn't a trivial problem, but there are several established techniques that are both effective and relatively straightforward to implement. It’s more about understanding the architecture and applying the correct layers strategically rather than resorting to some deep magic.
+I've seen this come up more often than you’d expect, especially back when I was optimizing models for embedded systems where memory constraints were a serious concern. Handling variable image sizes in convolutional neural networks (cnns) isn't a trivial problem, but there are several established techniques that are both effective and relatively straightforward to implement. It’s more about understanding the architecture and applying the correct layers strategically rather than resorting to some deep magic.
 
 The core issue stems from the fact that standard cnn architectures, particularly those with fully connected layers towards the end, inherently assume a fixed input size. The dimensions of the activation maps after convolutional and pooling operations directly influence the number of parameters in those subsequent fully connected layers. If you change the input size, you change the dimensions of these feature maps, and thus the entire connection structure will break.
 

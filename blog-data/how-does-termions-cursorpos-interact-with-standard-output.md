@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-termions-cursorpos-interact-with-standard-output"
 ---
 
-, one. It's a question that seems straightforward but actually reveals some fascinating nuances about terminal interaction. I've personally spent a good chunk of time debugging terminal-based apps, and issues around cursor position tracking are common culprits. So, let's break down how termion's `cursor_pos()` functions in relation to standard output (stdout).
+It's a question that seems straightforward but actually reveals some fascinating nuances about terminal interaction. I've personally spent a good chunk of time debugging terminal-based apps, and issues around cursor position tracking are common culprits. So, let's break down how termion's `cursor_pos()` functions in relation to standard output (stdout).
 
 Termion, for those unfamiliar, is a Rust crate that abstracts away the complexities of interacting with terminal input and output. Specifically, `cursor_pos()` is meant to provide the current cursor position within the terminal window. Now, the key thing to understand is that terminals maintain their own internal state regarding the cursor's location. This state is updated based on escape sequences received by the terminal emulator. So, termion's `cursor_pos()` doesn't magically "know" where the cursor is; rather, it sends specific escape sequences to the terminal to _ask_ for that information.
 

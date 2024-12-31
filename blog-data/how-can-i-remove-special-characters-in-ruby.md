@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-remove-special-characters-in-ruby"
 ---
 
-, let’s tackle this. Cleaning up strings and getting rid of those pesky special characters is something I've certainly dealt with more times than I care to remember. In my experience, it’s often a precursor to data standardization or preparation for some kind of analysis or database insertion. There isn't one single magic bullet, of course, but rather a toolkit of approaches depending on what you consider "special," and what you intend to do with the cleansed string afterward.
+Cleaning up strings and getting rid of those pesky special characters is something I've certainly dealt with more times than I care to remember. In my experience, it’s often a precursor to data standardization or preparation for some kind of analysis or database insertion. There isn't one single magic bullet, of course, but rather a toolkit of approaches depending on what you consider "special," and what you intend to do with the cleansed string afterward.
 
 First, it’s crucial to define what we mean by “special characters.” This definition can be very fluid and depends heavily on the context. Are we talking about punctuation? Control characters? Non-ascii characters? Or are we specifically targeting a specific set of characters, for example, in order to comply with a file naming convention?
 

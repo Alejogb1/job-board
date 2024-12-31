@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-an-elasticsearch-pipeline-doesnt-match-paths"
 ---
 
-, let's get into this. you’re seeing that an elasticsearch pipeline, specifically a processor within that pipeline, isn't matching paths as expected, and that can be a real head-scratcher. i've definitely been there, staring at the screen, wondering why the darn thing isn't doing what i told it to. been coding since i was a teenager and this situation is like a classic “the computer is doing exactly what i told it to do, not what i wanted it to do”. happens all the time.
+, you’re seeing that an elasticsearch pipeline, specifically a processor within that pipeline, isn't matching paths as expected, and that can be a real head-scratcher. i've definitely been there, staring at the screen, wondering why the darn thing isn't doing what i told it to. been coding since i was a teenager and this situation is like a classic “the computer is doing exactly what i told it to do, not what i wanted it to do”. happens all the time.
 
 so, the core issue usually boils down to how elasticsearch handles paths in a pipeline context and how those paths interact with the processor's configuration, particularly when you're dealing with processors like `script`, `set`, or even `gsub`. the key point is that the “path” isn’t always what you think it is. when you configure a pipeline, you're dealing with the document structure, not necessarily what you might think of as a file system path. it's all about fields and their values within the elasticsearch document.
 

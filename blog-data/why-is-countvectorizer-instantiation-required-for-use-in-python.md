@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-countvectorizer-instantiation-required-for-use-in-python"
 ---
 
-, let’s tackle this. It’s not uncommon to stumble over the seemingly redundant step of instantiating `CountVectorizer()` before using it, especially when you’re starting out with scikit-learn. I’ve certainly been there, scratching my head, back when I was building a text classification system for a large news aggregator, trying to make sense of why a simple “vectorize” command wouldn't suffice. It really boils down to the object-oriented nature of the library and the design choices that underpin its flexibility.
+It’s not uncommon to stumble over the seemingly redundant step of instantiating `CountVectorizer()` before using it, especially when you’re starting out with scikit-learn. I’ve certainly been there, scratching my head, back when I was building a text classification system for a large news aggregator, trying to make sense of why a simple “vectorize” command wouldn't suffice. It really boils down to the object-oriented nature of the library and the design choices that underpin its flexibility.
 
 So, why the need to instantiate? The `CountVectorizer` class isn't a function; it's a blueprint for creating objects that perform a specific task – converting text documents into numerical feature vectors. Think of it like having a recipe for making bread. You don’t just _think_ about the recipe and magically have bread; you actually need to follow the steps to create the bread. The `CountVectorizer` class is the recipe, and instantiating it — like calling `vectorizer = CountVectorizer()` — is the act of preparing to bake the bread, specifically, a text-vectorizing object.
 

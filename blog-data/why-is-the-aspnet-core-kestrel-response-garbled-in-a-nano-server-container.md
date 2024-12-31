@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-aspnet-core-kestrel-response-garbled-in-a-nano-server-container"
 ---
 
-, one. It's a classic scenario, and one I've had the pleasure of debugging more than a few times, especially back when Nano Server was the new kid on the block. Dealing with garbled responses from Kestrel within a Nano Server container points to a subtle but significant interplay of networking, character encodings, and the inherent limitations of a lightweight operating system. It's rarely a single culprit, but usually a combination of factors.
+It's a classic scenario, and one I've had the pleasure of debugging more than a few times, especially back when Nano Server was the new kid on the block. Dealing with garbled responses from Kestrel within a Nano Server container points to a subtle but significant interplay of networking, character encodings, and the inherent limitations of a lightweight operating system. It's rarely a single culprit, but usually a combination of factors.
 
 The core issue stems from how Kestrel, as a cross-platform web server, handles network communication in a somewhat minimalist environment like Nano Server. Remember, Nano Server is designed for minimal overhead, meaning a lot of the traditional Windows subsystems and DLLs aren't present. This includes certain locale and encoding handling which, under a full-fledged Windows Server installation, might operate in the background without a second thought.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-structure-a-rails-app-with-a-calendar-date-as-its-primary-view"
 ---
 
-, let’s tackle this. You’re looking to build a Rails application where the primary interface centers around a calendar date – a very common requirement, and one I've definitely navigated multiple times. From personal experience, I can tell you that getting this structure just _so_ is crucial for both usability and maintainability further down the line. It’s not merely about slapping a calendar widget on a page; it's about the data model, the controller logic, and how it all plays together. Let's get into the details.
+You’re looking to build a Rails application where the primary interface centers around a calendar date – a very common requirement, and one I've definitely navigated multiple times. From personal experience, I can tell you that getting this structure just _so_ is crucial for both usability and maintainability further down the line. It’s not merely about slapping a calendar widget on a page; it's about the data model, the controller logic, and how it all plays together. Let's get into the details.
 
 First, let’s establish a strong foundation. Thinking about your data model, you likely won't have a single "calendar date" model. Instead, you’ll need models that are _associated_ with dates. For example, you might have an `Event` model, a `Task` model, a `Booking` model, or all three. The key is how those models relate to a specific date. Typically, you'd accomplish this with a `datetime` or `date` column in the relevant tables.
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-singularity-effectively-replicate-dockers-layer-caching-for-a-shared-base-image"
 ---
 
-Let’s dive into this, shall we? I recall a particularly intricate project a few years back, involving a large-scale scientific simulation pipeline. We initially deployed everything using Docker, enjoyed its excellent layer caching, which significantly sped up our build times and deployments. Then, due to security and infrastructure requirements, we transitioned to Singularity. The challenge, of course, was replicating that Docker-like layer caching performance with Singularity. It's a different beast, but not insurmountable.
+Let’s dive into this? I recall a particularly intricate project a few years back, involving a large-scale scientific simulation pipeline. We initially deployed everything using Docker, enjoyed its excellent layer caching, which significantly sped up our build times and deployments. Then, due to security and infrastructure requirements, we transitioned to Singularity. The challenge, of course, was replicating that Docker-like layer caching performance with Singularity. It's a different beast, but not insurmountable.
 
 The heart of the issue is that Singularity, by design, does not natively build images using layered file system operations like Docker does. Docker's `Dockerfile` approach creates a series of changes to a base image, building up in layers, each layer corresponding to a different command. These layers are immutable and cached. Subsequent builds that reuse prior stages benefit greatly. Singularity, conversely, primarily focuses on producing single-file images (sifs), often from existing Docker images or directly from filesystems, which naturally hinders leveraging this caching paradigm directly. However, there are strategies to approximate similar performance benefits.
 
-The primary method to accomplish something akin to layer caching involves utilizing *modular image creation* with Singularity, leveraging the *overlay* functionality. Instead of rebuilding the entire image each time, we can separate our changes into multiple filesystems (or directories) that are then mounted on top of a base image during runtime. This is achieved in two stages: building reusable base images and applying overlay layers.
+The primary method to accomplish something akin to layer caching involves utilizing _modular image creation_ with Singularity, leveraging the _overlay_ functionality. Instead of rebuilding the entire image each time, we can separate our changes into multiple filesystems (or directories) that are then mounted on top of a base image during runtime. This is achieved in two stages: building reusable base images and applying overlay layers.
 
 Let's break this down with a code example. We'll start by creating a reusable base image containing the core dependencies of our application.
 
@@ -34,11 +34,11 @@ if __name__ == "__main__":
     base_dir = "base_env" # Assume we have a directory with core libraries and packages
     if not os.path.exists(base_dir):
       os.makedirs(base_dir)
-    
+
     with open(os.path.join(base_dir, 'environment.txt'), 'w') as f:
          f.write("numpy==1.23.5\n")
          f.write("scipy==1.10.0\n")
-    
+
     print("Creating base image directory")
 
     cmd = ["python3", "-m", "venv", "venv"]

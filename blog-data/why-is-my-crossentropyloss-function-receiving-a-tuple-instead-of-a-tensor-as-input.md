@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-crossentropyloss-function-receiving-a-tuple-instead-of-a-tensor-as-input"
 ---
 
-, let’s tackle this. It's not uncommon to find yourself in the weeds with tensor inputs, especially when loss functions get involved. I've seen variations of this issue pop up more often than I'd like to count, particularly when working with complex data loading pipelines or customized model architectures. Let’s break down why your `cross_entropy_loss` function might be getting a tuple instead of a tensor, and, more importantly, how to rectify it.
+It's not uncommon to find yourself in the weeds with tensor inputs, especially when loss functions get involved. I've seen variations of this issue pop up more often than I'd like to count, particularly when working with complex data loading pipelines or customized model architectures. Let’s break down why your `cross_entropy_loss` function might be getting a tuple instead of a tensor, and, more importantly, how to rectify it.
 
 The core of the problem typically lies in how the output is handled from the preceding layers or data loading steps leading to the loss function. It's rare that a loss function would directly _cause_ the tuple; it’s almost always a result of how outputs are being propagated or how data is being prepared for model consumption. Let's consider three scenarios where this could occur, drawing from past project experiences, and how to address each.
 

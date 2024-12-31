@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-effective-is-gridsearchcv-for-hyperparameter-tuning-in-deep-neural-networks"
 ---
 
-, one. I’ve spent a good chunk of my career dealing with the complexities of deep learning models, and hyperparameter tuning, particularly with tools like GridSearchCV, is something I've got a rather intimate understanding of. The short answer is that GridSearchCV is a powerful technique, but its effectiveness for deep neural networks is nuanced, and quite frankly, frequently not optimal without careful consideration.
+I’ve spent a good chunk of my career dealing with the complexities of deep learning models, and hyperparameter tuning, particularly with tools like GridSearchCV, is something I've got a rather intimate understanding of. The short answer is that GridSearchCV is a powerful technique, but its effectiveness for deep neural networks is nuanced, and quite frankly, frequently not optimal without careful consideration.
 
 The fundamental idea behind GridSearchCV is exhaustive search: you define a grid of possible hyperparameter values, and the algorithm tries _every_ combination, evaluating each one using cross-validation. This is incredibly straightforward, and for many machine learning algorithms where the hyperparameter space is relatively small, it's often perfectly sufficient. However, when we delve into the world of deep learning, we run into problems.
 

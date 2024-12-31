@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-wordpress-admin-login-redirect-to-a-site-cant-be-reached-error-even-though-the-url-shows-wordpress"
 ---
 
-Let's dive right in, shall we? I've seen this particular head-scratcher pop up more times than I care to recall. The situation, where your wordpress admin login page directs you to a “site can’t be reached” error, while the browser url bar clearly shows your intended wordpress path (e.g., `/wp-admin`, `/wp-login.php`), usually points towards a disconnect between what the browser expects and what the server actually provides. It's seldom a simple case of a broken link, but more often a subtle misalignment of several moving parts. Think of it like an orchestra where one instrument is slightly out of tune, causing the whole piece to fall apart.
+Let's dive right in? I've seen this particular head-scratcher pop up more times than I care to recall. The situation, where your wordpress admin login page directs you to a “site can’t be reached” error, while the browser url bar clearly shows your intended wordpress path (e.g., `/wp-admin`, `/wp-login.php`), usually points towards a disconnect between what the browser expects and what the server actually provides. It's seldom a simple case of a broken link, but more often a subtle misalignment of several moving parts. Think of it like an orchestra where one instrument is slightly out of tune, causing the whole piece to fall apart.
 
 From my experience, this issue commonly stems from several interconnected root causes which we can systematically explore. The first, and quite possibly the most frequent culprit, is an issue with the wordpress site url and home url settings. These values are stored directly in the `wp_options` table within the wordpress database. If these don't accurately reflect the intended domain name or protocol (http vs https), then you're essentially telling wordpress to look for itself in the wrong place. Let's say, for instance, you had initially set up wordpress using an ip address but subsequently switched to a domain name without updating these settings. When wordpress attempts to redirect you after a login attempt, it will use the outdated ip address, rendering the site inaccessible from the domain.
 
@@ -23,7 +23,7 @@ define('WP_SITEURL','https://yourdomain.com');
 
 This code snippet directly sets the `WP_HOME` and `WP_SITEURL` constants, effectively overriding any erroneous values present within the database. Remember to replace `https://yourdomain.com` with your actual domain name. If you are using https and the site is not loading correctly after this change, there may be another underlying issue with your ssl certificate configuration which you'll need to investigate.
 
-Next, let's look at a problematic `.htaccess` file. A common misconfiguration I've observed is a set of rewrite rules that unintentionally interferes with the wordpress login process. Here's an example of something you'd *want* to avoid:
+Next, let's look at a problematic `.htaccess` file. A common misconfiguration I've observed is a set of rewrite rules that unintentionally interferes with the wordpress login process. Here's an example of something you'd _want_ to avoid:
 
 ```apache
 # .htaccess (Problematic Example)

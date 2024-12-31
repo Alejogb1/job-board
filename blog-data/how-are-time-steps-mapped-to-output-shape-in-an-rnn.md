@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-time-steps-mapped-to-output-shape-in-an-rnn"
 ---
 
-Right, . It's a fundamental aspect of recurrent neural networks, and one I've seen trip up a few people over the years, including myself in the early days, dealing with some seriously gnarly sequence data. So, let's get into the mechanics of how time steps map to output shapes in an rnn, and break down exactly what's going on.
+RightIt's a fundamental aspect of recurrent neural networks, and one I've seen trip up a few people over the years, including myself in the early days, dealing with some seriously gnarly sequence data. So, let's get into the mechanics of how time steps map to output shapes in an rnn, and break down exactly what's going on.
 
 Fundamentally, an rnn’s architecture is designed to process sequential data, where the order of the inputs matters. The “time steps” you’re referring to are essentially the individual elements of that sequence. Think of it as a sentence: each word is a time step. Or, in the case of time-series data, each data point in your sequence is a time step. The rnn processes each of these time steps sequentially, maintaining an internal ‘hidden state’ that encodes information from previous time steps. This hidden state is what gives rnn's their memory, and it is what contributes to the complexities of output shape.
 

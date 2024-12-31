@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-view-and-edit-rich-text-source-in-wagtail"
 ---
 
-Right, one. I've spent more than my fair share elbow-deep in Wagtail projects, and dealing with rich text editor intricacies is a common scenario. It’s not always straightforward to directly manipulate the underlying HTML source when you're working within the Wagtail admin interface. The system, by design, aims to abstract away the raw markup for content editors, which, while excellent for usability, can sometimes be a hurdle for more technical users or when specific customization is needed.
+Right I've spent more than my fair share elbow-deep in Wagtail projects, and dealing with rich text editor intricacies is a common scenario. It’s not always straightforward to directly manipulate the underlying HTML source when you're working within the Wagtail admin interface. The system, by design, aims to abstract away the raw markup for content editors, which, while excellent for usability, can sometimes be a hurdle for more technical users or when specific customization is needed.
 
 Essentially, what you're asking is: "How can I get to the raw HTML and make changes, not just fiddle with the buttons?" There isn't a built-in “view source” button in the default Wagtail rich text editor, but luckily, there are a few viable strategies. I remember a project a few years back – a complex news portal. We needed very specific HTML structures and classes to integrate with their bespoke styling framework. The standard rich text editor outputs were just not cutting it. We had to get down and dirty with the raw markup.
 

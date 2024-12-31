@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-convolutional-kernel-gradients-be-calculated-manually"
 ---
 
-, let’s tackle this. I've spent a fair bit of time over the years elbow-deep in convolutional neural networks, often debugging and fine-tuning implementations from the ground up. The manual calculation of convolutional kernel gradients is something that, while typically handled by deep learning libraries, is fundamental to truly understanding backpropagation. It's not just an academic exercise; it can be incredibly useful when you're dealing with custom architectures or trying to diagnose performance issues. Essentially, it boils down to a careful application of the chain rule, tracing the error signal backwards through the convolution operation.
+I've spent a fair bit of time over the years elbow-deep in convolutional neural networks, often debugging and fine-tuning implementations from the ground up. The manual calculation of convolutional kernel gradients is something that, while typically handled by deep learning libraries, is fundamental to truly understanding backpropagation. It's not just an academic exercise; it can be incredibly useful when you're dealing with custom architectures or trying to diagnose performance issues. Essentially, it boils down to a careful application of the chain rule, tracing the error signal backwards through the convolution operation.
 
 First, let's clarify what we’re working with. A convolutional layer involves sliding a kernel (or filter) across an input feature map, performing element-wise multiplication and summation at each location. This process generates an output feature map. The core challenge here is how changes in the kernel weights impact the loss function – the heart of gradient descent.
 

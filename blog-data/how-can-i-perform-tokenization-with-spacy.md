@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-perform-tokenization-with-spacy"
 ---
 
-Let's explore tokenization with spaCy, shall we? I recall working on a large-scale document analysis project a few years back—it involved processing thousands of legal contracts daily. Proper tokenization was absolutely critical; any inaccuracies propagated downstream into our named entity recognition and relation extraction pipelines. I quickly learned that while spaCy makes this process seemingly straightforward, understanding the nuances underneath the hood is paramount for reliable results.
+Let's explore tokenization with spaCy? I recall working on a large-scale document analysis project a few years back—it involved processing thousands of legal contracts daily. Proper tokenization was absolutely critical; any inaccuracies propagated downstream into our named entity recognition and relation extraction pipelines. I quickly learned that while spaCy makes this process seemingly straightforward, understanding the nuances underneath the hood is paramount for reliable results.
 
 So, what's tokenization, and why should you care? Essentially, it's the process of breaking down a string of text into smaller units, called "tokens." These tokens can be words, sub-words, punctuation marks, or even whitespace, depending on the specific needs of your application. SpaCy's strength lies in its pre-trained models and the way it handles these nuances effectively.
 

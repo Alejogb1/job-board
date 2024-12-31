@@ -8,14 +8,14 @@ handling multiple mongo containers, yeah, that’s a thing i’ve banged my head
 
 first off, i’ve been doing database stuff for a good while now, and i've seen all sorts of weird things go wrong. like, one time, i was working on this project for a small startup, they wanted a highly available database. i set up a replica set, everything looked perfect locally in my mac, and the staging environment was flawless too, with the same exact configuration, i could see both nodes in the cluster perfectly. but then production, oh boy, production decided to be a drama queen. for some reason, one node kept having connectivity issues, turns out the issue was the virtual network interface settings i forgot to configure after copying the docker compose files, and i wasted a full day on it, trying every other option before coming to the realization that the obvious was the problem all along, what a mess. anyway, from that moment i decided to never blindly copy code and always check interfaces. lesson learned there. that’s when i really learned the importance of meticulous setup.
 
-so, when we talk about handling multiple mongo containers, we’re usually talking about one of two scenarios: replica sets or sharding. replica sets are all about data redundancy and high availability, and sharding is all about distributing data across multiple machines, scaling horizontally. both can get complicated, but let's break it down, shall we?
+so, when we talk about handling multiple mongo containers, we’re usually talking about one of two scenarios: replica sets or sharding. replica sets are all about data redundancy and high availability, and sharding is all about distributing data across multiple machines, scaling horizontally. both can get complicated, but let's break it down?
 
 for replica sets, you basically want a group of mongo instances acting as a single unit. one primary node accepts writes, and then those writes are replicated to the secondary nodes. if the primary goes down, one of the secondaries gets promoted automatically. docker-compose is your friend here. you'll define each mongo instance as a separate service in your `docker-compose.yml` file, and then link them all together. the tricky bit is getting the replica set initialization right. this typically involves running a command on one of the containers to initiate the set.
 
 here's a `docker-compose.yml` example, let's say we want three nodes:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   mongo1:
     image: mongo:latest
@@ -60,14 +60,14 @@ that javascript snippet is very important since it’s what starts the replica s
 
 now, for sharding, we're stepping up the complexity. sharding means distributing your data across multiple shard servers. in a sharded cluster, you'll have:
 
-*   shard servers: these hold the actual data chunks.
-*   config servers: store metadata about which data chunks are located where.
-*   mongos routers: act as the interface between your application and the sharded cluster.
+- shard servers: these hold the actual data chunks.
+- config servers: store metadata about which data chunks are located where.
+- mongos routers: act as the interface between your application and the sharded cluster.
 
 docker-compose can again be your friend, but it becomes significantly more complex. you will need more than a simple compose file, usually. setting up sharding can be more of an orchestration task and i recommend using kubernetes for more complex deployments, it’s much better suited for this. if you use docker for orchestration, then docker swarm is also a possibility although it can get tricky. but since you are asking about containers we will assume you want to deal with docker compose. a simple docker compose example can show the general structure:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   config1:
     image: mongo:latest
@@ -109,8 +109,8 @@ networks:
 this sets up three config servers in a replica set named `cs0`, two shard servers in two different replica sets named `shard1` and `shard2`, and one `mongos` router that connects to all the config servers. after bringing this up, you have to init the replica sets for config and shard servers, same way as before, with `rs.initiate` on each set. then you must connect to the `mongos` instance and add the shards to it, something like this:
 
 ```javascript
-sh.addShard("shard1/shard1:27017")
-sh.addShard("shard2/shard2:27017")
+sh.addShard("shard1/shard1:27017");
+sh.addShard("shard2/shard2:27017");
 ```
 
 this script is run in `mongos`.

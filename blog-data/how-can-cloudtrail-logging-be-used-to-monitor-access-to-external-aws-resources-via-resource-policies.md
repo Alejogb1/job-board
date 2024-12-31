@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cloudtrail-logging-be-used-to-monitor-access-to-external-aws-resources-via-resource-policies"
 ---
 
-, let’s tackle this. I remember back in the early days of a previous project, we had a similar challenge concerning external access policies – it's not always straightforward to see _exactly_ who's doing what when you're granting access to external entities. We leaned heavily on CloudTrail, and here's the breakdown of how we managed to get detailed insights into such access:
+I remember back in the early days of a previous project, we had a similar challenge concerning external access policies – it's not always straightforward to see _exactly_ who's doing what when you're granting access to external entities. We leaned heavily on CloudTrail, and here's the breakdown of how we managed to get detailed insights into such access:
 
 The core challenge lies in the fact that resource policies, like those attached to s3 buckets or kms keys, govern who _can_ do what, but they don’t directly create log events of access. Instead, CloudTrail logs _API calls_. Therefore, to monitor access granted by resource policies, you have to translate the "who" in the logs to the effective permissions resulting from those policies. This is where a good understanding of CloudTrail event structure and policy evaluation logic becomes vital. Essentially, CloudTrail allows you to see when an entity _attempts_ an action, and a properly configured system means those attempts will often fail or succeed _because_ of the resource policy.
 

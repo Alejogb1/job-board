@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-achieve-a-transparent-status-bar-and-constrain-to-its-bottom"
 ---
 
-Right then, one. I remember a project back in 2018, a mobile e-commerce app, where we absolutely needed the content to seamlessly blend under the status bar – a common design request, actually, but deceptively tricky to implement properly. The challenge, as you're finding, isn't just about making the status bar transparent; it’s about ensuring your content doesn’t get clipped or covered up by it and that you still respect the safe areas. So, how exactly did I accomplish that? Let me break it down.
+Right then I remember a project back in 2018, a mobile e-commerce app, where we absolutely needed the content to seamlessly blend under the status bar – a common design request, actually, but deceptively tricky to implement properly. The challenge, as you're finding, isn't just about making the status bar transparent; it’s about ensuring your content doesn’t get clipped or covered up by it and that you still respect the safe areas. So, how exactly did I accomplish that? Let me break it down.
 
 First and foremost, understanding the concept of "safe areas" is crucial. Mobile operating systems, like iOS and Android, have areas they define as “safe” for content display, typically accounting for the status bar, navigation bars, and notches on modern devices. Ignoring these safe areas leads to content overlaps, making for a poor user experience. We want our content to extend _into_ the status bar region, but also to respect the bottom edge of the status bar to avoid overlapping content.
 

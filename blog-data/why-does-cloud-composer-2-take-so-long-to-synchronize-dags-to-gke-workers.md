@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-cloud-composer-2-take-so-long-to-synchronize-dags-to-gke-workers"
 ---
 
-, let’s tackle this. I’ve personally spent more than a few late nights debugging DAG synchronization issues in Cloud Composer 2, so I can speak to this from some hands-on experience, not just theoretical knowledge. It's frustrating, I get it – you push a change, and you're waiting what feels like an eternity for it to actually reflect in the GKE worker nodes. The issue isn't usually due to a single, easily identifiable culprit; rather, it's typically the interplay of several factors within the architecture.
+I’ve personally spent more than a few late nights debugging DAG synchronization issues in Cloud Composer 2, so I can speak to this from some hands-on experience, not just theoretical knowledge. It's frustrating, I get it – you push a change, and you're waiting what feels like an eternity for it to actually reflect in the GKE worker nodes. The issue isn't usually due to a single, easily identifiable culprit; rather, it's typically the interplay of several factors within the architecture.
 
 First and foremost, it's critical to understand that Cloud Composer 2 leverages Google Kubernetes Engine (GKE) for its worker environment. DAG synchronization isn't a direct push from the Cloud Storage bucket to the workers. Instead, it involves a series of steps, each potentially introducing a delay. Here’s a breakdown of the process, along with common bottlenecks I've encountered:
 

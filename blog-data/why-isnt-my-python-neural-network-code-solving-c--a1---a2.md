@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-my-python-neural-network-code-solving-c--a1---a2"
 ---
 
-, let’s unpack this. You’re finding that your neural network, designed to learn the simple operation `c = a1 - a2`, isn't converging. This is a common stumbling block, and it often stems from a few fundamental issues rather than a single, glaring error. I’ve personally spent more hours debugging seemingly trivial subtraction networks than I’d care to recall, and it usually boils down to one of these root causes: inappropriate network architecture, inadequate training data, or unsuitable hyperparameter choices. Let’s go through each, shall we?
+, let’s unpack this. You’re finding that your neural network, designed to learn the simple operation `c = a1 - a2`, isn't converging. This is a common stumbling block, and it often stems from a few fundamental issues rather than a single, glaring error. I’ve personally spent more hours debugging seemingly trivial subtraction networks than I’d care to recall, and it usually boils down to one of these root causes: inappropriate network architecture, inadequate training data, or unsuitable hyperparameter choices. Let’s go through each?
 
 First, consider the network’s architecture itself. When learning simple arithmetic, an overly complex network can actually hinder performance. A simple single-layer network, often called a linear model, might be the most effective starting point. Think of it this way: you’re trying to fit a linear equation, and sometimes a linear approach really is the best option. The complexity of the network isn’t necessarily an indication of its potential for success.
 

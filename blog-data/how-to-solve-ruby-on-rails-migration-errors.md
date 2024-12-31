@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-solve-ruby-on-rails-migration-errors"
 ---
 
-, let's talk about Ruby on Rails migration errors. It's a topic I’ve become intimately acquainted with, shall we say, over the years. I distinctly remember a particularly complex project, some five years ago, where a seemingly innocuous migration cascade triggered a week-long debugging session. It was a baptism by fire, and from that experience, I've developed a rather pragmatic approach to handling these issues. They are, after all, a fairly common occurrence in the lifecycle of a Rails application.
+, let's talk about Ruby on Rails migration errors. It's a topic I’ve become intimately acquainted with say, over the years. I distinctly remember a particularly complex project, some five years ago, where a seemingly innocuous migration cascade triggered a week-long debugging session. It was a baptism by fire, and from that experience, I've developed a rather pragmatic approach to handling these issues. They are, after all, a fairly common occurrence in the lifecycle of a Rails application.
 
 Migration errors, at their core, stem from discrepancies between the defined database schema and the actual database state. This can occur due to a variety of factors: malformed migrations, conflicting changes across branches, manual database modifications, or even unforeseen edge cases in the underlying database engine. The key to resolving these issues lies in understanding the precise nature of the error and having a methodical troubleshooting process. It’s never just about blindly rerunning migrations; that almost always leads to further complications.
 

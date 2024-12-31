@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-read-a-file-from-a-github-path-using-airflow-cloud-composer"
 ---
 
-, one. Having grappled with similar challenges integrating external resources into cloud workflows for, well, quite a while now, I can offer some concrete solutions. Reading a file from a GitHub repository within an Airflow environment on Cloud Composer requires a bit of finesse, as direct file system access isn’t generally the preferred route in a cloud-based orchestration setup. We need to think more about fetching the content, and less about 'reading it like it's local'.
+Having grappled with similar challenges integrating external resources into cloud workflows for, well, quite a while now, I can offer some concrete solutions. Reading a file from a GitHub repository within an Airflow environment on Cloud Composer requires a bit of finesse, as direct file system access isn’t generally the preferred route in a cloud-based orchestration setup. We need to think more about fetching the content, and less about 'reading it like it's local'.
 
 The core problem boils down to this: Airflow, especially in a managed environment like Cloud Composer, operates on a distributed file system, not your local machine's. The git repository you’re interested in is external. Therefore, direct path access akin to `file:///path/to/my/file.txt` won't work. Instead, we’ll leverage Airflow's ability to handle external data via hooks and operators, combined with tools that can interact with git.
 

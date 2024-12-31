@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-docker-run-an-image-from-a-cache"
 ---
 
-, one. It’s a question that pops up more often than you'd think, especially when you're trying to optimize build pipelines or manage a complex development environment. The gist of it, as I understand, is that you've got a docker image already present locally and you want to launch a container using that specific cached version, without pulling anything new. It's not quite as straightforward as just assuming docker will automatically grab the cached copy, particularly if you're not careful with how you’ve set things up. I’ve seen this trip up quite a few teams over the years, myself included during a particularly frustrating project involving microservices and a terribly flaky network.
+It’s a question that pops up more often than you'd think, especially when you're trying to optimize build pipelines or manage a complex development environment. The gist of it, as I understand, is that you've got a docker image already present locally and you want to launch a container using that specific cached version, without pulling anything new. It's not quite as straightforward as just assuming docker will automatically grab the cached copy, particularly if you're not careful with how you’ve set things up. I’ve seen this trip up quite a few teams over the years, myself included during a particularly frustrating project involving microservices and a terribly flaky network.
 
 So, let's break down what's happening and how you make sure docker actually _uses_ your cached image.
 

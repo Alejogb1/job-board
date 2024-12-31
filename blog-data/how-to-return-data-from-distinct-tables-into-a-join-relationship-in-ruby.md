@@ -8,7 +8,7 @@ id: "how-to-return-data-from-distinct-tables-into-a-join-relationship-in-ruby"
 
 i recall one project back in the early 2010's when i was working with a really old legacy system. they had a bizarre structure for storing user information and their order history split across like five tables, all related by different id schemes – it was a mess. and the worst part? it was all in plain sql with no orms whatsoever. getting that data to come back to the user's view was a big challenge and my task. i initially tried to do it all in one gigantic sql query, and it ended up looking like spaghetti code. i spent hours tracing down why it was returning random null values or duplicate entries. it was a lesson in data modeling, and a very painful one. since then i've done my research and have learned to use ruby's features with more elegance.
 
-so, let's get down to it. in ruby, the typical approach would use an orm like active record, especially if you're using rails. but it is not mandatory. if not using rails or an orm, you can use raw sql with a gem like `pg` (for postgresql) or `sqlite3`. assuming you're somewhat familiar with relational databases, and sql, i'll show some code examples using both these approaches.
+so in ruby, the typical approach would use an orm like active record, especially if you're using rails. but it is not mandatory. if not using rails or an orm, you can use raw sql with a gem like `pg` (for postgresql) or `sqlite3`. assuming you're somewhat familiar with relational databases, and sql, i'll show some code examples using both these approaches.
 
 first, i will give an example using active record. let’s assume you have two models: `user` and `order`. a user can have many orders. your models would look like this:
 

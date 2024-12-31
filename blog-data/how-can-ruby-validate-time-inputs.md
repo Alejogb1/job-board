@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ruby-validate-time-inputs"
 ---
 
-, . It’s something I've actually spent a fair amount of time on, especially when building that scheduling system for the regional logistics hub a few years back. Time inputs, while seemingly straightforward, can be surprisingly tricky to handle correctly. In Ruby, there are a few effective strategies, each with their nuances, which we’ll explore. My primary focus is always on ensuring data integrity, so we’ll cover methods that minimize errors and handle unexpected input gracefully.
+It’s something I've actually spent a fair amount of time on, especially when building that scheduling system for the regional logistics hub a few years back. Time inputs, while seemingly straightforward, can be surprisingly tricky to handle correctly. In Ruby, there are a few effective strategies, each with their nuances, which we’ll explore. My primary focus is always on ensuring data integrity, so we’ll cover methods that minimize errors and handle unexpected input gracefully.
 
 Fundamentally, validating time inputs in Ruby means ensuring that the provided data can be correctly interpreted as a time, according to your system's needs. This could involve validating against a specific time format, checking for valid hour, minute, and second values, and handling timezone considerations, amongst other factors. It’s much more than just assuming that a string "10:30 AM" is perfectly ; we have to consider that human input is prone to errors.
 

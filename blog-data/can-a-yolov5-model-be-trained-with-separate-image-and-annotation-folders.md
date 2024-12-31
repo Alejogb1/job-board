@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-yolov5-model-be-trained-with-separate-image-and-annotation-folders"
 ---
 
-, one. I've certainly run into this exact scenario multiple times, usually when inheriting projects with… let's say, _less-than-ideal_ data organization. So, the short answer is yes, a yolov5 model _can_ absolutely be trained with separate image and annotation folders. It's quite common in fact. However, it's crucial to understand how yolov5, or any object detection framework for that matter, expects its data and how to guide it if you deviate from a standard setup.
+I've certainly run into this exact scenario multiple times, usually when inheriting projects with… let's say, _less-than-ideal_ data organization. So, the short answer is yes, a yolov5 model _can_ absolutely be trained with separate image and annotation folders. It's quite common in fact. However, it's crucial to understand how yolov5, or any object detection framework for that matter, expects its data and how to guide it if you deviate from a standard setup.
 
 The core issue here isn’t whether you _can_ have them separate; it's about creating a proper mapping that the yolov5 training script understands. The model doesn't care where the images and annotations physically reside; it cares that the annotation file corresponding to a specific image can be found quickly and easily. The default yolov5 configuration often assumes that the image and annotation share the same base filename (e.g., 'image1.jpg' and 'image1.txt'). If you have them in separate folders, you have to explicitly specify the relationship between them.
 

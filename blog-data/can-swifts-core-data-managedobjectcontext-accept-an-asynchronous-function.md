@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-swifts-core-data-managedobjectcontext-accept-an-asynchronous-function"
 ---
 
-, let’s tackle this one. The intersection of asynchronous operations and `managedObjectContext` in Core Data is, shall we say, an area ripe for misunderstanding. I’ve spent more late nights than I care to remember debugging issues stemming from precisely this. To answer your core question directly: no, a `managedObjectContext` doesn't _directly_ accept an asynchronous function in the sense of passing an async function as a parameter to a method. However, that doesn’t mean asynchronous operations can't interact with a `managedObjectContext` safely and effectively; it just requires careful orchestration.
+, let’s tackle this one. The intersection of asynchronous operations and `managedObjectContext` in Core Data is say, an area ripe for misunderstanding. I’ve spent more late nights than I care to remember debugging issues stemming from precisely this. To answer your core question directly: no, a `managedObjectContext` doesn't _directly_ accept an asynchronous function in the sense of passing an async function as a parameter to a method. However, that doesn’t mean asynchronous operations can't interact with a `managedObjectContext` safely and effectively; it just requires careful orchestration.
 
 The problem stems from the fundamentally single-threaded nature of `managedObjectContext`. It is, by design, not thread-safe and operates on a specific dispatch queue (or context) – typically the main queue for UI interaction or a background queue for data processing. Introducing async functions, which by their nature operate concurrently, without proper handling is a recipe for data corruption, race conditions, and ultimately, app crashes.
 

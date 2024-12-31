@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-fundamental-problems-encountered-when-using-the-keychainaccess-framework"
 ---
 
-Let's delve into the practical challenges, shall we? Having spent a good chunk of my career wrestling with the intricacies of secure data storage on Apple platforms, I've become intimately familiar with the quirks of Keychain Access. It's a powerful framework, undoubtedly, but it’s not without its potholes. Let me share some of the core issues I've consistently encountered, along with some mitigations I've found effective over the years.
+Let's delve into the practical challenges? Having spent a good chunk of my career wrestling with the intricacies of secure data storage on Apple platforms, I've become intimately familiar with the quirks of Keychain Access. It's a powerful framework, undoubtedly, but it’s not without its potholes. Let me share some of the core issues I've consistently encountered, along with some mitigations I've found effective over the years.
 
 One of the primary pain points is the inherent complexity of dealing with various keychain item classes and their attributes. It's not a simple key-value store. You're working with generic passwords, internet passwords, certificates, identities, and more. Each of these has its specific set of required and optional attributes, which aren't always clearly documented, and frankly, can be a bit of a headache to manage. The mismatch between the theoretical structure and the practical application, particularly around attribute setting, can lead to unexpected failures. I remember vividly one project where we had intermittent issues with credential retrieval because we were incorrectly specifying the 'account' attribute for an internet password item. It took a fair bit of debugging with `security find-generic-password` command-line tool to pinpoint the precise problem.
 
@@ -38,9 +38,11 @@ if status == errSecSuccess {
     print("Failed to add password: \(status)")
 }
 ```
+
 Note the importance of specifying `kSecAttrAccessible` to handle device-lock scenarios correctly.
 
 Now, a look at a slightly more involved example of fetching an item from the keychain. It showcases how to handle possible return codes:
+
 ```swift
 import Security
 

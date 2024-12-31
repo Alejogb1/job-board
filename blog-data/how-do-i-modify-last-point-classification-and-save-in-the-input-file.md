@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-modify-last-point-classification-and-save-in-the-input-file"
 ---
 
-, one. I recall a project back in '17, dealing with LiDAR data for autonomous navigation, where we needed precisely this functionality – modifying the classification of individual points and writing those changes directly back into the input file. It's a common requirement when you're refining algorithms or manually correcting initial classification errors. The devil, as always, is in the details, particularly when you're dealing with large point clouds.
+I recall a project back in '17, dealing with LiDAR data for autonomous navigation, where we needed precisely this functionality – modifying the classification of individual points and writing those changes directly back into the input file. It's a common requirement when you're refining algorithms or manually correcting initial classification errors. The devil, as always, is in the details, particularly when you're dealing with large point clouds.
 
 The fundamental challenge here is two-fold: first, efficiently accessing and modifying the classification data associated with each point; and second, ensuring that the modifications are accurately written back to the original data file, respecting the specific file format structure. Most point cloud formats (like las or laz) store classification information as an integer value assigned to each point. This usually corresponds to a pre-defined schema, such as those defined by the asprs (american society for photogrammetry and remote sensing). Let's dive into the process, using some example scenarios I've faced.
 

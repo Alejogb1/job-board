@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-avoid-bluetooth-pairing-request-screen-from-android-tv"
 ---
 
-Let's dive straight in, shall we? Avoiding that pesky Bluetooth pairing request screen on Android TV—it's a problem I've certainly encountered more than once. It often stems from the system interpreting peripheral advertising as an intention to pair, which, as we know, isn't always the case. I've spent my fair share of evenings debugging similar issues, and I've learned there isn’t one universal solution, but a few robust strategies. The core challenge lies in Android's Bluetooth stack automatically initiating pairing dialogues when it encounters connectable devices broadcasting services that it considers 'interesting' – typically HID (Human Interface Device) profiles. We need to be more specific in our requirements and, in some cases, filter out advertising data.
+Let's dive straight in? Avoiding that pesky Bluetooth pairing request screen on Android TV—it's a problem I've certainly encountered more than once. It often stems from the system interpreting peripheral advertising as an intention to pair, which, as we know, isn't always the case. I've spent my fair share of evenings debugging similar issues, and I've learned there isn’t one universal solution, but a few robust strategies. The core challenge lies in Android's Bluetooth stack automatically initiating pairing dialogues when it encounters connectable devices broadcasting services that it considers 'interesting' – typically HID (Human Interface Device) profiles. We need to be more specific in our requirements and, in some cases, filter out advertising data.
 
-First, let’s understand the context. Android's Bluetooth implementation follows a service discovery protocol. When a device advertises a service, Android’s Bluetooth service can interpret this as a signal to prompt for pairing. This is useful for keyboards and mice, less so for other peripherals or custom devices. The key here is to understand the different types of Bluetooth profiles and how android handles them. Typically, if you're developing custom hardware that's advertising over Bluetooth, the first step is to ensure you're *not* using a standard HID profile, unless you specifically *want* the pairing to trigger.
+First, let’s understand the context. Android's Bluetooth implementation follows a service discovery protocol. When a device advertises a service, Android’s Bluetooth service can interpret this as a signal to prompt for pairing. This is useful for keyboards and mice, less so for other peripherals or custom devices. The key here is to understand the different types of Bluetooth profiles and how android handles them. Typically, if you're developing custom hardware that's advertising over Bluetooth, the first step is to ensure you're _not_ using a standard HID profile, unless you specifically _want_ the pairing to trigger.
 
 Let's look at practical solutions. There are essentially three routes we can consider, and the best approach often depends on the context of your application or custom device:
 
@@ -52,7 +52,8 @@ Here's an illustrative code snippet using the Android Bluetooth API:
         }
     };
 ```
-In this code, the `customServiceUuid` uniquely identifies our custom service, preventing the Android system from interpreting it as a standard HID profile and triggering the pairing request dialog. Crucially, we *do not* include any generic or HID-related service UUIDs. On the central side (the Android TV), the application should also filter for this specific UUID.
+
+In this code, the `customServiceUuid` uniquely identifies our custom service, preventing the Android system from interpreting it as a standard HID profile and triggering the pairing request dialog. Crucially, we _do not_ include any generic or HID-related service UUIDs. On the central side (the Android TV), the application should also filter for this specific UUID.
 
 **2. Filtering by Device Name (Less Reliable):**
 
@@ -118,7 +119,7 @@ private final ScanCallback scanCallback = new ScanCallback() {
 };
 ```
 
-This code demonstrates filtering devices based on their name. While it’s straightforward, relying on device names can be unreliable. The filtering should always be an *additional* step not the main solution. It's often more of a stop-gap measure than a solid fix.
+This code demonstrates filtering devices based on their name. While it’s straightforward, relying on device names can be unreliable. The filtering should always be an _additional_ step not the main solution. It's often more of a stop-gap measure than a solid fix.
 
 **3. Modifying the Advertising Interval (Last Resort):**
 

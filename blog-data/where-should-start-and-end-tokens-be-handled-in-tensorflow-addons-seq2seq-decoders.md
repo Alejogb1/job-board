@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "where-should-start-and-end-tokens-be-handled-in-tensorflow-addons-seq2seq-decoders"
 ---
 
-Ah, the subtle intricacies of seq2seq decoders and those pesky start/end tokens. Been there, tweaked that—more times than I care to recall. The question of *where* exactly to handle these tokens isn’t just a pedantic detail; it's critical for the proper functioning and, often, sanity of your sequence-to-sequence models. Let’s unpack this, shall we?
+Ah, the subtle intricacies of seq2seq decoders and those pesky start/end tokens. Been there, tweaked that—more times than I care to recall. The question of _where_ exactly to handle these tokens isn’t just a pedantic detail; it's critical for the proper functioning and, often, sanity of your sequence-to-sequence models. Let’s unpack this?
 
 My journey with seq2seq models, especially those involving TensorFlow Addons, has taught me that there isn't a single 'one-size-fits-all' answer. The optimal location for managing start and end tokens can depend quite heavily on the specific decoder you're using and the task at hand. Generally, though, we aim for a design that is both logically coherent and computationally efficient.
 
-Let's consider the scenario where you're implementing a basic attention-based decoder using `tfa.seq2seq.AttentionWrapper`. In this setting, the responsibility for introducing the start token *typically* falls upon you, the implementer, rather than within the decoder itself. Conversely, handling the end token (or rather, detecting its generation) is often a shared responsibility between the decoder and your control loop.
+Let's consider the scenario where you're implementing a basic attention-based decoder using `tfa.seq2seq.AttentionWrapper`. In this setting, the responsibility for introducing the start token _typically_ falls upon you, the implementer, rather than within the decoder itself. Conversely, handling the end token (or rather, detecting its generation) is often a shared responsibility between the decoder and your control loop.
 
-Here’s why: the decoder’s primary role is to *predict* the next token in a sequence, given the preceding tokens and the encoded input context. It doesn’t inherently know when to begin generating. It starts with some input – a ‘seed,’ if you will. This initial input is almost always a learned embedding representation of the start-of-sequence token. You, therefore, are in control of injecting that start token.
+Here’s why: the decoder’s primary role is to _predict_ the next token in a sequence, given the preceding tokens and the encoded input context. It doesn’t inherently know when to begin generating. It starts with some input – a ‘seed,’ if you will. This initial input is almost always a learned embedding representation of the start-of-sequence token. You, therefore, are in control of injecting that start token.
 
-Now, for the end token: the decoder *does* emit this token when its internal prediction mechanisms decide the sequence is complete. However, simply having the decoder generate the end token isn't sufficient; you also need to recognize it and halt further decoding steps. This is often managed in a loop that checks each prediction.
+Now, for the end token: the decoder _does_ emit this token when its internal prediction mechanisms decide the sequence is complete. However, simply having the decoder generate the end token isn't sufficient; you also need to recognize it and halt further decoding steps. This is often managed in a loop that checks each prediction.
 
 Here’s an example using `tfa.seq2seq.BasicDecoder`, which is very similar to how it would work with `AttentionWrapper` once you have the wrapper built correctly. This specific example will have a simple embedding layer and a dense layer for output:
 
@@ -47,7 +47,7 @@ def training_loop(decoder, start_token_id, end_token_id, max_len, encoder_hidden
         optimizer.apply_gradients(zip(gradients, decoder.trainable_variables))
 
         decoder_inputs = tf.expand_dims(target_sequences[:,t],1)
-    
+
     return loss/tf.cast(target_sequences.shape[1], tf.float32)
 
 vocab_size = 100
@@ -86,7 +86,7 @@ def decoding_loop(decoder, start_token_id, end_token_id, max_len, encoder_hidden
          predicted_token = tf.argmax(decoder_output[:, -1, :], axis=-1)
          predicted_tokens.append(predicted_token)
          decoder_input = tf.expand_dims(predicted_token, 1)
-        
+
          if tf.reduce_all(predicted_token == end_token_id):
             break
 
@@ -96,7 +96,7 @@ decoded_sequences = decoding_loop(decoder, start_token_id, end_token_id, max_len
 print(f"Decoded Sequences Shape: {decoded_sequences.shape}")
 ```
 
-In this second code snippet, the `decoding_loop` function demonstrates how to check for the end token after each prediction. We accumulate the predictions in the `predicted_tokens` list and terminate the decoding process when *all* predictions are equal to the `end_token_id`.
+In this second code snippet, the `decoding_loop` function demonstrates how to check for the end token after each prediction. We accumulate the predictions in the `predicted_tokens` list and terminate the decoding process when _all_ predictions are equal to the `end_token_id`.
 
 Now let's briefly touch upon the case where you’re using a more sophisticated decoder such as `tfa.seq2seq.BeamSearchDecoder`. In such a case, the decoding process is often abstracted away from you. You would generally still provide the start token ID, which gets embedded and used as the initial input. However, beam search decoders usually internally handle end tokens more gracefully. Specifically, `tfa.seq2seq.BeamSearchDecoder` internally tracks when a beam has reached the end token, pruning it from the search space. You typically just deal with the final predicted sequence generated from the best beam.
 
@@ -129,6 +129,7 @@ beam_width = 5
 beam_search_predictions = beam_search_decoding(decoder, start_token_id, end_token_id, max_len, encoder_hidden_state, beam_width, batch_size, vocab_size)
 print(f"Beam Search Decoded Sequence Shape: {beam_search_predictions.shape}")
 ```
+
 In this snippet, the handling of start tokens and end tokens is managed inside the `BeamSearchDecoder` and the `dynamic_decode` API.
 
 In essence, the takeaway is this: while the decoder’s architecture often guides the process, the handling of start and end tokens is primarily your domain within the main loop that controls decoding. The decoder generates tokens, but your code directs where and how those tokens are used. For simpler decoders, you are responsible for seeding with the start token and detecting the end token in the prediction loop. More complex decoders often abstract some of the end token handling away, but you still need to provide the starting context and initial input to get the decoding process going.

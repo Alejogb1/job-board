@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-javascript-function-calling-correctly-when-used-with-a-forms-onclick-attribute"
 ---
 
-, let’s tackle this. I’ve certainly seen this issue rear its head more than once over the years – that frustrating moment when your javascript function seems to ignore your form’s onclick attribute like a teenager ignoring their curfew. It usually boils down to a few common culprits, and I’ve spent enough time debugging these scenarios to have a decent understanding of what’s typically going on under the hood. Let’s dive in.
+I’ve certainly seen this issue rear its head more than once over the years – that frustrating moment when your javascript function seems to ignore your form’s onclick attribute like a teenager ignoring their curfew. It usually boils down to a few common culprits, and I’ve spent enough time debugging these scenarios to have a decent understanding of what’s typically going on under the hood. Let’s dive in.
 
 The crux of the issue usually isn't that the onclick event itself _isn't_ firing; it’s more about _how_ and _when_ the javascript is being executed, and specifically, the scope within which the function is being called. The html onclick attribute doesn't operate in the same way as attaching an event listener in javascript. This can be confusing since both _seem_ to achieve the same thing, but the contexts are fundamentally different.
 

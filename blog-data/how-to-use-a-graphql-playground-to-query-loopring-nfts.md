@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-to-use-a-graphql-playground-to-query-loopring-nfts"
 ---
 
-Let's cut straight to it, shall we? I’ve had my fair share of encounters integrating with various blockchain networks, and Loopring, with its focus on zkRollups and efficient NFT transfers, certainly presented its own set of interesting challenges. Querying Loopring NFTs via a GraphQL playground is quite feasible, and even enjoyable once you understand the nuances of the API. I recall wrestling with this during a prototype for a decentralized marketplace several years back—we needed performant and flexible access to NFT metadata, and traditional REST APIs weren't cutting it. GraphQL was the obvious solution.
+Let's cut straight to it? I’ve had my fair share of encounters integrating with various blockchain networks, and Loopring, with its focus on zkRollups and efficient NFT transfers, certainly presented its own set of interesting challenges. Querying Loopring NFTs via a GraphQL playground is quite feasible, and even enjoyable once you understand the nuances of the API. I recall wrestling with this during a prototype for a decentralized marketplace several years back—we needed performant and flexible access to NFT metadata, and traditional REST APIs weren't cutting it. GraphQL was the obvious solution.
 
-Essentially, a GraphQL playground, like GraphiQL or Apollo Explorer, provides a user interface to craft and execute GraphQL queries against a server. In this case, that server exposes the Loopring API. The real trick, and this is where most newcomers stumble, isn't so much about the playground itself, but understanding the *schema* of the Loopring GraphQL API. This schema defines the types and fields you can query. It is the blueprint, and without it, you’re essentially throwing darts in the dark.
+Essentially, a GraphQL playground, like GraphiQL or Apollo Explorer, provides a user interface to craft and execute GraphQL queries against a server. In this case, that server exposes the Loopring API. The real trick, and this is where most newcomers stumble, isn't so much about the playground itself, but understanding the _schema_ of the Loopring GraphQL API. This schema defines the types and fields you can query. It is the blueprint, and without it, you’re essentially throwing darts in the dark.
 
 First things first, you’ll typically need the correct GraphQL endpoint. Loopring often publishes these, but always confirm their source before usage, as API changes are a reality in the blockchain world. You can typically find these in their official developer documentation; or if there is a specific library or SDK you might be using, it will commonly be listed as a configuration variable.
 
@@ -33,16 +33,15 @@ query FetchNftMetadata {
     createdAt
   }
 }
-
 ```
 
 In this query:
 
-*   `query FetchNftMetadata` declares the operation type, namely a query. You can give it any meaningful name you'd like.
-*   `nft(tokenId: "123456")` is the entry point to our query. We’re asking for data related to the nft with the ID '123456'. Note that the type for a tokenId might sometimes be an integer or bigint, depending on the implementation. The documentation should clarify this.
-*   `nftId` is an identifier assigned by the Loopring network to the NFT itself.
-*   `metadata` retrieves the actual data associated with the NFT. The nested fields within `metadata` are `name`, `description`, `imageUrl`, and `attributes`. The `attributes` field is typically an array of objects representing the properties of your NFT. This is where things can get complex – some NFTs will have a lot of properties, others will have very few or none at all.
-*   `owner` retrieves the Loopring wallet address that currently owns the NFT, and `createdAt` is a timestamp for when the NFT was created.
+- `query FetchNftMetadata` declares the operation type, namely a query. You can give it any meaningful name you'd like.
+- `nft(tokenId: "123456")` is the entry point to our query. We’re asking for data related to the nft with the ID '123456'. Note that the type for a tokenId might sometimes be an integer or bigint, depending on the implementation. The documentation should clarify this.
+- `nftId` is an identifier assigned by the Loopring network to the NFT itself.
+- `metadata` retrieves the actual data associated with the NFT. The nested fields within `metadata` are `name`, `description`, `imageUrl`, and `attributes`. The `attributes` field is typically an array of objects representing the properties of your NFT. This is where things can get complex – some NFTs will have a lot of properties, others will have very few or none at all.
+- `owner` retrieves the Loopring wallet address that currently owns the NFT, and `createdAt` is a timestamp for when the NFT was created.
 
 The response from the server would be a JSON structure mirroring the query. For example, it might look something like this:
 
@@ -61,8 +60,8 @@ The response from the server would be a JSON structure mirroring the query. For 
             "value": "Unique"
           },
           {
-              "traitType": "Color",
-              "value": "Green"
+            "traitType": "Color",
+            "value": "Green"
           }
         ]
       },
@@ -88,8 +87,8 @@ query FetchUserNfts {
       }
     }
     pageInfo {
-        hasNextPage
-        endCursor
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -97,38 +96,38 @@ query FetchUserNfts {
 
 In this query:
 
-*   `nfts(owner: "0xabc789...", first: 10, skip: 0)`: Here, we use the `nfts` field, providing an `owner` argument (which, as mentioned, will be a Loopring wallet address). The `first` argument limits the query to return the first 10 NFTs. This is key for pagination. The `skip` argument lets you skip the initial elements to paginate if `hasNextPage` is true.
-*   `nodes { ... }` provides a collection of NFT objects that are returned.
-*    `pageInfo` returns info about pagination. `hasNextPage` will be true if there are more pages of data, and the `endCursor` will be the identifier to fetch the next page.
+- `nfts(owner: "0xabc789...", first: 10, skip: 0)`: Here, we use the `nfts` field, providing an `owner` argument (which, as mentioned, will be a Loopring wallet address). The `first` argument limits the query to return the first 10 NFTs. This is key for pagination. The `skip` argument lets you skip the initial elements to paginate if `hasNextPage` is true.
+- `nodes { ... }` provides a collection of NFT objects that are returned.
+- `pageInfo` returns info about pagination. `hasNextPage` will be true if there are more pages of data, and the `endCursor` will be the identifier to fetch the next page.
 
 The structure of the corresponding response will generally be as follows:
 
 ```json
 {
-    "data": {
-        "nfts": {
-            "nodes":[
-               {
-                  "nftId": "123456-0",
-                  "metadata": {
-                    "name": "My Cool NFT 1",
-                    "imageUrl": "https://example.com/my_nft_1.png"
-                 }
-                },
-               {
-                   "nftId": "123457-0",
-                   "metadata": {
-                     "name": "My Cool NFT 2",
-                     "imageUrl": "https://example.com/my_nft_2.png"
-                 }
-              }
-           ],
-           "pageInfo": {
-               "hasNextPage": true,
-               "endCursor": "abcdefg123"
-            }
+  "data": {
+    "nfts": {
+      "nodes": [
+        {
+          "nftId": "123456-0",
+          "metadata": {
+            "name": "My Cool NFT 1",
+            "imageUrl": "https://example.com/my_nft_1.png"
+          }
+        },
+        {
+          "nftId": "123457-0",
+          "metadata": {
+            "name": "My Cool NFT 2",
+            "imageUrl": "https://example.com/my_nft_2.png"
+          }
         }
+      ],
+      "pageInfo": {
+        "hasNextPage": true,
+        "endCursor": "abcdefg123"
+      }
     }
+  }
 }
 ```
 
@@ -137,20 +136,21 @@ To fetch the next page of NFTs, you would use `endCursor` in the next query. For
 ```graphql
 query FetchNextPageUserNfts {
   nfts(owner: "0xabc789...", first: 10, after: "abcdefg123") {
-      nodes {
-        nftId
+    nodes {
+      nftId
       metadata {
         name
         imageUrl
       }
-      }
-    pageInfo {
-        hasNextPage
-        endCursor
-        }
     }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
 }
 ```
+
 Here, we are using the `after` argument to load the next page of results.
 
 **Example 3: Filtering NFTs based on metadata attributes**
@@ -159,29 +159,26 @@ Sometimes you need to query NFTs based on their metadata. For instance, you migh
 
 ```graphql
 query SearchNftsByAttribute {
-    nfts(
-      where: {
-            metadata_contains: {
-                attributes_some: {
-                  traitType_eq: "Rarity",
-                  value_eq: "Unique"
-                  }
-                }
-        },
-      first: 10
-    ) {
-        nodes {
-          nftId
-          metadata {
-            name
-            imageUrl
-            attributes{
-              traitType
-              value
-            }
-        }
+  nfts(
+    where: {
+      metadata_contains: {
+        attributes_some: { traitType_eq: "Rarity", value_eq: "Unique" }
+      }
     }
-   }
+    first: 10
+  ) {
+    nodes {
+      nftId
+      metadata {
+        name
+        imageUrl
+        attributes {
+          traitType
+          value
+        }
+      }
+    }
+  }
 }
 ```
 
@@ -191,7 +188,7 @@ The key takeaway is the flexible use of filters and `metadata_contains` within t
 
 **Best Practices and Resources**
 
-When embarking on this kind of endeavor, there are a few key things to remember, and some valuable references. First, always consult the official documentation for the *specific* Loopring API you are using. These APIs are continually evolving. Second, be prepared to handle the complexity inherent in dynamically structured metadata, as demonstrated in example 3.
+When embarking on this kind of endeavor, there are a few key things to remember, and some valuable references. First, always consult the official documentation for the _specific_ Loopring API you are using. These APIs are continually evolving. Second, be prepared to handle the complexity inherent in dynamically structured metadata, as demonstrated in example 3.
 
 For foundational knowledge on GraphQL itself, I strongly recommend "GraphQL in Action" by Samer Buna, as it’s a very practical and well-structured resource. For deeper insights into API design and query performance, "Designing Data-Intensive Applications" by Martin Kleppmann is an invaluable resource to understand the underlying principles, although it isn't explicitly about GraphQL. Finally, reading the official GraphQL specification will assist in understanding the query language itself and what types of queries are even possible.
 

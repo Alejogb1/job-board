@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-svg-text-rendering-inside-the-shape"
 ---
 
-Let’s tackle this, shall we? I’ve seen this particular issue crop up more times than I care to recall, and it often stems from a misunderstanding of how SVG interprets coordinate systems and the inherent behavior of `text` elements. There's no inherent mechanism that magically confines text _inside_ a shape; instead, the text element behaves in a way that is more aligned with its typographic nature than its relationship to a visually apparent container. It’s not a bug, per se, but a consequence of design, requiring us to carefully manage positioning.
+Let’s tackle this? I’ve seen this particular issue crop up more times than I care to recall, and it often stems from a misunderstanding of how SVG interprets coordinate systems and the inherent behavior of `text` elements. There's no inherent mechanism that magically confines text _inside_ a shape; instead, the text element behaves in a way that is more aligned with its typographic nature than its relationship to a visually apparent container. It’s not a bug, per se, but a consequence of design, requiring us to carefully manage positioning.
 
 When we define an SVG text element, its positioning is anchored by its x and y attributes. These coordinates do not represent a bounding box or a visual container; rather, they mark the _starting point_ of the text baseline. Imagine the text as being placed on an invisible line—that's essentially what’s happening. When this baseline lies outside of a shape, the text appears to "float" rather than reside inside it, causing the apparent misalignment that's likely the core of the problem. We don't inherently have containment like you'd expect from, say, a traditional HTML div.
 

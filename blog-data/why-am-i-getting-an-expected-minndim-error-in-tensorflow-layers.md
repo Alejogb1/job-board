@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-expected-minndim-error-in-tensorflow-layers"
 ---
 
-Let's tackle that 'expected min_ndim' error, shall we? It's a fairly common hiccup when working with TensorFlow, particularly when you're piecing together custom layer architectures or manipulating tensor shapes in ways that aren't immediately obvious. I've personally been down that rabbit hole more times than I care to remember, and I've found the cause is almost always tied to misaligned expectations regarding the rank, or number of dimensions, of your input tensors.
+Let's tackle that 'expected min_ndim' error? It's a fairly common hiccup when working with TensorFlow, particularly when you're piecing together custom layer architectures or manipulating tensor shapes in ways that aren't immediately obvious. I've personally been down that rabbit hole more times than I care to remember, and I've found the cause is almost always tied to misaligned expectations regarding the rank, or number of dimensions, of your input tensors.
 
 The core issue, as the error message suggests, is that certain TensorFlow layers have a minimum number of expected dimensions, or `min_ndim`, they can process. These expectations stem from the way layers are designed to handle different types of data. For example, convolutional layers (like `Conv2D`) naturally operate on image-like data that's typically represented with a minimum rank of 4: `(batch_size, height, width, channels)`. A dense layer (`Dense`), on the other hand, expects a minimum rank of 2: `(batch_size, features)`. Feeding a tensor with fewer dimensions than the layer expects will trigger this error.
 

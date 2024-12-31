@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-l2-regularization-prevent-cnn-overfitting"
 ---
 
-, let’s tackle this. I've seen my fair share of convolutional neural networks (CNNs) teetering on the edge of overfitting, and L2 regularization is a common tool in that fight. The question of whether it definitively _prevents_ overfitting isn't a simple yes or no, but let’s unpack it thoroughly.
+I've seen my fair share of convolutional neural networks (CNNs) teetering on the edge of overfitting, and L2 regularization is a common tool in that fight. The question of whether it definitively _prevents_ overfitting isn't a simple yes or no, but let’s unpack it thoroughly.
 
 From my experience, L2 regularization doesn't magically eliminate overfitting; rather, it provides a robust mechanism to _mitigate_ it. Think of it less like an impenetrable shield and more like a dampener, reducing the tendency of the model to memorize the training data. Overfitting, at its core, occurs when a model learns the nuances, and often noise, present in the training dataset so well that it struggles to generalize to new, unseen data. This results in excellent performance on training data, but dismal performance in real-world scenarios.
 

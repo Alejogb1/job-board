@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-loop-through-multiple-folders-and-subfolders-using-pyspark-in-azure-blob-container-adls-gen2"
 ---
 
-Let’s address that, shall we? Handling nested directory structures within an Azure Blob container using pyspark is a fairly common challenge, and I've certainly had my share of battles with it. I recall a past project where we were processing sensor data from a network of devices, each dumping into its own subfolder hierarchy. The sheer volume of data, and the inherent nesting, made simply listing files impractical. A purely recursive approach would’ve been a performance bottleneck given the scale. So, let's explore a more efficient and robust way to tackle this.
+Let’s address that? Handling nested directory structures within an Azure Blob container using pyspark is a fairly common challenge, and I've certainly had my share of battles with it. I recall a past project where we were processing sensor data from a network of devices, each dumping into its own subfolder hierarchy. The sheer volume of data, and the inherent nesting, made simply listing files impractical. A purely recursive approach would’ve been a performance bottleneck given the scale. So, let's explore a more efficient and robust way to tackle this.
 
-The core issue revolves around how pyspark interacts with the underlying storage abstraction provided by Hadoop and, specifically, how it handles directory listings. When you point pyspark to a top-level directory within your adls gen2 container, it *doesn't* automatically dive into subdirectories. It treats that initial directory path as the singular input path. We need to explicitly instruct it to recurse. The `hadoopPath` parameter and its wildcard functionality become our primary tools here.
+The core issue revolves around how pyspark interacts with the underlying storage abstraction provided by Hadoop and, specifically, how it handles directory listings. When you point pyspark to a top-level directory within your adls gen2 container, it _doesn't_ automatically dive into subdirectories. It treats that initial directory path as the singular input path. We need to explicitly instruct it to recurse. The `hadoopPath` parameter and its wildcard functionality become our primary tools here.
 
 A straightforward method, although sometimes less granular, involves using a wildcard to target all files within subdirectories. For example, if your storage structure looks like this: `/data/year=2023/month=01/day=01/file1.csv`, `/data/year=2023/month=01/day=02/file2.csv`, and so on, we can use a wildcard like `/data/*/*/*` to reach all files beneath the `/data` root.
 
-However, this can become problematic if there are non-data-related files or subdirectories mixed in. It also doesn’t give you detailed control over traversal. More importantly, relying *solely* on wildcards means we're implicitly trusting that all subfolders follow the same depth and naming conventions, which is not always a given in real-world scenarios.
+However, this can become problematic if there are non-data-related files or subdirectories mixed in. It also doesn’t give you detailed control over traversal. More importantly, relying _solely_ on wildcards means we're implicitly trusting that all subfolders follow the same depth and naming conventions, which is not always a given in real-world scenarios.
 
 The most effective approach, in my experience, hinges on strategically using `spark.read.csv` (or parquet, json, whatever your file format might be) along with the underlying hadoop file system path. The key is to leverage the wildcards, and the `spark.sparkContext.hadoopFile` for file discovery. Let's look at specific code examples to clarify:
 
@@ -29,6 +29,7 @@ input_path = f"{container_path}/*/*/*" # three-level deep directory structure
 df = spark.read.csv(input_path, header=True, inferSchema=True)
 df.show()
 ```
+
 In this snippet, we're leveraging the wildcard pattern to instruct spark to discover files within three nested layers under the 'data' folder. If your depth varies, you'll need to adjust the pattern accordingly. It's a fast and straightforward, if not always the most flexible way of getting your file paths. This approach works if the structure is predictable and the depth is consistent.
 
 **Example 2: Dynamic Path Generation with `hadoopFile`**
@@ -109,8 +110,9 @@ df = spark.read.csv(file_paths, header = True, inferSchema = True)
 df = df.withColumn("filename", input_file_name())
 df.show()
 ```
+
 This example builds on the previous one by incorporating a filter during the file path discovery phase. Here, we only consider files that contain 'sensor' in the filename. This offers much more precise control over which data gets loaded, a vital aspect of any production data processing pipeline. We're also incorporating `input_file_name()` to enrich the dataframe with the source filename, for audit or provenance reasons.
 
 For in-depth information, I recommend consulting "Hadoop: The Definitive Guide" by Tom White. It provides a comprehensive overview of the Hadoop file system and related concepts. Another essential resource is the Apache Spark documentation itself, particularly the sections detailing the Spark Context and data source APIs, which provides the nitty-gritty on file handling. Additionally, while not a book, the documentation for the Azure SDK for python will give you insights into how the library interacts with the adls layer. Lastly, the paper “MapReduce: Simplified Data Processing on Large Clusters” by Dean and Ghemawat is also very relevant as it explains the foundational concept that pyspark is built on.
 
-The key takeaway here isn’t just about the mechanics of using wildcard patterns or `hadoopFile`; it's about understanding *how* spark interacts with the underlying filesystem to effectively ingest data from your adls gen2 containers. Having that, and practicing with these different methods will make you more efficient at dealing with the complexities of real-world data pipelines.
+The key takeaway here isn’t just about the mechanics of using wildcard patterns or `hadoopFile`; it's about understanding _how_ spark interacts with the underlying filesystem to effectively ingest data from your adls gen2 containers. Having that, and practicing with these different methods will make you more efficient at dealing with the complexities of real-world data pipelines.

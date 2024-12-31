@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-client-communicate-with-a-docker-container-running-on-a-different-server"
 ---
 
-, one. It’s a problem I've encountered countless times, and there's rarely a single 'best' way, as the optimal solution often hinges on the specific use case. Fundamentally, we’re talking about network communication between a client and a Docker container residing on a separate server. This isn’t a trivial 'out-of-the-box' situation, since Docker containers by default are isolated, and we need to explicitly expose ports and implement mechanisms for clients to reach them. Let’s delve into the practical aspects and some common approaches.
+It’s a problem I've encountered countless times, and there's rarely a single 'best' way, as the optimal solution often hinges on the specific use case. Fundamentally, we’re talking about network communication between a client and a Docker container residing on a separate server. This isn’t a trivial 'out-of-the-box' situation, since Docker containers by default are isolated, and we need to explicitly expose ports and implement mechanisms for clients to reach them. Let’s delve into the practical aspects and some common approaches.
 
 My first brush with this was back in '16 while building a distributed data processing pipeline. We had the processing nodes running in Docker on separate servers, and we needed an external web application to communicate with them to initiate jobs and monitor their status. Direct, unprotected access wasn't an option, so we had to implement a more robust communication strategy.
 

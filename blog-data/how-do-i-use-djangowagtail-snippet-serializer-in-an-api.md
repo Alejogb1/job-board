@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-djangowagtail-snippet-serializer-in-an-api"
 ---
 
-Let’s dive right in, shall we? I've tackled this specific scenario – integrating Wagtail snippets into a Django API using a serializer – quite a few times over the years, and it's a common point of friction for developers new to the Wagtail ecosystem. It's not inherently complicated, but the documentation often assumes a certain level of prior knowledge, which can lead to confusion. So, let's break down how to effectively serialize Wagtail snippets for use in your API.
+Let’s dive right in? I've tackled this specific scenario – integrating Wagtail snippets into a Django API using a serializer – quite a few times over the years, and it's a common point of friction for developers new to the Wagtail ecosystem. It's not inherently complicated, but the documentation often assumes a certain level of prior knowledge, which can lead to confusion. So, let's break down how to effectively serialize Wagtail snippets for use in your API.
 
 The challenge fundamentally lies in the fact that Wagtail snippets are models, often with relationships, that don't neatly align with standard Django serialization techniques. We're typically used to serializing querysets of Django models directly, but snippets need a more nuanced approach. The goal is to produce a clean, structured JSON output that includes all the necessary data, including related fields, images, or other Wagtail-specific elements that your snippets contain.
 

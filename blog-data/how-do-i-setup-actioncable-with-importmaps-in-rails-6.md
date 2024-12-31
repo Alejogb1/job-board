@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-setup-actioncable-with-importmaps-in-rails-6"
 ---
 
-, let’s tackle this. Setting up ActionCable with importmaps in Rails 6 is definitely a transition from the traditional asset pipeline approach, but it’s a worthwhile move for managing your javascript dependencies more explicitly. I’ve walked this path on a couple of projects now, so let's lay out the specifics.
+Setting up ActionCable with importmaps in Rails 6 is definitely a transition from the traditional asset pipeline approach, but it’s a worthwhile move for managing your javascript dependencies more explicitly. I’ve walked this path on a couple of projects now, so let's lay out the specifics.
 
 The key difference here is that instead of relying on Webpacker to manage your javascript, you're directly importing modules using importmaps, and ActionCable needs to fit into this ecosystem. It's not difficult, but it requires a slightly different mindset. Let's break it down.
 

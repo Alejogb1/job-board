@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-django-rest-api-conditions-be-detected-before-data-submission"
 ---
 
-, let’s tackle this. I recall a project back in my days building a large e-commerce platform – handling data submission errors, especially on the api side, became critical to maintaining a good user experience and preventing data corruption. We needed a robust solution to detect issues _before_ a request hit our database. So, let's break down how we can accomplish this in Django REST Framework (DRF).
+I recall a project back in my days building a large e-commerce platform – handling data submission errors, especially on the api side, became critical to maintaining a good user experience and preventing data corruption. We needed a robust solution to detect issues _before_ a request hit our database. So, let's break down how we can accomplish this in Django REST Framework (DRF).
 
 The core issue centers around pre-submission validation, and that involves moving beyond merely relying on model validation at the database level. If you're only catching issues post-database interaction, you're already too late. We want to catch malformed requests, data type mismatches, or business logic violations as early as possible in the request lifecycle. DRF offers several layers that facilitate this, namely serializers and viewset actions (or function-based views), and it's at these points where we leverage that power most effectively.
 

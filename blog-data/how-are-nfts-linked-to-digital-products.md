@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-nfts-linked-to-digital-products"
 ---
 
-Right, let’s tackle this. I remember a project back in 2018—a small indie game studio wanting to experiment with in-game assets. They’d heard about these nascent NFTs and wanted to see if they could tie virtual swords and shields to them. It wasn't exactly smooth sailing, but it gave me a solid, practical understanding of how non-fungible tokens can be linked to digital products. So, let me lay out the essentials and a few nuances I picked up along the way.
+Right I remember a project back in 2018—a small indie game studio wanting to experiment with in-game assets. They’d heard about these nascent NFTs and wanted to see if they could tie virtual swords and shields to them. It wasn't exactly smooth sailing, but it gave me a solid, practical understanding of how non-fungible tokens can be linked to digital products. So, let me lay out the essentials and a few nuances I picked up along the way.
 
 Essentially, NFTs act as a unique, verifiable proof of ownership for a digital item. Think of it like a digital certificate of authenticity, but instead of being issued by a central authority, it's recorded on a blockchain. This record isn't just for visual art, as many assume; it can be for any unique digital asset. This includes in-game items, digital music tracks, virtual real estate, and even access keys to premium online content.
 
@@ -77,18 +77,19 @@ Lastly, an example demonstrating how one might check for the existence of the di
 ```javascript
 // Example 3: Fetching NFT metadata using javascript (Simplified)
 async function fetchMetadata(nftTokenId, contractAddress, abi) {
-  const provider = new ethers.providers.JsonRpcProvider("YOUR_ETHEREUM_NODE_URL"); // Connect to blockchain node
+  const provider = new ethers.providers.JsonRpcProvider(
+    "YOUR_ETHEREUM_NODE_URL"
+  ); // Connect to blockchain node
   const contract = new ethers.Contract(contractAddress, abi, provider);
 
   try {
-    const tokenUri = await contract.getTokenURI(nftTokenId);  //Assume SimpleNFT contract as in the previous example
+    const tokenUri = await contract.getTokenURI(nftTokenId); //Assume SimpleNFT contract as in the previous example
     console.log("Retrieved Token URI:", tokenUri);
     // Now use tokenUri (e.g. for display or other operations)
-      const response = await fetch(tokenUri);
-      const metadata = await response.json();
-      console.log("Metadata:", metadata)
-       return metadata;
-
+    const response = await fetch(tokenUri);
+    const metadata = await response.json();
+    console.log("Metadata:", metadata);
+    return metadata;
   } catch (error) {
     console.error("Error fetching metadata:", error);
     return null;
@@ -102,6 +103,7 @@ async function fetchMetadata(nftTokenId, contractAddress, abi) {
 //Here, we use javascript with a web3 library to interact with the blockchain to fetch the metadata associated with the NFT.
 //Then we retrieve the actual data, which might be stored as JSON or other structured data.
 ```
+
 These are simplified, of course. Real-world systems would involve far more complex smart contracts, security considerations, and scalability challenges.
 
 The core concept to grasp here is that the NFT itself isn't the digital product. It's the immutable and unique pointer or identifier to that product, verified on a blockchain. This system of ownership is what gives NFTs their value and applicability.
@@ -110,8 +112,8 @@ It's not a perfect system. The persistence of the linked content is not guarante
 
 If you're looking to deepen your knowledge, I'd suggest you explore:
 
-*   **"Mastering Bitcoin" by Andreas Antonopoulos** – This book offers a strong foundation for understanding the blockchain underpinnings, which is essential for grasping how NFTs operate.
-*   **Ethereum Documentation:** Read the documentation available from the Ethereum foundation (ethereum.org) – it's the definitive source for how Ethereum, where many NFTs are created, works.
-*  **EIP-721 and EIP-1155 standard documents:** These Ethereum Improvement Proposals detail the core technical specs for creating NFTs, and are a must-read for developers working with the technology.
+- **"Mastering Bitcoin" by Andreas Antonopoulos** – This book offers a strong foundation for understanding the blockchain underpinnings, which is essential for grasping how NFTs operate.
+- **Ethereum Documentation:** Read the documentation available from the Ethereum foundation (ethereum.org) – it's the definitive source for how Ethereum, where many NFTs are created, works.
+- **EIP-721 and EIP-1155 standard documents:** These Ethereum Improvement Proposals detail the core technical specs for creating NFTs, and are a must-read for developers working with the technology.
 
 Understanding how NFTs reference digital products is key to appreciating their potential, and their limitations. It's a connection established through metadata and a unique blockchain identifier, not direct embedding. And as the technology evolves, I'm sure we will see even more complex and nuanced ways of linking them. It's a field to keep a very close eye on.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-training-a-cnn-with-segmented-images-yield-significantly-different-accuracy-andor-loss-compared-to-training-with-whole-images"
 ---
 
-, let’s tackle this. I’ve spent a fair bit of time on image analysis, particularly with convolutional neural networks (CNNs), and this question about segmented versus whole image training brings back memories of a challenging project from my days at a biomedical imaging firm. We were working on cell morphology analysis, and the choice of training data format made a substantial difference. So, let’s unpack this from a practical standpoint.
+I’ve spent a fair bit of time on image analysis, particularly with convolutional neural networks (CNNs), and this question about segmented versus whole image training brings back memories of a challenging project from my days at a biomedical imaging firm. We were working on cell morphology analysis, and the choice of training data format made a substantial difference. So, let’s unpack this from a practical standpoint.
 
 The short answer is, yes, training a CNN with segmented images _can_ yield significantly different accuracy and loss compared to training with whole images. However, the ‘significantly different’ part isn't a guarantee and depends heavily on the specifics of your task, the data, and the network architecture. The underlying reason is tied to how the network learns features and what it perceives as relevant.
 

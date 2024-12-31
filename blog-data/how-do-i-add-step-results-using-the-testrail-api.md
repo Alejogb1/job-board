@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-step-results-using-the-testrail-api"
 ---
 
-, let’s tackle this. I've seen this come up more than a few times, usually in the context of automating large test suites or needing granular feedback from complex processes. Adding step results to TestRail via its API, while not conceptually difficult, requires careful construction of your requests and a solid understanding of the underlying data structure. It's definitely not a one-size-fits-all situation; the specifics of your test framework will influence the implementation.
+I've seen this come up more than a few times, usually in the context of automating large test suites or needing granular feedback from complex processes. Adding step results to TestRail via its API, while not conceptually difficult, requires careful construction of your requests and a solid understanding of the underlying data structure. It's definitely not a one-size-fits-all situation; the specifics of your test framework will influence the implementation.
 
 The core idea here revolves around the `add_result_for_case` endpoint, or specifically `add_result_for_case_with_steps` if you're dealing with test cases that break down into multiple steps. I'll primarily focus on the latter, because in my experience, that's where the real complexity usually lies. I once had to rebuild a rather chaotic automated framework; the original implementers hadn't properly considered how detailed results needed to be structured in TestRail, leading to practically useless overall test runs. We rectified that, but it was a lesson in planning and data integrity.
 

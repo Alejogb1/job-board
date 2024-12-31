@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-single-linux-machine-emulate-both-lan-and-wan-networks-using-containers"
 ---
 
-, let's get into this. I've had my share of head-scratching moments trying to wrangle network topologies with limited hardware, and emulating both lan and wan behaviors on a single linux box using containers certainly fits that bill. It's not just theoretically possible, it's actually quite practical and even indispensable for certain testing and development scenarios. Let's break down why and how we can accomplish this, starting with some fundamental concepts.
+, I've had my share of head-scratching moments trying to wrangle network topologies with limited hardware, and emulating both lan and wan behaviors on a single linux box using containers certainly fits that bill. It's not just theoretically possible, it's actually quite practical and even indispensable for certain testing and development scenarios. Let's break down why and how we can accomplish this, starting with some fundamental concepts.
 
 The core idea is leveraging linux's built-in networking capabilities in conjunction with containerization tools like docker (or podman, whichever you prefer) to create isolated network environments. We're essentially crafting multiple virtual networks within the single physical host. Think of it like having multiple switches and routers existing entirely in software, all within your machine. The linux kernel, with its advanced network namespace support, forms the bedrock of this setup. These namespaces provide the necessary segregation to allow multiple network stacks, each with their own interfaces, routing tables, and firewall rules, to coexist peacefully.
 

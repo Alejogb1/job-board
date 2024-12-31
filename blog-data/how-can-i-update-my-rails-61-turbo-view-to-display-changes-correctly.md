@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-update-my-rails-61-turbo-view-to-display-changes-correctly"
 ---
 
-, let’s tackle this. I remember back when we were migrating a particularly hefty legacy app to Rails 6.1, the whole Turbo view update mechanism caused us quite a few headaches initially. It wasn't just a case of flipping a switch; you really had to understand the underlying mechanics to avoid weird rendering quirks. So, you're asking about how to ensure your view reflects changes correctly when using Turbo in Rails 6.1? Let's get into the nitty-gritty, because it's not just about refreshing the whole page anymore.
+I remember back when we were migrating a particularly hefty legacy app to Rails 6.1, the whole Turbo view update mechanism caused us quite a few headaches initially. It wasn't just a case of flipping a switch; you really had to understand the underlying mechanics to avoid weird rendering quirks. So, you're asking about how to ensure your view reflects changes correctly when using Turbo in Rails 6.1? Let's get into the nitty-gritty, because it's not just about refreshing the whole page anymore.
 
 The core of the issue often boils down to Turbo's morphing behavior and how it interacts with server-side renders. In essence, Turbo tries to be smart. It doesn't do a full page reload; instead, it compares the new HTML received from the server with the existing HTML in the browser. It identifies differences and morphs the DOM to reflect those changes, targeting specific elements with the `id` attribute as the key. This sounds great, and mostly it is, but sometimes things need a bit of gentle nudging.
 

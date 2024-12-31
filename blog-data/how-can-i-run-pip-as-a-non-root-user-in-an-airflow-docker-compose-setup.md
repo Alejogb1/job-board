@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-pip-as-a-non-root-user-in-an-airflow-docker-compose-setup"
 ---
 
-Ah, running pip without root in an Airflow docker-compose setup, I’ve certainly been down that path more times than I care to remember. It's one of those common sticking points when you're trying to establish a secure and maintainable workflow. It’s particularly relevant when you're aiming for a least-privilege environment, which, frankly, should be the default these days. Let’s dive into the nuances of achieving this, shall we?
+Ah, running pip without root in an Airflow docker-compose setup, I’ve certainly been down that path more times than I care to remember. It's one of those common sticking points when you're trying to establish a secure and maintainable workflow. It’s particularly relevant when you're aiming for a least-privilege environment, which, frankly, should be the default these days. Let’s dive into the nuances of achieving this?
 
 The core of the problem typically arises because, by default, the user inside the Docker container is often `root`. This means any `pip install` command, unless explicitly instructed otherwise, operates with root privileges. While it might initially seem convenient, it’s a bad practice for a multitude of reasons, primarily security. Imagine a compromised dependency executing arbitrary code with root permissions within your container; that's a massive security breach waiting to happen. We want to avoid this entirely.
 
@@ -37,7 +37,7 @@ In this snippet, we're adding a user and group 'airflow' with specific user and 
 Next, you'll need to make a few adjustments to your `docker-compose.yml` file. You’ll want to ensure the container’s entrypoint script is also executed by the `airflow` user, and you might want to ensure proper file ownership by creating volumes that allow this. For a specific example, take this snippet:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   airflow-webserver:
     image: my-custom-airflow-image # Use the image you've built

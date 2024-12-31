@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-a-validation-set-necessary-for-yolov5-training"
 ---
 
-one head-on, shall we? It's not an uncommon question, particularly for those getting into the practicalities of object detection with models like YOLOv5. My own introduction to it involved a project analyzing drone footage for infrastructure assessment some years ago – and let me tell you, neglecting proper validation then led to some… interesting… model behaviors, to say the least.
+one head-on? It's not an uncommon question, particularly for those getting into the practicalities of object detection with models like YOLOv5. My own introduction to it involved a project analyzing drone footage for infrastructure assessment some years ago – and let me tell you, neglecting proper validation then led to some… interesting… model behaviors, to say the least.
 
 The short answer is a resounding yes: a validation set is absolutely necessary for effective YOLOv5 training. While it might seem like an extra layer of complexity, skipping it is a shortcut to a potentially unusable model, no matter how carefully you curate your training data. To understand why, let's break down what a validation set does and why it’s so crucial in the context of deep learning.
 

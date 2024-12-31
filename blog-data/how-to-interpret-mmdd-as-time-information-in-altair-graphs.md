@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-interpret-mmdd-as-time-information-in-altair-graphs"
 ---
 
-, shall we? I recall a particular project involving time-series data back in 2018; the source data for the project, bizarrely enough, stored dates as 'MM_DD' strings without any year information. When we tried plotting it using Altair, the initial results were, as you might imagine,… unconventional. The graphs were interpreting ‘MM_DD’ as, well, just numbers without a temporal component. We ended up spending a good chunk of time figuring out how to properly coax Altair into treating this string representation as time information. Here’s what we learned, and how you can solve this very practical problem.
+? I recall a particular project involving time-series data back in 2018; the source data for the project, bizarrely enough, stored dates as 'MM_DD' strings without any year information. When we tried plotting it using Altair, the initial results were, as you might imagine,… unconventional. The graphs were interpreting ‘MM_DD’ as, well, just numbers without a temporal component. We ended up spending a good chunk of time figuring out how to properly coax Altair into treating this string representation as time information. Here’s what we learned, and how you can solve this very practical problem.
 
 The challenge arises because Altair, at its core, expects datetime objects or numerical representations of dates/times when dealing with temporal axes. When you feed it a string like ‘MM_DD’, it defaults to treating it as categorical or numerical data, which is often not the desired behavior. To correct this, we need to pre-process the data to include the year information, then explicitly tell Altair how to parse it correctly.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-transition-table-be-expanded-to-cover-all-possible-input-combinations"
 ---
 
-, one. Thinking back to my time developing embedded systems, specifically a complex industrial controller, dealing with state transitions was a core part of my day-to-day. The challenge of fully mapping out all input permutations in a transition table? Yeah, that’s something I've spent considerable time on. It can be a real beast, but it's vital for robust and predictable system behavior.
+Thinking back to my time developing embedded systems, specifically a complex industrial controller, dealing with state transitions was a core part of my day-to-day. The challenge of fully mapping out all input permutations in a transition table? Yeah, that’s something I've spent considerable time on. It can be a real beast, but it's vital for robust and predictable system behavior.
 
 The fundamental issue you’re facing is completeness. A transition table represents the behavior of a finite state machine (fsm) by mapping a current state and an input to a next state and potentially an output. The aim, as you’ve stated, is to ensure that _every_ possible combination of current state and input is accounted for, preventing the fsm from entering an undefined state. In practice, this means you need to consider the entire input space. This space isn’t always binary, and it’s not just about a single input. You can have multiple inputs, each with multiple possible values, multiplying the complexity significantly.
 

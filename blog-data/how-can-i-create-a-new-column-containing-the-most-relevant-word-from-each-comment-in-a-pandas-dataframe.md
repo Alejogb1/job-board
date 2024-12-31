@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-new-column-containing-the-most-relevant-word-from-each-comment-in-a-pandas-dataframe"
 ---
 
-, let’s tackle this. I remember facing a similar challenge a few years back when I was working on a large-scale social media sentiment analysis project. We had thousands of text comments, and extracting the most relevant keyword from each was crucial for our topic modeling. The problem wasn't just about finding the "most frequent" word; it was about finding the _most meaningful_ one. Let's explore how to approach this using pandas, which, as we all know, is often our data manipulation workhorse.
+I remember facing a similar challenge a few years back when I was working on a large-scale social media sentiment analysis project. We had thousands of text comments, and extracting the most relevant keyword from each was crucial for our topic modeling. The problem wasn't just about finding the "most frequent" word; it was about finding the _most meaningful_ one. Let's explore how to approach this using pandas, which, as we all know, is often our data manipulation workhorse.
 
 Firstly, when we talk about "relevant" words, we need to define it rigorously. We can't just grab the first non-stop word that comes along. Generally, what constitutes a relevant word depends heavily on the context, but a good starting point involves understanding two things: stop words and word frequencies, but crucially _also_ incorporating some measure of importance.
 
@@ -82,7 +82,7 @@ df['relevant_word_tfidf'] = df['comment'].apply(lambda x: find_relevant_word_tfi
 print(df)
 ```
 
-In this example, we instantiate a `TfidfVectorizer` with english stop words and fit it on the corpus of comments in the dataframe. We use its transform method to generate the TF-IDF vectors and look for the best token. We create a new 'relevant_word_tfidf' column using this function. It's worth noting that TF-IDF tends to perform well when the document set isn't excessively diverse. The benefit is that it down-weights words that are commonly used in all documents, giving relevance to words that are important for the _specific_ text being analyzed.
+In this example, we instantiate a `TfidfVectorizer` with english stop words and fit it on the corpus of comments in the dataframe. We use its transform method to generate the TF-IDF vectors and look for the best token. We create a new 'relevant*word_tfidf' column using this function. It's worth noting that TF-IDF tends to perform well when the document set isn't excessively diverse. The benefit is that it down-weights words that are commonly used in all documents, giving relevance to words that are important for the \_specific* text being analyzed.
 
 Now, let's consider a scenario where we need a more sophisticated approach because both of the previous examples were looking only at single words. What if your significant content was expressed in terms of multi-word phrases? This requires us to handle n-grams, where 'n' can represent bi-grams (two words), tri-grams (three words) or larger sequences of words. It also adds a new layer of difficulty because n-grams can have varying lengths, which is challenging with our approach, so we will generate ngrams of all possible sizes from 1 to 3 and then apply TF-IDF as before.
 

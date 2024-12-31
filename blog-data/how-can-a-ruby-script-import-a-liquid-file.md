@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-ruby-script-import-a-liquid-file"
 ---
 
-importing liquid files within a Ruby script, shall we? It's a problem I've encountered numerous times, often in contexts like static site generators or email templating systems. The core challenge lies in bridging the gap between ruby's execution environment and liquid's templating language. They serve distinct purposes and don't naturally interoperate. However, with a few straightforward techniques, we can manage this integration quite effectively.
+importing liquid files within a Ruby script? It's a problem I've encountered numerous times, often in contexts like static site generators or email templating systems. The core challenge lies in bridging the gap between ruby's execution environment and liquid's templating language. They serve distinct purposes and don't naturally interoperate. However, with a few straightforward techniques, we can manage this integration quite effectively.
 
 The essence is to treat the liquid file as a string that we can read, and then hand it off to liquid for processing along with necessary variables. Instead of directly "importing" in a traditional sense, we're essentially loading the contents and then rendering them within a liquid context that our Ruby script has created. This methodology is not just practical, but it is often the preferred way, providing granular control over how the data is introduced and managed. In a previous project involving generating documentation from structured data, I heavily leaned on this approach, allowing for highly customized output based on a core set of liquid templates and ruby logic.
 

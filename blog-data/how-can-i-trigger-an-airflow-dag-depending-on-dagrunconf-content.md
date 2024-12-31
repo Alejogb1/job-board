@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-trigger-an-airflow-dag-depending-on-dagrunconf-content"
 ---
 
-, let’s tackle this. I recall a particularly sticky situation a few years back involving exactly this—triggering airflow dag runs based on the content of their `dag_run.conf`. We were dealing with a complex data ingestion pipeline, and we needed to dynamically adjust the workflow based on parameters passed during manual or programmatic triggering. Let me walk you through how I approached it and some key considerations.
+I recall a particularly sticky situation a few years back involving exactly this—triggering airflow dag runs based on the content of their `dag_run.conf`. We were dealing with a complex data ingestion pipeline, and we needed to dynamically adjust the workflow based on parameters passed during manual or programmatic triggering. Let me walk you through how I approached it and some key considerations.
 
 The crux of the matter is that `dag_run.conf` provides a mechanism for injecting parameters when triggering a DAG. These parameters are essentially a dictionary, which airflow exposes through the jinja templating engine within various components of a dag – most notably, tasks. Now, using these parameters to _directly_ dictate whether a dag _should_ trigger is a nuanced problem, because DAG schedules are handled outside of the running DAG itself. We can't dynamically modify those schedules on a per-trigger basis. However, we _can_ control execution flow within the dag itself based on the `conf` parameters, effectively mimicking a trigger condition.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-data-attributes-in-rails-with-simpleform-and-stimulus"
 ---
 
-, one. It's a common challenge, and one I recall facing a few years back while working on an internal platform. The need to bridge the gap between form interactions, front-end dynamism, and clean Rails conventions using simple_form and stimulus is a really pertinent example of modern web development.
+It's a common challenge, and one I recall facing a few years back while working on an internal platform. The need to bridge the gap between form interactions, front-end dynamism, and clean Rails conventions using simple_form and stimulus is a really pertinent example of modern web development.
 
 The core idea is to use data attributes as a conduit for transferring information between your Rails server-side components (like simple_form), and your client-side stimulus controllers. Instead of relying heavily on brittle class names or complex DOM traversal, data attributes offer a more structured and reliable approach. They allow you to attach custom metadata directly to HTML elements, which can then be easily accessed and manipulated by your JavaScript code.
 

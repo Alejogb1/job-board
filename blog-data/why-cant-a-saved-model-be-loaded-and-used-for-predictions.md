@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-saved-model-be-loaded-and-used-for-predictions"
 ---
 
-, let's get into this. I've seen this issue pop up more times than I care to count, usually during that late-night debugging session when deadlines are looming. The frustration is real, so let's break down why loading a saved model for predictions can sometimes just… not work. It’s almost never a fault of the _saving_ itself, but rather inconsistencies between the environment where the model was trained and where you’re trying to use it. It’s a complex interplay of data, architecture, and environment that we need to unpack.
+, I've seen this issue pop up more times than I care to count, usually during that late-night debugging session when deadlines are looming. The frustration is real, so let's break down why loading a saved model for predictions can sometimes just… not work. It’s almost never a fault of the _saving_ itself, but rather inconsistencies between the environment where the model was trained and where you’re trying to use it. It’s a complex interplay of data, architecture, and environment that we need to unpack.
 
 First, let’s acknowledge that "saved model" is a broad term. We're generally talking about models serialized in some format—be it a simple pickle file for scikit-learn models, tensorflow's SavedModel format, or a PyTorch checkpoint. Each has its own peculiarities, but they share a common goal: to persist the model's learned parameters and architecture for later use. The issues arise not in the saving, but in the assumptions made about the loading environment.
 

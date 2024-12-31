@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-use-the-contains-method-with-ranges"
 ---
 
-Let's dive straight in, shall we? The question of using `contains()` with ranges is one I've bumped into a few times, usually in situations where filtering or validation are involved. It's not always as straightforward as it might initially appear, particularly if you're accustomed to working with concrete values. The core issue is that ranges, in many programming languages, are not directly comparable to individual values in the same manner as, say, comparing two integers. They represent a *span* of values, and therefore, `contains()` needs to consider if a given value *falls within* that span.
+Let's dive straight in? The question of using `contains()` with ranges is one I've bumped into a few times, usually in situations where filtering or validation are involved. It's not always as straightforward as it might initially appear, particularly if you're accustomed to working with concrete values. The core issue is that ranges, in many programming languages, are not directly comparable to individual values in the same manner as, say, comparing two integers. They represent a _span_ of values, and therefore, `contains()` needs to consider if a given value _falls within_ that span.
 
-The straightforward application of `.contains()` generally works well when dealing with collections like arrays, lists, or sets, but when ranges are involved, we’re talking about a different kind of check: *membership testing* within that range. Now, many languages provide native support for this, but the specific implementation and usage vary. I'll walk you through a few examples, highlighting the nuances I've encountered.
+The straightforward application of `.contains()` generally works well when dealing with collections like arrays, lists, or sets, but when ranges are involved, we’re talking about a different kind of check: _membership testing_ within that range. Now, many languages provide native support for this, but the specific implementation and usage vary. I'll walk you through a few examples, highlighting the nuances I've encountered.
 
 My first real exposure to this was years back, while working on a data validation module for a large financial system. We had numerous rules involving acceptable transaction amounts, which were often defined using ranges. We couldn’t just list every single value; the ranges were fundamental. Initially, we had a rather clunky implementation involving iterating through the range, which was both slow and inefficient. It was when we revisited the use of `.contains()` more thoughtfully, leveraging language-specific support for ranges, that things started to improve substantially.
 
@@ -56,7 +56,7 @@ function checkValueInRange(value, start, end) {
 // Example usage:
 console.log(checkValueInRange(5, 1, 10)); // Output: true
 console.log(checkValueInRange(12, 1, 10)); // Output: false
-console.log(checkValueInRange(10, 1, 10));  // Output: true
+console.log(checkValueInRange(10, 1, 10)); // Output: true
 ```
 
 Here, JavaScript lacks dedicated range constructs. However, the logic of checking if a number falls between two other numbers using comparison (`>=` and `<=`) is functionally equivalent to a range's `contains()` operation. While it’s not a direct `.contains()` call on a range object, the result is the same; it determines if a value is within the specified bounds. In JavaScript, you would commonly see this approach within conditionals for data validation and filtering.

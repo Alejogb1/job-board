@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-state-values-after-usestate"
 ---
 
-, let’s tackle this. I've seen this question pop up countless times, and I understand why. The asynchronous nature of state updates with `useState` in React can be a bit of a head-scratcher for newcomers, and even seasoned developers sometimes run into unexpected behavior. It's not about just declaring a state variable; it's about understanding how and when that state gets updated and how you can reliably work with those values. So, let's dive deep into it.
+I've seen this question pop up countless times, and I understand why. The asynchronous nature of state updates with `useState` in React can be a bit of a head-scratcher for newcomers, and even seasoned developers sometimes run into unexpected behavior. It's not about just declaring a state variable; it's about understanding how and when that state gets updated and how you can reliably work with those values. So, let's dive deep into it.
 
 Essentially, the key thing to understand is that state updates in React, done with the setter function returned by `useState`, are not synchronous. This means that after you call the setter, the updated state value isn't immediately available. It's batched and applied by React in a subsequent render cycle. Attempting to use the immediately updated state value after the setState operation will often result in accessing the _previous_ value, leading to bugs and frustrating debugging sessions.
 

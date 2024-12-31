@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-extract-endpoint-ids-from-gcp-resources-in-a-vertex-ai-pipeline"
 ---
 
-, let’s tackle this. Finding those specific endpoint ids within a Vertex AI pipeline can indeed present a bit of a challenge if you’re not familiar with the nuances of how pipeline components interact with metadata and resource management. I recall a project a while back, involving large-scale distributed training, where accurately extracting endpoint ids was crucial for dynamically configuring post-training evaluation processes. We learned a few lessons the hard way, so let's delve into it, shall we?
+Finding those specific endpoint ids within a Vertex AI pipeline can indeed present a bit of a challenge if you’re not familiar with the nuances of how pipeline components interact with metadata and resource management. I recall a project a while back, involving large-scale distributed training, where accurately extracting endpoint ids was crucial for dynamically configuring post-training evaluation processes. We learned a few lessons the hard way, so let's delve into it?
 
 The fundamental issue here stems from the fact that a Vertex AI pipeline execution is, at its core, a series of orchestrated tasks. Each task, or component, can create and interact with various gcp resources, including Vertex AI endpoints. These endpoints, however, are not explicitly passed around as simple strings, but rather exist as managed resources within the GCP environment. To get at their ids, you'll need to leverage metadata tracking and the Vertex AI SDK.
 

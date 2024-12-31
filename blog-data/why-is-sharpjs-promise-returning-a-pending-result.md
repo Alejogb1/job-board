@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-sharpjs-promise-returning-a-pending-result"
 ---
 
-, . I remember a particularly frustrating week back in 2019 when we were migrating our image processing pipeline to use sharpjs. We were all scratching our heads because, occasionally, seemingly at random, sharpjs promises would just hang in a 'pending' state. It wasn't a constant issue, but when it occurred, it was a real pain to track down. The issue, as it turned out, wasn't so much with sharpjs itself, but rather how we were using it, specifically concerning the asynchronous nature of its operations and the event loop in Node.js. Let me explain.
+I remember a particularly frustrating week back in 2019 when we were migrating our image processing pipeline to use sharpjs. We were all scratching our heads because, occasionally, seemingly at random, sharpjs promises would just hang in a 'pending' state. It wasn't a constant issue, but when it occurred, it was a real pain to track down. The issue, as it turned out, wasn't so much with sharpjs itself, but rather how we were using it, specifically concerning the asynchronous nature of its operations and the event loop in Node.js. Let me explain.
 
 The core of the problem stems from the fact that sharpjs, being a library that interacts with native image processing libraries, performs its core work asynchronously. When you initiate an operation like resizing or cropping an image with sharp, it doesn’t immediately execute that task and return a result. Instead, it queues the work and returns a promise. This promise represents the eventual result of that operation. The issue occurs when the promise remains pending indefinitely, which generally points to a situation where either the asynchronous operation is never resolved or where we’ve made a critical mistake in handling the promise.
 
@@ -21,17 +21,15 @@ Let's look at some code examples to illustrate these points, focusing on the err
 This first example demonstrates a scenario where we're missing a crucial error handler. Without it, should the `resize` operation fail for any reason, the promise will be left in a pending state.
 
 ```javascript
-const sharp = require('sharp');
-const fs = require('fs').promises;
+const sharp = require("sharp");
+const fs = require("fs").promises;
 
 async function processImageWithoutErrorHandling(inputPath, outputPath) {
   try {
-      await sharp(inputPath)
-        .resize(200, 200)
-        .toFile(outputPath);
-      console.log('Image processed (no error handling)');
-  } catch (err){
-      console.error('Caught an error processing without handling.');
+    await sharp(inputPath).resize(200, 200).toFile(outputPath);
+    console.log("Image processed (no error handling)");
+  } catch (err) {
+    console.error("Caught an error processing without handling.");
   }
 }
 
@@ -39,16 +37,15 @@ async function processImageWithoutErrorHandling(inputPath, outputPath) {
 // processImageWithoutErrorHandling('./nonexistentimage.jpg', './output-error.jpg');
 
 async function processImageWithErrorHandling(inputPath, outputPath) {
-    await sharp(inputPath)
-      .resize(200, 200)
-      .toFile(outputPath)
-      .then(() => console.log('Image processed (with error handling)'))
-      .catch(err => console.error('Error processing image:', err));
+  await sharp(inputPath)
+    .resize(200, 200)
+    .toFile(outputPath)
+    .then(() => console.log("Image processed (with error handling)"))
+    .catch((err) => console.error("Error processing image:", err));
 }
 
-
 // Example usage - correctly handles errors
-processImageWithErrorHandling('./nonexistentimage.jpg', './output-error.jpg');
+processImageWithErrorHandling("./nonexistentimage.jpg", "./output-error.jpg");
 ```
 
 In the above example, the first invocation of `processImageWithoutErrorHandling` is explicitly wrapped in a try/catch to demonstrate the behavior and to highlight a common mistake. However, the second function shows the proper way to handle it. If the file at `inputPath` doesn't exist or is corrupted in some way, and the promises returned from sharpjs aren't handled using a `.catch()`, the program will hang, the promise will not resolve, and there will not be a clear indication of why. The corrected code shows explicit error handling with `.catch`, which catches and logs the error.
@@ -58,32 +55,35 @@ In the above example, the first invocation of `processImageWithoutErrorHandling`
 The next example illustrates a situation where we generate multiple sharp operations concurrently without controlling the degree of concurrency, which can, at times, overwhelm the processing and lead to pending promises.
 
 ```javascript
-const sharp = require('sharp');
-const fs = require('fs').promises;
+const sharp = require("sharp");
+const fs = require("fs").promises;
 
 async function processImagesConcurrent(inputPaths, outputPaths) {
-    const promises = inputPaths.map((inputPath, index) =>
-        sharp(inputPath)
-            .resize(100, 100)
-            .toFile(outputPaths[index])
-            .then(() => console.log(`Processed image ${index + 1}`))
-            .catch(err => console.error(`Error processing image ${index + 1}:`, err))
-    );
+  const promises = inputPaths.map((inputPath, index) =>
+    sharp(inputPath)
+      .resize(100, 100)
+      .toFile(outputPaths[index])
+      .then(() => console.log(`Processed image ${index + 1}`))
+      .catch((err) =>
+        console.error(`Error processing image ${index + 1}:`, err)
+      )
+  );
 
-    await Promise.all(promises);
+  await Promise.all(promises);
 }
 
-
 // Example usage - can lead to excessive concurrency
-const inputFiles = Array(10).fill('./test-image.jpg');
-const outputFiles = inputFiles.map((_, index) => `./output-concurrent-${index}.jpg`);
+const inputFiles = Array(10).fill("./test-image.jpg");
+const outputFiles = inputFiles.map(
+  (_, index) => `./output-concurrent-${index}.jpg`
+);
 
 // Create dummy images for the test
 async function createDummyImages() {
-    await fs.writeFile('./test-image.jpg', Buffer.from('dummy image data'));
+  await fs.writeFile("./test-image.jpg", Buffer.from("dummy image data"));
 }
 createDummyImages().then(() => {
-    processImagesConcurrent(inputFiles, outputFiles);
+  processImagesConcurrent(inputFiles, outputFiles);
 });
 ```
 
@@ -94,27 +94,27 @@ In this example, I am creating an array of image processing promises using `map`
 This next example showcases a more controlled approach, leveraging `async`/`await` within a loop to manage the execution of sharpjs operations sequentially, addressing the potential concurrency issue. It's not inherently faster, but provides explicit execution of the underlying work.
 
 ```javascript
-const sharp = require('sharp');
-const fs = require('fs').promises;
+const sharp = require("sharp");
+const fs = require("fs").promises;
 
 async function processImagesSequentially(inputPaths, outputPaths) {
   for (let i = 0; i < inputPaths.length; i++) {
-        try {
-              await sharp(inputPaths[i])
-              .resize(100, 100)
-              .toFile(outputPaths[i]);
-              console.log(`Processed image ${i + 1} sequentially`);
-        } catch(err) {
-            console.error(`Error in sequential processing ${i+1}`, err);
-        }
+    try {
+      await sharp(inputPaths[i]).resize(100, 100).toFile(outputPaths[i]);
+      console.log(`Processed image ${i + 1} sequentially`);
+    } catch (err) {
+      console.error(`Error in sequential processing ${i + 1}`, err);
     }
+  }
 }
 
 // Example usage
-const inputFilesSequential = Array(10).fill('./test-image.jpg');
-const outputFilesSequential = inputFiles.map((_, index) => `./output-sequential-${index}.jpg`);
+const inputFilesSequential = Array(10).fill("./test-image.jpg");
+const outputFilesSequential = inputFiles.map(
+  (_, index) => `./output-sequential-${index}.jpg`
+);
 
-processImagesSequentially(inputFilesSequential, outputFilesSequential)
+processImagesSequentially(inputFilesSequential, outputFilesSequential);
 ```
 
 Here, each image operation is explicitly `await`ed, ensuring that one operation completes before the next begins. This is much less likely to cause concurrency related problems. If there is an issue with file access or processing then it is captured and handled, avoiding the 'pending promise' hang.

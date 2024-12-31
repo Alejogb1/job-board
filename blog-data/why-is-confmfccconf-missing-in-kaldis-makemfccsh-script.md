@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-confmfccconf-missing-in-kaldis-makemfccsh-script"
 ---
 
-, . It's a question that probably pops up more often than we'd like, especially for those starting their journey with Kaldi. You're looking at the `make_mfcc.sh` script and wondering where the expected `conf/mfcc.conf` file is, and that's perfectly understandable. I recall my initial foray into Kaldi, encountering precisely this "missing file" conundrum. So, let me break it down for you, based on that experience and what I've learned over the years.
+It's a question that probably pops up more often than we'd like, especially for those starting their journey with Kaldi. You're looking at the `make_mfcc.sh` script and wondering where the expected `conf/mfcc.conf` file is, and that's perfectly understandable. I recall my initial foray into Kaldi, encountering precisely this "missing file" conundrum. So, let me break it down for you, based on that experience and what I've learned over the years.
 
 The key here is not that the `conf/mfcc.conf` file is _missing_ in the sense of being accidentally deleted or misplaced. Instead, it's simply not a mandatory configuration file that Kaldi's `make_mfcc.sh` script always expects to find in that specific location. The script is designed to be flexible, allowing for various feature extraction methods and parameters beyond just the default mel-frequency cepstral coefficients (mfcc). It’s also important to realize that modern Kaldi workflows often use the newer `steps/make_mfcc.sh` script which also doesn't require a `conf/mfcc.conf` file.
 

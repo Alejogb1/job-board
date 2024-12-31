@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-solidity-dynamic-multi-swaps-fail-with-transferfromfailed"
 ---
 
-, one. Having spent more time than I care to remember debugging smart contracts, especially those involving complex token interactions, i've definitely encountered the dreaded `TRANSFER_FROM_FAILED` error during dynamic multi swaps in Solidity. It's a frustrating situation, but it's usually traceable back to a few core issues with how approvals, allowances, and the ERC-20 token standard interact, especially in multi-hop scenarios. Let's break down why this happens, what I've seen in the field, and how to fix it.
+Having spent more time than I care to remember debugging smart contracts, especially those involving complex token interactions, i've definitely encountered the dreaded `TRANSFER_FROM_FAILED` error during dynamic multi swaps in Solidity. It's a frustrating situation, but it's usually traceable back to a few core issues with how approvals, allowances, and the ERC-20 token standard interact, especially in multi-hop scenarios. Let's break down why this happens, what I've seen in the field, and how to fix it.
 
 The primary cause, at its heart, involves a misalignment between what a smart contract _thinks_ it’s allowed to do versus what the token contract _actually_ permits. When you're talking about multi-swaps involving multiple tokens in a single transaction, you’re essentially chaining together multiple `transferFrom` calls. If any of these calls fails due to inadequate allowance, then the whole transaction will revert, typically with the `TRANSFER_FROM_FAILED` error.
 

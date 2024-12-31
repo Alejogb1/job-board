@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-network-mine-a-new-block-when-the-previous-one-isnt-full"
 ---
 
-, one. I've seen this misconception pop up quite a few times, and it usually stems from a misunderstanding of how block creation and propagation are designed in blockchain systems, specifically within the proof-of-work mechanism used by many. It’s a good question because it challenges the intuitive notion that resources, in this case, block space, must be fully utilized before proceeding.
+I've seen this misconception pop up quite a few times, and it usually stems from a misunderstanding of how block creation and propagation are designed in blockchain systems, specifically within the proof-of-work mechanism used by many. It’s a good question because it challenges the intuitive notion that resources, in this case, block space, must be fully utilized before proceeding.
 
 The short answer is that blocks aren't filled to capacity before being mined because the primary purpose isn’t achieving maximum utilization of the limited space in a block. Instead, it's about maintaining a consistent average time between blocks. This time, defined by the blockchain protocol, is crucial for network stability and security. If the focus was on filling blocks completely before mining new ones, the time between blocks would become unpredictable, fluctuating wildly based on transaction volume. Imagine a world where one block takes seconds and the next could take hours, that kind of instability is extremely problematic and is exactly what the design is meant to prevent.
 

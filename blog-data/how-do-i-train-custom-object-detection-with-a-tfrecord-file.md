@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-train-custom-object-detection-with-a-tfrecord-file"
 ---
 
-Right then, let’s tackle this. I recall a rather intricate project a few years back, involving drone imagery analysis for agricultural assessments. We needed to identify specific types of crop damage, and pre-trained models just weren't cutting it. Creating a custom object detection model trained with tfrecord files was absolutely crucial for that project’s success. So, let me walk you through the process, based on what I’ve learned along the way.
+Right then I recall a rather intricate project a few years back, involving drone imagery analysis for agricultural assessments. We needed to identify specific types of crop damage, and pre-trained models just weren't cutting it. Creating a custom object detection model trained with tfrecord files was absolutely crucial for that project’s success. So, let me walk you through the process, based on what I’ve learned along the way.
 
 The core idea is that you're not just tossing image files at your model. Tfrecord files provide a structured, efficient way to store and access your training data – think of them as highly optimized containers for your images and their corresponding bounding box annotations. This process involves a few distinct steps, and I’ll outline each with a bit of explanation and a code snippet to make it more tangible.
 
@@ -73,7 +73,7 @@ def create_tf_example(image_path, annotations, label_map):
 
 The `create_tf_example` function here takes an image path, associated annotations, and a label map as input. It reads the image, extracts the bounding box coordinates, and then carefully crafts an example proto for each image. Notice how we are also storing the encoded image, and the corresponding metadata such as filename and image format. This structured data makes it easier for Tensorflow to understand and process the data during the training process.
 
-Next up is the actual writing of these `tf.train.Example` protos into your tfrecord file.  You'll use a `tf.io.TFRecordWriter` object to write your generated protos. Here is an example:
+Next up is the actual writing of these `tf.train.Example` protos into your tfrecord file. You'll use a `tf.io.TFRecordWriter` object to write your generated protos. Here is an example:
 
 ```python
 def create_tfrecord_from_data(image_annotation_pairs, label_map, output_path):

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-the-contains-method-with-an-array-of-structs-in-swiftui"
 ---
 
-, let’s tackle this. I've encountered this specific challenge quite a few times in my work, particularly when dealing with complex data models in SwiftUI projects. It’s a common stumbling block for many, so you're not alone. The issue essentially boils down to the fact that the `.contains()` method, when used directly with an array of structs, relies on _equality_. Now, structs by default don't inherently know how to compare themselves for equality, unless they adhere to the `Equatable` protocol. This isn't a SwiftUI-specific quirk; it's how Swift works in general. Let me break down how to handle this situation and avoid potential pitfalls.
+I've encountered this specific challenge quite a few times in my work, particularly when dealing with complex data models in SwiftUI projects. It’s a common stumbling block for many, so you're not alone. The issue essentially boils down to the fact that the `.contains()` method, when used directly with an array of structs, relies on _equality_. Now, structs by default don't inherently know how to compare themselves for equality, unless they adhere to the `Equatable` protocol. This isn't a SwiftUI-specific quirk; it's how Swift works in general. Let me break down how to handle this situation and avoid potential pitfalls.
 
 First, let’s establish the foundational issue: a straightforward `.contains()` check on an array of structs won’t function as you might expect. Assume we have a struct like this, and for illustrative purposes, let's say this was in a past project where I was implementing a task management system:
 

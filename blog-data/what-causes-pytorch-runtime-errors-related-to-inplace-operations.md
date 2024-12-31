@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-pytorch-runtime-errors-related-to-inplace-operations"
 ---
 
-, one. I've seen more than my fair share of those cryptic PyTorch errors involving inplace operations. They can be a real pain, especially when you're knee-deep in training a complex model. It’s not uncommon for a seemingly innocuous change to trigger a cascade of these, and the error messages aren’t always as helpful as we’d like. Essentially, these errors bubble up from PyTorch's automatic differentiation (autograd) engine's attempt to correctly track the flow of computation for gradient calculation.
+I've seen more than my fair share of those cryptic PyTorch errors involving inplace operations. They can be a real pain, especially when you're knee-deep in training a complex model. It’s not uncommon for a seemingly innocuous change to trigger a cascade of these, and the error messages aren’t always as helpful as we’d like. Essentially, these errors bubble up from PyTorch's automatic differentiation (autograd) engine's attempt to correctly track the flow of computation for gradient calculation.
 
 The crux of the issue revolves around how autograd builds a computation graph. When you perform an operation, autograd records it so that it can later compute gradients via backpropagation. Inplace operations, by their very nature, modify tensors directly, without creating a new tensor to hold the result. This can lead to problems if the original tensor was required elsewhere in the computation graph, particularly when its original values are needed for gradient computation. PyTorch throws an error precisely to prevent you from inadvertently corrupting the backpropagation process.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-rails-6--a-route-for-custom-post--action-for-a-nested-resource--form"
 ---
 
-, so, nested resources and custom post actions in rails 6 with a form, gotcha. been there, done that, got the t-shirt. or maybe more accurately, got the caffeine-fueled all-nighters and the "why is this not working?!" moments. let me break it down based on some of my own, shall we say, _adventures_ with similar setups.
+, so, nested resources and custom post actions in rails 6 with a form, gotcha. been there, done that, got the t-shirt. or maybe more accurately, got the caffeine-fueled all-nighters and the "why is this not working?!" moments. let me break it down based on some of my own say, _adventures_ with similar setups.
 
 first, let's assume you've already got your basic models set up with the nested association. something like, say, a `blog` has many `posts`, and you're trying to add a custom action, maybe 'publish', to a specific post within that blog. i’ll throw together some snippets that will help you get the picture.
 

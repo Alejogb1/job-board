@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-quantedas-dfmweight-produce-relative-frequencies-exceeding-1"
 ---
 
-, let’s tackle this. It's a question that's certainly tripped up a few people, and I recall encountering it firsthand during a particularly complex text analysis project a couple of years back. I was working on a large corpus of legal documents, and seeing those seemingly impossible relative frequencies pop up from `dfm_weight()` in `quanteda` threw me for a loop initially. Let's break down why this happens, avoiding some of the common misinterpretations, and get to the core mechanisms of how the weighting works.
+It's a question that's certainly tripped up a few people, and I recall encountering it firsthand during a particularly complex text analysis project a couple of years back. I was working on a large corpus of legal documents, and seeing those seemingly impossible relative frequencies pop up from `dfm_weight()` in `quanteda` threw me for a loop initially. Let's break down why this happens, avoiding some of the common misinterpretations, and get to the core mechanisms of how the weighting works.
 
 The core confusion, as I’ve often seen, stems from a misunderstanding of how `dfm_weight()` with the `scheme = "relfreq"` parameter actually computes relative frequencies. People often assume it’s simply term frequency divided by the total number of _terms_ in the document. This is not quite accurate. Instead, what `quanteda` does, is calculate term frequency divided by the _maximum_ term frequency within that document. It's subtle but makes a critical difference. Let's clarify this with examples.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-effects-of-increasing-the-stack-size-in-reinforcement-learning-frameobservation-stacking"
 ---
 
-Right, let’s tackle this. I’ve spent my fair share of time elbow-deep in reinforcement learning (rl) pipelines, and the impact of frame stacking on performance, specifically in relation to stack size, is something I’ve encountered quite a few times. It's definitely not a one-size-fits-all scenario, and the consequences of fiddling with stack size can be substantial, sometimes in unexpected ways. It's worth unpacking this piece by piece.
+Right I’ve spent my fair share of time elbow-deep in reinforcement learning (rl) pipelines, and the impact of frame stacking on performance, specifically in relation to stack size, is something I’ve encountered quite a few times. It's definitely not a one-size-fits-all scenario, and the consequences of fiddling with stack size can be substantial, sometimes in unexpected ways. It's worth unpacking this piece by piece.
 
 The fundamental idea behind frame stacking, or observation stacking as you rightly put it, is to provide an rl agent with a history of recent observations rather than just a single, instantaneous view of the environment. This is often crucial, especially in environments with partial observability. Imagine, for instance, learning to play pong using only a single frame of pixel data at any given moment. The agent might struggle to infer the direction and speed of the ball, since it lacks the temporal context.
 

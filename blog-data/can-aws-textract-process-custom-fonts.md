@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-aws-textract-process-custom-fonts"
 ---
 
-Let’s get straight to it, shall we? This whole topic of custom fonts and optical character recognition (OCR), especially with a service like aws textract, brings back some…interesting times. I remember a project a few years back where we had to extract data from historical documents for a museum archive. These weren’t neatly typed pages; they were a mix of handwritten notes, printed text using fonts that looked like they had escaped from a 19th-century printing press, and some truly bizarre typographic choices. We quickly learned the limitations of default OCR models, and it’s a lesson I've internalized deeply since.
+Let’s get straight to it? This whole topic of custom fonts and optical character recognition (OCR), especially with a service like aws textract, brings back some…interesting times. I remember a project a few years back where we had to extract data from historical documents for a museum archive. These weren’t neatly typed pages; they were a mix of handwritten notes, printed text using fonts that looked like they had escaped from a 19th-century printing press, and some truly bizarre typographic choices. We quickly learned the limitations of default OCR models, and it’s a lesson I've internalized deeply since.
 
 So, can aws textract process custom fonts? The short answer is: yes, but with caveats. The longer answer gets into the nuances of how textract operates and what you can do to maximize its effectiveness. Here's a breakdown:
 
@@ -31,16 +31,17 @@ process_document('custom_font_doc.png')
 # Expected Output (likely incomplete/incorrect):
 # "Ths i a sampl of FcnyFont"
 ```
+
 As you can see, textract hasn't correctly identified all of the letters. The output is garbled. This highlights the limitations of relying solely on the out-of-the-box textract model.
 
 So, what can we do about it? The answer is multi-faceted but usually involves a combination of image pre-processing and, potentially, using textract’s custom analysis capabilities (though these are not about defining custom fonts themselves, but rather custom document structures).
 
 Image pre-processing involves cleaning up your input image to help improve the visibility of text. This might include operations like:
 
-*   **Noise reduction:** Removing imperfections in the image.
-*   **Contrast enhancement:** Increasing the distinction between text and background.
-*   **Binarization:** Converting the image to black and white, which can sharpen the text.
-*   **Skew correction:** Straightening any slanted text.
+- **Noise reduction:** Removing imperfections in the image.
+- **Contrast enhancement:** Increasing the distinction between text and background.
+- **Binarization:** Converting the image to black and white, which can sharpen the text.
+- **Skew correction:** Straightening any slanted text.
 
 Here's how image pre-processing might look using a library like opencv, which I often used on that museum project:
 
@@ -78,6 +79,7 @@ This preprocessing often makes a significant difference. However, for extremely 
 In those challenging cases, you might want to investigate textract’s "analyze_document" feature. While it doesn't specifically allow you to "train" textract on a custom font in the way you might train a custom machine learning model, analyze_document allows for more control over the document analysis. It uses different model types (e.g., 'FORMS' for structured data) that may provide different strengths, rather than just relying solely on 'DETECT_DOCUMENT_TEXT'. Using custom queries can help refine data extraction. It’s also worth noting that textract also supports the ability to extract text from tables and forms, which can sometimes be a better approach for structured documents.
 
 Let’s say we had a document that, in addition to some "FancyFont", contained a table with numerical data. `analyze_document` along with the use of custom queries could provide a useful approach to data extraction, while `detect_document_text` might fall short:
+
 ```python
 # Example 3: Using analyze_document for Forms
 import boto3

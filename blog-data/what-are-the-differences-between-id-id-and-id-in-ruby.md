@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-are-the-differences-between-id-id-and-id-in-ruby"
 ---
 
-, let’s tackle this. Having spent a fair chunk of time navigating the intricacies of Ruby, I've often encountered the nuances of `:id`, `id:`, and simply `id` in various contexts. These seemingly minor variations can, and often do, lead to vastly different interpretations and behaviours within the language. It's crucial, therefore, to understand their distinctions. Let me break it down from my experience, focusing on the technical aspects with a bit of practical colour.
+Having spent a fair chunk of time navigating the intricacies of Ruby, I've often encountered the nuances of `:id`, `id:`, and simply `id` in various contexts. These seemingly minor variations can, and often do, lead to vastly different interpretations and behaviours within the language. It's crucial, therefore, to understand their distinctions. Let me break it down from my experience, focusing on the technical aspects with a bit of practical colour.
 
 First off, when we see `:id`, we're dealing with a symbol. Symbols in Ruby are immutable strings, essentially lightweight identifiers often used as keys in hashes or as method names. They are not variables, and they always evaluate to themselves. Their immutability offers performance advantages, especially in situations where a string would be repeatedly allocated and garbage collected. They are part of the core fabric of Ruby's object model and are widely used under the hood. For example, when defining attributes in Active Record, they are represented as symbols. This is also very clear in Rails routing configurations.
 

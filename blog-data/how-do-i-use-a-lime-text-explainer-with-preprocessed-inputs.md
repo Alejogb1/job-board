@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-a-lime-text-explainer-with-preprocessed-inputs"
 ---
 
-, one. I’ve spent a good chunk of my career elbow-deep in the complexities of machine learning interpretability, and dealing with LIME (Local Interpretable Model-agnostic Explanations) and preprocessed text inputs is definitely a situation I’ve encountered more than once. It's less straightforward than, say, plugging in raw text, but it's certainly not insurmountable. The trick lies in understanding how LIME handles its perturbation process and aligning that with your preprocessing pipeline.
+I’ve spent a good chunk of my career elbow-deep in the complexities of machine learning interpretability, and dealing with LIME (Local Interpretable Model-agnostic Explanations) and preprocessed text inputs is definitely a situation I’ve encountered more than once. It's less straightforward than, say, plugging in raw text, but it's certainly not insurmountable. The trick lies in understanding how LIME handles its perturbation process and aligning that with your preprocessing pipeline.
 
 Here’s the core issue: LIME works by creating a perturbed version of your input and then observing how those perturbations affect your model's output. If your inputs are preprocessed—say, tokenized, padded, and transformed into a numerical sequence—LIME doesn't inherently understand how to create meaningful perturbations at that transformed level. Just randomly changing numbers won’t likely produce variations that reflect changes in the original text. It will lead to nonsense that your model has never seen and therefore can't meaningfully respond to. That makes it difficult for LIME to create explanations that actually make any sense.
 

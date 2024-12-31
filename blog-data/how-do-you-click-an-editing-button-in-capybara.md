@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-you-click-an-editing-button-in-capybara"
 ---
 
-, let’s tackle this. I've spent a good chunk of my career elbow-deep in automated testing, and Capybara, that trusty tool, has been a constant companion. Specifically, the task of triggering an edit action, often represented by a button, might seem straightforward, but can have a few nuances depending on the context. So let's explore how to reliably "click an editing button" in Capybara, while also highlighting some common pitfalls and solutions I've encountered over the years.
+I've spent a good chunk of my career elbow-deep in automated testing, and Capybara, that trusty tool, has been a constant companion. Specifically, the task of triggering an edit action, often represented by a button, might seem straightforward, but can have a few nuances depending on the context. So let's explore how to reliably "click an editing button" in Capybara, while also highlighting some common pitfalls and solutions I've encountered over the years.
 
 The core issue is not just about _finding_ the button, but ensuring Capybara interacts with it correctly within the rendered html. We’re not just clicking, we're simulating the user's interaction. That's the critical distinction. Simple selectors may sometimes fail when there's complexity in the DOM.
 

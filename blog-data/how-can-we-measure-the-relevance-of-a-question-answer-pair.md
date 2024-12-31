@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-we-measure-the-relevance-of-a-question-answer-pair"
 ---
 
-Let's dive right into this, shall we? Assessing the relevance of a question-answer pair is a fundamental problem, and not just in the context of something like StackOverflow. I’ve grappled with this across several projects, ranging from building internal knowledge bases at a previous role to working on an early iteration of a conversational AI platform. It’s a nuanced challenge, and “relevance” itself can mean different things depending on the application. At its core, however, it involves establishing how well the information provided in the answer addresses the intent and specific needs expressed in the question.
+Let's dive right into this? Assessing the relevance of a question-answer pair is a fundamental problem, and not just in the context of something like StackOverflow. I’ve grappled with this across several projects, ranging from building internal knowledge bases at a previous role to working on an early iteration of a conversational AI platform. It’s a nuanced challenge, and “relevance” itself can mean different things depending on the application. At its core, however, it involves establishing how well the information provided in the answer addresses the intent and specific needs expressed in the question.
 
 Initially, a naive approach might focus solely on keyword overlap—counting the number of matching words between the question and the answer. However, this often falls short, particularly when dealing with synonyms, paraphrases, or implied meaning. Let's consider a scenario where someone asks "how do i make a program that sends data over a network socket?" A response that simply mentions "socket programming" without further context would register low on keyword overlap, yet could be highly relevant for a seasoned developer. Conversely, an answer filled with networking jargon, while having high keyword overlap, might be completely irrelevant for a novice.
 
@@ -116,9 +116,10 @@ This illustrates the basic steps, but creating and using a custom model goes wel
 When choosing between these methods, consider the trade-offs between accuracy and computational cost. Cosine similarity with sentence embeddings is robust but computationally more expensive, while TF-IDF is quicker but less precise. Fine-tuning offers high precision but requires substantial effort in dataset creation.
 
 For deeper dives, I strongly recommend the following resources:
-*   **Speech and Language Processing** by Daniel Jurafsky and James H. Martin - a cornerstone text for understanding natural language processing fundamentals.
-*   **Deep Learning with Python** by François Chollet – A fantastic book for understanding the practical application of deep learning, including NLP concepts.
-*   The documentation and research papers provided by the authors of the `Sentence Transformers` library, which provide detailed insights into their pre-trained models and the underlying techniques.
-*   The Hugging Face `transformers` documentation is essential for anyone planning to use their libraries for fine-tuning models.
+
+- **Speech and Language Processing** by Daniel Jurafsky and James H. Martin - a cornerstone text for understanding natural language processing fundamentals.
+- **Deep Learning with Python** by François Chollet – A fantastic book for understanding the practical application of deep learning, including NLP concepts.
+- The documentation and research papers provided by the authors of the `Sentence Transformers` library, which provide detailed insights into their pre-trained models and the underlying techniques.
+- The Hugging Face `transformers` documentation is essential for anyone planning to use their libraries for fine-tuning models.
 
 Ultimately, measuring the relevance of a question-answer pair is a complex and evolving field. There is no one-size-fits-all solution. The best approach often involves experimentation, careful evaluation, and a continuous process of refining your methods.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-convert-facebooknllb-200-33b-to-aws-neuron"
 ---
 
-, let’s tackle this. Migrating a large language model like `facebook/nllb-200-3.3B` to AWS neuron is a non-trivial task, but definitely achievable with the correct strategy. It’s something I actually spent a good portion of a project on a couple of years back, attempting to optimize inference speed for a high-throughput translation service. The sheer scale of such models necessitates a deliberate approach to ensure optimal performance on AWS Neuron-compatible hardware.
+Migrating a large language model like `facebook/nllb-200-3.3B` to AWS neuron is a non-trivial task, but definitely achievable with the correct strategy. It’s something I actually spent a good portion of a project on a couple of years back, attempting to optimize inference speed for a high-throughput translation service. The sheer scale of such models necessitates a deliberate approach to ensure optimal performance on AWS Neuron-compatible hardware.
 
 The core challenge lies in the fact that `nllb-200-3.3B`, like most transformer models, is designed for general-purpose accelerators such as GPUs. AWS Neuron, however, is designed for the custom silicon offered by AWS Inferentia and Trainium chips. This means direct conversion is usually not possible. Instead, we need to focus on exporting the model in a format compatible with the neuron SDK and then optimizing it.
 

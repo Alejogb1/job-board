@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-save-and-load-a-pytorch-model"
 ---
 
-Let’s tackle this, shall we? It's a question that might seem straightforward on the surface but quickly reveals subtleties as you delve deeper into practical deployment scenarios. I’ve spent a fair amount of time optimizing model workflows, and dealing with the nuances of saving and loading PyTorch models efficiently is something I've had to refine over many projects. It’s not just about making things work, it's about making them robust, repeatable, and maintainable.
+Let’s tackle this? It's a question that might seem straightforward on the surface but quickly reveals subtleties as you delve deeper into practical deployment scenarios. I’ve spent a fair amount of time optimizing model workflows, and dealing with the nuances of saving and loading PyTorch models efficiently is something I've had to refine over many projects. It’s not just about making things work, it's about making them robust, repeatable, and maintainable.
 
 The core challenge, as I see it, is that a PyTorch model isn't just a set of weights. It’s an intricately constructed computational graph, and we need to preserve both its architecture and learned parameters for later reuse. There are essentially two primary approaches you'll encounter in most projects: saving and loading the entire model directly, or saving and loading only the state dictionary. Each has its place, advantages, and disadvantages.
 
@@ -133,6 +133,7 @@ with torch.no_grad():
 assert torch.all(loaded_output_bundle == dummy_output)
 print("Checkpoint Saved and Loaded Correctly")
 ```
+
 With this, not only are we saving model weights, but also optimizer state and other relevant details that are useful for continuation. When you reload this dictionary, everything that was previously in there is available.
 
 For further deep diving, I recommend exploring the PyTorch documentation very thoroughly. Additionally, reading "Deep Learning with PyTorch" by Eli Stevens, Luca Antiga, and Thomas Viehmann is beneficial for a holistic understanding of best practices in PyTorch development. Also, the "Dive into Deep Learning" book by Aston Zhang, Zachary C. Lipton, Mu Li, and Alexander J. Smola provides excellent conceptual grounding on deep learning which is very helpful for making these save and load workflows smooth and effective. Finally, check the documentation related to `torch.save`, `torch.load`, and `state_dict` on the PyTorch official website for the most updated usage details. These resources combined will give you a really solid grasp of how to handle model persistence effectively in a range of real-world applications.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-fine-tune-the-last-layers-of-my-neural-network-for-transfer-learning"
 ---
 
-, shall we? I’ve been elbow-deep in this particular area more times than I care to recall, often when production models start exhibiting that oh-so-familiar stagnation after initial transfer learning. You're essentially asking about optimizing the latter stages of a pre-trained neural network after you've grafted it onto a new dataset—a crucial step, and often where the real performance gains materialize.
+? I’ve been elbow-deep in this particular area more times than I care to recall, often when production models start exhibiting that oh-so-familiar stagnation after initial transfer learning. You're essentially asking about optimizing the latter stages of a pre-trained neural network after you've grafted it onto a new dataset—a crucial step, and often where the real performance gains materialize.
 
 The idea here isn't just to slap a new classifier on the end of a frozen pre-trained network and call it a day. While that gets you a quick starting point, it usually leaves a lot of potential on the table. The final layers, those closest to your actual classification or regression task, often need specific adjustments to adapt the learned features from the original domain to your new target. These layers are specialized and therefore highly sensitive to the specifics of the data they encounter. We're dealing with a delicate balance: leveraging the robust feature extraction abilities of the pre-trained layers while still tailoring the later stages for optimal performance on your particular dataset.
 

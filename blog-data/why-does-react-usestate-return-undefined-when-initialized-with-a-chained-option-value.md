@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-react-usestate-return-undefined-when-initialized-with-a-chained-option-value"
 ---
 
-, one. It’s a classic pitfall, and one I’ve stumbled into myself more than a few times back when I was heavily involved in a complex React project involving dynamically generated forms. The issue with `useState` returning `undefined` when initialized with a chained option value isn't necessarily a bug in `useState` itself, but rather stems from how JavaScript evaluates expressions and, more critically, how `useState` handles its initial value logic within React's reconciliation process.
+It’s a classic pitfall, and one I’ve stumbled into myself more than a few times back when I was heavily involved in a complex React project involving dynamically generated forms. The issue with `useState` returning `undefined` when initialized with a chained option value isn't necessarily a bug in `useState` itself, but rather stems from how JavaScript evaluates expressions and, more critically, how `useState` handles its initial value logic within React's reconciliation process.
 
 Essentially, the behavior you’re seeing typically arises when your initial value expression is evaluated _before_ the actual data you’re attempting to access exists. `useState` only uses the initial value _once_ during the component’s initial render. On subsequent renders, it ignores the initial value. Therefore, if that initial value is calculated from something that's not yet available during the initial render, like an element in a not-yet-populated array, or a deeply nested property of a pending API response, you'll get `undefined`.
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-add-a-file-to-the-testcontainers-classpath-in-vs-codemetals-using-sbt"
 ---
 
-, let’s tackle this. I've actually run into this exact scenario a few times, especially when dealing with integration testing that requires custom configurations or data files alongside Testcontainers. It’s a fairly common need, and the solution, while not always immediately obvious, is actually quite straightforward once you understand how classpaths are handled.
+I've actually run into this exact scenario a few times, especially when dealing with integration testing that requires custom configurations or data files alongside Testcontainers. It’s a fairly common need, and the solution, while not always immediately obvious, is actually quite straightforward once you understand how classpaths are handled.
 
 The issue, fundamentally, stems from the fact that Testcontainers, when spinning up its Docker containers, needs access to any resource files you intend to use within your tests. If these files aren't properly included in the classpath that Testcontainers sees, you'll inevitably run into `FileNotFoundException` or similar errors when the code inside your container tries to access those resources. The default `sbt test` classpath doesn’t automatically grab extra, non-source files. That's where we need to intervene.
 
-My personal experience with this involved a complex microservice architecture where we had to load specific configuration files into containers during integration testing. We needed to simulate different environment configurations using these files, and initially, getting them into the Testcontainers environment was, shall we say, a learning experience.
+My personal experience with this involved a complex microservice architecture where we had to load specific configuration files into containers during integration testing. We needed to simulate different environment configurations using these files, and initially, getting them into the Testcontainers environment was say, a learning experience.
 
 The approach I’ve found consistently reliable involves leveraging sbt's ability to handle resource directories and then ensuring that these directories are correctly included in the classpath used when running your tests. Specifically, we'll use `unmanagedResources` in your `build.sbt` file. This directive tells sbt to treat specific directories as sources of resources that should be included when the project is compiled and bundled. Additionally, we'll use a `test` setting to ensure that resources end up on the classpath specifically for tests, which is where Testcontainers typically executes.
 

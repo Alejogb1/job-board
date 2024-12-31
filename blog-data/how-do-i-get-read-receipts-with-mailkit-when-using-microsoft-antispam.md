@@ -14,7 +14,7 @@ Here's a breakdown of the problem and a few strategies I've found helpful, along
 
 **The Problem: Antispam Interference**
 
-Microsoft's antispam filters are, shall we say, aggressive. If a message looks even slightly out of the ordinary, they are prone to modify or reject it, and `Disposition-Notification-To` headers often fall under that scrutiny. The recipient's email client may also play a role, as some might ignore the request by default.
+Microsoft's antispam filters are say, aggressive. If a message looks even slightly out of the ordinary, they are prone to modify or reject it, and `Disposition-Notification-To` headers often fall under that scrutiny. The recipient's email client may also play a role, as some might ignore the request by default.
 
 **Strategy 1: Direct Header Injection**
 

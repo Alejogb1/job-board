@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-failing-to-run-a-simple-program-in-solidity"
 ---
 
-, let’s tackle this. It's frustrating, I get it. Staring at what _should_ be a straightforward contract failing to deploy or execute is a common experience, one I've definitely spent my fair share of time debugging. The issue isn't always immediately obvious, and it often stems from a collection of subtle details rather than a single, glaring error. So, let’s walk through a few common pitfalls I've personally encountered, along with practical examples and specific areas where I’ve seen developers (myself included, on more than one occasion) stumble.
+It's frustrating, I get it. Staring at what _should_ be a straightforward contract failing to deploy or execute is a common experience, one I've definitely spent my fair share of time debugging. The issue isn't always immediately obvious, and it often stems from a collection of subtle details rather than a single, glaring error. So, let’s walk through a few common pitfalls I've personally encountered, along with practical examples and specific areas where I’ve seen developers (myself included, on more than one occasion) stumble.
 
 The first area to meticulously examine is the **Solidity version and compiler configuration**. Remember, different versions of the solidity compiler can interpret code slightly differently, and sometimes, these interpretations can be detrimental. Early versions had quirks; later ones introduced breaking changes. For example, I once spent hours tracking down a gas-related issue only to realize that the contract was compiled using a version that handled certain revert mechanisms differently than the testing environment expected.
 

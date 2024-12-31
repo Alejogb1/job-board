@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-build-command-not-found-error-when-running-rails-assetsprecompile-in-rails-7-production-mode"
 ---
 
-, let’s tackle this. So, you're running into the dreaded "build command not found" error during `rails assets:precompile` in a Rails 7 production environment. It’s a classic head-scratcher, and I've personally spent more than my fair share of late nights chasing down this specific issue. It's rarely a straightforward case, and the root causes often hide beneath a veneer of seemingly correct configurations. Let me walk you through what I’ve learned over the years.
+So, you're running into the dreaded "build command not found" error during `rails assets:precompile` in a Rails 7 production environment. It’s a classic head-scratcher, and I've personally spent more than my fair share of late nights chasing down this specific issue. It's rarely a straightforward case, and the root causes often hide beneath a veneer of seemingly correct configurations. Let me walk you through what I’ve learned over the years.
 
 This error fundamentally arises because the asset precompilation process, particularly in production, relies heavily on external tools and configurations, and if any of these components are absent or misconfigured, the process will fail. Rails, particularly since the introduction of webpacker (and now, importmaps) to manage front-end assets, uses external node.js packages and utilities. If these are not properly installed, accessible in the correct locations, or aren't executing as Rails expects, you'll see that frustrating "build command not found" error. The issue isn't usually with Rails itself, but more often with its environment and how it’s set up to find and run these necessary external commands.
 

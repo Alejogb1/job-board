@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-attrencrypted-be-used-in-rails-7"
 ---
 
-, let’s tackle this. I've spent a fair bit of time wrangling encrypted data in Rails, and `attr_encrypted` has been a tool in my arsenal for a long while. It's particularly handy when you need to store sensitive information in your database without resorting to full-disk encryption, though, keep in mind it's not a replacement for it. It also pairs well when compliance requirements around handling user data come into play. Now, in Rails 7, the core principles remain the same, but let’s delve into how you’d typically approach it, and we can look at some concrete examples to make it crystal clear.
+I've spent a fair bit of time wrangling encrypted data in Rails, and `attr_encrypted` has been a tool in my arsenal for a long while. It's particularly handy when you need to store sensitive information in your database without resorting to full-disk encryption, though, keep in mind it's not a replacement for it. It also pairs well when compliance requirements around handling user data come into play. Now, in Rails 7, the core principles remain the same, but let’s delve into how you’d typically approach it, and we can look at some concrete examples to make it crystal clear.
 
 Essentially, `attr_encrypted` allows you to define ActiveRecord attributes that are automatically encrypted before being stored in the database and decrypted when retrieved. It's transparent to the application layer – you work with the attributes as you normally would, without needing to worry about the encryption and decryption process directly. This makes for cleaner and more maintainable code.
 

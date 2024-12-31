@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-update-a-unity-ui-element-triggered-by-a-two-parameter-event"
 ---
 
-, let’s tackle this. Updating a Unity UI element based on a two-parameter event isn’t terribly complex, but a clear understanding of the process is key to keeping your code maintainable and scalable. I’ve been down this road countless times, especially when dealing with inventory systems or complex UI interactions where a single event needs to convey more than just a simple trigger. We're talking, for instance, about something like a ‘item selected’ event that provides both the item's id and its display name. Instead of just having a boolean to tell us something changed, we need data.
+Updating a Unity UI element based on a two-parameter event isn’t terribly complex, but a clear understanding of the process is key to keeping your code maintainable and scalable. I’ve been down this road countless times, especially when dealing with inventory systems or complex UI interactions where a single event needs to convey more than just a simple trigger. We're talking, for instance, about something like a ‘item selected’ event that provides both the item's id and its display name. Instead of just having a boolean to tell us something changed, we need data.
 
 The core idea revolves around using C#’s event system, specifically with `System.Action<T1, T2>` delegates when you need to pass two pieces of information. These delegates define the signature of the methods that will be called when the event is triggered. Let’s break this down, starting with establishing the event and publisher.
 

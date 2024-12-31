@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-u-net-be-trained-for-multi-landmark-heatmap-regression-to-produce-consistent-heatmaps-across-channels"
 ---
 
-, let's get into this. I've actually spent a considerable amount of time on problems like this, specifically with multi-landmark localization within medical imaging, and the question of consistent heatmaps across channels from a u-net is absolutely critical. It’s not just about getting _any_ heatmap; it’s about obtaining _predictable_ and _interpretable_ heatmaps that we can rely on across different landmark types or even acquisition modalities.
+, I've actually spent a considerable amount of time on problems like this, specifically with multi-landmark localization within medical imaging, and the question of consistent heatmaps across channels from a u-net is absolutely critical. It’s not just about getting _any_ heatmap; it’s about obtaining _predictable_ and _interpretable_ heatmaps that we can rely on across different landmark types or even acquisition modalities.
 
 So, to address your core question: yes, a u-net can absolutely be trained for multi-landmark heatmap regression to produce consistent heatmaps across channels. It's not a magical outcome, though. It requires careful consideration of network architecture, loss function, and, importantly, how you represent your ground truth data.
 

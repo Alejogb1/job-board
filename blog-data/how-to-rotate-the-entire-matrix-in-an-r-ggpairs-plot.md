@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-rotate-the-entire-matrix-in-an-r-ggpairs-plot"
 ---
 
-, one. I remember years ago, working on a particularly hairy data visualization project for a research group, we encountered this exact challenge with `ggpairs`. The default layout was causing a significant usability issue; the labels on the diagonal and some plot elements were just impossible to read without tilting your head, and the sheer volume of plots exacerbated the problem. The need to rotate the entire matrix for better horizontal alignment became a top priority. Let’s talk through how you’d handle this.
+I remember years ago, working on a particularly hairy data visualization project for a research group, we encountered this exact challenge with `ggpairs`. The default layout was causing a significant usability issue; the labels on the diagonal and some plot elements were just impossible to read without tilting your head, and the sheer volume of plots exacerbated the problem. The need to rotate the entire matrix for better horizontal alignment became a top priority. Let’s talk through how you’d handle this.
 
 The core of the problem stems from how `ggpairs` constructs its output: it uses ggplot2’s framework but arranges individual plots in a grid. There's no single, magic function to rotate the _entire_ matrix as a single entity. Instead, we have to operate on the individual plots that form the matrix. We can achieve this by intercepting the generated ggplot objects, modifying them, and then reconstructing the plot. This requires a bit of intermediate work, and we'll get into that.
 

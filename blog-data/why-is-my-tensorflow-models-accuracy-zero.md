@@ -8,7 +8,7 @@ id: "why-is-my-tensorflow-models-accuracy-zero"
 
 First off, let's ditch the assumption that the model itself is inherently flawed. More often than not, the issue isn't the architecture but what we're feeding it or how we’re training it. I’ve debugged countless hours thinking my layers were broken only to discover the problem was staring at me from the data preprocessing pipeline.
 
-Typically, a zero accuracy result signals one of these three main problem areas: data issues, incorrect loss functions paired with inappropriate activation functions, or fundamentally flawed training setup. Let’s unpack them, shall we?
+Typically, a zero accuracy result signals one of these three main problem areas: data issues, incorrect loss functions paired with inappropriate activation functions, or fundamentally flawed training setup. Let’s unpack them?
 
 **1. Data Issues - The Foundation of Your Model**
 

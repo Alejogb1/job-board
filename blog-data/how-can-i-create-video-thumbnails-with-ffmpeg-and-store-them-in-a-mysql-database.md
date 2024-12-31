@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-video-thumbnails-with-ffmpeg-and-store-them-in-a-mysql-database"
 ---
 
-, . Creating video thumbnails and managing them within a database is a fairly common requirement, and ffmpeg is definitely the right tool for the job. I’ve spent more than a few late nights wrestling (, _working_) with similar pipelines, so I can offer some practical guidance. The key here is to think of this as a two-step process: generating the thumbnail with ffmpeg and then storing it in the MySQL database.
+Creating video thumbnails and managing them within a database is a fairly common requirement, and ffmpeg is definitely the right tool for the job. I’ve spent more than a few late nights wrestling (, _working_) with similar pipelines, so I can offer some practical guidance. The key here is to think of this as a two-step process: generating the thumbnail with ffmpeg and then storing it in the MySQL database.
 
 Let's start with ffmpeg. It's incredibly flexible, but for thumbnails, we're typically focusing on a few core functionalities. Specifically, we want to extract a single frame from a video, resize it if necessary, and encode it into a standard image format like jpeg or png. My go-to approach usually involves using a combination of `-ss`, `-vframes`, `-vf`, and of course `-y` to overwrite existing files. The `-ss` flag allows you to specify the point in time you want to grab the frame. The `-vframes` flag lets you indicate the number of frames you wish to extract (in our case just one), and the `-vf` allows for frame filtering, such as scaling.
 

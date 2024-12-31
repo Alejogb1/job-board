@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-flaws-in-telegrams-bot-ban-system"
 ---
 
-head-on. I've spent a fair amount of time architecting and maintaining bot systems, not just for Telegram, but across various platforms, and I’ve certainly encountered the frustrating limitations of Telegram’s ban mechanism. It’s not as straightforward as a simple blacklist, and its design has, shall we say, complexities.
+head-on. I've spent a fair amount of time architecting and maintaining bot systems, not just for Telegram, but across various platforms, and I’ve certainly encountered the frustrating limitations of Telegram’s ban mechanism. It’s not as straightforward as a simple blacklist, and its design has say, complexities.
 
 First, it's crucial to understand that Telegram’s bot ban system relies heavily on user reports. This, in itself, presents a major vulnerability. If a bot becomes the target of a coordinated campaign of false reports, it can be banned, often without any actual violation of Telegram's terms of service. I recall a particularly problematic situation back in 2018 where a bot I had developed for a small online community, a tool for scheduling meetups, was targeted by a group who didn't like its core functionality. Within a few hours, it was banned, despite perfectly adhering to all rules. There was little recourse; the appeals process at that time was less than ideal, and frankly, the process of proving the bot's legitimacy was burdensome and time-consuming. This reliance on user-generated ‘flags’ introduces a significant bias that can be exploited.
 

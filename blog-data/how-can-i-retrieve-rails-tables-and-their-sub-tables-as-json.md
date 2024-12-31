@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-rails-tables-and-their-sub-tables-as-json"
 ---
 
-, let’s tackle this. I've been down this road more times than I care to count, particularly in scenarios where API responses need to be both comprehensive and efficient. Getting Rails tables, particularly with their associated sub-tables, into a nicely structured JSON format requires a considered approach. It’s less about a single magic command, and more about understanding the nuances of Active Record relationships and how best to serialize them.
+I've been down this road more times than I care to count, particularly in scenarios where API responses need to be both comprehensive and efficient. Getting Rails tables, particularly with their associated sub-tables, into a nicely structured JSON format requires a considered approach. It’s less about a single magic command, and more about understanding the nuances of Active Record relationships and how best to serialize them.
 
 My approach typically revolves around a few key techniques: leveraging eager loading, utilizing serializers, and sometimes incorporating custom logic for specific edge cases. Let's break down each of these.
 

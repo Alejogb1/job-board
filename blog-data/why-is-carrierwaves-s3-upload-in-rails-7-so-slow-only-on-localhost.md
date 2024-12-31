@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-carrierwaves-s3-upload-in-rails-7-so-slow-only-on-localhost"
 ---
 
-, let’s tackle this. I’ve definitely seen this one pop up a few times over the years, often catching developers off guard. It’s the frustrating scenario where your Carrierwave-powered S3 uploads in a Rails 7 application are lightning fast in production but grind to a halt on your localhost. The problem isn’t inherently with Carrierwave itself, or necessarily even with your code directly. Instead, it usually boils down to a confluence of factors involving how your development environment simulates cloud storage interactions.
+I’ve definitely seen this one pop up a few times over the years, often catching developers off guard. It’s the frustrating scenario where your Carrierwave-powered S3 uploads in a Rails 7 application are lightning fast in production but grind to a halt on your localhost. The problem isn’t inherently with Carrierwave itself, or necessarily even with your code directly. Instead, it usually boils down to a confluence of factors involving how your development environment simulates cloud storage interactions.
 
 The primary culprit, in my experience, is the way your local setup handles S3 requests. When you’re developing locally, you’re generally not _actually_ talking to Amazon S3. You’re typically relying on a service like `fog-aws`, `shrine`, or `mini_magick` (if you’re processing images), or some other mocking solution, to intercept those S3 calls and simulate responses. These mocks are great for isolating your application during development and avoiding unnecessary AWS costs, but they're often the source of slowdowns when dealing with significant data payloads.
 

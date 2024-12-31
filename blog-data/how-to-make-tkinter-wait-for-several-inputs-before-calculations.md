@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-make-tkinter-wait-for-several-inputs-before-calculations"
 ---
 
-, let’s tackle this. I’ve definitely stumbled through this particular scenario more than a few times in my UI development days, especially with Tkinter. The challenge, as you’ve framed it, isn’t about just _getting_ the inputs; it's about orchestrating the input collection _before_ firing off calculations, which can lead to some race conditions if not handled correctly. It's not enough for Tkinter to register key presses or form submissions individually; we need it to pause and accumulate the necessary data.
+I’ve definitely stumbled through this particular scenario more than a few times in my UI development days, especially with Tkinter. The challenge, as you’ve framed it, isn’t about just _getting_ the inputs; it's about orchestrating the input collection _before_ firing off calculations, which can lead to some race conditions if not handled correctly. It's not enough for Tkinter to register key presses or form submissions individually; we need it to pause and accumulate the necessary data.
 
 The crux of the issue lies in the event-driven nature of Tkinter. Every interaction, be it a button click, keypress, or menu selection, triggers an event. If your calculation function is directly tied to an individual event, you'll find yourself performing calculations prematurely, before all the necessary inputs are available. The solution involves decoupling input collection from the calculation trigger.
 

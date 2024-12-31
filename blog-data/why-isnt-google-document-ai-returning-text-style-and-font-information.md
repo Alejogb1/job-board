@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-google-document-ai-returning-text-style-and-font-information"
 ---
 
-, let’s tackle this. You’re encountering a fairly common frustration with Google Document AI, specifically its apparent reluctance to consistently return the stylistic nuances, such as font family, size, and other text formatting details. I’ve personally spent more than a few hours debugging similar situations across different projects, so I understand where you're coming from.
+You’re encountering a fairly common frustration with Google Document AI, specifically its apparent reluctance to consistently return the stylistic nuances, such as font family, size, and other text formatting details. I’ve personally spent more than a few hours debugging similar situations across different projects, so I understand where you're coming from.
 
 The crux of the issue lies in how Google Document AI (and most optical character recognition, or OCR, services, for that matter) is primarily optimized for _content extraction_, not precise stylistic replication. While Document AI _can_ sometimes provide hints about text style, it's not its core function and, frankly, shouldn’t be relied on for robust styling information. Think of it as a highly effective reader, not a perfect photocopier.
 

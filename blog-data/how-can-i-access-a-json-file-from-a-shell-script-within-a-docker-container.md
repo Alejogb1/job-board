@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-a-json-file-from-a-shell-script-within-a-docker-container"
 ---
 
-, one. I've bumped into this exact scenario multiple times during various deployments – the need to pull data from a json configuration file located inside a docker container, directly from within a shell script _running_ inside that same container. It’s more common than you might initially think, especially with microservice architectures where configuration is often externalized.
+I've bumped into this exact scenario multiple times during various deployments – the need to pull data from a json configuration file located inside a docker container, directly from within a shell script _running_ inside that same container. It’s more common than you might initially think, especially with microservice architectures where configuration is often externalized.
 
 The core challenge revolves around how your shell script, executing inside the container's environment, can reliably access and parse a file sitting in the container’s filesystem. The solution, essentially, boils down to combining a couple of standard shell commands. It isn’t complicated, but it's important to approach it methodically.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-one-hot-encoding-impact-the-precision-recall-curve-of-image-segmentation-models-as-measured-by-auc-roc"
 ---
 
-, shall we? It's a topic I've spent quite a bit of time on, specifically during my work with satellite imagery analysis a few years back, where precise segmentation was absolutely critical. We were dealing with a ton of multi-spectral data, and the way we handled the categorical output labels had a noticeable, sometimes frustrating, impact on our performance metrics, particularly the area under the receiver operating characteristic curve (auc-roc).
+? It's a topic I've spent quite a bit of time on, specifically during my work with satellite imagery analysis a few years back, where precise segmentation was absolutely critical. We were dealing with a ton of multi-spectral data, and the way we handled the categorical output labels had a noticeable, sometimes frustrating, impact on our performance metrics, particularly the area under the receiver operating characteristic curve (auc-roc).
 
 The core of the issue lies in how one-hot encoding transforms categorical data—the segment labels in this case—into a numerical format that machine learning algorithms can consume. In the context of image segmentation, each pixel is classified into one of several predefined categories (e.g., building, road, vegetation). These categorical labels are not inherently numerical and can't be directly fed into algorithms that typically expect numerical inputs. One-hot encoding addresses this by representing each category as a binary vector. For instance, if we have three classes: `building`, `road`, and `vegetation`, the encodings might be: `building` = [1, 0, 0], `road` = [0, 1, 0], and `vegetation` = [0, 0, 1].
 

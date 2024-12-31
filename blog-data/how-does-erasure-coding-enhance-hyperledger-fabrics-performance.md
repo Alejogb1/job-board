@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-erasure-coding-enhance-hyperledger-fabrics-performance"
 ---
 
-, one. It's a topic I've spent considerable time with, having wrangled data storage in a few production fabric networks. While much of the conversation around fabric focuses on consensus and smart contracts, the underlying storage mechanism can significantly impact overall performance, and erasure coding plays a crucial role here, even if it's often a bit under the radar.
+It's a topic I've spent considerable time with, having wrangled data storage in a few production fabric networks. While much of the conversation around fabric focuses on consensus and smart contracts, the underlying storage mechanism can significantly impact overall performance, and erasure coding plays a crucial role here, even if it's often a bit under the radar.
 
 The standard replication approach in traditional databases, which fabric also uses by default for its ledger, often involves creating multiple copies of the same data across different nodes. This ensures high availability and fault tolerance. If one node fails, other nodes hold the same data and can continue processing transactions. However, this comes with a hefty price – storage overhead. If you have _n_ replicas, you’re effectively using _n_ times the space you actually need for your core data. That’s a lot of wasted storage, especially as network sizes grow, and it becomes a performance bottleneck if storage bandwidth becomes a limiting factor during data reads.
 

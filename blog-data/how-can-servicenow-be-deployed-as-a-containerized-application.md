@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-servicenow-be-deployed-as-a-containerized-application"
 ---
 
-, let’s tackle this. Containerizing ServiceNow, while not something you’ll find ‘out of the box’ given its architecture, is a really interesting thought exercise, and something I've actually spent time exploring in a past project where we had complex multi-cloud requirements. The platform itself is not designed for direct containerization in the way, say, a microservice is. Instead, we're looking at a more involved orchestration strategy, leveraging containers for supporting components of the ServiceNow ecosystem.
+Containerizing ServiceNow, while not something you’ll find ‘out of the box’ given its architecture, is a really interesting thought exercise, and something I've actually spent time exploring in a past project where we had complex multi-cloud requirements. The platform itself is not designed for direct containerization in the way, say, a microservice is. Instead, we're looking at a more involved orchestration strategy, leveraging containers for supporting components of the ServiceNow ecosystem.
 
 The challenge stems from the fact that ServiceNow is a substantial, proprietary platform, generally deployed on its managed infrastructure. Direct image creation of the core application server is not something ServiceNow permits or provides. What _is_ possible, and where containers can dramatically enhance agility, is in the deployment and management of complementary services. This could include mid servers, integration hubs, or custom developed extensions. It's about moving away from static server deployments to a more dynamic, scalable approach for these supporting components.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tokenomics-research-be-automated"
 ---
 
-, one. I've spent a considerable amount of time working with various blockchain protocols, and automating aspects of tokenomics research is something I’ve found increasingly crucial, especially as ecosystems grow in complexity. The problem is multifaceted; it's not just about pulling data, it's about understanding the relationships within that data and drawing meaningful conclusions, and doing it at scale. This is where automation becomes essential.
+I've spent a considerable amount of time working with various blockchain protocols, and automating aspects of tokenomics research is something I’ve found increasingly crucial, especially as ecosystems grow in complexity. The problem is multifaceted; it's not just about pulling data, it's about understanding the relationships within that data and drawing meaningful conclusions, and doing it at scale. This is where automation becomes essential.
 
 Let's break down how we can achieve this. Firstly, data acquisition is paramount. You need reliable, structured data from multiple sources, including on-chain data (transaction history, token holdings, contract interactions), exchange data (price, volume, liquidity), and sometimes even social media sentiment (though that's often a noisy signal). I recall a project a few years back where we were trying to assess the impact of a staking mechanism change; relying on manually compiled data was simply impractical. We had to devise automated mechanisms to pull this data efficiently and regularly.
 

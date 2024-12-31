@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-custom-categorical-loss-function-for-a-variable-number-of-labels"
 ---
 
-, one. Custom loss functions, especially those dealing with a variable number of categories, can indeed be a bit intricate, but totally manageable. I've been in similar situations a few times, once back in my days working on a large-scale text classification system where we had documents tagged with multiple, sometimes wildly different, numbers of labels. That project forced me to really understand the guts of custom loss functions, not just relying on the pre-baked ones. So, how do we approach creating such a function?
+Custom loss functions, especially those dealing with a variable number of categories, can indeed be a bit intricate, but totally manageable. I've been in similar situations a few times, once back in my days working on a large-scale text classification system where we had documents tagged with multiple, sometimes wildly different, numbers of labels. That project forced me to really understand the guts of custom loss functions, not just relying on the pre-baked ones. So, how do we approach creating such a function?
 
 The challenge, as you've highlighted, lies in the 'variable number' aspect. Most standard categorical loss functions, like categorical cross-entropy, assume a fixed number of categories per sample. This simply won’t cut it when one instance might have one label and another might have five. We need a loss function that can gracefully handle differing label counts for each data point. The key is thinking about the loss in terms of individual label activations rather than applying a pre-defined aggregation over a fixed vector.
 

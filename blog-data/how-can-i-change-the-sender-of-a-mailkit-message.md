@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-change-the-sender-of-a-mailkit-message"
 ---
 
-, one. Changing the sender of an email using MailKit isn't as straightforward as setting a single property. It requires a bit of finesse, particularly when you’re concerned about things like proper email authentication and avoiding the dreaded spam folder. I’ve had my share of headaches with this over the years, specifically during a project where we needed to send notifications on behalf of different user accounts, not just a central service address.
+Changing the sender of an email using MailKit isn't as straightforward as setting a single property. It requires a bit of finesse, particularly when you’re concerned about things like proper email authentication and avoiding the dreaded spam folder. I’ve had my share of headaches with this over the years, specifically during a project where we needed to send notifications on behalf of different user accounts, not just a central service address.
 
 So, the challenge isn't about directly modifying a ‘sender’ field, per se. Email headers work in a layered way. The primary fields are ‘From,’ ‘Sender,’ and ‘Reply-To,’ each serving a specific purpose. The ‘From’ field is what the recipient's email client displays as the sender. The ‘Sender’ field indicates the actual mailbox sending the message, and ‘Reply-To’ dictates where replies should be directed. For most practical scenarios, you manipulate the ‘From’ field, while the underlying SMTP session uses your authenticated user account.
 

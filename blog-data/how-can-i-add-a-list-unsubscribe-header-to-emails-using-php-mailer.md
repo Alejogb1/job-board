@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-a-list-unsubscribe-header-to-emails-using-php-mailer"
 ---
 
-, one. I recall a particular project some years ago where we were scaling up our email marketing efforts, and ensuring deliverability was paramount. Part of that, naturally, involved properly handling unsubscribe requests, and that included setting the List-Unsubscribe header. It's not just good etiquette; it directly impacts your sender reputation. Ignoring this header can land your emails straight into the spam folder, and nobody wants that. So, let’s discuss how we achieve this using PHP Mailer, with a few code examples to clarify things.
+I recall a particular project some years ago where we were scaling up our email marketing efforts, and ensuring deliverability was paramount. Part of that, naturally, involved properly handling unsubscribe requests, and that included setting the List-Unsubscribe header. It's not just good etiquette; it directly impacts your sender reputation. Ignoring this header can land your emails straight into the spam folder, and nobody wants that. So, let’s discuss how we achieve this using PHP Mailer, with a few code examples to clarify things.
 
 The _List-Unsubscribe_ header essentially provides an automated way for recipients to opt out of your mailing list. It's typically included within the email’s headers, and many modern email clients recognize it. They often display an unsubscribe link or button directly, making it easier for users to manage their subscriptions without having to hunt for the unsubscribe link tucked away in the email body. This greatly reduces the chances of recipients simply marking your email as spam.
 

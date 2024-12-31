@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-initialize-a-request-in-getedithandler-in-a-modeladmin-class-in-wagtail"
 ---
 
-, let’s tackle this. It’s a common point of confusion when working with wagtail's admin interface customization. I've certainly spent a few late nights debugging similar issues myself. The challenge is that `get_edit_handler` operates within the context of building the admin form, and directly initializing request-specific data in there isn't straightforward. Instead, you often need to use other hooks or methods to accomplish the task. Let me explain, and provide some practical examples.
+It’s a common point of confusion when working with wagtail's admin interface customization. I've certainly spent a few late nights debugging similar issues myself. The challenge is that `get_edit_handler` operates within the context of building the admin form, and directly initializing request-specific data in there isn't straightforward. Instead, you often need to use other hooks or methods to accomplish the task. Let me explain, and provide some practical examples.
 
 The core issue is that `get_edit_handler` is called when the form definition is being created – think of it as blueprinting the admin form, rather than actively handling a specific user's request. The actual http request, with its cookies, headers, and user info, only becomes relevant during form processing. Therefore, attempting to grab data directly from a request within `get_edit_handler` will not work as you might expect. This is particularly problematic when, let's say, you want to pre-populate a form field based on the user or some data present in a query parameter.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-3d-hyperplane-be-used-for-multi-class-svm-training-with-3-features"
 ---
 
-, let’s tackle this. A question about 3d hyperplanes and multi-class svm with three features – it's a topic I've encountered quite a few times, and I’ve definitely seen the confusion it can spark. Let's get into the weeds a bit.
+A question about 3d hyperplanes and multi-class svm with three features – it's a topic I've encountered quite a few times, and I’ve definitely seen the confusion it can spark. Let's get into the weeds a bit.
 
 The core idea here revolves around how Support Vector Machines (SVMs) function and how they extend to handle more than two classes. Now, when we talk about _features_, think of these as the dimensions of your data. In this case, you've got three. So each data point can be envisioned as existing in a 3D space – think of it as a point in a room where 'x', 'y', and 'z' are your three features. Now, an svm, in its simplest binary form, essentially tries to find the best _plane_ (not hyperplane here, a simple 2d plane because the space is 3d) to divide these data points into two classes. This plane is defined by a normal vector and a bias (or offset) – that's how it's oriented and positioned in this 3d room.
 

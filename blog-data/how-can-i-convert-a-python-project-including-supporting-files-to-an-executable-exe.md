@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-convert-a-python-project-including-supporting-files-to-an-executable-exe"
 ---
 
-, one. I remember back in my early days of working on a sensor data analysis tool, I had to figure out a reliable way to ship it to clients who weren't exactly Python gurus. This process, while seeming straightforward, can quickly turn into a debugging adventure if you don't understand the nuances. Essentially, converting a python project into a standalone executable involves bundling your code, its dependencies, and a python interpreter into a single package. The primary challenge lies in ensuring that this bundled environment works consistently across different machines without requiring a separate python installation.
+I remember back in my early days of working on a sensor data analysis tool, I had to figure out a reliable way to ship it to clients who weren't exactly Python gurus. This process, while seeming straightforward, can quickly turn into a debugging adventure if you don't understand the nuances. Essentially, converting a python project into a standalone executable involves bundling your code, its dependencies, and a python interpreter into a single package. The primary challenge lies in ensuring that this bundled environment works consistently across different machines without requiring a separate python installation.
 
 There are several tools and approaches, but the ones I've found most reliable are PyInstaller, cx_Freeze, and Nuitka. We'll stick to discussing PyInstaller and cx_Freeze, as they’re commonly used and offer different strengths. Nuitka, while powerful for performance optimization, is a more advanced topic and requires a deeper dive that we'll avoid here for simplicity.
 

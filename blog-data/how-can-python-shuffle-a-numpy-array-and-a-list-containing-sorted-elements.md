@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-python-shuffle-a-numpy-array-and-a-list-containing-sorted-elements"
 ---
 
-, one. It's a deceptively straightforward question that touches on some core concepts in data manipulation and shuffling, and i’ve seen folks stumble on this exact problem more times than i'd like to remember. Specifically, how do we shuffle a NumPy array and a sorted list in Python? Well, it’s not as simple as throwing a single `shuffle` command at them. Each data structure needs slightly different handling to achieve the desired randomized order.
+It's a deceptively straightforward question that touches on some core concepts in data manipulation and shuffling, and i’ve seen folks stumble on this exact problem more times than i'd like to remember. Specifically, how do we shuffle a NumPy array and a sorted list in Python? Well, it’s not as simple as throwing a single `shuffle` command at them. Each data structure needs slightly different handling to achieve the desired randomized order.
 
 The key difference lies in the nature of the structures themselves. NumPy arrays are, fundamentally, homogeneous data structures designed for numerical computation, whereas standard Python lists are far more flexible. This distinction dictates the shuffling methods that are both efficient and correct. Let's break it down, starting with the NumPy array:
 

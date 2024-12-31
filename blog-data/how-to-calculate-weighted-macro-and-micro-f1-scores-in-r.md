@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-calculate-weighted-macro-and-micro-f1-scores-in-r"
 ---
 
-, shall we? I recall a particularly challenging project back in my fintech days, where we were building a sophisticated fraud detection system. We had highly imbalanced datasets, and using a standard F1-score just wasn't cutting it. That's when we needed to dive deep into weighted F1-scores, and I spent a considerable amount of time figuring out the nuances in R. So, let's break this down methodically, because the devil is definitely in the details here.
+? I recall a particularly challenging project back in my fintech days, where we were building a sophisticated fraud detection system. We had highly imbalanced datasets, and using a standard F1-score just wasn't cutting it. That's when we needed to dive deep into weighted F1-scores, and I spent a considerable amount of time figuring out the nuances in R. So, let's break this down methodically, because the devil is definitely in the details here.
 
 First off, when talking about F1-scores, we need to understand that we're essentially balancing precision and recall. The regular F1-score does this for a binary classification problem effectively, or even for multi-class in the macro-averaged form when we treat each class equally. However, when our data is imbalanced, this simple averaging can be misleading, as it could give disproportionate weight to the better performing classes and obscure the problems in the rarer classes, a scenario we faced often with fraud cases where genuine transactions greatly outnumber the fraudulent ones. Weighted macro and micro F1-scores address this head-on.
 

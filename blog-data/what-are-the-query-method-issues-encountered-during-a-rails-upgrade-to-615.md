@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-query-method-issues-encountered-during-a-rails-upgrade-to-615"
 ---
 
-, one. Upgrading to Rails 6.1.5 definitely introduces a few interesting wrinkles, particularly around query methods. It’s not always smooth sailing, and I’ve personally navigated some of these choppy waters on several projects. I remember one particularly painful incident with a legacy application – that one taught me some valuable lessons about the nuances involved. Let's delve into it.
+Upgrading to Rails 6.1.5 definitely introduces a few interesting wrinkles, particularly around query methods. It’s not always smooth sailing, and I’ve personally navigated some of these choppy waters on several projects. I remember one particularly painful incident with a legacy application – that one taught me some valuable lessons about the nuances involved. Let's delve into it.
 
 First off, one of the primary challenges revolves around changes to how Rails handles certain types of queries, specifically those that might have relied on implicit conversions or behaviors that were more lenient in prior versions. Rails 6.1.5, aligning with more stringent database interactions, tightens up a few areas. Think of it as enforcing stricter type-checking and data handling during your database operations.
 

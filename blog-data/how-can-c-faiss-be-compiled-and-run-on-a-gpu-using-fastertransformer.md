@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-c-faiss-be-compiled-and-run-on-a-gpu-using-fastertransformer"
 ---
 
-Let's dive straight in, shall we? Having spent more years than I care to count optimizing similarity search on various platforms, the combination of c++ faiss with gpus and fastertransformer is certainly a topic that hits close to home. I remember a project a few years back where we were tasked with real-time retrieval of near-duplicate images. The sheer volume of data made cpu-based indexing a non-starter, and that's where the journey of hybridizing faiss and gpus, eventually leading to incorporating aspects of FasterTransformer, became indispensable.
+Let's dive straight in? Having spent more years than I care to count optimizing similarity search on various platforms, the combination of c++ faiss with gpus and fastertransformer is certainly a topic that hits close to home. I remember a project a few years back where we were tasked with real-time retrieval of near-duplicate images. The sheer volume of data made cpu-based indexing a non-starter, and that's where the journey of hybridizing faiss and gpus, eventually leading to incorporating aspects of FasterTransformer, became indispensable.
 
 The core challenge here is that faiss itself is primarily designed for cpu execution, and while it offers gpu support, getting the most out of it, especially with the throughput enhancements that FasterTransformer provides, necessitates a careful approach. Essentially, we're looking at offloading the computationally intensive parts of faiss indexing and search to the gpu, and potentially utilizing FasterTransformer's optimizations in that process, especially if your workflows involve the transformer model embedding generation.
 
@@ -12,13 +12,13 @@ First things first, let's clarify that a direct 'compilation' of faiss with Fast
 
 1.  **Generating Embeddings on the GPU:** This step is where FasterTransformer comes into play. You would use FasterTransformer to generate embeddings from your input data (images, text, etc.) using a transformer model. Since FasterTransformer is optimized for gpus, this step can be significantly faster than doing it on the cpu.
 2.  **Creating a Faiss Index:** Once you have your embeddings, you'll use the faiss library to create an index. In this case, it's crucial to use faiss's gpu implementation if we are going for speed. This is not an implicit process; you have to specifically create gpu-based index.
-3. **Performing Similarity Search on the GPU:** Finally, during the search stage, faiss's gpu functions will handle the heavy lifting of the nearest neighbor search on the embeddings.
+3.  **Performing Similarity Search on the GPU:** Finally, during the search stage, faiss's gpu functions will handle the heavy lifting of the nearest neighbor search on the embeddings.
 
 Let me show you this with some simplified code snippets illustrating the general idea:
 
 **Snippet 1: Generating Embeddings with FasterTransformer**
 
-This example is highly simplified, as setting up a full FasterTransformer pipeline will depend on your specific model and data. This merely serves to illustrate the *concept* of how you might acquire embeddings ready for faiss from your transformer model.
+This example is highly simplified, as setting up a full FasterTransformer pipeline will depend on your specific model and data. This merely serves to illustrate the _concept_ of how you might acquire embeddings ready for faiss from your transformer model.
 
 ```cpp
 #include <iostream>
@@ -43,7 +43,7 @@ public:
 int main() {
     // Initialise FasterTransformer model
     FasterTransformerModel model(/* model specific configuration */);
-    
+
     // Sample input strings
     std::vector<std::string> inputs = {"input1", "input2", "input3"};
 
@@ -63,7 +63,8 @@ int main() {
     return 0;
 }
 ```
-*Disclaimer: This is a stub showing the idea of using a library to generate embeddings, and it will not run without actual FasterTransformer implementation.*
+
+_Disclaimer: This is a stub showing the idea of using a library to generate embeddings, and it will not run without actual FasterTransformer implementation._
 
 **Snippet 2: Creating a Faiss GPU Index**
 
@@ -79,7 +80,7 @@ This snippet assumes we have the embeddings from the previous step. We'll create
 int main() {
     int d = 3; // Dimension of the embeddings
     int nb = 3; // Number of embeddings
-    
+
     // Mock embeddings from fastertransformer example
     std::vector<std::vector<float>> embeddings = {
       {0,0,0}, {1,2,3}, {2,4,6}
@@ -96,12 +97,13 @@ int main() {
 
     index.add(nb, xb);
     std::cout << "faiss gpu index created, total elements: " << index.ntotal() << std::endl;
-    
+
     delete[] xb;
 
     return 0;
 }
 ```
+
 This example is explicitly using `faiss::gpu::GpuIndexFlatL2`, thereby leveraging the GPU. Remember, this assumes you have a gpu build of faiss installed with CUDA drivers available.
 
 **Snippet 3: Performing a Search on the GPU**
@@ -118,7 +120,7 @@ Continuing from the previous example, we'll perform a search with a dummy query 
 int main() {
      int d = 3; // Dimension of the embeddings
     int nb = 3; // Number of embeddings
-    
+
     // Mock embeddings from fastertransformer example
     std::vector<std::vector<float>> embeddings = {
       {0,0,0}, {1,2,3}, {2,4,6}
@@ -132,7 +134,7 @@ int main() {
 
     faiss::gpu::StandardGpuResources res;
     faiss::gpu::GpuIndexFlatL2 index(res, d);
-    
+
     index.add(nb, xb);
 
     int k = 1; // Number of nearest neighbors to search for

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-phpmailer-errors-preventing-email-sending"
 ---
 
-Right then, one. I’ve spent more evenings than I care to remember debugging email delivery issues with phpmailer, and it’s a beast that can throw up some pretty varied errors. The core of it usually boils down to a few key areas: server configuration, authentication, and message formatting. It's rarely ever the phpmailer library itself that's faulty— it’s usually something else in the pipeline. Let's explore the common culprits and how I’ve approached resolving them in past projects.
+Right then I’ve spent more evenings than I care to remember debugging email delivery issues with phpmailer, and it’s a beast that can throw up some pretty varied errors. The core of it usually boils down to a few key areas: server configuration, authentication, and message formatting. It's rarely ever the phpmailer library itself that's faulty— it’s usually something else in the pipeline. Let's explore the common culprits and how I’ve approached resolving them in past projects.
 
 First and foremost, we need to consider the _server configuration_ issues. This is where many beginners (and, let's be honest, seasoned devs on bad days) trip up. A typical failure point is the `sendmail` binary path or the usage of a local SMTP server. In some development environments, particularly on windows machines, the default php configuration often doesn't have a proper mail transfer agent (MTA) set up. This results in phpmailer being unable to establish a connection to send mail locally. The error message you’ll often see here involves a failure to open a socket or a timeout during connection attempt.
 
