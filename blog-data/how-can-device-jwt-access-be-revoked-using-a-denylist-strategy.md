@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-device-jwt-access-be-revoked-using-a-denylist-strategy"
 ---
 
-Let's unpack device JWT revocation via a denylist, shall we? This is a scenario I’ve encountered several times, often in the context of IoT platforms where the lifecycle of a device is a bit more… dynamic than your average user account. A simple expiration policy on JWTs isn't always enough; you frequently need to forcibly invalidate a token *before* its natural expiration, particularly if a device is compromised or decommissioned.
+device JWT revocation via a denylist, shall we? This is a scenario I’ve encountered several times, often in the context of IoT platforms where the lifecycle of a device is a bit more… dynamic than your average user account. A simple expiration policy on JWTs isn't always enough; you frequently need to forcibly invalidate a token _before_ its natural expiration, particularly if a device is compromised or decommissioned.
 
-The core idea behind a denylist strategy is straightforward: we maintain a list of JWT identifiers (typically, the `jti` claim) that are explicitly considered invalid. When a request arrives with a JWT, we must check that its `jti` is *not* present in the denylist before considering it valid. This provides an additional layer of control beyond the token's inherent expiration date. It does introduce a state management aspect that requires careful handling, of course, but it’s a robust approach for handling premature revocation.
+The core idea behind a denylist strategy is straightforward: we maintain a list of JWT identifiers (typically, the `jti` claim) that are explicitly considered invalid. When a request arrives with a JWT, we must check that its `jti` is _not_ present in the denylist before considering it valid. This provides an additional layer of control beyond the token's inherent expiration date. It does introduce a state management aspect that requires careful handling, of course, but it’s a robust approach for handling premature revocation.
 
 From my experience, the implementation choices for a denylist vary based on scale and latency requirements. A naive approach might involve a simple in-memory set for very small, low-traffic systems, but that won’t cut it at scale. I’ve seen that quickly become a bottleneck. For more substantial systems, a persistent datastore with fast read access, like a Redis cache or a dedicated key-value store, is almost always the better solution. Consistency, also, is something to bear in mind. A distributed denylist needs a strategy for replication and consistent reads.
 
 Let’s break down how we can approach this programmatically. I will show you examples in python, since that's a language many in the industry are comfortable with and it simplifies the concept.
 
-Here's a basic example demonstrating how you'd integrate a simple in-memory denylist check. This is purely for illustrative purposes and *not* recommended for production.
+Here's a basic example demonstrating how you'd integrate a simple in-memory denylist check. This is purely for illustrative purposes and _not_ recommended for production.
 
 ```python
 import jwt
@@ -108,9 +108,10 @@ if not valid:
     print("Token is not valid:", payload)
 
 ```
+
 Notice now that our denylist is stored in Redis. The redis connection initialization, the way we add to the denylist (`redis_client.set`), and how we check for membership during the token validation have changed. The `redis_client.exists` method is a fast lookup that avoids any manual iteration. Also, I’ve added an expiry when adding a `jti` to the denylist. This is a good practice, ensuring that our denylist does not grow indefinitely. Here, I have used an expiry of one week. You can adapt that for your needs.
 
-Finally, let's consider a more elaborate scenario. Imagine needing to manage not just revoked tokens, but also the *reason* for the revocation, maybe to provide details to support teams. In that case, a denylist approach can still be useful.
+Finally, let's consider a more elaborate scenario. Imagine needing to manage not just revoked tokens, but also the _reason_ for the revocation, maybe to provide details to support teams. In that case, a denylist approach can still be useful.
 
 ```python
 import jwt
@@ -160,6 +161,7 @@ if not valid:
     print("Token is not valid:", payload)
 
 ```
+
 Here, the `redis_client.set` method is used to store a JSON object containing the revocation reason along with a timestamp, which can be helpful in debugging and auditing. We still use an expiry, and now `validate_jwt` is able to decode that JSON object to return the reason for revocation. This gives us a richer context on why a token was revoked.
 
 For further reading, I would strongly recommend consulting "Designing Data-Intensive Applications" by Martin Kleppmann. It covers a lot of ground concerning distributed systems and provides a good understanding of the underlying problems when dealing with state management. Additionally, for a deeper understanding of JWT security best practices, the official IETF draft on JSON Web Token (RFC 7519) is a crucial resource. Lastly, looking into academic papers about distributed consistency models can offer a much more in-depth view about how a denylist strategy can fail under certain conditions. These resources can be invaluable for a complete understanding of the topic.

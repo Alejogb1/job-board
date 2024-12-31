@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "json-schema-versioning-handling-problem"
 ---
 
-json schema versioning yeah been there done that got the t-shirt multiple times trust me it’s a headache but a solvable one Let's unpack this from a purely practical point of view like one engineer talking to another no fluff no marketing jargon just real-world stuff
+json schema versioning yeah been there done that got the t-shirt multiple times trust me it’s a headache but a solvable one this from a purely practical point of view like one engineer talking to another no fluff no marketing jargon just real-world stuff
 
 Right off the bat you need to understand that json schema versioning is not something the schema spec directly provides you Its up to you the developer to figure out a system that works for your specific situation and believe me there is no one size fits all solution I've tried them all and all of them break eventually in some way or another That's just how software development rolls
 

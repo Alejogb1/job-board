@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-logistic-regression-achieve-100-accuracy-on-random-data"
 ---
 
-, let's unpack this question about logistic regression and perfect accuracy on random data. It's a scenario that, in my experience, seems counterintuitive initially but illuminates some core statistical concepts. I've seen this come up in several modeling challenges over the years, and the answer is nuanced, but ultimately, _yes_, under very specific and, frankly, contrived circumstances, logistic regression _can_ achieve 100% accuracy on what appears to be random data. It's crucial, however, to understand _why_ and what it actually signifies.
+question about logistic regression and perfect accuracy on random data. It's a scenario that, in my experience, seems counterintuitive initially but illuminates some core statistical concepts. I've seen this come up in several modeling challenges over the years, and the answer is nuanced, but ultimately, _yes_, under very specific and, frankly, contrived circumstances, logistic regression _can_ achieve 100% accuracy on what appears to be random data. It's crucial, however, to understand _why_ and what it actually signifies.
 
 The idea that a statistical model could perfectly predict random outcomes raises red flags. We’re conditioned to think that randomness, by its very nature, should be unpredictable. When dealing with true, independent random variables, no model should consistently achieve perfect classification. Yet, we must consider what 'random' actually means in the context of the data and our model.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-pango-does-not-give-the-location-for-certain-graphemes"
 ---
 
-, so you're hitting a pretty classic pango issue, and i've definitely been there. it's frustrating when you expect a location for a glyph and pango just shrugs. let's unpack this.
+, so you're hitting a pretty classic pango issue, and i've definitely been there. it's frustrating when you expect a location for a glyph and pango just shrugs. this.
 
 the core problem is that pango's glyph positioning isn't always a one-to-one mapping from input characters to rendered glyphs, especially when you're dealing with complex text layouts. think about it: pango has to handle all sorts of unicode weirdness, including combining characters, ligatures, bidirectional text, and shaping. when these come into play, the internal logic gets a bit less straightforward. pango doesn't necessarily represent all graphemes with explicitly bounded rectangles.
 

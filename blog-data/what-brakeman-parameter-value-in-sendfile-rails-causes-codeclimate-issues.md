@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-brakeman-parameter-value-in-sendfile-rails-causes-codeclimate-issues"
 ---
 
-, let's unpack this. It's been a while since I've actively worked with a Rails monolith that uses `send_file` so extensively it started triggering CodeClimate alerts related to Brakeman, but the memory’s still there. The specific issue we're likely hitting revolves around the `disposition` parameter when it's used improperly. I recall a particularly hairy incident back in '17 at a startup where a carelessly handled download feature nearly exposed sensitive data through a misconfigured header. It was a learning experience, to say the least.
+. It's been a while since I've actively worked with a Rails monolith that uses `send_file` so extensively it started triggering CodeClimate alerts related to Brakeman, but the memory’s still there. The specific issue we're likely hitting revolves around the `disposition` parameter when it's used improperly. I recall a particularly hairy incident back in '17 at a startup where a carelessly handled download feature nearly exposed sensitive data through a misconfigured header. It was a learning experience, to say the least.
 
 The `send_file` method in Rails is generally used to stream file contents as a response. The `disposition` parameter dictates how a browser should handle the file. If left unspecified, the default, typically ‘inline,’ attempts to display the file within the browser if possible. However, when dealing with non-viewable files, or when the user explicitly needs to download the file, setting the `disposition` to `attachment` is the standard practice. The problem isn’t necessarily using `attachment`, it’s what happens when you couple it with user-supplied parameters, making it vulnerable.
 

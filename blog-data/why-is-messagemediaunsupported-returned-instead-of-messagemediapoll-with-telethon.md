@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-messagemediaunsupported-returned-instead-of-messagemediapoll-with-telethon"
 ---
 
-, let's unpack this Telethon puzzle. I've certainly been down this road more than a few times, and it's usually not a case of outright failure but rather a misalignment in expectations, specifically about how Telegram handles media and how Telethon interfaces with it.
+Telethon puzzle. I've certainly been down this road more than a few times, and it's usually not a case of outright failure but rather a misalignment in expectations, specifically about how Telegram handles media and how Telethon interfaces with it.
 
 The core issue often revolves around timing and availability. The `MessageMediaUnsupported()` object isn’t actually a 'failure' state; rather, it indicates that the media content associated with a message isn't immediately accessible through the standard polling methods. This typically happens when the media is large, encrypted, or for whatever reason, hasn't fully materialized for direct retrieval during the initial message processing. It's a signal that Telegram intends for us to use a different pathway to obtain the media, instead of a quick, efficient `MessageMediaPoll()` response.
 

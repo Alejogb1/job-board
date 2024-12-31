@@ -6,7 +6,7 @@ id: "can-perl-work-on-any-server-type"
 
 you're asking if Perl can run anywhere right like on any server. I've been kicking around servers and coding in Perl since the late 90s and let me tell you it's a yes and a no kinda answer it's complicated but not that complicated.
 
-Short answer is yes perl can run on basically any server that matters even the weird ones but it's always "it depends". Let's unpack that.
+Short answer is yes perl can run on basically any server that matters even the weird ones but it's always "it depends". that.
 
 You see Perl's got this beauty called the Perl interpreter it's the engine that takes your Perl code and turns it into something a computer understands. This interpreter is written in C which is as close to the metal as you can generally get. C compilers exist for a vast number of platforms so perl can be compiled for them.
 

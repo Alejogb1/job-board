@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-keras-sequential-model-be-converted-to-a-spiking-neural-network-using-nengo-dl"
 ---
 
-Right then, let's unpack this. I remember a project a few years back where we needed to deploy a complex image recognition system onto a low-power embedded device. We had a thoroughly trained Keras sequential model, but its computational demands were just too high for the hardware. That’s where the notion of converting it to a spiking neural network (SNN) using something like Nengo-DL came to the fore. It's a nuanced process, and certainly not a one-to-one mapping, but highly effective when done well.
+Right then. I remember a project a few years back where we needed to deploy a complex image recognition system onto a low-power embedded device. We had a thoroughly trained Keras sequential model, but its computational demands were just too high for the hardware. That’s where the notion of converting it to a spiking neural network (SNN) using something like Nengo-DL came to the fore. It's a nuanced process, and certainly not a one-to-one mapping, but highly effective when done well.
 
 The primary motivation behind this conversion is energy efficiency. SNNs, inspired by biological neurons, operate on sparse, event-driven principles rather than the continuous activations of traditional artificial neural networks (ANNs). This event-driven nature can lead to significant power savings, particularly on specialized neuromorphic hardware. Nengo-DL is a superb framework for bridging the gap between the continuous domain of ANNs (like those built in Keras) and the discrete, temporal domain of SNNs.
 
@@ -14,13 +14,13 @@ Here's how it typically works, step by step:
 
 1. **Building the Keras model:** We start with the familiar task of constructing and training a Keras sequential model. We are working in the realm of standard deep learning tools.
 
-2.  **Preparing the Keras model for Nengo:** This often involves defining specific layers within the model. We have to ensure compatibility with the translation methods available in Nengo-DL. For example, we usually need to ensure that any activation functions are either ReLU or a variant of ReLU for effective conversion. Activation functions that are not explicitly available in the Nengo-DL library can be a major roadblock.
+2. **Preparing the Keras model for Nengo:** This often involves defining specific layers within the model. We have to ensure compatibility with the translation methods available in Nengo-DL. For example, we usually need to ensure that any activation functions are either ReLU or a variant of ReLU for effective conversion. Activation functions that are not explicitly available in the Nengo-DL library can be a major roadblock.
 
-3.  **Creating the corresponding Nengo-DL model:** This is where Nengo-DL’s conversion tools come into play. We essentially use it to import the trained Keras weights and re-create the architecture within the spiking network.
+3. **Creating the corresponding Nengo-DL model:** This is where Nengo-DL’s conversion tools come into play. We essentially use it to import the trained Keras weights and re-create the architecture within the spiking network.
 
-4.  **Running simulations:** We use Nengo-DL to simulate the SNN and test its performance on our dataset. This step includes exploring various encoding methods, simulation parameters, and spiking neuron types to find the optimal settings. This usually involves a good bit of experimentation.
+4. **Running simulations:** We use Nengo-DL to simulate the SNN and test its performance on our dataset. This step includes exploring various encoding methods, simulation parameters, and spiking neuron types to find the optimal settings. This usually involves a good bit of experimentation.
 
-5.  **Analyzing and refining:** Finally, we examine performance metrics like classification accuracy and energy consumption, further optimizing the architecture if required.
+5. **Analyzing and refining:** Finally, we examine performance metrics like classification accuracy and energy consumption, further optimizing the architecture if required.
 
 To make this concrete, let me provide three illustrative code snippets, albeit simplified, that show this translation in action. Please note, I'm not providing the full dataset loading or model training part of the script. Instead I am providing code snippets that are central to the conversion.
 
@@ -57,10 +57,10 @@ def convert_to_nengo_model(keras_model, input_shape, sim_time = 0.1, dt=0.001):
     inp = nengo.Node(size_in=input_shape[0]*input_shape[1]*input_shape[2])  # Assuming flattened input
     nengo_dl.Converter(keras_model, input_nodes={"flatten_input": inp},  swap_activations={tf.keras.activations.relu : nengo.SpikingRectifiedLinear() }, init_synapses=0.005)
     out_p = nengo.Probe(net.outputs, synapse=0.01)
-  
+
   with nengo_dl.Simulator(net, dt=dt) as sim:
       sim.run(sim_time)
-  
+
   return net, sim
 # The input shape variable from the build_keras_model is used here too.
 # Assume this function is called like: nengo_net, sim = convert_to_nengo_model(keras_model, (28,28,1))
@@ -81,6 +81,7 @@ def extract_classifications(sim, probe_output):
   return predicted_class
 # Assume this function is called like: output = extract_classifications(sim, out_p)
 ```
+
 This final snippet demonstrates how to retrieve the spiking outputs and derive a classification based on rate coding. We are averaging the network outputs and then predicting a class based on the averaged results. This function assumes some knowledge of the output of the simulator.
 
 Important considerations for this conversion involve: the choice of spiking neuron model within Nengo, the simulation time required for adequate spike accumulation, and the synaptic time constants, all these hyperparameters require tuning for each specific use case.

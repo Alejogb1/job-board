@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-flask-lightsail-logs-showing-requests-every-5-seconds"
 ---
 
-Ah, that familiar echo of repeated requests – I've encountered this specific quirk with Flask applications on Lightsail more times than I care to count. It's rarely a Flask issue itself, but rather a symptom of how AWS Lightsail's load balancers, particularly their health check mechanisms, interact with your deployed applications. Let's unpack why you're likely seeing these recurring requests every 5 seconds and, more importantly, how to address it.
+Ah, that familiar echo of repeated requests – I've encountered this specific quirk with Flask applications on Lightsail more times than I care to count. It's rarely a Flask issue itself, but rather a symptom of how AWS Lightsail's load balancers, particularly their health check mechanisms, interact with your deployed applications. why you're likely seeing these recurring requests every 5 seconds and, more importantly, how to address it.
 
 When deploying a web application – and Flask is no exception – behind a load balancer, such as the one Lightsail provides, you are effectively introducing an intermediary. This intermediary's primary role is to distribute traffic across multiple instances of your application, ensuring high availability and responsiveness. To do this effectively, the load balancer must be able to determine the health status of each underlying instance. This is where the health check comes in.
 
@@ -139,6 +139,7 @@ if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=80)
 
 ```
+
     This third example adds a delay to the health check response. Using your browser to connect to the /health endpoint, you should experience a short delay of 0.02 seconds. In a real world scenario, the latency could depend on connection to a database or external system, the health check endpoint could also make additional checks to confirm the system is in a suitable state.
 
 For further understanding, I'd recommend diving into "Building Microservices" by Sam Newman for the broader context of load balancers in distributed systems, and "Site Reliability Engineering" by Betsy Beyer et al., for a deeper understanding of system health monitoring and health checks. The official AWS documentation on Lightsail Load Balancers is also an invaluable resource. Lastly, the official Flask documentation on request handling provides all the details on intercepting and processing requests.

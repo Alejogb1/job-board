@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-userurl-undefined-in-my-devise-registration-controller"
 ---
 
-, let's unpack this. I've seen this particular head-scratcher more than a few times, usually when folks are customizing Devise in Rails. The "undefined `user_url` in my Devise registration controller" error typically surfaces because the necessary routes aren't being generated within the context where Devise is performing its magic, or there's a misunderstanding of how Devise interacts with Rails routing conventions.
+. I've seen this particular head-scratcher more than a few times, usually when folks are customizing Devise in Rails. The "undefined `user_url` in my Devise registration controller" error typically surfaces because the necessary routes aren't being generated within the context where Devise is performing its magic, or there's a misunderstanding of how Devise interacts with Rails routing conventions.
 
 Essentially, you're encountering this issue when Devise tries to use `user_url` or similar route helpers to redirect or generate URLs, but that helper simply doesn't exist in the controller's context _at that specific time_. This isn't a Devise bug per se, but rather an interaction with Rails' routing and controller life-cycle, often amplified when customizations are involved. Let's delve into the common causes and how to tackle them, informed by what I've seen in actual projects over the years.
 
@@ -35,7 +35,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 end
 ```
 
-Here, if your `routes.rb` is missing the essential resources for `users`, even though you have `devise_for :users`, it might not explicitly define a regular `users` resource outside of Devise’s scope. This doesn't cause the Devise functionality to fail completely, it just means that the redirect path generation won't work in a way that the after_sign_up_path_for method would expect. You _need_ explicit routing rules for your application’s resources, in addition to what Devise provides.
+Here, if your `routes.rb` is missing the essential resources for `users`, even though you have `devise_for :users`, it might not explicitly define a regular `users` resource outside of Devise’s scope. This doesn't cause the Devise functionality to fail completely, it just means that the redirect path generation won't work in a way that the after*sign_up_path_for method would expect. You \_need* explicit routing rules for your application’s resources, in addition to what Devise provides.
 
 **Example 2: The Fix – Explicit Resource Declaration**
 

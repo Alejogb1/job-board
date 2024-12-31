@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-deploy-multiple-ml-models-with-scoring-files-using-azure-ml-cli"
 ---
 
-Let's unpack this. I've certainly been in the trenches deploying multiple machine learning models, especially using Azure ml's command-line interface (cli). It’s not uncommon to find yourself juggling numerous models, each potentially having distinct scoring scripts, and needing a reliable, reproducible deployment strategy. The key, as I learned early on in a project involving personalized recommendation engines, is structured management and leveraging the cli's capabilities for automation.
+this. I've certainly been in the trenches deploying multiple machine learning models, especially using Azure ml's command-line interface (cli). It’s not uncommon to find yourself juggling numerous models, each potentially having distinct scoring scripts, and needing a reliable, reproducible deployment strategy. The key, as I learned early on in a project involving personalized recommendation engines, is structured management and leveraging the cli's capabilities for automation.
 
 The challenge you're facing fundamentally boils down to orchestrating several moving parts: the trained models themselves, their respective scoring scripts, environment dependencies, and the actual deployment process onto Azure compute resources. Each of these elements requires careful consideration and precise configuration to ensure seamless operation. Let's break it down, focusing on a typical pattern I’ve seen evolve and refine over various projects.
 
@@ -99,11 +99,13 @@ def run(raw_data):
     except Exception as e:
         return json.dumps({"error": str(e)})
 ```
+
 This `scoring_script.py` does the following: uses `azureml.core.model.Model` to load the previously registered model file, parses json input, converts it to dataframe, and uses the model to predict, then returns the result as json.
 
 We would repeat a similar process for models `b` and `c`, adjusting the parameters accordingly. This is where the power of scripting truly shines. Rather than manually running each command, I typically create a python script or a shell script to loop through the different models and perform the registration and deployment.
 
 For example, we can abstract the registration and deployment process into a python script as a wrapper. This is a simplified illustration and could be enhanced with error handling and logging.
+
 ```python
 import os
 import subprocess
@@ -157,6 +159,7 @@ if __name__ == "__main__":
         deploy_model(model_name,model_path, environment_path, scoring_script_path)
     print("All models deployed!")
 ```
+
 This simplified script iterates over the model directories and executes the az cli commands for each model. This ensures consistency of the deployment procedure.
 
 A key aspect I’ve found helpful, and which this python script touches upon, is to utilize configuration files for managing deployment parameters. In the initial directory structure I described, there was a config folder containing a `deployment_config.yaml`. This file can house the online endpoint names, the instance types, the instance counts, or other relevant parameters. This would allow modification of the deployment without hardcoding parameters in the script.

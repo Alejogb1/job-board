@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-distinitprocessgroup-hang-when-training-an-ml-model-across-multiple-gpus"
 ---
 
-Let's unpack the frustrating scenario of `dist.init_process_group()` hanging during multi-gpu model training. I've certainly been there, staring at a frozen console after launching a script, feeling like I've missed some crucial detail. It's usually not a single, easily identifiable problem, but rather a confluence of factors that can lead to this deadlock. The `dist.init_process_group()` function, as we know, is the gateway to distributed training in PyTorch (and similar libraries), and when it gets stuck, the entire distributed setup grinds to a halt. Let's dive into the common culprits based on my past experiences battling these issues.
+the frustrating scenario of `dist.init_process_group()` hanging during multi-gpu model training. I've certainly been there, staring at a frozen console after launching a script, feeling like I've missed some crucial detail. It's usually not a single, easily identifiable problem, but rather a confluence of factors that can lead to this deadlock. The `dist.init_process_group()` function, as we know, is the gateway to distributed training in PyTorch (and similar libraries), and when it gets stuck, the entire distributed setup grinds to a halt. Let's dive into the common culprits based on my past experiences battling these issues.
 
 First, the function’s core purpose is to establish communication channels between the various processes that constitute your distributed training setup. This involves a rendezvous point where each process waits to connect with all others. If any process fails to connect to this rendezvous point, or if one or more processes don't arrive at that point, the function hangs indefinitely, waiting for all participants.
 
@@ -94,6 +94,7 @@ if __name__ == "__main__":
       p = multiprocessing.Process(target=setup_bad_ranks, args=(rank, world_size, master_ip, master_port))
       p.start()
 ```
+
 In this second example, I intentionally make a mistake during the `RANK` assignment. The `rank` variable within the function still reflects the correct rank, but the environment variable might hold different values which will make `dist.init_process_group()` hang because two processes share the same rank while the third process will never be reached during the group initialization.
 
 **Example 3: Synchronization issues during initialization**
@@ -138,6 +139,7 @@ if __name__ == "__main__":
       p.start()
 
 ```
+
 In this example, a delay is introduced in process with rank 1 to illustrate synchronization issues where one process is delayed during initialization, causing a hang. This is a simplified illustration, but the same problem can occur with filesystem operations, or any other operation that is performed during setup and might delay certain processes more than others.
 
 For further understanding of these distributed training problems, I’d recommend looking into specific resources. For the underlying distributed computing principles, "Parallel Programming: Techniques and Applications Using Networked Workstations and Parallel Computers" by Barry Wilkinson and Michael Allen is invaluable. For PyTorch specifically, the official documentation is obviously essential. Additionally, papers describing specific synchronization primitives such as those implemented in NCCL and libraries like OpenMPI can be enlightening. Finally, I have found that spending some time studying well known distributed computing paradigms, such as those covered in "Introduction to Parallel Computing" by Ananth Grama, Anshul Gupta, George Karypis, Vipin Kumar provides you with an excellent general understanding.

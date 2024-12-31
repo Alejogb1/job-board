@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-attach-volumes-to-containers"
 ---
 
-, let's unpack this. The issue of seemingly being unable to attach volumes to containers is a recurring frustration, and believe me, I've spent my fair share of evenings debugging this particular problem. It’s often not a fundamental limitation of the container technology itself, but rather a confluence of factors related to configuration, container runtime intricacies, or even a misunderstanding of the underlying mechanics.
+. The issue of seemingly being unable to attach volumes to containers is a recurring frustration, and believe me, I've spent my fair share of evenings debugging this particular problem. It’s often not a fundamental limitation of the container technology itself, but rather a confluence of factors related to configuration, container runtime intricacies, or even a misunderstanding of the underlying mechanics.
 
 The primary challenge stems from the fact that containers, by design, operate within an isolated environment. This isolation, while crucial for security and reproducibility, dictates how resources like volumes are accessed and managed. A volume, in this context, typically refers to a persistent storage mechanism—either a directory on the host machine or a storage volume managed by an external provider—that needs to be made accessible within the container. It’s important to distinguish between volumes and ephemeral container storage. Ephemeral storage is automatically wiped when the container is removed, while volumes provide persistence.
 

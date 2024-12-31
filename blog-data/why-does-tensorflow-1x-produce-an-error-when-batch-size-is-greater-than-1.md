@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-tensorflow-1x-produce-an-error-when-batch-size-is-greater-than-1"
 ---
 
-, let's unpack this one. The issue of TensorFlow 1.x throwing errors when the batch size exceeds 1 is something I've definitely seen crop up in a variety of projects, especially back in those pre-eager execution days. It’s a core behavior stemming from how TensorFlow 1.x managed its computational graph and how it handled placeholders, and it wasn't always immediately obvious what was going wrong.
+one. The issue of TensorFlow 1.x throwing errors when the batch size exceeds 1 is something I've definitely seen crop up in a variety of projects, especially back in those pre-eager execution days. It’s a core behavior stemming from how TensorFlow 1.x managed its computational graph and how it handled placeholders, and it wasn't always immediately obvious what was going wrong.
 
 To get to the heart of the matter, remember that in TensorFlow 1.x, we first defined a static computational graph, and _then_ we executed it within a session. When you defined a placeholder, you were essentially reserving a spot in that graph for data to be fed later. Crucially, placeholders in 1.x, when not explicitly specified with a batch dimension, were often interpreted as expecting a _single_ sample. That’s the default behavior, not necessarily an assumption on your part.
 

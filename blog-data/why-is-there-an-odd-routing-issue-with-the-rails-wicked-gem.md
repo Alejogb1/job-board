@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-there-an-odd-routing-issue-with-the-rails-wicked-gem"
 ---
 
-, let's talk about the, shall we say, _interesting_ routing quirks you sometimes encounter with the Rails Wicked gem. I've definitely spent my share of late nights debugging that specific beast. It's not always immediately obvious why things go sideways, so let's unpack the common culprits and, more importantly, how to wrangle them back into shape.
+, let's talk about the, shall we say, _interesting_ routing quirks you sometimes encounter with the Rails Wicked gem. I've definitely spent my share of late nights debugging that specific beast. It's not always immediately obvious why things go sideways, so the common culprits and, more importantly, how to wrangle them back into shape.
 
 My experience with Wicked has been… varied. I remember this one project, a complex onboarding flow for a new SaaS platform, where seemingly innocent changes would suddenly throw our routing into chaos. What initially looked like a simple wizard implementation turned into a deep dive into the internals of Rails' routing engine and Wicked's interaction with it. The root of the issue often stems from how Wicked generates and manages step-specific routes in relation to the standard Rails route configuration. Essentially, when used improperly or with too little understanding of its underlying mechanics, Wicked can lead to route conflicts and unexpected navigation.
 

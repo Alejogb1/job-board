@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-testcontainers-handle-communication-between-containers-using-mapped-external-ports"
 ---
 
-, let's unpack this one. It's a common scenario, and one I've certainly encountered countless times, particularly during complex integration testing setups. The question of how Testcontainers handles communication between containers using mapped external ports often arises when we're orchestrating multi-service applications in our testing environments. The short answer is: it manages it quite elegantly, but let’s dive into the details, shall we?
+one. It's a common scenario, and one I've certainly encountered countless times, particularly during complex integration testing setups. The question of how Testcontainers handles communication between containers using mapped external ports often arises when we're orchestrating multi-service applications in our testing environments. The short answer is: it manages it quite elegantly, but let’s dive into the details, shall we?
 
 Firstly, let's establish the premise. When we run a container, especially one meant to be part of a larger system, it typically exposes services on internal ports within its own virtual network. To access these services from the host machine or other containers, we need to "map" those internal ports to external ports on the host. Testcontainers leverages Docker's capabilities here, but importantly, it does so in a way that allows inter-container communication to bypass the necessity of relying _solely_ on those host-mapped external ports. This distinction is crucial. Directly relying on host-mapped ports for inter-container comms can lead to flaky tests, particularly when there's port contention or if multiple test runs are happening concurrently.
 

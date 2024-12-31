@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-google-bigquery-connection-from-the-airflow-ui-dockerized"
 ---
 
-, let's unpack this. I’ve been down this particular rabbit hole before, specifically around five years back when we were migrating a large batch processing system to a cloud-native architecture. Setting up a robust connection between a dockerized Airflow instance and Google BigQuery is a crucial step, and it's more nuanced than it might first appear. It’s not just about the code—it’s also about properly configuring permissions and networking within your containerized environment.
+. I’ve been down this particular rabbit hole before, specifically around five years back when we were migrating a large batch processing system to a cloud-native architecture. Setting up a robust connection between a dockerized Airflow instance and Google BigQuery is a crucial step, and it's more nuanced than it might first appear. It’s not just about the code—it’s also about properly configuring permissions and networking within your containerized environment.
 
 The core issue revolves around ensuring that Airflow, running within its docker container, can authenticate with Google Cloud Platform (GCP) and BigQuery. This authentication typically hinges on service account keys, and the secure and reliable management of those keys is absolutely paramount. Let's walk through the necessary steps and some potential pitfalls based on my experience.
 

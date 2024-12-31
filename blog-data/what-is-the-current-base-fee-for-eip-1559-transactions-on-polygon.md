@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-current-base-fee-for-eip-1559-transactions-on-polygon"
 ---
 
-, let's unpack this question about the current base fee for EIP-1559 transactions on Polygon. It's a pertinent point, and I've spent quite a bit of time wrangling with transaction costs across various chains, including Polygon, back when I was optimizing a high-throughput trading application a couple of years ago. The move to EIP-1559 was a significant change, and understanding how it manifests on Polygon is essential.
+question about the current base fee for EIP-1559 transactions on Polygon. It's a pertinent point, and I've spent quite a bit of time wrangling with transaction costs across various chains, including Polygon, back when I was optimizing a high-throughput trading application a couple of years ago. The move to EIP-1559 was a significant change, and understanding how it manifests on Polygon is essential.
 
 First, to clarify, we're not talking about a static "base fee" as some might initially conceive it. EIP-1559 introduced a dynamic base fee that adjusts based on network congestion. So, the "current base fee" at any moment is a snapshot in time, reflective of the recent block utilization on the network. This isn't a constant you can simply look up once and rely on forever. Think of it as a price signal: high demand, high base fee; low demand, low base fee.
 

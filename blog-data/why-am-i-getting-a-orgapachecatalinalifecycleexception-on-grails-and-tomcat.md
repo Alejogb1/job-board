@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-orgapachecatalinalifecycleexception-on-grails-and-tomcat"
 ---
 
-, let's unpack this `org.apache.catalina.LifecycleException` you're encountering in your Grails application running on Tomcat. I’ve seen this one more than a few times in my years, and it often boils down to a handful of common culprits. This exception, at its core, signals that Tomcat is having issues starting or stopping one of its components, and pinpointing the exact source requires a bit of methodical examination. Think of it as Tomcat's way of saying, “Something's not quite right in my startup sequence or shutdown routine."
+`org.apache.catalina.LifecycleException` you're encountering in your Grails application running on Tomcat. I’ve seen this one more than a few times in my years, and it often boils down to a handful of common culprits. This exception, at its core, signals that Tomcat is having issues starting or stopping one of its components, and pinpointing the exact source requires a bit of methodical examination. Think of it as Tomcat's way of saying, “Something's not quite right in my startup sequence or shutdown routine."
 
 First off, it's crucial to understand that Tomcat's lifecycle is a series of ordered stages: initialization, starting, running, stopping, and destruction. A `LifecycleException` generally arises when one of these transitions fails. Given you're using Grails, there are layers of abstraction at play, making things potentially more complex. The core issue often isn't directly within your Grails application code _per se_, but rather within the interplay between Grails' lifecycle management and Tomcat's own.
 

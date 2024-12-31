@@ -6,7 +6,7 @@ id: "how-to-download-carrierwave-s3-files-to-a-temporary-directory"
 
 , . I've seen this scenario pop up quite a few times, usually when dealing with background jobs that need local access to files stored in s3, managed by carrierwave. The challenge, of course, is to download these remote files to a temporary location, use them, and then clean up effectively. It's less about ‘magic’ and more about carefully orchestrating file retrieval and management.
 
-The typical approach, which I've refined across multiple projects over the years, involves several key steps: first, retrieving the remote file url, then using Ruby's standard libraries for downloading and file operations, and lastly, ensuring proper cleanup. It's a matter of precision. Let's unpack this in detail, starting with the core process.
+The typical approach, which I've refined across multiple projects over the years, involves several key steps: first, retrieving the remote file url, then using Ruby's standard libraries for downloading and file operations, and lastly, ensuring proper cleanup. It's a matter of precision. this in detail, starting with the core process.
 
 First, obtaining the remote file's url is straightforward, assuming you've configured carrierwave correctly with s3. You'll likely have an instance of your uploader class associated with your model. You can access the s3 url through the uploader.url method. This is your point of entry. I’ve found the need to explicitly check that the url is not blank before proceeding invaluable. This saves you from debugging downstream issues caused by empty file urls.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "whats-the-difference-between-decomposing-by-business-capability-vs-subdomain"
 ---
 
-, let's unpack this. I’ve seen this distinction cause more than a few headaches on projects, and understanding it is truly fundamental when architecting anything of reasonable complexity. The difference between decomposing by business capability versus subdomain isn't just a semantic quirk; it's a strategic decision that impacts how your systems evolve, how your teams organize, and frankly, how much future pain you’re likely to encounter.
+. I’ve seen this distinction cause more than a few headaches on projects, and understanding it is truly fundamental when architecting anything of reasonable complexity. The difference between decomposing by business capability versus subdomain isn't just a semantic quirk; it's a strategic decision that impacts how your systems evolve, how your teams organize, and frankly, how much future pain you’re likely to encounter.
 
 In my experience, particularly back when I was working on a rather large e-commerce platform, we initially leaned heavily towards a subdomain-focused architecture. We had ‘Inventory,’ ‘Payment,’ ‘User Management,’ and so on. Seemed logical at the time. The trouble started when changes in one of these subdomains, specifically regarding new payment methods, rippled outwards unexpectedly and impacted the shopping cart functionality, which we'd neatly categorized separately. The coupling was far tighter than we anticipated. This experience taught me a brutal, but valuable lesson: subdomains, while useful for aligning with technical domains or existing organizational structures, often don’t capture the _what_ of the business, only the _how_.
 

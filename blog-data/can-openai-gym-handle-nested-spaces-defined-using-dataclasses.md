@@ -10,7 +10,7 @@ The direct answer is: OpenAI Gym, at its core, does not inherently ‘understand
 
 However, don't despair – it’s entirely possible, and often desirable, to incorporate dataclass structures for representing your environment’s internal state while still adhering to Gym’s requirements for space definitions. This usually involves a conversion or mapping process. You can think of it as an impedance matching problem: dataclasses provide a convenient data structure, while Gym's spaces define the structure it needs to understand. The bridge between these is typically some form of mapping or flattening.
 
-Let's unpack this with an example from a project a few years back. I was working on a simulated warehouse robot environment. Instead of having simple scalar values for the robot's position, we needed a more detailed state including cartesian coordinates, orientation quaternion, and a list of currently carried items. We were using dataclasses to model this robot state, making the code much cleaner and maintainable.
+this with an example from a project a few years back. I was working on a simulated warehouse robot environment. Instead of having simple scalar values for the robot's position, we needed a more detailed state including cartesian coordinates, orientation quaternion, and a list of currently carried items. We were using dataclasses to model this robot state, making the code much cleaner and maintainable.
 
 ```python
 from dataclasses import dataclass, field

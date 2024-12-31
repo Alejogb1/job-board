@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-classcastexception-with-hashmaps-in-java"
 ---
 
-, let's unpack this _ClassCastException_ situation you're encountering with HashMaps in Java. I've definitely spent my share of late nights staring at stack traces like that, and it's usually rooted in a misunderstanding of how type erasure and generics interact, or sometimes, a bit of careless coding. It's not a particularly _rare_ issue, but it's certainly frustrating until you pin down the exact cause.
+_ClassCastException_ situation you're encountering with HashMaps in Java. I've definitely spent my share of late nights staring at stack traces like that, and it's usually rooted in a misunderstanding of how type erasure and generics interact, or sometimes, a bit of careless coding. It's not a particularly _rare_ issue, but it's certainly frustrating until you pin down the exact cause.
 
 Typically, a _ClassCastException_ when dealing with HashMaps points to an attempt to treat an object of one type as if it were another. This happens during runtime because Java's generics are a compile-time construct – after compilation, generic type information is largely erased through a process known as _type erasure_. This means that the compiler enforces type safety _at compile time_, but at runtime, the JVM doesn't know that your `HashMap` was supposed to hold, say, `Integer` keys and `String` values specifically; it simply deals with raw objects.
 

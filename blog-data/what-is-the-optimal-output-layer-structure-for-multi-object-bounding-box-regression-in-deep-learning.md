@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-optimal-output-layer-structure-for-multi-object-bounding-box-regression-in-deep-learning"
 ---
 
-, let's unpack the intricacies of output layer design for multi-object bounding box regression in deep learning. It’s a topic that, frankly, has kept me busy for a good chunk of my career, particularly during my work on that autonomous vehicle project a few years back. We were dealing with constantly varying environments and object densities, and getting the output layer just _right_ was pivotal.
+the intricacies of output layer design for multi-object bounding box regression in deep learning. It’s a topic that, frankly, has kept me busy for a good chunk of my career, particularly during my work on that autonomous vehicle project a few years back. We were dealing with constantly varying environments and object densities, and getting the output layer just _right_ was pivotal.
 
 The challenge isn't just about getting the model to predict boxes; it’s about doing it accurately, efficiently, and in a way that's compatible with your loss function and post-processing steps. There's no single 'optimal' structure that works universally, but we can break it down into the key considerations and standard practices. Let's dive in.
 

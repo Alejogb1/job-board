@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-do-i-get-a-docker-deploy-minidlna-groupmod-etcgroup-permission-denied"
 ---
 
-, let's unpack this "permission denied" with docker and minidlna. it's a classic, i've seen it countless times, usually when folks are getting into containerization and linux file permissions. i've been there myself, pulling my hair out in my early days trying to get simple things like sharing media to work reliably. it usually comes down to how docker containers and user/group ids interact, especially when you are trying to modify system files inside the container.
+"permission denied" with docker and minidlna. it's a classic, i've seen it countless times, usually when folks are getting into containerization and linux file permissions. i've been there myself, pulling my hair out in my early days trying to get simple things like sharing media to work reliably. it usually comes down to how docker containers and user/group ids interact, especially when you are trying to modify system files inside the container.
 
 the core of the problem is that the `groupmod` command you see in the error log is trying to modify `/etc/group` within the docker container. this is a pretty sensitive file in a linux system, it stores user group information. and by default docker containers run with a user id and group id that are not root (usually something like uid 1000, gid 1000). this is a security thing docker does. but the thing is that `groupmod` needs root level permissions to change `/etc/group`.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "in-azureml-does-startlogging-start-asynchronous-execution-or-synchronous-execution"
 ---
 
-, let's unpack this. I remember battling this very question a few years back when migrating a sizable model training pipeline to AzureML. The 'synchronous vs. asynchronous' nature of `start_logging` – and its impact on your overall workflow – is indeed a crucial aspect to grasp, and it's not immediately obvious from the surface-level documentation.
+. I remember battling this very question a few years back when migrating a sizable model training pipeline to AzureML. The 'synchronous vs. asynchronous' nature of `start_logging` – and its impact on your overall workflow – is indeed a crucial aspect to grasp, and it's not immediately obvious from the surface-level documentation.
 
 To be precise, in the context of AzureML's `run` object and the logging mechanism, `start_logging` itself does **not** initiate asynchronous or synchronous execution of your _training code_. It primarily serves as a signal to AzureML that you're starting to log metrics and other metadata related to a specific run. The actual execution – be it synchronous or asynchronous – depends on how you've configured your training script submission via the `Experiment.submit()` or `ScriptRunConfig` methods.
 

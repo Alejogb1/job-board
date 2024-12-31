@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-was-an-nft-revealed-on-testnet-but-not-on-opensea-mainnet"
 ---
 
-Let's unpack this NFT visibility conundrum, shall we? It's a situation I've definitely encountered, more times than I'd like to recall, during my tenure building blockchain applications. Seeing a shiny, new NFT pop up on a testnet explorer, only for it to seemingly vanish into the ether when attempting to view it on OpenSea's mainnet, is quite frustrating. There are several interconnected reasons for this behavior, and most often they stem from subtle but critical configuration mismatches.
+this NFT visibility conundrum, shall we? It's a situation I've definitely encountered, more times than I'd like to recall, during my tenure building blockchain applications. Seeing a shiny, new NFT pop up on a testnet explorer, only for it to seemingly vanish into the ether when attempting to view it on OpenSea's mainnet, is quite frustrating. There are several interconnected reasons for this behavior, and most often they stem from subtle but critical configuration mismatches.
 
 Essentially, the core issue revolves around the fundamental difference between testnet and mainnet environments, coupled with the mechanics of how marketplaces like OpenSea ingest NFT data. Testnets, like Goerli, Sepolia, or Rinkeby (though many are now deprecated), are designed for experimentation and development. They operate with simulated currencies and are generally free of the real-world financial stakes that govern mainnet transactions. Mainnets, such as Ethereum's mainnet, are where actual transactions involving valuable cryptocurrency occur. This separation ensures that development activities don’t unintentionally impact live systems.
 
@@ -36,7 +36,7 @@ contract MyNFT is ERC721 {
 }
 ```
 
-The crucial point here is that the *same* code deployed across different chains will have *different* contract addresses. Attempting to view an NFT created on the mainnet with the testnet contract address will fail. You must use the correct contract address in your OpenSea query.
+The crucial point here is that the _same_ code deployed across different chains will have _different_ contract addresses. Attempting to view an NFT created on the mainnet with the testnet contract address will fail. You must use the correct contract address in your OpenSea query.
 
 **Example 2: Incorrect Metadata URI**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-many-erc-20-token-buys-and-sells-occurred-in-the-last-24-hours"
 ---
 
-, let's unpack this. Tracking the precise number of erc-20 token buy and sell transactions within a specific timeframe, like the last 24 hours, isn't as straightforward as querying a single database. It necessitates a nuanced approach, combining on-chain data analysis with careful filtering. I've tackled similar challenges numerous times, usually when needing to audit decentralized exchange (dex) activity or validate data for internal reporting tools. It’s not like a simple SQL query where you’d get the total number of rows. Let's break it down methodically.
+. Tracking the precise number of erc-20 token buy and sell transactions within a specific timeframe, like the last 24 hours, isn't as straightforward as querying a single database. It necessitates a nuanced approach, combining on-chain data analysis with careful filtering. I've tackled similar challenges numerous times, usually when needing to audit decentralized exchange (dex) activity or validate data for internal reporting tools. It’s not like a simple SQL query where you’d get the total number of rows. Let's break it down methodically.
 
 The crux of the matter lies in the nature of the Ethereum blockchain. Transactions are recorded immutably, but not in a structured way that allows for direct “buy” or “sell” query. Instead, what we have are _transfers_ of erc-20 tokens between addresses. These transfers are the fundamental unit of activity. To determine whether a transfer constitutes a "buy" or "sell," we have to examine the context within which the transfer occurred, typically by monitoring events emitted by decentralized exchanges or other smart contracts.
 

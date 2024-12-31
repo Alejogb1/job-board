@@ -8,7 +8,7 @@ you're hitting the "pg_restore did not find magic string header" error right? I'
 
 So here's the deal this error usually screams one thing loud and clear your restore file isn't what pg_restore expects it to be It's essentially saying "hey I'm looking for a file that starts with a specific sequence of bytes a magic string if you will and you're giving me something that doesn't match that pattern" It's Postgres trying to ensure the integrity of backups it's a good thing but man is it annoying when it goes wrong
 
-Let's unpack this like a bunch of code snippets because that's what we do best right
+this like a bunch of code snippets because that's what we do best right
 
 **First the obvious stuff**
 

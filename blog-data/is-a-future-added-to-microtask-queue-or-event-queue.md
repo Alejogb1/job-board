@@ -6,7 +6,7 @@ id: "is-a-future-added-to-microtask-queue-or-event-queue"
 
 , one. I remember vividly a particularly challenging debugging session a few years back, where understanding the nuances of microtask and event queues was absolutely critical. We were dealing with a complex asynchronous data pipeline involving multiple promises and network requests, and the behavior of the ui seemed...well, unpredictable. That experience, more than anything, burned into my brain exactly how futures and their associated asynchronous operations are scheduled.
 
-So, the short answer to your question: a `Future` _itself_ is not directly added to either the microtask or event queue. Instead, the _operations resulting from_ the completion of a `Future`, typically continuations like `.then()` or `async/await` blocks, are what get scheduled, and these are scheduled onto the microtask queue. Let's unpack that a bit because it's crucial to understand the subtle distinctions.
+So, the short answer to your question: a `Future` _itself_ is not directly added to either the microtask or event queue. Instead, the _operations resulting from_ the completion of a `Future`, typically continuations like `.then()` or `async/await` blocks, are what get scheduled, and these are scheduled onto the microtask queue. that a bit because it's crucial to understand the subtle distinctions.
 
 Think of a `Future` as a promise—a placeholder for a value that might not be available immediately. It represents an eventual result of an asynchronous operation. The key thing is that a `Future`'s operation, like a network call or a file read, typically originates from the event loop, but the _notification_ of its completion and subsequent handling are what's orchestrated through the microtask queue.
 

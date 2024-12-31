@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-benefits-of-using-multiple-projects-in-a-ddd-net-core-application"
 ---
 
-, let's unpack this. I’ve seen firsthand the chaos that can ensue when a domain-driven design (DDD) application in .NET Core starts to resemble a monolithic blob, and conversely, I’ve witnessed the elegance and maintainability that comes from a well-structured, multi-project architecture. It’s not just about aesthetics; there are tangible, practical advantages to slicing your DDD application into multiple projects. Let me walk you through my experience and explain why this approach can make a significant difference.
+. I’ve seen firsthand the chaos that can ensue when a domain-driven design (DDD) application in .NET Core starts to resemble a monolithic blob, and conversely, I’ve witnessed the elegance and maintainability that comes from a well-structured, multi-project architecture. It’s not just about aesthetics; there are tangible, practical advantages to slicing your DDD application into multiple projects. Let me walk you through my experience and explain why this approach can make a significant difference.
 
 I remember a rather large e-commerce project I worked on a few years back. We initially tried to cram everything – from user authentication to order processing and inventory management – into a single .NET Core project. It quickly became unwieldy. Build times skyrocketed, code changes became risky, and the various domain concerns were so intertwined that even trivial bug fixes felt like a high-stakes operation. This is where the concept of multiple projects, aligned with DDD principles, became our saving grace.
 

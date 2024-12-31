@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-attributeerror-parallelenv-in-paddleoce"
 ---
 
-, `AttributeError: 'ParallelEnv'` issue you're encountering within PaddleOCR. I've seen this particular error pop up several times over the years, usually stemming from a few related, underlying reasons. It's not uncommon, especially when working with more advanced or custom configurations of PaddleOCR, and it’s almost always a problem in how the environment is set up, or how you are initiating the paddleocr library. Let's unpack that a bit.
+, `AttributeError: 'ParallelEnv'` issue you're encountering within PaddleOCR. I've seen this particular error pop up several times over the years, usually stemming from a few related, underlying reasons. It's not uncommon, especially when working with more advanced or custom configurations of PaddleOCR, and it’s almost always a problem in how the environment is set up, or how you are initiating the paddleocr library. that a bit.
 
 Firstly, this error, `AttributeError: 'ParallelEnv'`, indicates that you're attempting to access an attribute or method named `ParallelEnv` on an object where it simply doesn't exist. In the context of PaddleOCR, which often leverages parallel processing for faster OCR tasks, this usually pinpoints problems with how the framework attempts to establish or utilise its multi-processing capabilities. It's crucial to understand that PaddleOCR provides options for parallel processing that may be called through `ParallelEnv` class, and if this process fails, you may encounter the error.
 

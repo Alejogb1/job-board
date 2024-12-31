@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-groovys-ast-transformations-applied-twice-for-methods-with-parameters"
 ---
 
-, let's unpack this groovy behavior. It's a quirk that's tripped up quite a few developers, and I've certainly spent my fair share of time debugging its nuances. The apparent double application of abstract syntax tree (AST) transformations for methods with parameters in Groovy is not a bug, but rather an intended consequence of how the Groovy compiler handles method signatures and its internal phases of compilation. To understand this, we need to delve into Groovy's compilation pipeline and look closely at how method ASTs are initially constructed and subsequently modified.
+groovy behavior. It's a quirk that's tripped up quite a few developers, and I've certainly spent my fair share of time debugging its nuances. The apparent double application of abstract syntax tree (AST) transformations for methods with parameters in Groovy is not a bug, but rather an intended consequence of how the Groovy compiler handles method signatures and its internal phases of compilation. To understand this, we need to delve into Groovy's compilation pipeline and look closely at how method ASTs are initially constructed and subsequently modified.
 
 In essence, when the Groovy compiler encounters a method definition with parameters, it generates a method AST that includes parameter information. This initial AST is, in a way, a placeholder. It contains the bare minimum structure needed to represent the method and its parameters. Crucially, at this stage, the parameter types might not have been fully resolved or processed. This is the first point of entry for AST transformations. Those transformations can then operate on this preliminary AST.
 

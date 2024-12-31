@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-select-a-table"
 ---
 
-, let's talk tables. It’s funny; “selecting a table” sounds simple on the surface, but the reality can get surprisingly intricate depending on the context. I’ve seen projects grind to a halt because the foundational database design, specifically the choice of table type and its structure, was overlooked in the initial phases. It’s a pitfall many developers stumble into, often under pressure to move quickly. Let's unpack this a bit, shall we?
+, let's talk tables. It’s funny; “selecting a table” sounds simple on the surface, but the reality can get surprisingly intricate depending on the context. I’ve seen projects grind to a halt because the foundational database design, specifically the choice of table type and its structure, was overlooked in the initial phases. It’s a pitfall many developers stumble into, often under pressure to move quickly. this a bit, shall we?
 
 Fundamentally, “selecting a table” isn’t just about choosing a name; it’s about choosing the appropriate data structure for the task at hand. We need to consider performance, scalability, data consistency, and even the operational overhead associated with each choice. The database, after all, is the foundation upon which most applications are built, and a bad foundation makes building anything on top problematic. My experience includes situations where we had to migrate massive datasets because the initial table design couldn’t handle the scaling demands – a costly and time-consuming lesson in proper initial planning.
 

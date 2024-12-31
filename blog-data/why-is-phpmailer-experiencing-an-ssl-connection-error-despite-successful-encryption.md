@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-phpmailer-experiencing-an-ssl-connection-error-despite-successful-encryption"
 ---
 
-, let's unpack this. I've definitely been down this rabbit hole a few times, and it's often more nuanced than a simple SSL configuration issue. You're seeing that PHPMailer _appears_ to encrypt the connection successfully, but then throws an error indicating a problem with the SSL connection. It's a frustrating spot to be in, but there are a few common culprits we can investigate.
+. I've definitely been down this rabbit hole a few times, and it's often more nuanced than a simple SSL configuration issue. You're seeing that PHPMailer _appears_ to encrypt the connection successfully, but then throws an error indicating a problem with the SSL connection. It's a frustrating spot to be in, but there are a few common culprits we can investigate.
 
 The key thing to understand is that "successful encryption" in the context of network communication, especially with protocols like SMTP, doesn't only mean the initial handshake went smoothly. It involves a secure channel being established _and maintained_ correctly. The error you are seeing typically indicates a disconnect between what PHPMailer expects and what the mail server provides during the lifecycle of the connection, even if the initial TLS handshake was successful.
 

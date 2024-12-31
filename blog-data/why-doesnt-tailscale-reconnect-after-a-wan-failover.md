@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-doesnt-tailscale-reconnect-after-a-wan-failover"
 ---
 
-Let's unpack the complexities of why Tailscale might struggle to reconnect after a wan failover, something I’ve certainly encountered in my time. It's not always as straightforward as a simple network hiccup; there are a number of interlocking components that need consideration. My experience, particularly with setting up multi-site vpn configurations, has highlighted these challenges, and while tailscale simplifies a lot, it doesn't eliminate all the underlying issues.
+the complexities of why Tailscale might struggle to reconnect after a wan failover, something I’ve certainly encountered in my time. It's not always as straightforward as a simple network hiccup; there are a number of interlocking components that need consideration. My experience, particularly with setting up multi-site vpn configurations, has highlighted these challenges, and while tailscale simplifies a lot, it doesn't eliminate all the underlying issues.
 
 The core of the problem often lies in how tailscale, and indeed most vpn solutions, establish and maintain connections. Think of it less like a direct wire and more like a carefully orchestrated dance between multiple systems, each dependent on the others. When your primary wan connection drops, it isn’t just the loss of internet access; it’s a seismic shift in the network landscape as far as your devices and tailscale’s control servers are concerned.
 

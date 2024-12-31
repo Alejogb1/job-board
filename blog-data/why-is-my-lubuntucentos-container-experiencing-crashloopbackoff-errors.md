@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-lubuntucentos-container-experiencing-crashloopbackoff-errors"
 ---
 
-Right, let's unpack this CrashLoopBackOff situation with your Lubuntu/CentOS container. It's a frustrating one, I've definitely been there a few times myself, and usually it boils down to a handful of common culprits, albeit sometimes masked by specific environment nuances. I’m not just throwing generic advice here; I've spent my fair share of late nights tracing logs and tweaking configurations to get these containers back on their feet.
+Right CrashLoopBackOff situation with your Lubuntu/CentOS container. It's a frustrating one, I've definitely been there a few times myself, and usually it boils down to a handful of common culprits, albeit sometimes masked by specific environment nuances. I’m not just throwing generic advice here; I've spent my fair share of late nights tracing logs and tweaking configurations to get these containers back on their feet.
 
 So, a CrashLoopBackOff, in essence, signals that your container is repeatedly starting, failing, and then being restarted by Kubernetes (or Docker Swarm or whatever your orchestrator might be), creating a cycle of futility. We need to figure out why it’s failing initially. Let's approach this systematically.
 
@@ -54,15 +54,15 @@ Here's how resource limitations can manifest in a simple Docker compose setup.
 
 ```yaml
 # docker-compose.yml
-version: '3.8'
+version: "3.8"
 services:
   app:
     image: my-app-image:latest
     deploy:
-       resources:
-         limits:
-           memory: 128m
-           cpus: '0.5' # half of a CPU core
+      resources:
+        limits:
+          memory: 128m
+          cpus: "0.5" # half of a CPU core
 ```
 
 Now, let's say the `my-app-image:latest` requires much more than 128m memory or 0.5 CPU to run effectively. During startup, it will either crash immediately or be forcefully killed by the container engine. This behaviour can be verified using `docker stats` while the container is restarting. You may see the container briefly reach the memory limit and be terminated. To resolve this, you can increase these values to fit the application needs.

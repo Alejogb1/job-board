@@ -10,7 +10,7 @@ From my experience, especially during the early days of building large-scale app
 
 The problem stems from how reCaptcha verification works; a request needs a site key and secret key to validate a token. A single pair used everywhere will create a lack of proper testing, as validation success depends heavily on environment context which should be avoided.
 
-There are several approaches to manage this separation, but I find the most maintainable one involves configuration management. Essentially, the application should obtain the reCaptcha site key from a configurable source, specific to the environment in which it's running. Let's unpack that further.
+There are several approaches to manage this separation, but I find the most maintainable one involves configuration management. Essentially, the application should obtain the reCaptcha site key from a configurable source, specific to the environment in which it's running. that further.
 
 First, you need to generate separate reCaptcha keys. Go to the Google reCaptcha admin console and create one set of keys for your development environment and another for production. Name them clearly; something like 'my_app_dev' and 'my_app_prod' is a good starting point. The site key will be embedded in your frontend code, while the secret key is used on the backend for validation. Crucially, the backend should never receive the site key.
 

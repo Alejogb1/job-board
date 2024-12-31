@@ -6,7 +6,7 @@ id: "why-is-downloadstring-failing-when-installing-chocolatey-in-a-docker-window
 
 one. I've seen this exact situation unfold more times than I care to remember, usually in the middle of a Friday night deployment gone sideways. It’s frustrating because it _feels_ like it should be straightforward, especially when you're just trying to get a basic container setup working.
 
-The core issue, when "DownloadString" fails within a Docker Windows container attempting to install Chocolatey, boils down to a combination of network restrictions, certificate issues, and the inherent limitations of the containerized environment regarding network access. It’s rarely just one thing. Let's unpack this systematically.
+The core issue, when "DownloadString" fails within a Docker Windows container attempting to install Chocolatey, boils down to a combination of network restrictions, certificate issues, and the inherent limitations of the containerized environment regarding network access. It’s rarely just one thing. this systematically.
 
 First, let's consider the usual method for installing Chocolatey, which typically involves invoking PowerShell to download and execute a script from `https://community.chocolatey.org/install.ps1`. This script, by design, reaches out over the network to retrieve its components. In the context of a Docker Windows container, this seemingly simple network operation can easily stumble.
 

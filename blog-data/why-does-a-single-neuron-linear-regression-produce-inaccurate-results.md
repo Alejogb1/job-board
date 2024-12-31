@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-single-neuron-linear-regression-produce-inaccurate-results"
 ---
 
-, let's unpack this. I've seen this issue rear its head more times than I can count, particularly back in my early days working on simple machine learning prototypes. A single-neuron linear regression model, while conceptually straightforward, often delivers results that are, let's say, less than stellar. The problem isn't with the math itself, but rather the inherent limitations of the model and the assumptions it makes. It's a bit like using a screwdriver to hammer a nail – you _can_ do it, but it’s not the ideal tool and the outcome won't be great.
+. I've seen this issue rear its head more times than I can count, particularly back in my early days working on simple machine learning prototypes. A single-neuron linear regression model, while conceptually straightforward, often delivers results that are, let's say, less than stellar. The problem isn't with the math itself, but rather the inherent limitations of the model and the assumptions it makes. It's a bit like using a screwdriver to hammer a nail – you _can_ do it, but it’s not the ideal tool and the outcome won't be great.
 
 The core issue boils down to the model's inability to capture complex relationships within the data. A single neuron in a linear regression setup, essentially performing a weighted sum followed by a bias addition, is designed to model a linear relationship. That's it. It seeks to approximate a data pattern with a straight line (or a hyperplane in higher dimensions). When the underlying data deviates from this linear assumption, the model struggles, leading to inaccurate predictions.
 

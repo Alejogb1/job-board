@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-predict-a-sine-wave-using-python"
 ---
 
-, let's unpack this. Predicting a sine wave isn’t about divining the future; it's about understanding the underlying mathematical structure and then employing that knowledge within a predictive model. This task often crops up in signal processing, time series analysis, and even some areas of simulation. I’ve personally tackled this kind of thing multiple times in various embedded systems and data analysis projects, so I've got some hands-on experience to draw from.
+. Predicting a sine wave isn’t about divining the future; it's about understanding the underlying mathematical structure and then employing that knowledge within a predictive model. This task often crops up in signal processing, time series analysis, and even some areas of simulation. I’ve personally tackled this kind of thing multiple times in various embedded systems and data analysis projects, so I've got some hands-on experience to draw from.
 
 The core concept here is that a sine wave, at its heart, is defined by a fairly simple mathematical function: `y(t) = A * sin(2 * pi * f * t + phi)`, where `A` is the amplitude, `f` is the frequency, `t` is time, and `phi` is the phase shift. Our goal, then, isn't about magic, but about estimating the parameters `A`, `f`, and `phi` (and maybe handling any noise present). This is where curve fitting and time series analysis techniques come into play.
 

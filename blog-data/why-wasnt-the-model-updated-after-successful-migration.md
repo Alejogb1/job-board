@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-wasnt-the-model-updated-after-successful-migration"
 ---
 
-, let's unpack this scenario. It’s a situation I've certainly encountered more than once over the years – a seemingly successful data migration that, upon closer inspection, hasn't quite delivered on updating the model as expected. The frustration is real, I understand. It's not always as straightforward as it looks, and there are a few common culprits worth examining. Typically, when a model remains stubbornly unchanged after a data migration, it boils down to a disconnect between the _process_ of data transfer and the _mechanism_ of model retraining, or perhaps even how the data itself was handled during the transfer.
+scenario. It’s a situation I've certainly encountered more than once over the years – a seemingly successful data migration that, upon closer inspection, hasn't quite delivered on updating the model as expected. The frustration is real, I understand. It's not always as straightforward as it looks, and there are a few common culprits worth examining. Typically, when a model remains stubbornly unchanged after a data migration, it boils down to a disconnect between the _process_ of data transfer and the _mechanism_ of model retraining, or perhaps even how the data itself was handled during the transfer.
 
 First off, let’s establish a working definition: we're talking about a machine learning model, likely residing within a larger system, that's supposed to be re-trained or updated with fresh, migrated data. The "migration" component implies a change in data location, format, or even the underlying system itself. We assume this migration completes successfully – i.e., data reaches its intended destination without obvious errors in the data transfer pipeline. The challenge, therefore, is why the subsequent model update does not occur.
 
@@ -56,7 +56,7 @@ if __name__ == "__main__":
       trigger_model_retraining()
 ```
 
-This simple script highlights the core problem: if the expected naming convention, ‘data_YYYYMMDD.csv’, doesn’t match the actual file name generated after the migration, the retraining will not be triggered. While a crude example, the crux is that the process _checking_ for data was not properly updated to match the new output from the migration process.
+This simple script highlights the core problem: if the expected naming convention, ‘data*YYYYMMDD.csv’, doesn’t match the actual file name generated after the migration, the retraining will not be triggered. While a crude example, the crux is that the process \_checking* for data was not properly updated to match the new output from the migration process.
 
 Secondly, it's essential to examine the _data transformation_ step. Migrated data is rarely ready for model consumption in its raw form. Often, data requires preprocessing – cleaning, normalization, feature engineering, etc. If the code responsible for these transformations isn’t updated to account for any schema changes or format differences introduced by the migration, the downstream model retraining will likely receive unusable input. Or it may outright error out depending on the level of error handling implemented. I had another case where we moved from a very old custom database to a standard relational database. While we migrated the data well enough (all rows were there), the SQL schema was different. The downstream python script for building the training data did not account for the different column names causing a complete halt to retraining.
 

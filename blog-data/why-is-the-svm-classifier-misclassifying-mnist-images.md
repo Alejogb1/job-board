@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-svm-classifier-misclassifying-mnist-images"
 ---
 
-, let's unpack this. Misclassification with Support Vector Machines (SVMs) on MNIST digits is definitely something I’ve seen – and, frankly, it's less of a mysterious failure and more a symptom of several common issues. Back when I was working on a large-scale character recognition system for a historical document digitization project, we had a particularly challenging time getting our SVM to properly classify some of the more stylized handwritten text. It's not dissimilar to MNIST, just a lot messier. The key is to understand _why_ an SVM might fail, rather than just throwing more data or tuning parameters randomly.
+. Misclassification with Support Vector Machines (SVMs) on MNIST digits is definitely something I’ve seen – and, frankly, it's less of a mysterious failure and more a symptom of several common issues. Back when I was working on a large-scale character recognition system for a historical document digitization project, we had a particularly challenging time getting our SVM to properly classify some of the more stylized handwritten text. It's not dissimilar to MNIST, just a lot messier. The key is to understand _why_ an SVM might fail, rather than just throwing more data or tuning parameters randomly.
 
 First, let's be clear: SVMs are powerful classifiers, particularly well-suited for high-dimensional data, which makes them a solid starting point for image recognition tasks. But they are not magic. They have certain limitations, and often, misclassifications point to problems in how we’ve configured or prepped the data for them. Here’s what I've found to be the main culprits.
 

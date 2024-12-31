@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-register-service-workers-in-rails-7-with-importmap"
 ---
 
-, let's unpack this service worker integration with importmap in Rails 7. I've seen this come up in a few different projects, and it's definitely a case where the default setup can feel a little… incomplete. It’s not that Rails 7 isn't equipped for it; it just requires a few specific steps to get those service workers playing nicely with importmap. The issue, as I've observed, is typically with the way assets are managed and how we ensure the service worker script is loaded correctly.
+service worker integration with importmap in Rails 7. I've seen this come up in a few different projects, and it's definitely a case where the default setup can feel a little… incomplete. It’s not that Rails 7 isn't equipped for it; it just requires a few specific steps to get those service workers playing nicely with importmap. The issue, as I've observed, is typically with the way assets are managed and how we ensure the service worker script is loaded correctly.
 
 When I first encountered this, it was in a progressive web app project for a small e-commerce client back in 2022. We needed offline capability for product browsing, and naturally, service workers were the route. Initially, the service worker was failing to register and throw obscure errors. This was largely because we hadn't paid enough attention to the nuances of how importmap handles relative paths, and how that affects service worker registration. So, let’s get into the details.
 

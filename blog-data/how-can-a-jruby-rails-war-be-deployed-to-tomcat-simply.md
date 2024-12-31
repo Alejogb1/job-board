@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-jruby-rails-war-be-deployed-to-tomcat-simply"
 ---
 
-, let's unpack this. I’ve spent a fair bit of time deploying JRuby on Rails applications to Tomcat, and while “simply” might be a strong word depending on your environment, there are certainly approaches that streamline the process quite a bit. I remember battling with classpath issues and weird gem conflicts back in '09 with a particularly complex legacy system; it forced me to dive deep into the nuances of JRuby deployments on Java application servers. What I’ve landed on, and what I’ve consistently found to be the most reliable path, hinges on using the Warbler gem.
+. I’ve spent a fair bit of time deploying JRuby on Rails applications to Tomcat, and while “simply” might be a strong word depending on your environment, there are certainly approaches that streamline the process quite a bit. I remember battling with classpath issues and weird gem conflicts back in '09 with a particularly complex legacy system; it forced me to dive deep into the nuances of JRuby deployments on Java application servers. What I’ve landed on, and what I’ve consistently found to be the most reliable path, hinges on using the Warbler gem.
 
 Warbler essentially handles the heavy lifting of packaging your JRuby Rails application into a deployable WAR file. It takes care of mapping your gem dependencies, JRuby runtime, and all the other necessary bits and pieces into a single, self-contained artifact that Tomcat can readily understand. The key here is minimizing manual configuration. The less you do by hand, the less chance for a typo or misconfiguration to throw a wrench into your deployment process.
 

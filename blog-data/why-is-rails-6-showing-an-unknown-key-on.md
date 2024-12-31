@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-rails-6-showing-an-unknown-key-on"
 ---
 
-, let's unpack this 'unknown key on' error in Rails 6. It's a peculiar issue, and one I've encountered several times across projects – often in situations where configurations, especially those passed to active record queries or associated model setups, become a bit... _enthusiastic_. The core problem stems from a misunderstanding of how rails handles hash keys, particularly when those keys are strings versus symbols, and how certain configuration options are interpreted. Let's dissect this.
+'unknown key on' error in Rails 6. It's a peculiar issue, and one I've encountered several times across projects – often in situations where configurations, especially those passed to active record queries or associated model setups, become a bit... _enthusiastic_. The core problem stems from a misunderstanding of how rails handles hash keys, particularly when those keys are strings versus symbols, and how certain configuration options are interpreted. Let's dissect this.
 
 The error message, typically appearing as `ActiveRecord::UnknownAttributeError: unknown attribute 'on'`, often surfaces when you're attempting to pass a hash as an argument to methods like `where`, `joins`, or within the options of associations like `has_many` and `belongs_to`. The key component here is the word 'on'. It's not typically a standard column name, yet it's showing up as an unknown attribute. This suggests that Rails is interpreting 'on' not as a configuration directive, which it can be, but rather as an _actual_ attribute name for the model it's interacting with.
 

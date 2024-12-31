@@ -10,7 +10,7 @@ My experience working on a large-scale time series prediction model for financia
 
 Essentially, `NaN` arises from mathematically undefined operations. Division by zero is the most classic example, but it can also be produced by attempting to calculate the logarithm of a negative number, the square root of a negative number, or even certain numerical overflows or underflows, depending on the floating-point representation being used. The accuracy being `0.0` is a logical consequence – if your model is receiving undefined results, it cannot effectively learn or predict. It becomes stuck because there's no gradient for optimization algorithms to descend, or the gradients themselves become `NaN`, effectively halting any learning progress.
 
-Let's unpack the common culprits and how to diagnose them:
+the common culprits and how to diagnose them:
 
 **1. Data Preprocessing Issues:**
 
@@ -113,15 +113,15 @@ This very simple example demonstrates how a seemingly innocuous iterative multip
 
 When encountering `NaN` losses and zero accuracy, the approach I tend to follow is systematic:
 
-*   **Check the Data:** Ensure your input data is well-scaled, cleaned of missing values, and outliers are handled using a robust method. I'd recommend examining descriptive statistics for your data before you begin modeling it.
-*   **Inspect the Model:** Verify that the model architecture is appropriate for your problem and that your layers and activation functions are configured correctly.
-*   **Monitor Gradients:** Keep a close eye on your gradients during training. Exploding gradients often lead to numerical instability and `NaN`. Use gradient clipping or a more stable optimizer to address this.
-*   **Validate at Each Step:** Break your workflow down and ensure that each stage is functioning as expected by printing results along the way.
+- **Check the Data:** Ensure your input data is well-scaled, cleaned of missing values, and outliers are handled using a robust method. I'd recommend examining descriptive statistics for your data before you begin modeling it.
+- **Inspect the Model:** Verify that the model architecture is appropriate for your problem and that your layers and activation functions are configured correctly.
+- **Monitor Gradients:** Keep a close eye on your gradients during training. Exploding gradients often lead to numerical instability and `NaN`. Use gradient clipping or a more stable optimizer to address this.
+- **Validate at Each Step:** Break your workflow down and ensure that each stage is functioning as expected by printing results along the way.
 
 For further study, I'd suggest looking into the following:
 
-*   *Numerical Recipes* by William H. Press et al., for a deep dive into numerical analysis, specifically sections on floating-point arithmetic.
-*   Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville, particularly the sections discussing optimization algorithms, regularization, and numerical stability.
-*   *Pattern Recognition and Machine Learning* by Christopher M. Bishop is an authoritative text which explains in detail the statistics behind many techniques, thus providing a sound theoretical foundation to debug these issues.
+- _Numerical Recipes_ by William H. Press et al., for a deep dive into numerical analysis, specifically sections on floating-point arithmetic.
+- Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville, particularly the sections discussing optimization algorithms, regularization, and numerical stability.
+- _Pattern Recognition and Machine Learning_ by Christopher M. Bishop is an authoritative text which explains in detail the statistics behind many techniques, thus providing a sound theoretical foundation to debug these issues.
 
 In summary, `NaN` loss and 0.0 accuracy is not a dead end but a call to action. These issues reveal errors in either data handling, model construction, or training processes. By meticulously stepping through each stage, and carefully using the resources mentioned above, you’ll be able to identify the source and devise a reliable solution. It's a common issue, and debugging it will ultimately hone your skills as a data professional.

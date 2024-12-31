@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-better-for-bert-custom-training-or-pre-trained-data"
 ---
 
-Let's unpack this. I’ve navigated similar scenarios on a few different projects, and the “better” option between custom training a bert model and relying solely on its pre-trained state truly depends on the specifics of the task at hand. There's no one-size-fits-all answer, despite what some quick-start guides might suggest.
+this. I’ve navigated similar scenarios on a few different projects, and the “better” option between custom training a bert model and relying solely on its pre-trained state truly depends on the specifics of the task at hand. There's no one-size-fits-all answer, despite what some quick-start guides might suggest.
 
 The pre-trained bert models, and i'm referring to variations like `bert-base-uncased`, `bert-large-uncased`, etc., are astonishingly powerful out-of-the-box, thanks to the massive amounts of text they’ve seen during their initial training phase. This typically involves a combination of the masked language model (mlm) and next sentence prediction (nsp) objectives, where the model learns intricate linguistic patterns across a broad range of text. Think of it as a foundation built on vast amounts of general knowledge. Therefore, using a pre-trained model without any additional fine-tuning can be surprisingly effective for tasks where the desired output is closely aligned with this general knowledge and pattern recognition. For example, basic sentiment analysis or named entity recognition on commonly used entities. In these scenarios, you’re leveraging the “transfer learning” capabilities of bert.
 

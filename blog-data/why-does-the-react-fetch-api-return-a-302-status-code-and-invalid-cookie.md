@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-react-fetch-api-return-a-302-status-code-and-invalid-cookie"
 ---
 
-, let's unpack this rather thorny issue of React fetch requests encountering 302 redirects and invalid cookies. I've seen this crop up a few times over the years, and it’s often a confluence of subtle configuration problems, not necessarily a straightforward bug in React itself.
+rather thorny issue of React fetch requests encountering 302 redirects and invalid cookies. I've seen this crop up a few times over the years, and it’s often a confluence of subtle configuration problems, not necessarily a straightforward bug in React itself.
 
 The core of the issue typically stems from a mismatch between the expected client-side request behavior and what the server is actually doing. A 302 status code, by its very definition, indicates a temporary redirect. The server is essentially telling the client, "the resource you're looking for is now located at this other address." Coupled with an apparent invalid cookie issue, we're usually dealing with server-side handling of authentication or session management not playing well with how `fetch` operates.
 

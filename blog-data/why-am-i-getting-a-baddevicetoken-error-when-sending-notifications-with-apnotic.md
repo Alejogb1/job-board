@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-baddevicetoken-error-when-sending-notifications-with-apnotic"
 ---
 
-Let's unpack that `BadDeviceToken` error you're seeing with apnotic, because honestly, it's a common pitfall that I've seen countless times, and yes, I've definitely battled it myself more than once. It usually indicates a mismatch between the device token you're using to send notifications and the actual state of the app and device on apple’s side. It's not that your code is fundamentally broken; it's more about the nuances of how apple's push notification service works, and those nuances can be a pain point if not understood correctly.
+that `BadDeviceToken` error you're seeing with apnotic, because honestly, it's a common pitfall that I've seen countless times, and yes, I've definitely battled it myself more than once. It usually indicates a mismatch between the device token you're using to send notifications and the actual state of the app and device on apple’s side. It's not that your code is fundamentally broken; it's more about the nuances of how apple's push notification service works, and those nuances can be a pain point if not understood correctly.
 
 To elaborate, the `BadDeviceToken` error typically arises when the token you've acquired is no longer considered valid by apns (apple push notification service). This invalidation can stem from a few specific scenarios. A device token becomes invalid when an app is uninstalled, then reinstalled; if the user explicitly disables notifications for your app, that token will be rejected; if you attempt to send notifications to a token from a sandbox environment with your production environment, or the opposite, you’ll see an error. Finally, there are token rotation policies by apple, tokens don't remain valid forever. These are some key areas. The system might have determined that your app, identified by that particular token, is no longer registered to receive push notifications. Think of it like an expired passport – your access is revoked.
 
@@ -118,6 +118,7 @@ if __name__ == '__main__':
     asyncio.run(main())
 
 ```
+
 In this snippet, the `is_sandbox_token` function provides an overly simplified check; you'd need to incorporate your own logic for discerning between token environments. We then adjust the topic for our notification to append a `.dev` when we are using a development token, this needs to mirror the app identifier setup on the apple developer portal.
 
 **Example 3: Monitoring Token Updates**

@@ -6,7 +6,7 @@ id: "what-are-the-problems-encountered-upgrading-rails-from-5071-to-517"
 
 , let's talk about that leap from Rails 5.0.7.1 to 5.1.7. It’s a seemingly small version jump, but trust me, the devil's often in those point releases. I’ve been on the frontline of plenty of these upgrades, and this one, in particular, brings back a few memories – and a fair amount of debugging.
 
-The most significant challenges I encountered were typically in three main categories: subtle changes in Active Record behavior, specifically around how attributes are handled; alterations to the asset pipeline and the handling of precompiled assets; and, finally, the shift in how Rails deals with parameters and request handling. Let's unpack each of those with some specific cases and code snippets.
+The most significant challenges I encountered were typically in three main categories: subtle changes in Active Record behavior, specifically around how attributes are handled; alterations to the asset pipeline and the handling of precompiled assets; and, finally, the shift in how Rails deals with parameters and request handling. each of those with some specific cases and code snippets.
 
 **Active Record Attribute Behavior**
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-couchdb-invalid-bookmark-value-hyperledger-fabric"
 ---
 
-, let's unpack this couchdb invalid bookmark value thing you're seeing with hyperledger fabric. i've been down this road myself a few times, and it’s usually a quirky little dance between fabric’s ledger and couchdb's indexing that causes the headache. it's not a straightforward error, so let's try and troubleshoot this step by step.
+couchdb invalid bookmark value thing you're seeing with hyperledger fabric. i've been down this road myself a few times, and it’s usually a quirky little dance between fabric’s ledger and couchdb's indexing that causes the headache. it's not a straightforward error, so let's try and troubleshoot this step by step.
 
 first off, the "invalid bookmark value" usually surfaces when fabric is trying to query the couchdb database using a stored bookmark, and that bookmark doesn't quite line up with the actual state of the database. think of a bookmark as a pointer that couchdb uses to keep track of where it was in the index when a previous query ran. it’s like leaving a placeholder in a book, but sometimes the page you’ve marked isn’t where you left it. when the index gets updated, sometimes these bookmarks can become stale. fabric uses these bookmarks to implement pagination and efficient retrieval of data from couchdb. it's a pretty common issue with complex setups like hyperledger fabric, where multiple components are involved.
 

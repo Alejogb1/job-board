@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-openseas-functionality-work"
 ---
 
-, let's unpack the inner workings of OpenSea. I've spent a fair chunk of time poking around similar marketplaces, both in a professional capacity and as a curious enthusiast, so I think I can offer a reasonably clear breakdown.
+the inner workings of OpenSea. I've spent a fair chunk of time poking around similar marketplaces, both in a professional capacity and as a curious enthusiast, so I think I can offer a reasonably clear breakdown.
 
 Essentially, OpenSea operates as a decentralized marketplace for non-fungible tokens (NFTs). That's the core concept, but the implementation details are where things get interesting. Instead of holding the actual assets themselves, OpenSea provides a platform for users to discover, buy, and sell these tokens. The beauty, and complexity, lies in how they interact with the underlying blockchain.
 

@@ -6,7 +6,7 @@ id: "why-rails-7stimulus-connect-fires-twice-but-why-can-i-only-access-values-on
 
 , so, you've stumbled upon one of those classic, "wait, what's _actually_ going on here?" moments with rails 7 and stimulus, specifically regarding the `connect()` lifecycle callback. it's something i've definitely banged my head against a few times, so let me try to break down what's happening and why you're only seeing the values you expect on that first `connect()`.
 
-let's unpack this. at its core, stimulus controllers are designed to react to changes in the dom. when a stimulus controller's element is added to the dom, or if the controller is connected to an existing element it triggers the `connect()` callback. what seems like a simple hook can have some unexpected consequences if not well understood.
+this. at its core, stimulus controllers are designed to react to changes in the dom. when a stimulus controller's element is added to the dom, or if the controller is connected to an existing element it triggers the `connect()` callback. what seems like a simple hook can have some unexpected consequences if not well understood.
 
 the issue of `connect()` firing twice is less about stimulus and more about how hotwire (specifically turbo) is playing with the dom. in a normal page load, the controller will be connected to the dom, and `connect()` fires once. that's straightforward. but when you use turbo, things get interesting. turbo's goal is to intercept navigation and form submissions and update the page by replacing _parts_ of the dom, without doing a full page reload. this leads to the controller element being removed and added back which will result on two firings.
 

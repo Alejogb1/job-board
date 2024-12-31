@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-hashjson-as-the-value-for-a-rails-selecttag-option"
 ---
 
-Right, let's unpack this. I've seen this pattern crop up a fair bit over the years, particularly when dealing with complex form interactions in rails applications. It’s a legitimate requirement when you need to transmit more than just a simple id or a string via a form select, and it’s one of those seemingly simple tasks that can quickly lead you down a rabbit hole if not handled carefully. The key here is understanding how HTML form data is submitted and how Rails processes it, and then crafting a solution that plays nicely with those mechanics.
+Right. I've seen this pattern crop up a fair bit over the years, particularly when dealing with complex form interactions in rails applications. It’s a legitimate requirement when you need to transmit more than just a simple id or a string via a form select, and it’s one of those seemingly simple tasks that can quickly lead you down a rabbit hole if not handled carefully. The key here is understanding how HTML form data is submitted and how Rails processes it, and then crafting a solution that plays nicely with those mechanics.
 
 The core challenge is that HTML `<select>` tags are designed to submit string values, not complex data structures like hashes or json objects. Rails, being a server-side framework, expects data from the form submission to be structured as key-value pairs. So, when we want to pass something more intricate, we need a strategy for encoding that data into a string format that can be transmitted, and then decode it back to its original structure on the server side.
 

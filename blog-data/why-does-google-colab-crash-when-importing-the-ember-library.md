@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-google-colab-crash-when-importing-the-ember-library"
 ---
 
-, let's unpack this. I've seen my fair share of peculiar library conflicts, and the Google Colab + ember.js scenario is definitely one that sticks out. It's not a straightforward "ember is broken" issue, but rather a confluence of factors that, when combined, can lead to those frustrating Colab crashes. It's a system interaction problem, not necessarily a flaw in either Colab or ember itself.
+. I've seen my fair share of peculiar library conflicts, and the Google Colab + ember.js scenario is definitely one that sticks out. It's not a straightforward "ember is broken" issue, but rather a confluence of factors that, when combined, can lead to those frustrating Colab crashes. It's a system interaction problem, not necessarily a flaw in either Colab or ember itself.
 
 From my experience, back in the pre-cloud-native days when we were trying to optimize large scale data processing within limited virtual machines, similar memory exhaustion issues cropped up during intensive dependency installations. It taught me a few critical things that are applicable here. The main culprit, as I've come to realize, isn't directly tied to the _import_ statement, but the _installation_ phase of the ember library itself and its dependencies. This situation typically triggers a resource limit within the Colab environment, specifically memory limits, which causes the notebook kernel to terminate. Colab, despite being quite powerful, has resource constraints that need to be respected.
 

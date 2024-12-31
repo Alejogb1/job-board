@@ -6,7 +6,7 @@ id: "why-is-jetbrains-app-android-studio-cannot-invoke-context-menu-by-two-finge
 
 , .
 
-so, you're hitting an issue with android studio on your macbook m2, specifically the context menu not popping up with a two-finger tap. that's… annoying, i get it. i've spent way too many hours debugging similar kinds of input weirdness myself, so let's unpack this.
+so, you're hitting an issue with android studio on your macbook m2, specifically the context menu not popping up with a two-finger tap. that's… annoying, i get it. i've spent way too many hours debugging similar kinds of input weirdness myself, so this.
 
 from my experience, it's rarely a "one size fits all" explanation, but there are some usual suspects when it comes to touchpad input and java based applications, like android studio. sometimes it's the combination of the java virtual machine (jvm) and how it interacts with the os's input system, sometimes it's a configuration thing, and sometimes it's even a bug that hasn't been patched yet. believe me, i’ve been there with older versions of eclipse and swing apps back in the day; those were dark times for touchpad gestures, i tell you.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-chaincode-instantiate-due-to-missing-main-method"
 ---
 
-, let's unpack this chaincode instantiation issue. I've seen this crop up a fair few times in my experience, often catching developers off guard despite it being a pretty fundamental aspect of how Hyperledger Fabric operates. The crux of the problem, the 'missing main method' error you're encountering, isn't about a literal `main()` function like you'd find in a standalone Java or C++ program. Instead, it points to a misalignment between what Fabric expects for chaincode execution and how your code is structured.
+chaincode instantiation issue. I've seen this crop up a fair few times in my experience, often catching developers off guard despite it being a pretty fundamental aspect of how Hyperledger Fabric operates. The crux of the problem, the 'missing main method' error you're encountering, isn't about a literal `main()` function like you'd find in a standalone Java or C++ program. Instead, it points to a misalignment between what Fabric expects for chaincode execution and how your code is structured.
 
 Essentially, chaincode doesn't run in a conventional command-line context. It's deployed and executed within the Fabric network’s peer nodes. These nodes communicate with the chaincode container via the gRPC interface defined in the Hyperledger Fabric protobuf definitions. The actual entry point is the contract or smart contract interface, specifically, the `Init()` and `Invoke()` methods that are critical for interacting with the ledger. Fabric uses these specific method signatures to manage chaincode lifecycles and execute transactions, not some arbitrary `main()` function.
 

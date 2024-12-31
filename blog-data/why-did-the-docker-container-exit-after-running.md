@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-the-docker-container-exit-after-running"
 ---
 
-Let's unpack this one; it's a common pitfall, and frankly, I’ve seen it countless times during my tenure. Why does a docker container decide to abruptly end its execution shortly after being launched? It's seldom a singular reason; instead, it's often a cascade of interconnected issues. Over my years working on everything from microservices to massive data pipelines, I’ve encountered this problem across different environments and setups, and it usually boils down to a few key areas. Let’s delve into them, focusing on the practical aspects that frequently cause such situations.
+this one; it's a common pitfall, and frankly, I’ve seen it countless times during my tenure. Why does a docker container decide to abruptly end its execution shortly after being launched? It's seldom a singular reason; instead, it's often a cascade of interconnected issues. Over my years working on everything from microservices to massive data pipelines, I’ve encountered this problem across different environments and setups, and it usually boils down to a few key areas. Let’s delve into them, focusing on the practical aspects that frequently cause such situations.
 
 First, and perhaps most frequently, the container's primary process—the one specified in the `CMD` or `ENTRYPOINT` instruction of your dockerfile—simply finishes its job. Think of a basic script that executes a task and then, logically, concludes. A container's lifespan is directly tied to the foreground process it's running. If that process exits, docker, by design, interprets it as a signal that the container's job is complete and therefore terminates the container. This is perfectly normal behavior for, say, a simple utility container that might copy files from one location to another.
 
@@ -48,6 +48,7 @@ Building and running this will, naturally, produce an error. The container's exi
 ```bash
 docker logs <container_id>
 ```
+
 Which will reveal an error message indicating the attempted division by zero before the process terminated.
 
 ```

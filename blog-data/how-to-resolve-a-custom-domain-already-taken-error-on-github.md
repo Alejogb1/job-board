@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-a-custom-domain-already-taken-error-on-github"
 ---
 
-Let's unpack this “custom domain already taken” issue on GitHub; I’ve bumped into this a few times over the years and it's almost always a matter of ownership miscommunication within the DNS system, or perhaps some forgotten configurations. It's less of a GitHub problem itself and more of a reflection of how domain names work across the internet. When GitHub reports that your custom domain is already taken, it means their systems are detecting an existing configuration elsewhere that points that domain towards a different service, or they might even be picking up remnants of old, lingering configurations.
+this “custom domain already taken” issue on GitHub; I’ve bumped into this a few times over the years and it's almost always a matter of ownership miscommunication within the DNS system, or perhaps some forgotten configurations. It's less of a GitHub problem itself and more of a reflection of how domain names work across the internet. When GitHub reports that your custom domain is already taken, it means their systems are detecting an existing configuration elsewhere that points that domain towards a different service, or they might even be picking up remnants of old, lingering configurations.
 
 Essentially, when you're trying to set up a custom domain for your GitHub Pages site (or any GitHub service that uses custom domains), you’re telling GitHub that you want requests for, say, `mydomain.com` to be routed to the specific resources they host for you. This requires changes both at your domain registrar’s end and on GitHub’s side, and that’s where things can sometimes get tricky.
 
@@ -58,7 +58,7 @@ Here’s an example of using `dig` to check the A records for `mydomain.com`:
 dig mydomain.com A
 ```
 
-The output will show the current A records associated with your domain. You should see the GitHub IP addresses listed. If you see different IP addresses, or no A records for your apex domain, you've found the problem and need to reconfigure your registrar settings. If it *does* show the correct GitHub addresses, you just need to wait a little bit longer.
+The output will show the current A records associated with your domain. You should see the GitHub IP addresses listed. If you see different IP addresses, or no A records for your apex domain, you've found the problem and need to reconfigure your registrar settings. If it _does_ show the correct GitHub addresses, you just need to wait a little bit longer.
 
 **Further Recommendations**
 

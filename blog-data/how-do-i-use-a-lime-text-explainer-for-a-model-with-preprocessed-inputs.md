@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-a-lime-text-explainer-for-a-model-with-preprocessed-inputs"
 ---
 
-, let's unpack this. I've definitely been down this road before – specifically, I remember a project a few years back involving sentiment analysis on user-generated reviews where we had a rather involved preprocessing pipeline. We needed explainability, and LIME seemed like a solid choice, but the preprocessing step certainly added a layer of complexity. It's not insurmountable, but it requires a careful approach.
+. I've definitely been down this road before – specifically, I remember a project a few years back involving sentiment analysis on user-generated reviews where we had a rather involved preprocessing pipeline. We needed explainability, and LIME seemed like a solid choice, but the preprocessing step certainly added a layer of complexity. It's not insurmountable, but it requires a careful approach.
 
 The fundamental challenge, as I understand it, is that LIME, at its core, works by perturbing the input features and observing how the model's output changes. When your model is trained on preprocessed data, the perturbed inputs need to be similarly processed _before_ being fed into the model. If not, the model will essentially be evaluating data that doesn’t resemble what it saw during training, rendering the explanations meaningless.
 

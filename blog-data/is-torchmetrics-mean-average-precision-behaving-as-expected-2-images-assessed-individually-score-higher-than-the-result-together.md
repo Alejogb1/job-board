@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-torchmetrics-mean-average-precision-behaving-as-expected-2-images-assessed-individually-score-higher-than-the-result-together"
 ---
 
-, let's unpack this. It's a situation I've encountered before, particularly when I was working on an object detection project involving satellite imagery several years back. We were using a custom model, and we observed a similar anomaly with our metrics: individual assessments seemingly outperforming batch assessments using torchmetrics' mean average precision (mAP). The intuition, at first glance, is that the aggregate score should fall _somewhere_ within the range of the individual scores, or at the very least, not be _lower_ than _all_ of them. So, yes, it can be quite perplexing if the results contradict that expectation.
+. It's a situation I've encountered before, particularly when I was working on an object detection project involving satellite imagery several years back. We were using a custom model, and we observed a similar anomaly with our metrics: individual assessments seemingly outperforming batch assessments using torchmetrics' mean average precision (mAP). The intuition, at first glance, is that the aggregate score should fall _somewhere_ within the range of the individual scores, or at the very least, not be _lower_ than _all_ of them. So, yes, it can be quite perplexing if the results contradict that expectation.
 
 The core of the issue often isn't that torchmetrics' mAP is inherently misbehaving; rather, it’s usually about how mAP itself works and the specifics of your data and evaluation setup. Let’s dive into the details.
 

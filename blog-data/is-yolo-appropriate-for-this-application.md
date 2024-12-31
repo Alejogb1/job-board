@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-yolo-appropriate-for-this-application"
 ---
 
-Let's dive into this. I've been around the block a few times with object detection models, and I can certainly share my thoughts on whether YOLO is a good fit. The short answer, like most things in tech, is "it depends," but let's unpack that. I distinctly recall a project back in my days at a robotics firm where we were trying to integrate real-time detection for object avoidance. We initially flirted with a few architectures, including YOLO, and ultimately settled on something a bit more tailored, but the exercise illuminated a lot about YOLO's strengths and limitations.
+Let's dive into this. I've been around the block a few times with object detection models, and I can certainly share my thoughts on whether YOLO is a good fit. The short answer, like most things in tech, is "it depends," but that. I distinctly recall a project back in my days at a robotics firm where we were trying to integrate real-time detection for object avoidance. We initially flirted with a few architectures, including YOLO, and ultimately settled on something a bit more tailored, but the exercise illuminated a lot about YOLO's strengths and limitations.
 
 First and foremost, YOLO – which stands for "You Only Look Once" – is renowned for its speed. That single pass through the network is a massive advantage when you need low latency. This speed comes at a cost though, primarily in terms of accuracy, especially with smaller, more densely packed objects. It's an architecture that prioritizes speed and efficiency over pixel-perfect precision. So, before deciding if it's appropriate, we absolutely must understand the specific requirements of the application. What objects are you detecting? How small are they likely to be? What level of accuracy is acceptable? Is real-time performance a must-have, or can you tolerate some delay? These are the core questions to answer before we even begin to evaluate YOLO's applicability.
 
@@ -39,7 +39,7 @@ def basic_process_yolo_output(output, threshold):
 # detections = basic_process_yolo_output(yolo_output, threshold=0.5)
 ```
 
-This first example illustrates a *very* simplified post-processing stage. In reality, we would need non-max suppression (NMS) to handle overlapping boxes, and much more sophisticated anchor box configurations. This highlights a critical aspect: YOLO requires careful preprocessing and postprocessing to function correctly.
+This first example illustrates a _very_ simplified post-processing stage. In reality, we would need non-max suppression (NMS) to handle overlapping boxes, and much more sophisticated anchor box configurations. This highlights a critical aspect: YOLO requires careful preprocessing and postprocessing to function correctly.
 
 Here is a second, slightly more advanced example which includes an NMS function:
 
@@ -95,7 +95,7 @@ def process_yolo_output(output, score_threshold, iou_threshold):
 # detections = process_yolo_output(yolo_output, score_threshold=0.5, iou_threshold=0.5)
 ```
 
-This second snippet adds the essential non-max suppression which dramatically improves the quality of output. The *iou* (intersection over union) calculation helps in determining whether two bounding boxes are overlapping too much and the NMS function then prunes away duplicate detections of the same object.
+This second snippet adds the essential non-max suppression which dramatically improves the quality of output. The _iou_ (intersection over union) calculation helps in determining whether two bounding boxes are overlapping too much and the NMS function then prunes away duplicate detections of the same object.
 
 Finally, let's imagine a situation where we need to finetune a YOLO model for a very specific task:
 
@@ -123,7 +123,7 @@ def create_custom_yolo_model(num_classes, input_shape=(416, 416, 3)):
 # yolo_model.compile(optimizer='adam', loss={'output_boxes':'mse', 'output_scores':'categorical_crossentropy'})
 ```
 
-This final snippet is an example of *transfer learning* where the base layers are inherited from a pre-trained model. This is a very common approach to speed-up training and is incredibly powerful. Note that here, we've defined example output layers for demonstration purposes. In reality, the structure of these layers, the activation functions, and the loss function would need careful adjustment depending on the YOLO architecture you're implementing and its version.
+This final snippet is an example of _transfer learning_ where the base layers are inherited from a pre-trained model. This is a very common approach to speed-up training and is incredibly powerful. Note that here, we've defined example output layers for demonstration purposes. In reality, the structure of these layers, the activation functions, and the loss function would need careful adjustment depending on the YOLO architecture you're implementing and its version.
 
 These snippets highlight some of the technical details and complexities involved. If you need high precision, a more robust model like Faster R-CNN or even Mask R-CNN might be a better starting point, though you would sacrifice some speed. However, if the real-time aspect is absolutely critical and your objects are not exceptionally small or densely packed, YOLO can be an excellent option if tailored correctly.
 

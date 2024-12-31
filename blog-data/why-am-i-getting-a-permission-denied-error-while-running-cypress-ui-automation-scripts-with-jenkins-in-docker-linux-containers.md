@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-permission-denied-error-while-running-cypress-ui-automation-scripts-with-jenkins-in-docker-linux-containers"
 ---
 
-, so you're hitting that classic 'permission denied' error when trying to run cypress ui tests inside a docker container orchestrated by jenkins. yeah, that's a real head-scratcher at first, been there, seen that. let's unpack this. it's almost always about file system permissions, especially when docker, jenkins, and cypress are all playing together. i've debugged this exact thing more times than i care to count, often late at night fueled by too much coffee.
+, so you're hitting that classic 'permission denied' error when trying to run cypress ui tests inside a docker container orchestrated by jenkins. yeah, that's a real head-scratcher at first, been there, seen that. this. it's almost always about file system permissions, especially when docker, jenkins, and cypress are all playing together. i've debugged this exact thing more times than i care to count, often late at night fueled by too much coffee.
 
 first off, let's get the lay of the land. you've got jenkins, a job scheduler; docker, a containerization tech; and cypress, your ui testing tool. they all run as different users within the linux ecosystem inside your container. the problem often arises when the user running cypress doesn't have sufficient permissions to access the files and directories it needs, usually because of file ownership. jenkins often runs its jobs as a specific user, and that user may not be the same as the one inside the docker container, leading to the error.
 

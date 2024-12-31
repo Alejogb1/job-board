@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-cnn-failing-to-learn-effectively"
 ---
 
-, let's unpack this question about convolutional neural networks (CNNs) and their learning efficacy. I’ve spent a good chunk of my career fine-tuning these architectures, sometimes battling with them, other times marveling at their capabilities. So, when we ask if they're failing to learn _effectively_, it's a nuanced point. It's not a binary 'yes' or 'no'; it's more like, under _what conditions_ do they struggle, and what can we do about it?
+question about convolutional neural networks (CNNs) and their learning efficacy. I’ve spent a good chunk of my career fine-tuning these architectures, sometimes battling with them, other times marveling at their capabilities. So, when we ask if they're failing to learn _effectively_, it's a nuanced point. It's not a binary 'yes' or 'no'; it's more like, under _what conditions_ do they struggle, and what can we do about it?
 
 To frame this properly, we shouldn't equate _any_ learning deficiency with complete failure. CNNs, at their core, are powerful feature extractors. However, their performance is intricately linked to several factors – data quality, architectural choices, training methodologies, and of course, the inherent limitations of the task at hand. I've seen projects where a seemingly “failed” CNN was entirely redeemed by just a change in data augmentation or even a small tweak to the learning rate schedule.
 

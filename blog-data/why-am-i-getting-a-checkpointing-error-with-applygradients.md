@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-checkpointing-error-with-applygradients"
 ---
 
-ah, checkpointing errors with `apply_gradients()`, that's a classic. i've been there, trust me. it’s one of those things that can make you scratch your head for hours, especially when everything else seems to be working fine. let's unpack this.
+ah, checkpointing errors with `apply_gradients()`, that's a classic. i've been there, trust me. it’s one of those things that can make you scratch your head for hours, especially when everything else seems to be working fine. this.
 
 first off, when you see checkpointing errors related to `apply_gradients()`, it usually boils down to one of a few common scenarios. it's not always immediately obvious, but the root cause generally lies in how tensorflow is tracking the tensors and operations within your model and gradient updates.
 
@@ -15,6 +15,7 @@ one of the biggest culprits is using variables that are not directly part of the
 let me give you some examples in code:
 
 first scenario: **untracked variables**.
+
 ```python
 import tensorflow as tf
 
@@ -69,11 +70,12 @@ checkpoint.save(checkpoint_path)
 print("checkpoint created successfully")
 ```
 
-if you run this code, it will run and the checkpoint will be created. but try to load the model and you might see an error if your code is not carefully coded. notice that the `untracked_var` is not part of the checkpoint it will be reinitialized when you load the model if you have code that tries to use it. when applying gradients and if the untracked variable is part of the gradients you will encounter the error. it's crucial that *all* variables involved in gradient computations are explicitly tracked by the `tf.train.Checkpoint`. this includes the trainable variables of your model and variables directly used by the optimizer. the key thing to notice is that here there is no direct application of the untracked variables to the gradients this is ok and this example won't cause an error, but if you apply the gradient it will.
+if you run this code, it will run and the checkpoint will be created. but try to load the model and you might see an error if your code is not carefully coded. notice that the `untracked_var` is not part of the checkpoint it will be reinitialized when you load the model if you have code that tries to use it. when applying gradients and if the untracked variable is part of the gradients you will encounter the error. it's crucial that _all_ variables involved in gradient computations are explicitly tracked by the `tf.train.Checkpoint`. this includes the trainable variables of your model and variables directly used by the optimizer. the key thing to notice is that here there is no direct application of the untracked variables to the gradients this is ok and this example won't cause an error, but if you apply the gradient it will.
 
 another very common scenario is that you are changing your model's architecture dynamically, that is, you are not using a keras model class or something similar. this is something that i see in many research experiments that i review. tensorflow's checkpointing mechanism heavily relies on a static graph. if you are adding or removing layers or changing the number of variables between training sessions, the checkpoint might not be able to load back the proper state.
 
 here is a more subtle example that can occur if you are building models that change its weights and structure in an imperceptible way.
+
 ```python
 import tensorflow as tf
 
@@ -137,6 +139,7 @@ print("checkpoint loaded successfully")
 in this example, the model is not explicitly changed during training but during reload. this can trigger an issue and if the number of layers change you might have an error. this is a bit more complex, but it will also show you the power of checkpointing and the issues you can get into. if your code is like this it's very difficult to debug and it's the most common reason for an issue with checkpointing.
 
 another case i've seen is where some tensor is not properly being traced within the graph and you are not using the `tf.function` decorator, and the checkpoint does not really know what to save or how to save it. using `tf.function` is key to getting all the proper tracing of the operations. here is another example of a not very common but possible scenario with `tf.function`
+
 ```python
 import tensorflow as tf
 
@@ -192,6 +195,7 @@ print("checkpoint created successfully")
 checkpoint.restore(checkpoint_path) # this can break with a checkpoint error
 print("checkpoint loaded successfully")
 ```
+
 in the previous code, if the my_loss_calculation is not using a `tf.*` operations and you are working with numpy arrays, this can also break the graph and cause an error since not all the operations can be traced. i do not recommend working with pure python objects inside tf.functions, they are not tensor friendly.
 
 so, to sum things up, here's a quick checklist to debug checkpointing issues with `apply_gradients()`:
@@ -199,8 +203,8 @@ so, to sum things up, here's a quick checklist to debug checkpointing issues wit
 1.  **ensure that all trainable variables are properly part of the `tf.train.Checkpoint`**: avoid creating un-tracked variables that can be used in the gradients or the training loop.
 2.  **use a static graph**: avoid dynamic changes to the model architecture between train and load cycles, specially if it affects the gradients or the trainable variables.
 3.  **use `tf.function`** this is critical for many tensorflow features, and checkpointing is one of them. make sure that all the operations inside a `tf.function` are `tf.*` operations, if you try to mix python and `tf` inside the `tf.function` you might get into issues.
-4. ** double check the loss function**: make sure your loss function is using proper `tf.*` operations or it's something that tensorflow can trace and use for automatic differentiation, avoid python pure operations within the gradients or loss function computations.
+4.  ** double check the loss function**: make sure your loss function is using proper `tf.*` operations or it's something that tensorflow can trace and use for automatic differentiation, avoid python pure operations within the gradients or loss function computations.
 
 for more detailed information, i would suggest looking at the tensorflow documentation, specially the `tf.train.Checkpoint`, `tf.GradientTape` and `tf.function` pages, these are the main places where you can have hidden problems with checkpointing. i would also recommend the book "deep learning with python" by francois chollet, this book gives a lot of deep insight into how tensorflow and keras work behind the scenes. in the book there is a chapter focused on creating custom training loops that has many pointers to understanding how to use tensorflow with automatic differentiation that will give you an amazing starting point.
 
-i hope this helps you with your checkpointing issues. oh, and by the way, i once spent two days trying to figure out why my model was training but not saving correctly, turns out i was saving the checkpoint *before* applying the gradients, i was saving a completely different model. after that i decided to take a coffee and had the greatest epiphany of my life, haha. good luck debugging your model!.
+i hope this helps you with your checkpointing issues. oh, and by the way, i once spent two days trying to figure out why my model was training but not saving correctly, turns out i was saving the checkpoint _before_ applying the gradients, i was saving a completely different model. after that i decided to take a coffee and had the greatest epiphany of my life, haha. good luck debugging your model!.

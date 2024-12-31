@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-failover-exception-with-aws-mysql-aurora-serverless-v2-and-wso2-api-manager"
 ---
 
-, let's unpack this failover exception situation you're encountering with AWS Aurora Serverless v2 and WSO2 API Manager. I've seen this pattern emerge a few times in my years working with distributed systems, and it often boils down to a subtle interplay between how these two technologies handle transient connection disruptions.
+failover exception situation you're encountering with AWS Aurora Serverless v2 and WSO2 API Manager. I've seen this pattern emerge a few times in my years working with distributed systems, and it often boils down to a subtle interplay between how these two technologies handle transient connection disruptions.
 
 Initially, when aurora serverless v2 was relatively new, we ran into similar issues integrating it with our middleware services, including a specific iteration of our api gateway, which had a similar underlying connection management model to wso2 apim. These weren't straightforward database errors; it wasn't as simple as bad credentials. Instead, it manifested as these persistent failover exceptions, leading to downstream application instability, especially under load. The core problem, as we eventually discovered, was a combination of two main factors: improper connection pool configuration on the api manager side and a misunderstanding of how aurora serverless v2 handles scaling and failover events.
 

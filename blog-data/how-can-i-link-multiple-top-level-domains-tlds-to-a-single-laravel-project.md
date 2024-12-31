@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-link-multiple-top-level-domains-tlds-to-a-single-laravel-project"
 ---
 
-, let's unpack this one. I've seen this particular challenge pop up a number of times, often when companies are expanding their brands or trying to target different geographical regions. Linking multiple top-level domains (TLDs) to a single Laravel project might seem complex at first, but it’s quite manageable with a solid understanding of server configuration and Laravel’s routing capabilities. The key, really, lies in properly configuring your web server and then leveraging Laravel to respond appropriately to the different hostnames.
+one. I've seen this particular challenge pop up a number of times, often when companies are expanding their brands or trying to target different geographical regions. Linking multiple top-level domains (TLDs) to a single Laravel project might seem complex at first, but it’s quite manageable with a solid understanding of server configuration and Laravel’s routing capabilities. The key, really, lies in properly configuring your web server and then leveraging Laravel to respond appropriately to the different hostnames.
 
 The crucial aspect isn't so much about Laravel doing magic, but rather about your web server, be it Apache or Nginx, knowing which traffic to direct to which application instance. The server acts as the gatekeeper, initially identifying which domain is being accessed before it hands the request off to your Laravel application. From Laravel's perspective, it receives the request and can use the requested hostname to tailor its responses – different languages, themes, or functionalities can all be triggered based on the detected TLD.
 

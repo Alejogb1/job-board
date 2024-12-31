@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-volume-mount-errors-in-podman"
 ---
 
-Ah, volume mount errors in podman, a classic source of head-scratching, isn't it? I recall spending a particularly frustrating afternoon back in '21, debugging a rather complex microservice setup that kept throwing exactly these errors. It seemed that every time I adjusted the volume paths, something else would go awry. Let's unpack why this happens, and I'll share some things I've learned over the years that hopefully help you out.
+Ah, volume mount errors in podman, a classic source of head-scratching, isn't it? I recall spending a particularly frustrating afternoon back in '21, debugging a rather complex microservice setup that kept throwing exactly these errors. It seemed that every time I adjusted the volume paths, something else would go awry. why this happens, and I'll share some things I've learned over the years that hopefully help you out.
 
 Essentially, volume mount errors in podman (or any containerization technology, really) stem from a mismatch between the container's expectations and the reality of the host filesystem. Podman, unlike docker, has a slightly different approach to user namespaces, which can be the root cause of many of these issues. These errors usually manifest in a few distinct ways, often as `mount: permission denied` or similar messages during container creation or runtime.
 
@@ -41,6 +41,7 @@ Consider a scenario where you intend to mount a specific folder located inside y
 ```bash
 podman run -v /home/myuser/myproject/date:/data myimage
 ```
+
 This would cause `date` instead of `data` to be mounted, resulting in an error, most often the folder not being found. Or if `date` existed, it may not contain what is expected. The correct command should be:
 
 ```bash

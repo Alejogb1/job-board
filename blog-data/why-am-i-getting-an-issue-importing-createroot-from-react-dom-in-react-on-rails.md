@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-issue-importing-createroot-from-react-dom-in-react-on-rails"
 ---
 
-, let's unpack this. You're hitting a common snag when working with React in a Rails environment, specifically the `createRoot` import issue. It’s something I’ve tackled a good few times myself, particularly when migrating older Rails apps to modern React setups. The core of the problem lies in the version of `react-dom` you’re using relative to the React version, and how you’re attempting to render your React components. Let’s break it down into the key culprits and solutions.
+. You're hitting a common snag when working with React in a Rails environment, specifically the `createRoot` import issue. It’s something I’ve tackled a good few times myself, particularly when migrating older Rails apps to modern React setups. The core of the problem lies in the version of `react-dom` you’re using relative to the React version, and how you’re attempting to render your React components. Let’s break it down into the key culprits and solutions.
 
 Essentially, `createRoot` is a new API introduced in React 18 for rendering components. Prior to React 18, we used `ReactDOM.render` which is now considered legacy. If your `react-dom` version is 18 or later, you must use `createRoot`, but if you're stuck on a pre-18 version, `createRoot` simply won’t be there, hence the import error. This is where a mismatch between `react` and `react-dom` versions in your `package.json` often throws a wrench into the works. It's also possible you have a mismatch between what’s in your `package.json` and what's actually installed within your `node_modules` directory, which can happen more often than one would like.
 

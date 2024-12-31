@@ -8,7 +8,7 @@ id: "how-do-i-resolve-a-git-push-error-to-heroku-with-a-parsing-issue"
 
 The core issue, typically, is that Heroku’s buildpacks, which are responsible for understanding your project’s language and dependencies, have stumbled across something it can't understand. This manifests as a parsing error and not necessarily as an issue with your actual application code. I recall a project where a corrupted `.gitattributes` file caused similar headaches for the deployment process. It initially looked like a severe code flaw, but the root was, in fact, a misconfigured file that was silently causing issues.
 
-First things first, let's unpack what could be triggering this. Git doesn't _directly_ parse the contents of all of your project’s files, not in the same way a build tool does. Git tracks changes in content, but it doesn’t interpret them. However, the problem arises when Heroku is pulling in your codebase and then tries to construct a working environment for your app to run. That build process depends heavily on the buildpack’s parsing abilities and certain configuration files that git often manages and includes in the commit process.
+First things first what could be triggering this. Git doesn't _directly_ parse the contents of all of your project’s files, not in the same way a build tool does. Git tracks changes in content, but it doesn’t interpret them. However, the problem arises when Heroku is pulling in your codebase and then tries to construct a working environment for your app to run. That build process depends heavily on the buildpack’s parsing abilities and certain configuration files that git often manages and includes in the commit process.
 
 Three main areas consistently become focal points for these kinds of errors:
 

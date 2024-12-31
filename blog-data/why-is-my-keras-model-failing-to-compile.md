@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-keras-model-failing-to-compile"
 ---
 
-, let's unpack this. Compiling issues with Keras models can stem from a handful of fairly specific areas, and I’ve definitely navigated this maze more times than I care to remember. It's rarely a single, glaring error, but more often a combination of factors subtly conspiring to prevent a successful build. I'm going to walk through the most common culprits based on my experience, and include some practical code examples that I've seen resolve similar compilation headaches.
+. Compiling issues with Keras models can stem from a handful of fairly specific areas, and I’ve definitely navigated this maze more times than I care to remember. It's rarely a single, glaring error, but more often a combination of factors subtly conspiring to prevent a successful build. I'm going to walk through the most common culprits based on my experience, and include some practical code examples that I've seen resolve similar compilation headaches.
 
 The fundamental reason a keras model fails to compile is often related to the incompatibility of its constituent parts, specifically the model architecture, the loss function, and the optimizer. These are the key players in the training process and they must play nicely with one another. In a way, it's like ensuring you've selected the correct components from a library before assembling them into something functional.
 

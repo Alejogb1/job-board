@@ -10,7 +10,7 @@ The core challenge arises when your model isn't just spitting out one prediction
 
 The beauty of TensorFlow, though, is that it makes it relatively straightforward to build these custom loss functions using its `tf.keras.losses.Loss` class, particularly when leveraging the eager execution mode. It allows you to define a specific computation, which then can be directly applied during training. Now, the general strategy revolves around two main ideas: either compute separate losses for each prediction type and then combine them, or design a single loss function that takes all the predictions and ground truths into account simultaneously. My preferred method often depends on whether the sub-losses are fundamentally linked or not. When I have distinct predictions with some independence, I often choose the former. When the outputs are highly interrelated, a combined loss makes more sense.
 
-Let's unpack this with some code. First, here's an example where we calculate _separate_ losses for two different kinds of predictions, and then combine them using a weighted sum. This was somewhat similar to our initial attempt with the lidar-camera fusion.
+this with some code. First, here's an example where we calculate _separate_ losses for two different kinds of predictions, and then combine them using a weighted sum. This was somewhat similar to our initial attempt with the lidar-camera fusion.
 
 ```python
 import tensorflow as tf

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-perceptron-algorithm-fail-to-converge-properly"
 ---
 
-Let's unpack the intricacies of why the perceptron algorithm, a foundational element in machine learning, sometimes falls short of converging to an acceptable solution. I've seen this behavior play out countless times, especially when dealing with real-world datasets that are far from the idealized examples we often encounter in textbooks. Specifically, my past experiences in developing image recognition software highlighted some of these limitations quite clearly.
+the intricacies of why the perceptron algorithm, a foundational element in machine learning, sometimes falls short of converging to an acceptable solution. I've seen this behavior play out countless times, especially when dealing with real-world datasets that are far from the idealized examples we often encounter in textbooks. Specifically, my past experiences in developing image recognition software highlighted some of these limitations quite clearly.
 
 The primary issue with the perceptron’s convergence is its reliance on data being linearly separable. That is, a single hyperplane must exist that can perfectly separate the different classes of data. If this condition isn’t met, the algorithm will essentially enter a state of perpetual oscillation, bouncing back and forth without ever settling on a stable set of weights. This isn't a flaw in the algorithm itself, but rather a consequence of its underlying design and assumptions. It's built for a binary classification scenario where clear separation is possible, and it can't adapt when this underlying assumption is violated.
 
@@ -58,6 +58,7 @@ plt.show()
 
 print("Converged weights:", weights)
 ```
+
 In this example, the algorithm converges relatively quickly as the data is easily separable. The output weights indicate a clear decision boundary.
 
 **Example 2: Non-Linearly Separable Data (XOR case)**
@@ -101,9 +102,11 @@ plt.show()
 
 print("Weights after training (may not have converged):", weights)
 ```
+
 Here, you'll notice the algorithm fails to converge. The weights often change with each iteration, and the final weights do not provide a meaningful decision boundary, due to the XOR data being inherently non-linear.
 
 **Example 3: Handling Convergence Issues – A very basic hack using a max epoch threshold**
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -132,7 +135,7 @@ def train(data, labels, learning_rate=0.1, epochs=1000, convergence_threshold = 
         if np.linalg.norm(weights - previous_weights) < convergence_threshold:
           print(f"Converged in {epoch} epochs using threshold condition. Weights: {weights}")
           return weights
-        
+
         previous_weights = weights.copy()
 
 
@@ -155,12 +158,13 @@ plt.plot(x_range,y_range)
 plt.show()
 print("Weights after training:", weights)
 ```
+
 This example adds a convergence threshold to see if the weights stop changing significantly. If we just looked at max epochs, this would still run 1000 times but we stop early now if convergence is achieved (or at least it's oscillating within a small range). Although this won't help it classify this data properly, it is an improvement.
 
 To delve deeper into the theory behind the limitations of perceptrons and better convergence strategies, I’d highly recommend exploring these resources:
 
-*   **"Pattern Classification" by Richard O. Duda, Peter E. Hart, and David G. Stork**: This is a classic text that provides an in-depth explanation of the perceptron and its limitations within the broader context of pattern recognition.
-*   **"Neural Networks and Deep Learning" by Michael Nielsen**: This online book offers a thorough and accessible introduction to neural networks, including a detailed discussion of the perceptron and more advanced techniques to overcome its limitations. The book is freely available online and a fantastic resource.
-*   **"The Elements of Statistical Learning" by Trevor Hastie, Robert Tibshirani, and Jerome Friedman**: This is a more advanced text covering many machine learning algorithms and the mathematics behind them, providing a rigorous analysis of the perceptron and its performance.
+- **"Pattern Classification" by Richard O. Duda, Peter E. Hart, and David G. Stork**: This is a classic text that provides an in-depth explanation of the perceptron and its limitations within the broader context of pattern recognition.
+- **"Neural Networks and Deep Learning" by Michael Nielsen**: This online book offers a thorough and accessible introduction to neural networks, including a detailed discussion of the perceptron and more advanced techniques to overcome its limitations. The book is freely available online and a fantastic resource.
+- **"The Elements of Statistical Learning" by Trevor Hastie, Robert Tibshirani, and Jerome Friedman**: This is a more advanced text covering many machine learning algorithms and the mathematics behind them, providing a rigorous analysis of the perceptron and its performance.
 
 In summary, the perceptron’s failure to converge is primarily due to its inherent inability to handle non-linearly separable data. Its greedy learning strategy and lack of optimization for the margin between classes further compound these issues. While simple in design, the perceptron's limitations underscore the need for more sophisticated algorithms to tackle complex real-world problems. I often found that it was a great starting point for understanding the fundamentals, but rarely applicable for actual production systems.

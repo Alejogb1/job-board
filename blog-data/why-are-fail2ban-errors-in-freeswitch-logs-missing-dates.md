@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-fail2ban-errors-in-freeswitch-logs-missing-dates"
 ---
 
-Ah, the classic missing date stamp within Freeswitch logs when Fail2ban is involved. Let's unpack this. It’s a situation I encountered a few years back, managing a large voip deployment, and it caused more than a few headaches before I really understood what was going on. The issue isn't so much a bug within Fail2ban or Freeswitch itself, but rather a consequence of how they interact with each other during log processing, specifically, around the way log messages are piped or redirected.
+Ah, the classic missing date stamp within Freeswitch logs when Fail2ban is involved. this. It’s a situation I encountered a few years back, managing a large voip deployment, and it caused more than a few headaches before I really understood what was going on. The issue isn't so much a bug within Fail2ban or Freeswitch itself, but rather a consequence of how they interact with each other during log processing, specifically, around the way log messages are piped or redirected.
 
 Here’s the breakdown of what’s happening, and how we can effectively diagnose and resolve this problem. You see, Freeswitch, by default, timestamps its log messages. It’s pretty good about it. When you examine a regular Freeswitch log file, you will find entries like this:
 
@@ -14,7 +14,7 @@ That timestamp at the start, `2023-10-27 14:30:00.123456`, is the crucial piece 
 
 Now, the problem arises when you introduce Fail2ban into the equation. Fail2ban often doesn’t read log files directly, instead it’s configured to analyze the standard output (stdout) or standard error (stderr) streams of programs that generate log data. In most setups where Freeswitch is used with Fail2ban, Freeswitch output is redirected and piped to a pipe or log file handled by a different process which is monitored by fail2ban. While some methods of logging will preserve the timestamp correctly, others, especially those involving the syslog facility, sometimes modify the format, or even strip the timestamp entirely. The timestamp can easily be lost during redirection, or as a consequence of a logging setup where programs aren’t directly writing to a file that preserves the necessary format for fail2ban.
 
-The reason you then observe Fail2ban messages in your logs *without* dates isn’t because Fail2ban is generating them without dates, it's because Freeswitch events that are logged without date entries are being forwarded by Freeswitch, usually through a separate process, to where Fail2ban is monitoring. For example, if you have configured Freeswitch to use syslog, the date will often be added by syslog when the event is written to the syslog file. In cases where a fail2ban filter is used to watch a specific file where the timestamps are not included, Fail2ban sees the stripped log entries from Freeswitch, that is why they are missing the necessary date information when fail2ban is configured.
+The reason you then observe Fail2ban messages in your logs _without_ dates isn’t because Fail2ban is generating them without dates, it's because Freeswitch events that are logged without date entries are being forwarded by Freeswitch, usually through a separate process, to where Fail2ban is monitoring. For example, if you have configured Freeswitch to use syslog, the date will often be added by syslog when the event is written to the syslog file. In cases where a fail2ban filter is used to watch a specific file where the timestamps are not included, Fail2ban sees the stripped log entries from Freeswitch, that is why they are missing the necessary date information when fail2ban is configured.
 
 This causes all sorts of problems, because, as I've mentioned, Fail2ban relies on timestamps to implement its blocking actions. Without these dates, Fail2ban cannot correctly determine when the event happened, leading to issues where you'll observe errors in fail2ban, or fail2ban simply being unable to work correctly.
 
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     main()
 ```
 
-This script launches Freeswitch, reads each line of output, prepends a timestamp, and prints it to stdout. This ensures that every line is timestamped *before* it reaches Fail2ban or gets piped to a file. Note this requires the use of `-nonat` so the output is not printed to the terminal on startup and remains in the process stream.
+This script launches Freeswitch, reads each line of output, prepends a timestamp, and prints it to stdout. This ensures that every line is timestamped _before_ it reaches Fail2ban or gets piped to a file. Note this requires the use of `-nonat` so the output is not printed to the terminal on startup and remains in the process stream.
 
 You would then modify your logrotate configuration to use a postrotate to stop the wrapper, logrotate, then start it back up to handle log rotation for the piped output.
 

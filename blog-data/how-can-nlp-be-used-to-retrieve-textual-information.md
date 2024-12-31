@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-nlp-be-used-to-retrieve-textual-information"
 ---
 
-Let's unpack this one. Textual information retrieval using natural language processing is a field I’ve often navigated, and it's far more nuanced than a simple keyword search. I recall one particularly challenging project involving a vast archive of legal documents, where traditional methods were failing spectacularly. The problem wasn't just finding words; it was understanding the *context* and *intention* behind the legal phrasing. That’s where NLP became indispensable.
+this one. Textual information retrieval using natural language processing is a field I’ve often navigated, and it's far more nuanced than a simple keyword search. I recall one particularly challenging project involving a vast archive of legal documents, where traditional methods were failing spectacularly. The problem wasn't just finding words; it was understanding the _context_ and _intention_ behind the legal phrasing. That’s where NLP became indispensable.
 
 The core idea behind using NLP for information retrieval (IR) is to move beyond simple keyword matching and delve into the semantic meaning of text. Instead of just looking for strings of characters, we aim to identify and extract information that aligns with a user's query based on a deeper understanding of both the query and the documents themselves. This involves several key NLP techniques.
 

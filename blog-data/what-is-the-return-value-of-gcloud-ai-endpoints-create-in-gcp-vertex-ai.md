@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-return-value-of-gcloud-ai-endpoints-create-in-gcp-vertex-ai"
 ---
 
-, let's unpack the return value of `gcloud ai endpoints create`. I’ve spent a good chunk of my career deploying and managing models on Google Cloud Platform, and Vertex AI's endpoint creation has been a frequent point of interaction. It's not always as straightforward as a simple boolean or an integer. The `gcloud ai endpoints create` command, when successful, returns a json object containing a wealth of information about the newly created endpoint. Understanding this structure is essential for any robust deployment pipeline.
+the return value of `gcloud ai endpoints create`. I’ve spent a good chunk of my career deploying and managing models on Google Cloud Platform, and Vertex AI's endpoint creation has been a frequent point of interaction. It's not always as straightforward as a simple boolean or an integer. The `gcloud ai endpoints create` command, when successful, returns a json object containing a wealth of information about the newly created endpoint. Understanding this structure is essential for any robust deployment pipeline.
 
 From my experience working on a large-scale recommendation system, we heavily relied on automating Vertex AI deployments. We initially naively parsed the output, causing intermittent failures when properties we assumed would exist weren't present. This experience emphasized the importance of understanding the full return structure and being resilient to variations.
 

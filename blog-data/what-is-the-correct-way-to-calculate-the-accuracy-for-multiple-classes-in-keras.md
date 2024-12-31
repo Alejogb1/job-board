@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-correct-way-to-calculate-the-accuracy-for-multiple-classes-in-keras"
 ---
 
-, let's unpack this. Calculating accuracy in multi-class classification with Keras isn't always straightforward, and I've certainly seen my share of confusion around this topic over the years. It's not as simple as just calling `.evaluate()` and assuming you're getting the full picture. What we need to do is understand what 'accuracy' truly means in the context of multiple classes, and then apply the correct metrics.
+. Calculating accuracy in multi-class classification with Keras isn't always straightforward, and I've certainly seen my share of confusion around this topic over the years. It's not as simple as just calling `.evaluate()` and assuming you're getting the full picture. What we need to do is understand what 'accuracy' truly means in the context of multiple classes, and then apply the correct metrics.
 
 When we talk about accuracy, especially in a multi-class context, we're fundamentally interested in how well our model’s predictions align with the ground truth. But 'accuracy' in this sense can be interpreted in different ways. There's basic accuracy, which is simply the proportion of correctly classified instances, and then there are other, more granular metrics that can be quite useful, especially if your classes are imbalanced. In practice, I've found the basic accuracy can be misleading, especially when dealing with problems where one class dominates.
 

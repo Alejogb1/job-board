@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-swift-functions-from-packages-be-mocked"
 ---
 
-, let's unpack this. Mocking functions from packages in Swift – it's a topic that's come up more times than I can count in my years of building iOS and macOS applications, and I've seen some, let's say, 'interesting' approaches to handling it. The short answer is: yes, absolutely, but the _how_ is what we need to focus on, because it's not always straightforward. It’s a crucial skill for robust unit testing, and avoiding its pitfalls will save you a lot of debugging headaches later on.
+. Mocking functions from packages in Swift – it's a topic that's come up more times than I can count in my years of building iOS and macOS applications, and I've seen some, let's say, 'interesting' approaches to handling it. The short answer is: yes, absolutely, but the _how_ is what we need to focus on, because it's not always straightforward. It’s a crucial skill for robust unit testing, and avoiding its pitfalls will save you a lot of debugging headaches later on.
 
 I remember one project, about five years back, where we integrated a third-party package for handling network requests. Initially, everything worked fine. Then, as the project grew, we started noticing intermittent failures in our unit tests. We were mocking our local code thoroughly, but the network logic from that package, which we were using in multiple components, was causing chaos. We couldn't reliably test different scenarios, like network errors or different responses, which was a nightmare. That's when I really had to dive deep into effective mocking strategies for packages.
 

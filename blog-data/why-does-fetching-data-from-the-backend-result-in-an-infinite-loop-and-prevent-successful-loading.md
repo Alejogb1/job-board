@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-fetching-data-from-the-backend-result-in-an-infinite-loop-and-prevent-successful-loading"
 ---
 
-, let's unpack this infinite loop problem. It's a scenario I've definitely encountered before, usually late on a Friday, during a particularly complex integration. The core issue, when fetching data from a backend leads to a perpetual refresh cycle and blocks successful loading, almost always boils down to a fundamental misunderstanding of asynchronous operations and how state management interacts with data fetching. I've spent quite a few hours debugging these, so let's break down why this happens and, more importantly, how to fix it.
+infinite loop problem. It's a scenario I've definitely encountered before, usually late on a Friday, during a particularly complex integration. The core issue, when fetching data from a backend leads to a perpetual refresh cycle and blocks successful loading, almost always boils down to a fundamental misunderstanding of asynchronous operations and how state management interacts with data fetching. I've spent quite a few hours debugging these, so let's break down why this happens and, more importantly, how to fix it.
 
 The infinite loop, at its heart, is caused by an incorrect setup where the act of fetching data _also_ triggers the fetch operation again, creating a self-perpetuating cycle. This can occur at multiple points in your code, but commonly, it's inside the logic that handles the results of the fetch. Basically, you’re accidentally telling the application, “Hey, go get some data” which then results in, “Oh, the data is updated, go get some data again”, and this goes on endlessly.
 

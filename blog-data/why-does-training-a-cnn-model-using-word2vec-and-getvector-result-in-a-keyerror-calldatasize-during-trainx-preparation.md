@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-training-a-cnn-model-using-word2vec-and-getvector-result-in-a-keyerror-calldatasize-during-trainx-preparation"
 ---
 
-Let's unpack this particular conundrum. I recall encountering a remarkably similar issue a few years back while building a sentiment analysis system, and it highlighted a subtle interplay between text preprocessing, embedding layers, and the expectations of deep learning frameworks. The `KeyError: 'CALLDATASIZE'` you're seeing during `train_x` preparation when using word2vec's `get_vector()` within a convolutional neural network (CNN) training pipeline stems, most often, from a mismatch between the vocabulary indices expected by the embedding layer and the actual words present within your training data. It's not usually an error with the `get_vector()` method directly, but more a consequence of how that method's output is being used and what's been fed into it.
+this particular conundrum. I recall encountering a remarkably similar issue a few years back while building a sentiment analysis system, and it highlighted a subtle interplay between text preprocessing, embedding layers, and the expectations of deep learning frameworks. The `KeyError: 'CALLDATASIZE'` you're seeing during `train_x` preparation when using word2vec's `get_vector()` within a convolutional neural network (CNN) training pipeline stems, most often, from a mismatch between the vocabulary indices expected by the embedding layer and the actual words present within your training data. It's not usually an error with the `get_vector()` method directly, but more a consequence of how that method's output is being used and what's been fed into it.
 
 The essence of the problem lies in how we typically transition from raw text to numerical inputs digestible by a CNN. Let's break it down:
 
@@ -131,7 +131,8 @@ In this example, we define a `map_fn` that takes a sentence (as a `tf.Tensor`) a
 This provides a robust solution that integrates seamlessly with the `tf.data` API.
 
 To improve your understanding of this topic, I would suggest exploring the following:
-*   **"Distributed Representations of Words and Phrases and their Compositionality" (Mikolov et al., NIPS 2013)**: This is a cornerstone paper on word2vec. Reading it will provide crucial insight into the underlying mechanics.
-*   **The TensorFlow tutorials on text classification** : TensorFlow’s official documentation has comprehensive guides on using the `tf.data` API effectively for text data, which will cover similar concepts. Also pay close attention to the tensor shape of the inputs and the error messages that result from shape mismatches.
+
+- **"Distributed Representations of Words and Phrases and their Compositionality" (Mikolov et al., NIPS 2013)**: This is a cornerstone paper on word2vec. Reading it will provide crucial insight into the underlying mechanics.
+- **The TensorFlow tutorials on text classification** : TensorFlow’s official documentation has comprehensive guides on using the `tf.data` API effectively for text data, which will cover similar concepts. Also pay close attention to the tensor shape of the inputs and the error messages that result from shape mismatches.
 
 In summary, the `KeyError: 'CALLDATASIZE'` isn't about the `get_vector()` method itself, but rather a downstream error caused by feeding unknown words to the system that haven’t been converted to an index. By properly indexing your vocabulary and handling out-of-vocabulary words (often with a designated unknown token representation), and by using `tf.data` effectively, you’ll avoid this error and your training pipeline will function smoothly. It's a common hurdle, and now, hopefully, one you can navigate with ease.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-store-numbers-securely-with-chainlink-vrf"
 ---
 
-, let's unpack storing numbers securely with Chainlink vrf. This isn't just a theoretical exercise for me; I’ve actually had to implement this in a few production systems, dealing with everything from random lottery draws to dynamic non-fungible token (nft) metadata generation. The core issue, as always with randomness in distributed systems, is ensuring that the generated value is both verifiable and impervious to manipulation. Simply storing the raw output of a vrf call directly on-chain, while seemingly straightforward, is not always the optimal—or safest—approach.
+storing numbers securely with Chainlink vrf. This isn't just a theoretical exercise for me; I’ve actually had to implement this in a few production systems, dealing with everything from random lottery draws to dynamic non-fungible token (nft) metadata generation. The core issue, as always with randomness in distributed systems, is ensuring that the generated value is both verifiable and impervious to manipulation. Simply storing the raw output of a vrf call directly on-chain, while seemingly straightforward, is not always the optimal—or safest—approach.
 
 The critical component here is that Chainlink vrf provides _provable_ randomness. It's cryptographically backed, meaning that any attempt to tamper with the result would invalidate the proof and be detectable. However, how you use and store this raw randomness output is where the subtleties come into play. Let’s start with why the direct storage method can be problematic, and then dive into better strategies.
 

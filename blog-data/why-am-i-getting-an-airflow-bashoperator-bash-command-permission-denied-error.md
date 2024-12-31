@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-airflow-bashoperator-bash-command-permission-denied-error"
 ---
 
-Ah, permission denied errors with Airflow's BashOperator. I’ve seen that one more times than I care to remember. It usually boils down to a few predictable culprits. Let's unpack this; it's less mysterious than it seems at first glance.
+Ah, permission denied errors with Airflow's BashOperator. I’ve seen that one more times than I care to remember. It usually boils down to a few predictable culprits. this; it's less mysterious than it seems at first glance.
 
-First, understand that the BashOperator executes shell commands *as the user running the Airflow worker process*. It's not executing as the user who triggered the dag run, or your personal login. This is a key distinction. So when you get that “permission denied,” it’s usually because the worker user doesn't have the access it needs for the command or the file it’s trying to access or execute.
+First, understand that the BashOperator executes shell commands _as the user running the Airflow worker process_. It's not executing as the user who triggered the dag run, or your personal login. This is a key distinction. So when you get that “permission denied,” it’s usually because the worker user doesn't have the access it needs for the command or the file it’s trying to access or execute.
 
 Here’s the typical journey I’ve gone through when diagnosing this, and you’ll find this pattern useful too:
 

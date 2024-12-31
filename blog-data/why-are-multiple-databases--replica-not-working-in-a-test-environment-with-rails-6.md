@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-multiple-databases--replica-not-working-in-a-test-environment-with-rails-6"
 ---
 
-, let's unpack this. I've definitely seen this issue crop up more than a few times over the years, particularly when teams are scaling up their Rails applications and introducing more complex database setups. The problem of multiple database replicas not functioning correctly in a test environment with Rails 6, while often seemingly baffling, typically boils down to a few common culprits related to how Rails manages database connections and configurations in different environments.
+. I've definitely seen this issue crop up more than a few times over the years, particularly when teams are scaling up their Rails applications and introducing more complex database setups. The problem of multiple database replicas not functioning correctly in a test environment with Rails 6, while often seemingly baffling, typically boils down to a few common culprits related to how Rails manages database connections and configurations in different environments.
 
 It’s not uncommon to start with a setup that works perfectly in development, hitting one central database, but then things get hairy when we try to replicate that for testing or staging – especially with replicas. In my experience, I've found the key is almost always in the fine-grained details of connection management and how Rails' test environment treats those connections.
 

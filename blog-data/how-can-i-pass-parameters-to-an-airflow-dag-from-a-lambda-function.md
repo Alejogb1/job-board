@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pass-parameters-to-an-airflow-dag-from-a-lambda-function"
 ---
 
-, let's unpack this. Passing parameters from a lambda function to an airflow dag is a problem I've encountered more times than i’d care to count, usually in the context of event-driven workflows. It’s not always straightforward, but there are definitely reliable patterns to achieve this without resorting to convoluted workarounds. Essentially, we're talking about external triggers interacting with airflow’s scheduling mechanism, and doing it in a manner that allows dynamic behavior.
+. Passing parameters from a lambda function to an airflow dag is a problem I've encountered more times than i’d care to count, usually in the context of event-driven workflows. It’s not always straightforward, but there are definitely reliable patterns to achieve this without resorting to convoluted workarounds. Essentially, we're talking about external triggers interacting with airflow’s scheduling mechanism, and doing it in a manner that allows dynamic behavior.
 
 The key here isn’t necessarily about directly "passing" parameters in a procedural sense, as you might do in a function call, but rather setting up a communication channel that allows your lambda to signal airflow with necessary context. Airflow itself, being batch-oriented, isn’t designed to receive real-time inputs in the same way as a serverless function might. Instead, it relies on triggers and variables. So, our approach will involve using a mechanism to update variables that airflow can then pick up during dag execution.
 

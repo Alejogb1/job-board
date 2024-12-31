@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-ahoy-gem-filtering-visittokenvisitortoken-and-why-is-geolocation-not-storing-data-in-developmentproduction-database"
 ---
 
-, let's unpack this ahoy and geolocation situation, seems like you've hit a couple of common snags. i've been down these roads before, probably more times than i care to remember, and i've got a few thoughts on what's likely going on, along with how to get things humming.
+ahoy and geolocation situation, seems like you've hit a couple of common snags. i've been down these roads before, probably more times than i care to remember, and i've got a few thoughts on what's likely going on, along with how to get things humming.
 
 first up, the ahoy gem filtering of `visit_token`/`visitor_token`. this is something i actually struggled with a few years back when building an early user analytics dashboard. i was pulling my hair out trying to figure out why certain visits weren't showing up. turns out, it's usually down to how ahoy is configured, or rather, how it's _not_ configured to handle those tokens.
 

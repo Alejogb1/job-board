@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-typeerror-with-unexpected-numsamples-argument"
 ---
 
-, let's unpack this TypeError issue you're encountering with an unexpected `num_samples` argument. I've seen this one crop up a few times, usually in scenarios where library updates or subtle API shifts are in play. It's a common stumble, especially when working with data processing or machine learning pipelines. Let’s break down why this might happen and how you can address it.
+TypeError issue you're encountering with an unexpected `num_samples` argument. I've seen this one crop up a few times, usually in scenarios where library updates or subtle API shifts are in play. It's a common stumble, especially when working with data processing or machine learning pipelines. Let’s break down why this might happen and how you can address it.
 
 Essentially, a `TypeError` with an unexpected argument means you're passing a parameter, in this case `num_samples`, to a function or method that wasn't designed to receive it. The error message itself is the compiler’s way of telling you, "Hey, I don't know what to do with this." This usually boils down to a mismatch between what you think a function should accept and what it actually does. The `num_samples` parameter typically relates to specifying the number of data points to draw, which could indicate you’re likely interacting with a library that performs sampling or data generation, especially within machine learning or numerical computation frameworks.
 

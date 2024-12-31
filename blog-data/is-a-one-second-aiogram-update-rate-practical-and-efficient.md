@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-a-one-second-aiogram-update-rate-practical-and-efficient"
 ---
 
-, let's unpack this question about one-second update rates with Aiogram. It's something I've tackled quite a few times over the years, and the answer, as with most technical considerations, is nuanced. Instead of a simple "yes" or "no," we need to delve into the practical implications. The core issue isn't whether Aiogram _can_ handle a one-second update frequency—it absolutely can—but whether doing so is a sensible decision for your specific application.
+question about one-second update rates with Aiogram. It's something I've tackled quite a few times over the years, and the answer, as with most technical considerations, is nuanced. Instead of a simple "yes" or "no," we need to delve into the practical implications. The core issue isn't whether Aiogram _can_ handle a one-second update frequency—it absolutely can—but whether doing so is a sensible decision for your specific application.
 
 My experience stems from developing a bot that tracked real-time updates for several hundred concurrent users, all subscribing to frequent, time-sensitive information. We started, rather naively, with a one-second poll, and quickly learned that it was… inefficient, to say the least. Performance degraded rapidly, and we spent a significant amount of time optimizing our approach.
 

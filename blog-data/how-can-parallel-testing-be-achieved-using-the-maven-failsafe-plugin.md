@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-parallel-testing-be-achieved-using-the-maven-failsafe-plugin"
 ---
 
-, let's unpack parallel testing with Maven Failsafe. I've spent a fair chunk of time optimizing test suites, and believe me, getting parallel execution working correctly with Failsafe can significantly reduce your build times, particularly on larger projects. It's not just about slapping a switch; there are nuances to consider for a stable and efficient parallel setup.
+parallel testing with Maven Failsafe. I've spent a fair chunk of time optimizing test suites, and believe me, getting parallel execution working correctly with Failsafe can significantly reduce your build times, particularly on larger projects. It's not just about slapping a switch; there are nuances to consider for a stable and efficient parallel setup.
 
 First off, Failsafe, unlike the Surefire plugin that's primarily used for unit tests, is geared towards integration tests. These are often more time-consuming, making parallel execution even more crucial. By default, Failsafe runs tests sequentially, one after another. To enable parallelism, we need to configure the plugin using the `configuration` tag within the `<plugin>` block of our `pom.xml`.
 

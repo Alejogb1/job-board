@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "when-should-i-use-conv1d-conv2d-or-conv3d-in-a-cnn"
 ---
 
-, let's unpack convolutional layers, a topic I've spent more than a few late nights grappling with. The decision between `Conv1D`, `Conv2D`, and `Conv3D` in a convolutional neural network (cnn) isn't arbitrary; it's fundamentally tied to the dimensionality of your input data and the kind of spatial or temporal relationships you want to capture. It's a choice that, in my experience, can drastically impact a model’s performance if not approached carefully.
+convolutional layers, a topic I've spent more than a few late nights grappling with. The decision between `Conv1D`, `Conv2D`, and `Conv3D` in a convolutional neural network (cnn) isn't arbitrary; it's fundamentally tied to the dimensionality of your input data and the kind of spatial or temporal relationships you want to capture. It's a choice that, in my experience, can drastically impact a model’s performance if not approached carefully.
 
 Thinking back to a project a few years ago, I was working on a system to analyze sensor readings from a complex industrial machine. We were receiving a time-series of data, with multiple sensors measuring various aspects of the machine’s performance, such as temperature, pressure, and vibration, over time. Initially, I made a mistake of throwing everything into a `Conv2D` layer, but soon realized I needed a more nuanced approach. Let me elaborate on what I learned then, and have refined since.
 

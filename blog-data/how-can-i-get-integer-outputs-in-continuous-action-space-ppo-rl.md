@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-integer-outputs-in-continuous-action-space-ppo-rl"
 ---
 
-Let's unpack this particular challenge, which I've encountered myself more than a few times in my work with reinforcement learning, specifically with Proximal Policy Optimization (PPO). It's a common misconception that continuous action spaces inherently preclude discrete, integer outputs; they don't. The issue arises from how continuous actions are typically represented and how agents learn to map state inputs to these continuous values, often floating-point numbers between, say, -1 and 1. To get actual integer actions from PPO operating in a continuous action space, we need to introduce a discretization or quantization step *after* the policy network has generated its continuous action. We're not changing the fundamental nature of PPO itself, just adding a processing layer between the policy output and the environment.
+this particular challenge, which I've encountered myself more than a few times in my work with reinforcement learning, specifically with Proximal Policy Optimization (PPO). It's a common misconception that continuous action spaces inherently preclude discrete, integer outputs; they don't. The issue arises from how continuous actions are typically represented and how agents learn to map state inputs to these continuous values, often floating-point numbers between, say, -1 and 1. To get actual integer actions from PPO operating in a continuous action space, we need to introduce a discretization or quantization step _after_ the policy network has generated its continuous action. We're not changing the fundamental nature of PPO itself, just adding a processing layer between the policy output and the environment.
 
 I’ve seen this problem firsthand. I once worked on a robotic arm control project. We were training the robot to stack blocks, and our initial PPO setup was outputting floating-point values for the movement commands (e.g., 'move arm x units along axis 1'), which was, of course, not acceptable. The robot couldn't execute partial moves. We needed integer values representing discrete steps or movements. That's when I delved deep into post-processing techniques, and that's what I'm going to share with you.
 
@@ -14,7 +14,7 @@ Here are the core methods that I've found effective, complete with code examples
 
 **Method 1: Rounding or Quantization:**
 
-The most straightforward approach involves taking the continuous action output from the PPO policy and rounding it to the nearest integer. While simple, it works surprisingly well in many scenarios. The trick is scaling the output first to an appropriate range. For instance, if your integer action space ranged from 0 to 10, you would first scale your continuous action (usually between -1 and 1) to that range and *then* round.
+The most straightforward approach involves taking the continuous action output from the PPO policy and rounding it to the nearest integer. While simple, it works surprisingly well in many scenarios. The trick is scaling the output first to an appropriate range. For instance, if your integer action space ranged from 0 to 10, you would first scale your continuous action (usually between -1 and 1) to that range and _then_ round.
 
 Here's a python code snippet using PyTorch to illustrate this:
 
@@ -51,7 +51,7 @@ In this code, the `quantize_action` function takes a continuous action as input 
 
 **Method 2: Discrete Action Selection Through a Categorical Distribution**
 
-This method involves mapping the continuous output to parameters of a categorical distribution from which discrete actions are then sampled. Instead of directly outputting continuous values, the policy network now learns to output *logits* or probabilities associated with each possible discrete action. This leverages the fact that we are ultimately dealing with discrete categories and allows us to work with an entirely differentiable system end-to-end.
+This method involves mapping the continuous output to parameters of a categorical distribution from which discrete actions are then sampled. Instead of directly outputting continuous values, the policy network now learns to output _logits_ or probabilities associated with each possible discrete action. This leverages the fact that we are ultimately dealing with discrete categories and allows us to work with an entirely differentiable system end-to-end.
 
 Here’s how it looks in Python:
 
@@ -104,7 +104,8 @@ logits = policy(continuous_output)
 discrete_action = select_discrete_action(logits)
 print(discrete_action) # Output will be an integer between 0 and num_actions-1 (3 here)
 ```
-This example maps a continuous output through a fully connected layer, the output of which is interpreted as *logits*. A probability distribution is then sampled, leading to a discrete integer action. This method is fully differentiable and compatible with gradient descent in PPO. This approach is powerful because it allows the agent to learn which discrete action is most probable given a continuous state representation and it is entirely compatible with PPO's core principles.
+
+This example maps a continuous output through a fully connected layer, the output of which is interpreted as _logits_. A probability distribution is then sampled, leading to a discrete integer action. This method is fully differentiable and compatible with gradient descent in PPO. This approach is powerful because it allows the agent to learn which discrete action is most probable given a continuous state representation and it is entirely compatible with PPO's core principles.
 
 **Method 3: Gumbel-Softmax for differentiable approximations (for more complex scenarios):**
 

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-test-a-controller-route-in-rspec"
 ---
 
-Let's dive straight into this. I’ve spent a fair chunk of my career knee-deep in rails applications, and testing controller routes is a subject I've revisited countless times. The specifics can get nuanced, depending on what you’re trying to assert, but the foundational principles remain fairly consistent. The goal, fundamentally, is to verify that your controller actions respond correctly to specific requests, respecting the defined routes. Let's unpack this, focusing on how we achieve this in rspec.
+Let's dive straight into this. I’ve spent a fair chunk of my career knee-deep in rails applications, and testing controller routes is a subject I've revisited countless times. The specifics can get nuanced, depending on what you’re trying to assert, but the foundational principles remain fairly consistent. The goal, fundamentally, is to verify that your controller actions respond correctly to specific requests, respecting the defined routes. this, focusing on how we achieve this in rspec.
 
-When we talk about controller route testing in rspec, we're essentially moving beyond just ensuring that your controller action *exists*; we're verifying the *entire interaction*. This involves sending a request to a specific route, hitting your controller action, and asserting various aspects of the response, such as the status code, the rendered template, the data that was assigned, and so forth. The power here lies in our ability to simulate the behavior of an actual web browser interacting with your application.
+When we talk about controller route testing in rspec, we're essentially moving beyond just ensuring that your controller action _exists_; we're verifying the _entire interaction_. This involves sending a request to a specific route, hitting your controller action, and asserting various aspects of the response, such as the status code, the rendered template, the data that was assigned, and so forth. The power here lies in our ability to simulate the behavior of an actual web browser interacting with your application.
 
 The typical setup in rspec involves using `rails_helper.rb` or the standard rspec configuration file to include the necessary modules. You’ll often find yourself utilizing `spec/controllers` to house your controller tests, mirroring your `app/controllers` directory structure. Here's where it begins to get practical.
 
@@ -41,6 +41,7 @@ RSpec.describe PostsController, type: :controller do
   end
 end
 ```
+
 In this first snippet, we first invoke the controller action `index` by `get :index`. Then we test if the response is ok using `expect(response).to have_http_status(:ok)`. After that, we test if the view rendered is the index view using `expect(response).to render_template(:index)`. Finally, we check if the correct array of `@posts` were assigned in the controller action using the `assigns` method and ensuring the `@posts` variable in the controller matched the created posts.
 
 This example covers basic response assertions and verifies data assignment for the view. In my experience, these fundamental checks form a solid base for controller testing.
@@ -70,7 +71,7 @@ RSpec.describe PostsController, type: :controller do
             get :show, params: { id: post.id }
             expect(assigns(:post)).to eq(post)
         end
-        
+
        it 'returns not found if post does not exist' do
            get :show, params: { id: 99999}
            expect(response).to have_http_status(:not_found)

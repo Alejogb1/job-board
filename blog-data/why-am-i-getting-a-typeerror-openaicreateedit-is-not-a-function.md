@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-typeerror-openaicreateedit-is-not-a-function"
 ---
 
-Ah, that "TypeError: openai.createEdit is not a function" – a familiar friend, or perhaps a frustrating foe, depending on your perspective. I've definitely encountered that one, and it often pops up when working with the openai api, particularly after library updates. Let's unpack what's likely going on, and I'll share a few solutions based on my past experiences.
+Ah, that "TypeError: openai.createEdit is not a function" – a familiar friend, or perhaps a frustrating foe, depending on your perspective. I've definitely encountered that one, and it often pops up when working with the openai api, particularly after library updates. what's likely going on, and I'll share a few solutions based on my past experiences.
 
 Typically, this error stems from a mismatch between the version of the `openai` python library you're using and the specific functions it exposes. The `createEdit` function, specifically, has been deprecated and replaced by newer functionalities in recent versions of the library. This means code written relying on the old naming convention will break. Thinking back, i remember a project where i was upgrading dependencies across multiple services, and this error surfaced in one of them. I had forgotten to check the openai library release notes before jumping to the newest version, and spent a good hour troubleshooting a non existent function before I realized it wasn't me, but the api itself!
 
@@ -29,6 +29,7 @@ Here’s how I'd handle this based on my past experiences:
 Now let’s look at a few examples:
 
 **Example 1: Transitioning from `createEdit` (Pre-upgrade example - this code will fail after an upgrade)**
+
 ```python
 import openai
 import os
@@ -60,9 +61,11 @@ if edited_string:
     print(f"Original: {input_string}")
     print(f"Edited: {edited_string}")
 ```
+
 This code would have worked with an older version of the library, but as soon as you upgrade it, `createEdit` won't be there.
 
 **Example 2: Using `completions.create` for Text Modification (Post-upgrade)**
+
 ```python
 import openai
 import os
@@ -95,9 +98,11 @@ if edited_string:
     print(f"Edited: {edited_string}")
 
 ```
+
 Here, instead of calling `createEdit` you are passing a specially crafted prompt including your text and the desired instruction and then using a model suitable for text completion. The model is interpreting your prompt and generating the edited text.
 
 **Example 3: Using `chat.completions.create` for More Conversational Edits (Post-upgrade)**
+
 ```python
 import openai
 import os
@@ -132,6 +137,7 @@ if edited_string:
     print(f"Original: {input_string}")
     print(f"Edited: {edited_string}")
 ```
+
 This approach uses the chat completion API, giving a more conversational tone to the instructions and allowing for a more nuanced text manipulation if needed. It's worth experimenting with both `completions.create` and `chat.completions.create` to see which better fits your specific scenario.
 
 **Essential Resources:**

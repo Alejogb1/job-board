@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "why-does-airflow-externaltasksensor-not-work-on-the-dag-having-a-pythonoperator"
 ---
 
-ah, i see the problem you're having. it's a classic, and one i've definitely banged my head against a few times back in the day when i was first starting with airflow. the external task sensor and python operator interaction can be a bit, let's say, *unintuitive* at first glance.
+ah, i see the problem you're having. it's a classic, and one i've definitely banged my head against a few times back in the day when i was first starting with airflow. the external task sensor and python operator interaction can be a bit, let's say, _unintuitive_ at first glance.
 
-basically, the issue isn’t that the *sensor* itself is broken. it’s more about understanding how airflow schedules and executes tasks, and how the external task sensor behaves specifically. let's unpack this, shall we?
+basically, the issue isn’t that the _sensor_ itself is broken. it’s more about understanding how airflow schedules and executes tasks, and how the external task sensor behaves specifically. this, shall we?
 
-first, the external task sensor. it's designed to wait for a task in *another* dag to reach a specific state, typically ‘success’ or ‘finished’. it's not just looking at whether the *code* for the task has run; it's looking for the airflow system’s record of that task reaching a completion state. this record is what airflow uses to keep track of what’s been done and what still needs doing.
+first, the external task sensor. it's designed to wait for a task in _another_ dag to reach a specific state, typically ‘success’ or ‘finished’. it's not just looking at whether the _code_ for the task has run; it's looking for the airflow system’s record of that task reaching a completion state. this record is what airflow uses to keep track of what’s been done and what still needs doing.
 
-now, the python operator. it executes arbitrary python code. and while that seems simple enough, the key thing to remember is that a python operator, by default, doesn't automatically create an external system record or signal another dag that it has finished, in the way that, say, a bash operator does when running a command and exiting with a code of 0. it runs the code, and if it doesn't throw an exception, airflow assumes it's ‘successful’ locally within the dag that contains the python operator. but the other dag, the one with the external task sensor, isn't really aware that the python operator's code has finished executing *and* that airflow marked its task as complete.
+now, the python operator. it executes arbitrary python code. and while that seems simple enough, the key thing to remember is that a python operator, by default, doesn't automatically create an external system record or signal another dag that it has finished, in the way that, say, a bash operator does when running a command and exiting with a code of 0. it runs the code, and if it doesn't throw an exception, airflow assumes it's ‘successful’ locally within the dag that contains the python operator. but the other dag, the one with the external task sensor, isn't really aware that the python operator's code has finished executing _and_ that airflow marked its task as complete.
 
 let's illustrate this with some code. imagine you have two dags, `dag_a` and `dag_b`.
 
@@ -55,9 +55,10 @@ with DAG(
         external_task_id='my_python_task'
     )
 ```
+
 if you were expecting `dag_b` to automatically sense the completion of `my_python_task` in `dag_a`, well, that’s the crux of the issue. `dag_b` will probably spin its wheels indefinitely, since the sensor can't find the signal that its waiting for.
 
-the problem, again, is that airflow registers tasks as finished at the level of the execution dag, not inter-dags. the sensor isn't just checking that the code ran; it’s looking for a specific marker saying *airflow* knows the task completed, which needs to exist *outside* the execution of the python callable code. the sensor works best when it is reading statuses from operations that explicitly report states to airflow's metadata store, such as bash operators which inherently return exit codes that the system can read. a python operator does not inherently do this when just running its code.
+the problem, again, is that airflow registers tasks as finished at the level of the execution dag, not inter-dags. the sensor isn't just checking that the code ran; it’s looking for a specific marker saying _airflow_ knows the task completed, which needs to exist _outside_ the execution of the python callable code. the sensor works best when it is reading statuses from operations that explicitly report states to airflow's metadata store, such as bash operators which inherently return exit codes that the system can read. a python operator does not inherently do this when just running its code.
 
 so, how do we solve this? the most straightforward approach is to make the python operator create a tangible indication that its task is finished, something the sensor in `dag_b` can look for. you could achieve this by using the airflow's xcom mechanism, writing to a database, or using an external event queue, but let's keep this simple with an airflow specific approach. in our `dag_a` code we can include a line to mark the completion status via airflow's internal communication system, xcom:
 
@@ -84,6 +85,7 @@ with DAG(
         provide_context=True # we need context to access xcom_push
     )
 ```
+
 here, we are leveraging `xcom_push`, that marks that the task inside dag_a is indeed completed. and then we can modify our sensor in dag_b to read that value using a `poke` function:
 
 ```python
@@ -115,6 +117,7 @@ with DAG(
     )
 
 ```
+
 this approach will let dag_b correctly determine if dag_a's python operator completed its execution, by reading its signal via xcom, solving the initial problem of the external sensor not firing.
 
 i’ve seen a similar problem when trying to coordinate complex pipelines across multiple teams. one team was using purely python operators, and another was using bash and docker operators. the team with python operators had all sorts of 'weird' issues with dependencies and other dags not catching their completion. we fixed it by introducing some shared event logic, where every task wrote a small record to a database of task completion. this method made the whole thing much more reliable but it was painful to implement since we had to modify every dag to handle this logic, and in some cases, teams were resistant to change. at the time i thought, is it just me or is this whole thing overly complex? (just kidding).

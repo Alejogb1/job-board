@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-indexerror-too-many-indices-for-tensor-of-dimension-3"
 ---
 
-, let's unpack this `IndexError: too many indices for tensor of dimension 3` situation. I've been through this particular rodeo more times than I care to count, and it’s often a head-scratcher until you really break down what's going on with your tensor indexing.
+`IndexError: too many indices for tensor of dimension 3` situation. I've been through this particular rodeo more times than I care to count, and it’s often a head-scratcher until you really break down what's going on with your tensor indexing.
 
 Essentially, this error crops up when you’re attempting to access a tensor using more indices than its actual number of dimensions. Think of a tensor like a multi-dimensional array. A 3-dimensional tensor is like a cube; it has width, height, and depth, corresponding to three indices needed to pinpoint a specific element. If you mistakenly try to access it with four indices, your code is essentially asking for a location that doesn’t exist within the defined structure, leading to this `IndexError`. The core problem lies in a mismatch between your indexing operation and the tensor’s shape.
 

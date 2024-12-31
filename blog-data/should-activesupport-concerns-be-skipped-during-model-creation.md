@@ -6,7 +6,7 @@ id: "should-activesupport-concerns-be-skipped-during-model-creation"
 
 , let’s talk about ActiveSupport concerns and model creation, a topic that I've certainly spent a good chunk of my career pondering and, at times, debugging. I'll structure this around some of the practical experiences I've encountered. The short answer is: it's not a straightforward "yes" or "no". Skipping ActiveSupport concerns during model creation _can_ offer certain advantages, but it also introduces trade-offs that require careful consideration.
 
-My perspective comes from years of maintaining and scaling Ruby on Rails applications, where I’ve seen concerns implemented brilliantly, and also quite disastrously. Let's unpack why that's the case.
+My perspective comes from years of maintaining and scaling Ruby on Rails applications, where I’ve seen concerns implemented brilliantly, and also quite disastrously. why that's the case.
 
 First, let's establish what we mean by ActiveSupport concerns. For those less familiar, ActiveSupport::Concern is a module that allows you to package up reusable code and inject it into your models (or any other class that can include it). This is intended to mitigate code duplication and enforce the single responsibility principle, moving specific functionalities out of the core model and into well-defined modules. When done correctly, concerns promote a cleaner, more manageable codebase.
 

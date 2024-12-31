@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "when-is-a-constraint-on-cpmodel-applicable-based-on-a-relationship-between-integer-variables"
 ---
 
-, let's unpack this. I've seen this scenario pop up more times than i care to count, usually when dealing with intricate scheduling or resource allocation problems. The question of when a constraint on a `CpModel` is applicable based on the relationships between integer variables is central to effective constraint programming. It's not just about tossing in any old constraint and hoping for the best; it's about understanding the underlying mechanisms and when those mechanisms actually provide tangible benefits.
+. I've seen this scenario pop up more times than i care to count, usually when dealing with intricate scheduling or resource allocation problems. The question of when a constraint on a `CpModel` is applicable based on the relationships between integer variables is central to effective constraint programming. It's not just about tossing in any old constraint and hoping for the best; it's about understanding the underlying mechanisms and when those mechanisms actually provide tangible benefits.
 
 From my experience, it boils down to this: a constraint is truly _applicable_ when it accurately reflects a domain-specific restriction and enables the solver to prune the search space effectively, leading to feasible solutions (ideally, optimal ones) faster than it would otherwise. A constraint doesn’t magically improve everything; its value is context-dependent.
 

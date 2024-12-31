@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-my-custom-view-working-in-constraint-layout"
 ---
 
-, let’s get into it. Been there, seen that, more times than I care to remember. A custom view stubbornly refusing to play nice with `ConstraintLayout` can be incredibly frustrating, and there’s a specific constellation of reasons why this often happens. I've personally spent countless hours debugging similar issues, so let's unpack the common culprits. This isn't usually about the view itself being fundamentally flawed, but rather about how it interacts with the layout system, and specifically, the constraints you’ve defined or failed to define.
+, let’s get into it. Been there, seen that, more times than I care to remember. A custom view stubbornly refusing to play nice with `ConstraintLayout` can be incredibly frustrating, and there’s a specific constellation of reasons why this often happens. I've personally spent countless hours debugging similar issues, so the common culprits. This isn't usually about the view itself being fundamentally flawed, but rather about how it interacts with the layout system, and specifically, the constraints you’ve defined or failed to define.
 
 The core issue often lies in how the view determines its size and positioning, and how that interacts with `ConstraintLayout`’s expectations. `ConstraintLayout`, unlike simpler layouts, relies heavily on the constraints you set to deduce the size and location of its children. If your custom view doesn’t properly participate in this constraint-solving dance, you’re going to see it either not showing up, taking up no space, or being placed where it obviously shouldn’t be. Let's explore some of the specific scenarios.
 

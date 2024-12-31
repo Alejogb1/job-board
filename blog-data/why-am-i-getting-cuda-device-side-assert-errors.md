@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-cuda-device-side-assert-errors"
 ---
 
-, let's unpack those frustrating cuda device-side assert errors. It's a scenario I've bumped into more than a few times over the years, particularly during the early days of projects involving custom kernels and less mature codebases. Believe me, it's a far more common headache than some might initially think. The crux of it, in almost every instance, boils down to an issue within your kernel's execution on the GPU itself – a problem that wasn't caught during compilation or host-side checks, but manifests catastrophically while running in parallel on the device.
+those frustrating cuda device-side assert errors. It's a scenario I've bumped into more than a few times over the years, particularly during the early days of projects involving custom kernels and less mature codebases. Believe me, it's a far more common headache than some might initially think. The crux of it, in almost every instance, boils down to an issue within your kernel's execution on the GPU itself – a problem that wasn't caught during compilation or host-side checks, but manifests catastrophically while running in parallel on the device.
 
 These errors, quite often, signal a violation of some internal invariant or a condition that's explicitly checked using `__assert()` within the CUDA runtime. The typical manifestation of this error is not a gentle message, but rather the abrupt halt of your kernel and the program as a whole. It's the kind of abrupt stop that makes you reach for the debugger immediately. The error message, though concise, often lacks specific information about _where_ the error occurred, making the troubleshooting process somewhat akin to detective work.
 

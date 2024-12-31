@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-hierarchical-lstm-autoencoder---model-not-training"
 ---
 
-so, hierarchical lstm autoencoders, and they're not playing ball, training-wise. i've been there, trust me. it's a tricky area, and the "hierarchical" bit adds a layer of fun, doesn’t it? (that's my attempt at tech humor, i know, it's not gonna win any comedy awards). anyway, let's unpack this.
+so, hierarchical lstm autoencoders, and they're not playing ball, training-wise. i've been there, trust me. it's a tricky area, and the "hierarchical" bit adds a layer of fun, doesn’t it? (that's my attempt at tech humor, i know, it's not gonna win any comedy awards). anyway.
 
 first, when you say "not training", what exactly does that mean? is the loss just not decreasing? is it fluctuating wildly? is it stuck at some high value? these details matter. a loss that's not moving is very different from a loss that's jumping around. it helps to be as precise as possible when diagnosing, and it is essential to see your loss curve to figure out the problem.
 

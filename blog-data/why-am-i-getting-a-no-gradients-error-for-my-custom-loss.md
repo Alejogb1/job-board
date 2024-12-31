@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-no-gradients-error-for-my-custom-loss"
 ---
 
-, let's unpack this 'no gradients' issue. It's a frustratingly common problem, and I've certainly spent my fair share of evenings chasing it down. From my experience, especially when working on those convoluted object detection models a few years back, custom loss functions can be a real breeding ground for this specific error. It usually boils down to one of a few core problems, and it's less often a fault of the framework itself and more often an issue with how we're defining the loss computation or how we're handling the tensors within that process.
+'no gradients' issue. It's a frustratingly common problem, and I've certainly spent my fair share of evenings chasing it down. From my experience, especially when working on those convoluted object detection models a few years back, custom loss functions can be a real breeding ground for this specific error. It usually boils down to one of a few core problems, and it's less often a fault of the framework itself and more often an issue with how we're defining the loss computation or how we're handling the tensors within that process.
 
 The fundamental issue with a 'no gradients' error in a deep learning context is that the automatic differentiation engine, the mechanism that computes derivatives so your model can learn, can't find a path to propagate the gradient signal back through your custom loss function. In effect, it means some operation or series of operations within your custom loss has broken the computational graph required for backpropagation. This effectively stops any learning from happening. So, here's a breakdown of the usual suspects and what we can do to catch them.
 

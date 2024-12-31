@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-war-file-failing-to-load-a-necessary-java-class"
 ---
 
-, let's unpack this common but frustrating issue. I’ve certainly had my fair share of late nights spent debugging classloading problems with web applications, and it's almost always some nuance of the classpath or deployment environment. A .war file failing to load a necessary Java class usually boils down to a handful of suspects, and it's rarely a straightforward "it's not there" scenario. Let's get into the specifics.
+common but frustrating issue. I’ve certainly had my fair share of late nights spent debugging classloading problems with web applications, and it's almost always some nuance of the classpath or deployment environment. A .war file failing to load a necessary Java class usually boils down to a handful of suspects, and it's rarely a straightforward "it's not there" scenario. Let's get into the specifics.
 
 First off, understand that a .war file is essentially a zipped archive containing all the components of a web application—Java servlets, JSPs, static content, and importantly, dependent jar files usually located within the `/WEB-INF/lib` directory. The application server, like Tomcat or Jetty, takes this archive and deploys it, which involves unpacking it and setting up the classloading environment. It's that environment where things often go sideways.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-my-rails-application-running-on-the-aws-ec2-instance"
 ---
 
-, let's unpack this. I've definitely seen this scenario play out more times than I'd like to remember. You've got your shiny Rails app, carefully crafted, tested locally, and now it’s stubbornly refusing to cooperate on your new AWS EC2 instance. It's a common hurdle, and often the culprits are buried in the details of environment configurations and network settings. Instead of jumping straight to blame, let’s methodically go through the most likely culprits. Based on my past experiences, where I spent a good chunk of a particular month debugging a similar problem, the reasons typically fall under these categories:
+. I've definitely seen this scenario play out more times than I'd like to remember. You've got your shiny Rails app, carefully crafted, tested locally, and now it’s stubbornly refusing to cooperate on your new AWS EC2 instance. It's a common hurdle, and often the culprits are buried in the details of environment configurations and network settings. Instead of jumping straight to blame, let’s methodically go through the most likely culprits. Based on my past experiences, where I spent a good chunk of a particular month debugging a similar problem, the reasons typically fall under these categories:
 
 **1. Deployment and Application Server Issues:**
 

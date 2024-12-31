@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-nodejs-chaincode-functions-call-each-other"
 ---
 
-, let's unpack this. Thinking back to my days building distributed ledger applications using Hyperledger Fabric, the need to structure chaincode effectively, including the ability for functions to interact, became quite a frequent discussion. It's definitely not as straightforward as calling a function within a single JavaScript file, given the distributed nature of the ledger and the execution environment of chaincode. So, how exactly can we get functions within a Node.js chaincode to communicate?
+. Thinking back to my days building distributed ledger applications using Hyperledger Fabric, the need to structure chaincode effectively, including the ability for functions to interact, became quite a frequent discussion. It's definitely not as straightforward as calling a function within a single JavaScript file, given the distributed nature of the ledger and the execution environment of chaincode. So, how exactly can we get functions within a Node.js chaincode to communicate?
 
 The key here lies in understanding that chaincode functions are essentially methods exposed by the smart contract, and interactions are primarily facilitated through the chaincode API. You don't call functions directly in the typical programming sense. Instead, you're sending transactions to the network, triggering the chaincode to execute a function. This is vital to understand because it significantly shapes how you design the logic within your chaincode and how functions interact.
 

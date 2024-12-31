@@ -52,7 +52,7 @@ this is a bit more involved but gives you more control and keeps your csproj fil
    </Target>
 ```
 
-let's unpack this too:
+this too:
 
 - `<Target Name="IncludeDocumentationXml" AfterTargets="AfterBuild">`: this defines a new target called "includedocumentationxml" that runs after the standard "afterbuild" target. msbuild targets are the building blocks of the build process.
 - `<ItemGroup><DocumentationXmlFiles Include="$(OutputPath)\*.xml" />`: creates a named itemgroup that selects every xml file present in the output directory.

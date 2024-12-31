@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-pull-an-image-from-ecr-and-why-cant-portainer-seem-to-share-credentials-on-ec2"
 ---
 
-, let's unpack this. It’s a scenario I've encountered more times than I care to count, and the frustration is certainly understandable. You're attempting to pull a container image from Amazon Elastic Container Registry (ECR) on an EC2 instance, managed perhaps with something like Portainer, and the whole thing is falling apart because of credential issues. This isn't an uncommon hurdle. Let's dive into why this occurs and how to systematically address it.
+. It’s a scenario I've encountered more times than I care to count, and the frustration is certainly understandable. You're attempting to pull a container image from Amazon Elastic Container Registry (ECR) on an EC2 instance, managed perhaps with something like Portainer, and the whole thing is falling apart because of credential issues. This isn't an uncommon hurdle. Let's dive into why this occurs and how to systematically address it.
 
 Essentially, the core problem boils down to authorization and authentication—or rather, a failure of either. When an EC2 instance tries to access ECR, it needs to prove its identity, demonstrating it has the necessary permissions. It's not automatically trusted simply because it's running within AWS's infrastructure. Additionally, Portainer, while extremely useful, isn't magically sharing credentials across your system, and relies on properly configured authentication mechanisms.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-domain-model-mapper-for-complex-dtos"
 ---
 
-, let's dive into this. I remember a project, back in the early 2010s, where we were dealing with a particularly thorny legacy system. We had a database schema that was… let's just say “mature,” and our data transfer objects (DTOs) had grown quite complex trying to accommodate its quirks. Mapping those DTOs to our domain model felt less like programming and more like archaeology at times. What we needed was a robust, maintainable mapper, not a jumbled mess of ad-hoc code. So, let's unpack the options and best practices I've learned over the years.
+, let's dive into this. I remember a project, back in the early 2010s, where we were dealing with a particularly thorny legacy system. We had a database schema that was… let's just say “mature,” and our data transfer objects (DTOs) had grown quite complex trying to accommodate its quirks. Mapping those DTOs to our domain model felt less like programming and more like archaeology at times. What we needed was a robust, maintainable mapper, not a jumbled mess of ad-hoc code. So the options and best practices I've learned over the years.
 
 The core issue with complex DTOs and domain mapping lies in the impedance mismatch between your data representation (the DTO) and your application's internal model (domain entities). DTOs are often built around the requirements of data transport, serialization, or database schemas, while domain entities are designed to represent your business logic and rules. When DTOs become complex, hand-written mapping can quickly devolve into a maintenance nightmare. You end up with duplication, code that's difficult to understand, and a high likelihood of introducing bugs.
 

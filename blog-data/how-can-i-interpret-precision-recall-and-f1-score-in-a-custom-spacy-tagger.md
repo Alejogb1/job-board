@@ -8,7 +8,7 @@ id: "how-can-i-interpret-precision-recall-and-f1-score-in-a-custom-spacy-tagger"
 
 Now, regarding precision, recall, and the F1-score, these are foundational metrics used to evaluate the performance of classification models, including the custom spaCy tagger you're working with. They are particularly important when you're not just looking at overall accuracy (which can be misleading, especially with imbalanced datasets). Each metric provides a unique lens on the model’s performance, and understanding them separately is vital to improving your model.
 
-Let's unpack each one.
+each one.
 
 **Precision**:
 

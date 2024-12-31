@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-make-different-options-for-a-select-in-wagtail-admin"
 ---
 
-, let's unpack creating dynamic and varied options for select fields within Wagtail’s admin interface. It’s a challenge I've tackled countless times, especially when dealing with increasingly complex content models. The need for flexible options in select dropdowns often arises when straightforward static choices don’t cut it – think of scenarios involving categories, taxonomies, or even dynamically generated settings. I’ve found the key lies in understanding Wagtail's field processing and how to inject customized data.
+creating dynamic and varied options for select fields within Wagtail’s admin interface. It’s a challenge I've tackled countless times, especially when dealing with increasingly complex content models. The need for flexible options in select dropdowns often arises when straightforward static choices don’t cut it – think of scenarios involving categories, taxonomies, or even dynamically generated settings. I’ve found the key lies in understanding Wagtail's field processing and how to inject customized data.
 
 The default way Wagtail handles select fields relies on a straightforward `choices` parameter during field definition. While suitable for a limited number of static options, this approach becomes cumbersome when dealing with dynamic datasets. We need a way to dynamically generate these options. The core mechanism for this involves overriding the widget that wagtail uses for select fields and providing our dynamic data from the backend.
 

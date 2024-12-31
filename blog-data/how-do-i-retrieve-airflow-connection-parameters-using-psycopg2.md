@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-airflow-connection-parameters-using-psycopg2"
 ---
 
-, let's unpack this. It's a question that often comes up when you're trying to bridge the orchestration power of airflow with the database access capabilities of psycopg2. I've definitely been down this path a few times, usually when building data pipelines that require dynamically configured database connections based on airflow variables. It's not always the most straightforward thing, but it's certainly manageable with the right approach.
+. It's a question that often comes up when you're trying to bridge the orchestration power of airflow with the database access capabilities of psycopg2. I've definitely been down this path a few times, usually when building data pipelines that require dynamically configured database connections based on airflow variables. It's not always the most straightforward thing, but it's certainly manageable with the right approach.
 
 The core issue is, of course, that airflow stores its connection parameters in its metadata database, separate from where your python code is executing within your dags. You don't want to hardcode passwords or database uris into your dag files; that's a major security faux pas. The good news is that airflow provides the mechanisms to securely retrieve these connections at runtime. Specifically, we use the `get_connection` method from the airflow hooks module.
 

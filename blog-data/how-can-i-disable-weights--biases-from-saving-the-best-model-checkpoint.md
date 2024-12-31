@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-disable-weights--biases-from-saving-the-best-model-checkpoint"
 ---
 
-, let's unpack this. It's a nuanced request because, as anyone who's worked with Weights & Biases (wandb) extensively knows, its checkpointing behavior is designed to be helpful and somewhat "automatic." The good news is, you definitely have control, just not in a "one-click" sort of way. I've encountered this exact scenario in several projects, specifically when deploying models that had their own, more precise checkpointing logic baked in, or when I wanted to minimize storage usage for the wandb project. Let me illustrate the approach with a few practical examples and some reasoning behind why this works.
+. It's a nuanced request because, as anyone who's worked with Weights & Biases (wandb) extensively knows, its checkpointing behavior is designed to be helpful and somewhat "automatic." The good news is, you definitely have control, just not in a "one-click" sort of way. I've encountered this exact scenario in several projects, specifically when deploying models that had their own, more precise checkpointing logic baked in, or when I wanted to minimize storage usage for the wandb project. Let me illustrate the approach with a few practical examples and some reasoning behind why this works.
 
 The core challenge is that wandb’s `wandb.log` function, when used in conjunction with training loops, and especially its `wandb.watch` feature, often implicitly saves models that perform the best according to a given metric. This happens because it is coupled with the `wandb.Artifact` mechanism which, while great for reproducibility, can cause friction if you have existing save conventions.
 

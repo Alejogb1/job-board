@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-setting-ibmdbhome-prevent-pip-install-ibmdb"
 ---
 
-, let's unpack this. I've seen this scenario crop up more than a few times in my years working with databases and python, and it’s a particularly frustrating one when you’re just trying to get a simple installation going. The core issue, boiled down, is that setting `IBM_DB_HOME` can interfere with `pip`'s ability to correctly build and install the `ibm_db` package. This interference stems from how the `ibm_db` package leverages the IBM data server driver and, importantly, how `pip` itself operates in terms of linking external libraries.
+. I've seen this scenario crop up more than a few times in my years working with databases and python, and it’s a particularly frustrating one when you’re just trying to get a simple installation going. The core issue, boiled down, is that setting `IBM_DB_HOME` can interfere with `pip`'s ability to correctly build and install the `ibm_db` package. This interference stems from how the `ibm_db` package leverages the IBM data server driver and, importantly, how `pip` itself operates in terms of linking external libraries.
 
 Essentially, the `ibm_db` python package isn’t a pure python implementation. It's a wrapper, or a binding, around the IBM data server client. This client is a collection of native libraries and tools necessary to connect to IBM database systems, such as DB2. Now, `pip` typically looks for precompiled wheels or builds extensions during the installation process. When no pre-built wheel is available for your platform, it attempts to compile the extension using a setup script. This setup script relies on knowing where to find the IBM data server client libraries.
 

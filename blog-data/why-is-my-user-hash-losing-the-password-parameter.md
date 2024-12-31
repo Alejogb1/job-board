@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-user-hash-losing-the-password-parameter"
 ---
 
-, let's unpack this. I’ve seen this exact scenario play out more times than I care to remember, usually in the wee hours of the morning when deadlines loom. The question of why your user hash is losing the password parameter is fundamentally about understanding how data flows through your application, particularly when dealing with user authentication. It's rarely a single, glaring error, but more often a subtle interplay of factors. I've diagnosed this in everything from small web applications to sprawling enterprise systems. So let me walk you through some of the usual suspects, along with some code examples to illustrate.
+. I’ve seen this exact scenario play out more times than I care to remember, usually in the wee hours of the morning when deadlines loom. The question of why your user hash is losing the password parameter is fundamentally about understanding how data flows through your application, particularly when dealing with user authentication. It's rarely a single, glaring error, but more often a subtle interplay of factors. I've diagnosed this in everything from small web applications to sprawling enterprise systems. So let me walk you through some of the usual suspects, along with some code examples to illustrate.
 
 The core problem often stems from the fact that passwords, for security reasons, shouldn’t be stored or transmitted in plain text. Instead, we hash them – this is a one-way function that takes your password and produces a fixed-size string of seemingly random characters. The critical part, however, is ensuring the hashed password makes it to where it needs to be, and this process is where things commonly go awry.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-can-i-not-limit-access-to-an-azure-container-app-over-api-management"
 ---
 
-, let's unpack this. I've definitely bumped into this particular headache a few times in the past – the frustration of trying to tightly control access to an azure container app using api management and finding it, well, less than straightforward. it's not a simple yes-or-no scenario, and the subtleties often get in the way. so, let’s dive into why this can be more challenging than you might expect and what steps you can take to effectively secure your container app.
+. I've definitely bumped into this particular headache a few times in the past – the frustration of trying to tightly control access to an azure container app using api management and finding it, well, less than straightforward. it's not a simple yes-or-no scenario, and the subtleties often get in the way. so, let’s dive into why this can be more challenging than you might expect and what steps you can take to effectively secure your container app.
 
 the core issue here stems from how api management (apim) and azure container apps (aca) are designed to interact, particularly when it comes to network boundaries and authentication. apim acts as a reverse proxy, sitting at the edge of your network and directing traffic based on its defined policies. aca, on the other hand, lives within its own environment, often behind a virtual network (vnet). this separation is crucial for isolation and security.
 

@@ -4,23 +4,23 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-mailchimp-api-issue-with-batch-requests-using-skipmergevalidationtrue-for-add-list-operations"
 ---
 
-ah, the mailchimp api and batch requests, a classic combination that can sometimes throw curveballs. i've been down this rabbit hole myself more times than i care to remember. let's unpack this 'skip_merge_validation=true' issue.
+ah, the mailchimp api and batch requests, a classic combination that can sometimes throw curveballs. i've been down this rabbit hole myself more times than i care to remember. this 'skip_merge_validation=true' issue.
 
 so, you're trying to use the mailchimp api for batch adding contacts to a list, and to speed things up, you're leveraging the 'skip_merge_validation' parameter. normally, mailchimp validates the data you send to ensure each field aligns with its definition in your list. this includes things like ensuring the email address is a valid format, date fields are dates, etc. when you use 'skip_merge_validation=true', you're telling mailchimp to bypass this validation, which can significantly improve processing time, particularly with large datasets.
 
-the problem, as you’ve likely found, is that it doesn't always work as you expect, especially with add list operations. the mailchimp documentation sometimes feels like it was written by someone who's never actually *used* the api. i mean, i love mailchimp for the most part but their api documentation sometimes feels like a choose-your-own-adventure book.
+the problem, as you’ve likely found, is that it doesn't always work as you expect, especially with add list operations. the mailchimp documentation sometimes feels like it was written by someone who's never actually _used_ the api. i mean, i love mailchimp for the most part but their api documentation sometimes feels like a choose-your-own-adventure book.
 
-here's the thing: while 'skip_merge_validation=true' is intended to bypass *merge field* validation, it *doesn't* completely eliminate all checks by the api. there are still some core validation routines that mailchimp keeps in place for data integrity, even when you try to tell it to relax. the usual culprits that sneak past the 'skip_merge_validation' parameter are typically related to these core rules:
+here's the thing: while 'skip_merge_validation=true' is intended to bypass _merge field_ validation, it _doesn't_ completely eliminate all checks by the api. there are still some core validation routines that mailchimp keeps in place for data integrity, even when you try to tell it to relax. the usual culprits that sneak past the 'skip_merge_validation' parameter are typically related to these core rules:
 
 1. **email address format:** even if you're skipping field-specific validation, mailchimp still expects a somewhat reasonable email format. if your email strings are completely malformed (e.g., missing the "@" symbol or the domain part), mailchimp will likely reject the request. it's trying to protect itself from complete garbage data. it's not trying to be mean it's like that grumpy sysadmin who hates everything.
 
-2. **required fields:** if you have fields marked as “required” in your list settings, even with 'skip_merge_validation=true', mailchimp will often expect those fields to be present in your batch requests. it's not checking if the data *in* those fields is valid, but it expects those keys to be present in the json payload of each member you intend to add to the list. it’s a bit counterintuitive, i agree.
+2. **required fields:** if you have fields marked as “required” in your list settings, even with 'skip_merge_validation=true', mailchimp will often expect those fields to be present in your batch requests. it's not checking if the data _in_ those fields is valid, but it expects those keys to be present in the json payload of each member you intend to add to the list. it’s a bit counterintuitive, i agree.
 
 3. **list existence:** ensure the list id you're using is correct. this is a basic check but a surprisingly common source of errors, i've been there. a wrong id and nothing will work no matter what.
 
 4. **api key and permission:** double-check your api key has the necessary permissions to add members to that particular list. mailchimp is rather fussy about this for good security reasons. you would need full access to the list, or you will see a 403 forbidden error.
 
-now, let's get a bit more practical and look at the code. here's a simplified python example of a batch request that *might* cause the issue you are facing. i’m using the ‘requests’ library since it’s commonly used when interacting with apis like this one:
+now, let's get a bit more practical and look at the code. here's a simplified python example of a batch request that _might_ cause the issue you are facing. i’m using the ‘requests’ library since it’s commonly used when interacting with apis like this one:
 
 ```python
 import requests

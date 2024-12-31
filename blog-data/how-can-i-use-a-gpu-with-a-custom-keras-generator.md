@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-gpu-with-a-custom-keras-generator"
 ---
 
-, let's unpack the specifics of leveraging a gpu with a custom keras generator. It's a fairly common challenge, and i've definitely seen my share of systems bottlenecked by inefficient data handling. The key here isn't just the _use_ of the gpu, but ensuring data flows to it _efficiently_ without the cpu becoming the limiting factor. I remember back on an image classification project a few years ago, our training process was horrifically slow; turns out the cpu was spending more time generating batches than the gpu was spending processing them. The solution, fundamentally, comes down to optimizing your data pipeline.
+the specifics of leveraging a gpu with a custom keras generator. It's a fairly common challenge, and i've definitely seen my share of systems bottlenecked by inefficient data handling. The key here isn't just the _use_ of the gpu, but ensuring data flows to it _efficiently_ without the cpu becoming the limiting factor. I remember back on an image classification project a few years ago, our training process was horrifically slow; turns out the cpu was spending more time generating batches than the gpu was spending processing them. The solution, fundamentally, comes down to optimizing your data pipeline.
 
 The core issue usually lies with the custom keras generator. By default, these operate synchronously on the cpu, meaning that while your gpu is idly waiting for data, the cpu is busy generating it. This creates an enormous disparity and underutilizes the massively parallel processing power of the gpu. So the strategy becomes a balancing act: keep the gpu fed with data without overloading the system.
 

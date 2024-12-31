@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-rails-controller-update-even-with-devise-form-errors"
 ---
 
-, let's unpack this peculiar behavior with Rails and devise. It's not uncommon to scratch your head when you see updates persisting even when your devise forms are throwing validation errors. I've certainly been there, troubleshooting late nights after encountering this exact scenario. It’s a frustrating puzzle, but thankfully, the underlying logic is quite understandable once you examine the flow of events.
+peculiar behavior with Rails and devise. It's not uncommon to scratch your head when you see updates persisting even when your devise forms are throwing validation errors. I've certainly been there, troubleshooting late nights after encountering this exact scenario. It’s a frustrating puzzle, but thankfully, the underlying logic is quite understandable once you examine the flow of events.
 
 The core issue stems from how Rails handles form submissions and parameter processing, combined with how devise manages user authentication and object persistence. Essentially, the controller’s update action proceeds to _attempt_ the update, even if devise’s validation checks fail to validate the provided data _before_ it’s passed to the database layer. This is an important distinction: devise validation failure doesn’t automatically halt the controller update itself.
 

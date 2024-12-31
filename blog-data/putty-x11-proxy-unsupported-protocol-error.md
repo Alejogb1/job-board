@@ -6,7 +6,7 @@ id: "putty-x11-proxy-unsupported-protocol-error"
 
 so you're getting the `putty x11 proxy unsupported protocol error` right Been there done that got the t-shirt and the scars to prove it Let me tell you this isn't some arcane magic it's usually pretty straightforward but man oh man it can be frustrating if you don't know what to look for
 
-So first thing first let's unpack what's happening You're trying to use PuTTY to tunnel X11 traffic which basically means you want to display graphical applications running on a remote Linux machine on your local Windows box via some ssh tunneling magic right When PuTTY throws the "unsupported protocol" error it means something in that chain is not happy generally either your settings are off or the server isn't set up to play nice with x11 forwarding
+So first thing first what's happening You're trying to use PuTTY to tunnel X11 traffic which basically means you want to display graphical applications running on a remote Linux machine on your local Windows box via some ssh tunneling magic right When PuTTY throws the "unsupported protocol" error it means something in that chain is not happy generally either your settings are off or the server isn't set up to play nice with x11 forwarding
 
 I've seen this pop up in the weirdest situations like way back when I was still rocking Windows XP yes that long ago I was trying to debug a rendering issue on a server across a dodgy VPN the server side was running some old x window server version and I just banged my head against the wall for hours. But don't worry we'll get you sorted
 

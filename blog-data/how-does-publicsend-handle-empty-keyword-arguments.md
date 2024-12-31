@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-publicsend-handle-empty-keyword-arguments"
 ---
 
-, let's unpack how `public_send` behaves with empty keyword arguments. It's one of those seemingly simple areas that can trip folks up, and I’ve certainly been in situations where misinterpreting this led to some head-scratching debugging sessions. It's not always intuitive, and I’ve learned some useful lessons over the years. Specifically, my experience working on a high-throughput processing system involved frequent use of dynamic method dispatch, and this quirk with `public_send` and keyword arguments reared its head more than once.
+how `public_send` behaves with empty keyword arguments. It's one of those seemingly simple areas that can trip folks up, and I’ve certainly been in situations where misinterpreting this led to some head-scratching debugging sessions. It's not always intuitive, and I’ve learned some useful lessons over the years. Specifically, my experience working on a high-throughput processing system involved frequent use of dynamic method dispatch, and this quirk with `public_send` and keyword arguments reared its head more than once.
 
 The core of the issue revolves around how Ruby's method invocation system handles keywords, and how `public_send` interacts with that mechanism. `public_send`, as you likely know, is a powerful meta-programming tool allowing you to invoke methods on an object by their string or symbol representation, effectively enabling dynamic dispatch. However, when it comes to keyword arguments, the behavior becomes nuanced, particularly when no keyword arguments are actually specified.
 

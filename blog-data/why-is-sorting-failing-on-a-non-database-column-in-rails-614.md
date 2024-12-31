@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-sorting-failing-on-a-non-database-column-in-rails-614"
 ---
 
-, let's unpack this sorting issue on a non-database column in Rails 6.1.4. I've seen this particular problem crop up enough times across various projects to have a pretty solid grasp on its typical causes and solutions. It often stems from a fundamental misunderstanding of how ActiveRecord interacts with data and how sorting is generally handled, especially when custom, non-database attributes get involved. This issue isn’t necessarily a bug in Rails, but rather a consequence of how we need to approach sorting based on properties that don’t directly exist as database columns.
+sorting issue on a non-database column in Rails 6.1.4. I've seen this particular problem crop up enough times across various projects to have a pretty solid grasp on its typical causes and solutions. It often stems from a fundamental misunderstanding of how ActiveRecord interacts with data and how sorting is generally handled, especially when custom, non-database attributes get involved. This issue isn’t necessarily a bug in Rails, but rather a consequence of how we need to approach sorting based on properties that don’t directly exist as database columns.
 
 The core problem lies in ActiveRecord's `order` method. This method is designed to translate SQL `ORDER BY` clauses, working directly with columns present in the database schema. If you try to use `order` with an attribute that isn't mapped to a database column, it won’t know how to construct the corresponding SQL query and thus, it's unable to achieve the sort on the specified attribute. Essentially, you are asking the database to sort on something it doesn’t understand.
 

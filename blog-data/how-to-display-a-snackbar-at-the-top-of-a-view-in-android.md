@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-display-a-snackbar-at-the-top-of-a-view-in-android"
 ---
 
-, let's unpack this. I've definitely run into this scenario before, particularly back during my early work on a multi-pane tablet application where consistent top-aligned notifications were crucial for user orientation. The default snackbar behavior, anchored at the bottom, simply wouldn't cut it. Achieving a top-positioned snackbar isn't inherently complex, but it does require a bit more control than what's offered out of the box. It's not as simple as just flipping a switch; rather, it involves a careful understanding of the android view hierarchy and how snackbars are implemented.
+. I've definitely run into this scenario before, particularly back during my early work on a multi-pane tablet application where consistent top-aligned notifications were crucial for user orientation. The default snackbar behavior, anchored at the bottom, simply wouldn't cut it. Achieving a top-positioned snackbar isn't inherently complex, but it does require a bit more control than what's offered out of the box. It's not as simple as just flipping a switch; rather, it involves a careful understanding of the android view hierarchy and how snackbars are implemented.
 
 Essentially, the snackbar is a `BaseTransientBottomBar`, which, as its name suggests, is designed to appear from the bottom. To get it to the top, we must manually manipulate the view's position during its creation, overriding its default placement mechanism. We'll need to interact with the `CoordinatorLayout` or another parent view that supports the behavior, but we won't rely on the baked-in bottom-specific positioning. This involves more than just setting a different layout parameter. It needs a custom behavior.
 

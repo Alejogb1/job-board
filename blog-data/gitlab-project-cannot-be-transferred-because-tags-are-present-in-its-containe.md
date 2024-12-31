@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "gitlab-project-cannot-be-transferred-because-tags-are-present-in-its-containe"
 ---
 
-you’re having that classic GitLab project transfer problem because of tags right yeah been there done that got the t-shirt feels like a rite of passage for anyone using Git at scale so let's unpack this a bit
+you’re having that classic GitLab project transfer problem because of tags right yeah been there done that got the t-shirt feels like a rite of passage for anyone using Git at scale so this a bit
 
 first things first GitLab has this quirk or feature depending on how you look at it that prevents you from easily transferring a project with tags to another group or namespace basically it's a safety mechanism to prevent things from getting completely borked during the transfer process think about it tags are like little breadcrumbs pointing to specific commits or releases they might be crucial for your deployment pipelines or documentation or just about anything if you just blindly move the project without considering them things could go south real quick
 

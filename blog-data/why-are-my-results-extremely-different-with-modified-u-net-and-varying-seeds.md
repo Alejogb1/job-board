@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-my-results-extremely-different-with-modified-u-net-and-varying-seeds"
 ---
 
-Let's address this head-on; dealing with inconsistent results from a modified u-net, especially when tweaking seeds, is something I've encountered more than once in my deep learning work. It’s frustrating, I understand. What initially seems like a minor adjustment can throw the entire training process off, and those variations between runs can lead to significant headaches. So, let's unpack what's happening and how to approach this systematically.
+Let's address this head-on; dealing with inconsistent results from a modified u-net, especially when tweaking seeds, is something I've encountered more than once in my deep learning work. It’s frustrating, I understand. What initially seems like a minor adjustment can throw the entire training process off, and those variations between runs can lead to significant headaches. So what's happening and how to approach this systematically.
 
 The core of the issue often lies in the subtle interplay between initial random weight distributions, the stochastic nature of training, and, crucially, the architecture of your modifications to the u-net itself. U-nets, in their original form, are relatively robust, but introducing changes can inadvertently amplify these issues. When you vary the random seed, you're essentially changing the starting point of a highly complex optimization landscape. Imagine a mountainous region; each seed leads to a different starting position, and gradient descent then attempts to find the lowest valley. If the landscape is particularly rugged, some starting positions might lead to completely different valleys or get trapped on local plateaus.
 
@@ -118,6 +118,7 @@ if __name__ == '__main__':
     print(f"Loss with dropout for seed {seed2}: {loss_seed2_dropout}")
 
 ```
+
 You will see even more instability between runs. The randomness is now multiplied.
 
 **Example 3: Checking gradient magnitudes and parameter updates.**
@@ -175,6 +176,6 @@ Look out for huge changes in gradient norms from epoch to epoch. That's a sign o
 
 So, how can you approach this? First, perform a very careful analysis of all architectural changes you introduced. Check the scale of weights across layers, the gradient magnitudes, and how the loss behaves across epochs. Make sure you are using robust initialization strategies that are aligned to your modified architecture. In some instances, using batch normalization after convolutions can assist, though its effectiveness varies based on the specific modifications to the architecture. Then, conduct experiments with different seeds, recording the metrics precisely. This will allow you to get a feel for just how much variation to expect. Next, tune hyperparameters methodically. Often, overly aggressive learning rates can exacerbate the instability caused by different seeds. Lowering the learning rate, and using more stable optimizers (like AdamW), might help. Finally, consider using methods to stabilize training, for example, gradient clipping, and weight decay.
 
-Regarding further reading, for a detailed understanding of initialization strategies, I recommend “*Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification*” by He et al. For a more general understanding of the challenges of training deep networks, consider the chapter on optimization in “*Deep Learning*” by Goodfellow, Bengio, and Courville. For practical implementation and stability techniques, check the original papers for optimizers such as Adam or AdamW, and also regularization techniques like dropout or batch normalization.
+Regarding further reading, for a detailed understanding of initialization strategies, I recommend “_Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification_” by He et al. For a more general understanding of the challenges of training deep networks, consider the chapter on optimization in “_Deep Learning_” by Goodfellow, Bengio, and Courville. For practical implementation and stability techniques, check the original papers for optimizers such as Adam or AdamW, and also regularization techniques like dropout or batch normalization.
 
 In summary, while different results with varying seeds can be bothersome, it’s usually a symptom of underlying issues related to initialization, stochasticity, or modified architecture interactions, rather than a fundamental flaw in the u-net. By understanding the mechanisms at play and addressing them systematically, you can achieve more robust and predictable training outcomes.

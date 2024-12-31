@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-seeding-mandatory-for-stateless-random-flipping-in-tensorflow-image-operations"
 ---
 
-, let's unpack this. The necessity of seeding in stateless random image operations within tensorflow isn’t always intuitive, so it’s a worthwhile point to delve into. I've seen quite a few projects stumble over this, especially when folks are moving from simpler, stateful random operations to more complex, distributed training setups. Let me explain it from my perspective, having battled through some subtle bugs tied directly to this.
+. The necessity of seeding in stateless random image operations within tensorflow isn’t always intuitive, so it’s a worthwhile point to delve into. I've seen quite a few projects stumble over this, especially when folks are moving from simpler, stateful random operations to more complex, distributed training setups. Let me explain it from my perspective, having battled through some subtle bugs tied directly to this.
 
 Essentially, when we talk about “stateless” random operations, what we’re really discussing is the predictability of random number generation based solely on a provided seed value, and not an internal state that is being continuously modified. In tensorflow, stateless operations, such as `tf.image.stateless_random_crop` or `tf.random.stateless_uniform`, operate entirely on these seed values; given the same seed, they always yield the same result. That's by design. They’re specifically crafted to avoid the global state associated with functions that rely on a hidden, mutable rng, like those based on the built-in python `random` module.
 

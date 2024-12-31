@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-do-multiprocessing-in-a-deployed-azure-aci-for-inference"
 ---
 
-, let's unpack multiprocessing for inference within Azure Container Instances (ACI). It's a scenario I've definitely navigated, and trust me, it presents some unique considerations compared to, say, a typical local environment or a larger, managed service like AKS. The key challenge often revolves around resource constraints and the inherent stateless nature of ACI, demanding a different approach than what might be considered standard in multi-threaded applications.
+multiprocessing for inference within Azure Container Instances (ACI). It's a scenario I've definitely navigated, and trust me, it presents some unique considerations compared to, say, a typical local environment or a larger, managed service like AKS. The key challenge often revolves around resource constraints and the inherent stateless nature of ACI, demanding a different approach than what might be considered standard in multi-threaded applications.
 
 The core issue is that while ACI provides isolation at the container level, the individual containers themselves are generally not designed for intra-container multiprocessing that's as seamless as on a larger system with more direct hardware access. We are, therefore, usually talking about parallelization within the process running inside the container rather than creating entirely separate ACI instances to parallelize inference. This means you must rely on Python's `multiprocessing` library or alternatives like `concurrent.futures`, keeping in mind the limitations of ACI.
 

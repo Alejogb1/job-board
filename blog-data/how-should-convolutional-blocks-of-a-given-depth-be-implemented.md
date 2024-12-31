@@ -8,7 +8,7 @@ id: "how-should-convolutional-blocks-of-a-given-depth-be-implemented"
 
 The ‘depth’ of a convolutional block refers to the number of convolutional layers within that block, sometimes also including non-linearities and pooling layers. The choice of depth impacts receptive field size, feature complexity, and ultimately, the model’s ability to extract meaningful information from input data. A shallow block might struggle to capture intricate patterns, while an excessively deep block can lead to vanishing/exploding gradients or overfitting. The implementation strategy should therefore reflect the specific task, dataset, and computational resources at hand.
 
-There’s no single “best” way. Rather, the ideal implementation emerges from understanding trade-offs. A deeper block generally allows for more complex feature abstraction, but with the increased parameter count and associated computational burden. Let's unpack three different approaches, based on some of the challenges I've personally faced.
+There’s no single “best” way. Rather, the ideal implementation emerges from understanding trade-offs. A deeper block generally allows for more complex feature abstraction, but with the increased parameter count and associated computational burden. three different approaches, based on some of the challenges I've personally faced.
 
 **1. Simple Sequential Convolutional Blocks:**
 

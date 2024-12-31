@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "do-kubernetes-master-nodes-have-a-container-runtime"
 ---
 
-, let's unpack this. It's a question that often comes up, and it's good that we're addressing it directly. The short answer is that, yes, _in a sense_, kubernetes master nodes do interact with a container runtime, but not in the same way that worker nodes do. It’s a more nuanced interaction, and it's critical to understand the distinction to properly grasp kubernetes architecture.
+. It's a question that often comes up, and it's good that we're addressing it directly. The short answer is that, yes, _in a sense_, kubernetes master nodes do interact with a container runtime, but not in the same way that worker nodes do. It’s a more nuanced interaction, and it's critical to understand the distinction to properly grasp kubernetes architecture.
 
 In my years working with kubernetes, I've seen confusion around this point cause significant deployment and troubleshooting issues. Once, I recall debugging a cluster where someone assumed master nodes needed a fully configured docker installation, just like the workers, which led to unnecessary resource contention on those vital components. That's a mistake we definitely want to avoid.
 

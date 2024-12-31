@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-do-multi-label-token-classification-using-contextual-embeddings"
 ---
 
-, let's unpack multi-label token classification using contextual embeddings. It’s a challenge I’ve tackled quite a few times in my career, specifically when working on complex document analysis projects, like automatically categorizing clauses within legal contracts based on several pre-defined aspects. This isn’t your standard single-label classification, and frankly, it introduces several layers of complexity that need careful consideration.
+multi-label token classification using contextual embeddings. It’s a challenge I’ve tackled quite a few times in my career, specifically when working on complex document analysis projects, like automatically categorizing clauses within legal contracts based on several pre-defined aspects. This isn’t your standard single-label classification, and frankly, it introduces several layers of complexity that need careful consideration.
 
 The core idea, at a high level, is to leverage contextual embeddings – often derived from transformer models like BERT, RoBERTa, or even more specialized ones – to capture the nuanced meaning of each token within its sequence. These embeddings aren’t just word vectors; they encode meaning based on the surrounding context, which is crucial for multi-label scenarios where a single token might relate to multiple labels simultaneously. For example, in my legal contract project, the token "agreement" might relate to both the 'party identification' and the 'contract type' label, depending on the sentence it appears in.
 

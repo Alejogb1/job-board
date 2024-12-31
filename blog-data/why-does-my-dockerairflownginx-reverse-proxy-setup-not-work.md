@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-my-dockerairflownginx-reverse-proxy-setup-not-work"
 ---
 
-Right, let's unpack this docker-airflow-nginx conundrum. I’ve seen this exact scenario crop up more times than I care to recall, often with variations that make debugging a delightful, if time-consuming, exercise. Usually, the problem isn't just one thing; it’s a confluence of misconfigurations across the three components. Based on my past experiences battling similar setups, there are a few common culprits I'd like to examine.
+Right docker-airflow-nginx conundrum. I’ve seen this exact scenario crop up more times than I care to recall, often with variations that make debugging a delightful, if time-consuming, exercise. Usually, the problem isn't just one thing; it’s a confluence of misconfigurations across the three components. Based on my past experiences battling similar setups, there are a few common culprits I'd like to examine.
 
 Firstly, let's consider the networking layer. Docker, by default, isolates containers, so a communication breakdown often starts here. Airflow needs to be exposed to the outside world, usually on specific ports, and nginx needs to know which ports to forward traffic to. I've seen cases where either the docker compose file or the Airflow configurations have conflicting port mappings. This creates situations where traffic seems to vanish into thin air. Typically, what happens is the nginx reverse proxy is listening on port 80 (or 443 for https), but the airflow webserver is running on, say, port 8080 within its docker container but isn't properly mapped to a host port that nginx can access.
 
@@ -20,7 +20,7 @@ services:
   airflow-webserver:
     image: apache/airflow:2.8.0
     ports:
-      - "8080:8080"  # Host port 8080 maps to container port 8080
+      - "8080:8080" # Host port 8080 maps to container port 8080
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__WEBSERVER__BASE_URL=http://localhost:8080
@@ -56,10 +56,12 @@ server {
 This configuration listens on port 80 and forwards all requests to `http://host.docker.internal:8080`. Crucially, `host.docker.internal` resolves to the host machine's network interface from inside the Docker container. This is often the critical missing piece when you're trying to access services within the container. Notice the headers, these are needed by airflow to correctly reconstruct the user’s request.
 
 Finally, for completeness, a quick note on ensuring airflow's configuration, you often need a line like this in the `airflow.cfg`:
+
 ```ini
 [webserver]
 base_url = http://localhost
 ```
+
 However, this isn’t always necessary but is illustrative to why this is important. Here, we explicitly set the `base_url` to the domain nginx will be accessed through. A mismatch here can cause misdirection in the webserver’s handling of url and links, leading to broken views. If your domain is something other than localhost, you will need to update it there.
 
 The critical part when troubleshooting is examining the nginx logs first. Errors there can often indicate communication failures or improper configuration. Secondly, verifying your airflow's logs should then follow. This will reveal errors in parsing requests or misconfigurations relating to how the app views itself.

@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "why-is-a-fire-detection-model-incorrectly-identifying-all-images-as-having-no-fire-despite-displaying-85-accuracy"
 ---
 
-ah, i've been there, staring at a seemingly 'good' model that's completely useless in practice. let's unpack this fire detection fiasco. an 85% accuracy figure sounds impressive, but it’s totally misleading. it’s the classic case of accuracy paradox and class imbalance rearing their ugly heads. i've seen this happen countless times, and trust me, it's more common than one might think.
+ah, i've been there, staring at a seemingly 'good' model that's completely useless in practice. this fire detection fiasco. an 85% accuracy figure sounds impressive, but it’s totally misleading. it’s the classic case of accuracy paradox and class imbalance rearing their ugly heads. i've seen this happen countless times, and trust me, it's more common than one might think.
 
-when i first started dabbling in computer vision, i remember working on a project to classify images of different types of flowers. the initial model, boasting a similar high accuracy, fell flat on its face when confronted with a garden of only, let’s say, tulips. turns out, my dataset was heavily skewed towards roses; most images were roses and the model learnt to guess ‘rose’ all the time. i spent a whole weekend debugging that thing and i learnt more from that mistake than all the tutorials i followed. it taught me the accuracy metrics were almost meaningless by themselves. 
+when i first started dabbling in computer vision, i remember working on a project to classify images of different types of flowers. the initial model, boasting a similar high accuracy, fell flat on its face when confronted with a garden of only, let’s say, tulips. turns out, my dataset was heavily skewed towards roses; most images were roses and the model learnt to guess ‘rose’ all the time. i spent a whole weekend debugging that thing and i learnt more from that mistake than all the tutorials i followed. it taught me the accuracy metrics were almost meaningless by themselves.
 
-so, here is the thing, in your fire detection scenario it's very likely that the model is just predicting "no fire" for *everything*. the 85% accuracy means it is correct 85% of the time. that is fine if you have a dataset that 85% of the images have no fire in them; if your dataset is 90% no fire and 10% fire and the model always predict "no fire" then it would be correct 90% of the time, that accuracy says very little about how good the model is at *actually* detecting fire. think of it this way. if you trained a model to predict if there were a bear inside your closet and you used a dataset where 99.9% of the images had not a bear, your model can achieve a 99.9% accuracy saying always 'no bear'. is it good? certainly not!
+so, here is the thing, in your fire detection scenario it's very likely that the model is just predicting "no fire" for _everything_. the 85% accuracy means it is correct 85% of the time. that is fine if you have a dataset that 85% of the images have no fire in them; if your dataset is 90% no fire and 10% fire and the model always predict "no fire" then it would be correct 90% of the time, that accuracy says very little about how good the model is at _actually_ detecting fire. think of it this way. if you trained a model to predict if there were a bear inside your closet and you used a dataset where 99.9% of the images had not a bear, your model can achieve a 99.9% accuracy saying always 'no bear'. is it good? certainly not!
 
 the problem is class imbalance. your "no fire" class probably heavily outweighs the "fire" class in your training dataset. your model has learned a bias towards the majority class, the "no fire" one. it has simply found the easiest route to maximizing accuracy, even if it is practically useless. i have been burnt by this one more than once myself, literally and figuratively speaking.
 
@@ -60,6 +60,7 @@ next, we need to talk about how you fix it. there are several strategies.
 1.  **data augmentation:** generate more images of "fire" by applying transformations like rotations, flips, changes in brightness and contrast to the existing "fire" samples. this is a basic but usually very useful strategy for dealing with imbalanced datasets.
 
     for instance, with the `imgaug` library it can be done like this. it is important to note that `imgaug` has some deprecated functions. the modern way to use it is using `augmenters` classes, instead of `imgaug.augmenters.SomeFunction` do `iaa.SomeFunction` like shown in the next example. note that `image` below should be a numpy array with the image you want to transform.
+
 ```python
 import imgaug.augmenters as iaa
 import numpy as np
@@ -110,6 +111,7 @@ print(y_resampled)
 ```
 
 3.  **weighted loss function:** when calculating loss, you can give higher importance to the minority class. this makes the model focus more on correctly classifying the fire samples. this can be done in many deep learning frameworks like tensorflow or pytorch. this is, in my opinion, the most important strategy and should be the first one to try if you have enough data. for instance, in tensorflow:
+
 ```python
 import tensorflow as tf
 

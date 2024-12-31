@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-linkto-trigger-both-child-and-parent-record-deletion"
 ---
 
-, let's unpack this `link_to` and deletion conundrum, something I've seen trip up a fair few developers over the years. It's not quite as straightforward as some might initially assume, and the nuances are key to avoiding unexpected data loss. My initial exposure to this was during a rather complex e-commerce platform migration, where a poorly conceived relational model led to data cascading down like a toppled stack of cards. The good news is that we can definitely understand why and how this behaviour occurs, and, more importantly, how to control it.
+`link_to` and deletion conundrum, something I've seen trip up a fair few developers over the years. It's not quite as straightforward as some might initially assume, and the nuances are key to avoiding unexpected data loss. My initial exposure to this was during a rather complex e-commerce platform migration, where a poorly conceived relational model led to data cascading down like a toppled stack of cards. The good news is that we can definitely understand why and how this behaviour occurs, and, more importantly, how to control it.
 
 The short answer is that no, the `link_to` helper, in and of itself, does _not_ trigger record deletions—either of child records or the parent record, for that matter. The `link_to` helper in frameworks like Ruby on Rails or similar equivalents in other languages is principally designed to generate a hyperlink. Its purpose is purely navigational, instructing the user’s browser to request a different url. It’s essentially a facilitator for moving between views, a pointer to a route that the server will interpret. It doesn't inherently engage with any database operations at all.
 

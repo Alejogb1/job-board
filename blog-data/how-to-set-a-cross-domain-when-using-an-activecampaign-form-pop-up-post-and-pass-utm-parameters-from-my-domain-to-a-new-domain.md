@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-set-a-cross-domain-when-using-an-activecampaign-form-pop-up-post-and-pass-utm-parameters-from-my-domain-to-a-new-domain"
 ---
 
-, let's unpack this activecampaign cross-domain form submission with utm parameters issue. it's a classic problem, i've bumped into this kind of headache more times than i care to remember. it's not pretty, but we can definitely get it sorted. basically, you have a form on your site (domain a) that pops up (probably using their javascript snippet) and it submits to activecampaign's servers (domain b). and, because marketing is a thing, you need to carry over those precious utm parameters.
+activecampaign cross-domain form submission with utm parameters issue. it's a classic problem, i've bumped into this kind of headache more times than i care to remember. it's not pretty, but we can definitely get it sorted. basically, you have a form on your site (domain a) that pops up (probably using their javascript snippet) and it submits to activecampaign's servers (domain b). and, because marketing is a thing, you need to carry over those precious utm parameters.
 
 the core problem is the browser's same-origin policy. it's a security feature designed to prevent malicious scripts from messing with data on other websites. it's a good thing in general, but here, it makes our lives a little bit harder. because activecampaign’s form submits via a `post` method, we are going to deal with data submission that is not as trivial as a simple get method with parameters appended to the url.
 

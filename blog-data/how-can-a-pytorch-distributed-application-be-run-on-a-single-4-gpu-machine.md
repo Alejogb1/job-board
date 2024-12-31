@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-pytorch-distributed-application-be-run-on-a-single-4-gpu-machine"
 ---
 
-Let's unpack this. Back in the days when I was optimizing a particularly large-scale image classification model, I ran headfirst into this very issue. Training on a single machine with multiple gpus, especially with a framework like pytorch, can seem initially straightforward, but there are nuanced aspects that can dramatically affect performance and correctness. The crux of it lies in how pytorch's distributed data parallel (ddp) or other parallelization strategies interact with single-machine multi-gpu setups.
+this. Back in the days when I was optimizing a particularly large-scale image classification model, I ran headfirst into this very issue. Training on a single machine with multiple gpus, especially with a framework like pytorch, can seem initially straightforward, but there are nuanced aspects that can dramatically affect performance and correctness. The crux of it lies in how pytorch's distributed data parallel (ddp) or other parallelization strategies interact with single-machine multi-gpu setups.
 
 The fundamental challenge is configuring the distributed environment correctly when everything is physically within one box. We don't have the complexities of network latency and inter-node communication, but we still need to emulate the distributed infrastructure that ddp expects. Essentially, ddp is built on the idea of having multiple processes, each operating on a subset of data and then communicating gradients across processes. Even on a single machine, this process separation is still necessary, and that’s where it begins to diverge from more straightforward, single-gpu training scripts.
 
@@ -177,6 +177,7 @@ if __name__ == "__main__":
            nprocs=world_size,
            join=True)
 ```
+
 In this enhanced version, `DistributedSampler` plays a vital role. Each process only sees its assigned subset of the full dataset, ensuring each GPU operates on different data and that model convergence isn’t affected by all the GPUs running the exact same data in each batch.
 
 It is also crucial to note the communication overhead between these processes, even on the same machine. Techniques like gradient accumulation (if your batch size isn't large enough for effective parallelism), mixed precision training, and efficient data loading pipelines can be employed to mitigate this effect.

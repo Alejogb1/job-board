@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-classnotfoundexception-occurring-when-using-the-verticalscroll-modifier-in-a-desktop-application"
 ---
 
-, let's unpack this. I've seen `ClassNotFoundException` rear its ugly head in the context of desktop UI frameworks more times than I care to remember, particularly with scrollable components. And when it happens with something as seemingly straightforward as a `verticalScroll` modifier, it usually points to something more foundational. Let's delve into why that might be the case, drawing on my experiences building similar desktop apps over the years, and we'll even look at some code.
+. I've seen `ClassNotFoundException` rear its ugly head in the context of desktop UI frameworks more times than I care to remember, particularly with scrollable components. And when it happens with something as seemingly straightforward as a `verticalScroll` modifier, it usually points to something more foundational. Let's delve into why that might be the case, drawing on my experiences building similar desktop apps over the years, and we'll even look at some code.
 
 First off, `ClassNotFoundException` isn't specific to scrolling. It's a core java virtual machine (jvm) runtime exception. It means exactly what it says: the jvm, at runtime, can't locate the class definition it needs to proceed with execution. When this exception arises while using a specific modifier like `verticalScroll` in a desktop environment, it’s highly unlikely the modifier _itself_ is missing. Instead, it’s usually indicative of an underlying dependency that the scroll implementation depends upon but can't find at runtime.
 

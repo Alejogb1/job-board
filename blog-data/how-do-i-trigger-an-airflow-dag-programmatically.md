@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-trigger-an-airflow-dag-programmatically"
 ---
 
-Let's unpack how to kick off an airflow dag outside its scheduled cadence; a topic I've encountered more than a few times in various production environments. The need to trigger dags programmatically arises quite often - maybe it's a critical data refresh, an emergency patch, or perhaps a user-initiated process that needs airflow's orchestration. Thankfully, airflow offers several solid methods to achieve this, each with nuances that make them suitable for different situations.
+how to kick off an airflow dag outside its scheduled cadence; a topic I've encountered more than a few times in various production environments. The need to trigger dags programmatically arises quite often - maybe it's a critical data refresh, an emergency patch, or perhaps a user-initiated process that needs airflow's orchestration. Thankfully, airflow offers several solid methods to achieve this, each with nuances that make them suitable for different situations.
 
 Over the years, I've seen teams stumble by relying solely on the scheduler, leading to delays and unnecessary complexity. For instance, in a previous role managing a large ETL pipeline, a significant bug fix required us to reprocess a substantial chunk of data. Relying on the scheduled runs wouldn't have been fast enough, so we had to implement a programmatic trigger mechanism. From that point forward, we've always leveraged a mix of scheduled and programmatically triggered runs based on the use case.
 

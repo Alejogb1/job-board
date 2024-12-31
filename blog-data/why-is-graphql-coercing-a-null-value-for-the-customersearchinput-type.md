@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-graphql-coercing-a-null-value-for-the-customersearchinput-type"
 ---
 
-, let's unpack this null coercion with GraphQL, because it's a corner I've certainly encountered a fair few times over the years, especially during the transition to more strongly typed APIs. It’s a common frustration when we expect data to be present, yet GraphQL’s resolver machinery seems to mysteriously decide otherwise, particularly with custom input types like your `CustomerSearchInput`.
+null coercion with GraphQL, because it's a corner I've certainly encountered a fair few times over the years, especially during the transition to more strongly typed APIs. It’s a common frustration when we expect data to be present, yet GraphQL’s resolver machinery seems to mysteriously decide otherwise, particularly with custom input types like your `CustomerSearchInput`.
 
 The heart of the matter usually boils down to how GraphQL handles optional fields and the intricacies of its input coercion process. When a field within an input type is not explicitly marked as nullable (meaning, it doesn’t have an exclamation point following its type definition in the schema), and that field is missing from the incoming query, GraphQL will often, by default, try to coerce it to `null`, rather than passing an `undefined` value, or throwing an error as might be expected. This behavior, while consistent with the overall GraphQL type system, can catch developers off guard, particularly when they’re working with languages or frameworks where `null` and `undefined` have distinct meanings and implications.
 

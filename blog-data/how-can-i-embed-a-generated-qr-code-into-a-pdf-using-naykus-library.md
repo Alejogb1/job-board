@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-embed-a-generated-qr-code-into-a-pdf-using-naykus-library"
 ---
 
-, let's unpack this. Embedding QR codes into PDFs, especially programmatically, is a common need and can sometimes present a few quirks. My experience stems from a past project, a large-scale document generation system where we needed to dynamically include personalized QR codes on invoices and reports. We initially started with some clumsy methods, but using a dedicated library like Nayku streamlined the process significantly.
+. Embedding QR codes into PDFs, especially programmatically, is a common need and can sometimes present a few quirks. My experience stems from a past project, a large-scale document generation system where we needed to dynamically include personalized QR codes on invoices and reports. We initially started with some clumsy methods, but using a dedicated library like Nayku streamlined the process significantly.
 
 The core issue here is transforming a generated QR code, often an image or a set of vector graphics, into something that’s palatable to a PDF. Nayku, assuming we're referring to a Python library with similar functionality to others like ReportLab, offers a structured way to integrate various elements, including images, into PDF documents. It's not about literally pasting an image; it’s about placing it within the PDF's content stream using the appropriate PDF syntax. Essentially, Nayku provides an abstraction layer that handles the low-level details.
 

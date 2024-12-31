@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-opencv-deep-learning-video-processing-slow"
 ---
 
-, let's unpack this. The perceived slowness of OpenCV when handling deep learning models on video is a recurring issue, and it's rarely a single culprit. Over the years, I’ve encountered this exact problem on several projects, ranging from basic object detection in surveillance footage to more intricate pose estimation for motion analysis. I’ll share some insights based on what I’ve seen, along with some practical solutions.
+. The perceived slowness of OpenCV when handling deep learning models on video is a recurring issue, and it's rarely a single culprit. Over the years, I’ve encountered this exact problem on several projects, ranging from basic object detection in surveillance footage to more intricate pose estimation for motion analysis. I’ll share some insights based on what I’ve seen, along with some practical solutions.
 
 Fundamentally, the delay often stems from a combination of bottlenecks across multiple layers of the processing pipeline, rather than OpenCV itself being inherently slow. It’s the way we use it – or more precisely, the way we _don't_ use it optimally – that frequently leads to performance issues.
 

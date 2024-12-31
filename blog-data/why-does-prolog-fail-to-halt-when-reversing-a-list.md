@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-prolog-fail-to-halt-when-reversing-a-list"
 ---
 
-Right, let's unpack this curious behavior of Prolog when reversing lists, a scenario I've certainly encountered more than a few times in my days of logic programming. The core issue isn't that Prolog *can't* reverse a list; it's that a poorly constructed recursive definition can lead to infinite recursion, thus preventing the program from halting. It's a common trap, especially for those new to the declarative paradigm.
+Right curious behavior of Prolog when reversing lists, a scenario I've certainly encountered more than a few times in my days of logic programming. The core issue isn't that Prolog _can't_ reverse a list; it's that a poorly constructed recursive definition can lead to infinite recursion, thus preventing the program from halting. It's a common trap, especially for those new to the declarative paradigm.
 
 The root of the problem often lies in the way we define the `reverse` predicate, particularly how we handle the recursive call. A naïve, or incorrect, implementation can create a situation where the base case is never reached, leading to an endless chain of goals that exhaust stack space, effectively halting the program by crashing rather than by successful completion.
 

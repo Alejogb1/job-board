@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-span-index-out-of-range-errors-with-sentence-transformers"
 ---
 
-, let's unpack this `span index out of range` issue you're encountering with Sentence Transformers. It's a common head-scratcher, and I’ve definitely been down that road before, wrestling (oops, nearly slipped!) with it during a large-scale text embedding project a few years back. I was batching hundreds of thousands of documents, and suddenly, this error started popping up seemingly at random. It took a fair bit of investigation to nail down the root causes, so I'm glad to share the insights.
+`span index out of range` issue you're encountering with Sentence Transformers. It's a common head-scratcher, and I’ve definitely been down that road before, wrestling (oops, nearly slipped!) with it during a large-scale text embedding project a few years back. I was batching hundreds of thousands of documents, and suddenly, this error started popping up seemingly at random. It took a fair bit of investigation to nail down the root causes, so I'm glad to share the insights.
 
 Essentially, this error indicates that the model’s attempt to access a specific position within an input sequence—be it tokens, words, or characters—has gone beyond the boundaries of that sequence. In the context of Sentence Transformers, which rely heavily on the Transformer architecture, several factors can contribute to this.
 

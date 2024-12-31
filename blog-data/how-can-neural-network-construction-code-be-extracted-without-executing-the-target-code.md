@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-neural-network-construction-code-be-extracted-without-executing-the-target-code"
 ---
 
-, so, let's unpack this. It's not as straightforward as simply copying a block of text, that's for sure. I remember dealing with a similar problem years ago when I was part of a team working on a custom deep learning framework. We needed to introspect user-defined network architectures to apply automated performance optimizations, but executing the user's code was out of the question for security and stability concerns. It forced us to really dive into the mechanisms of how these frameworks construct networks.
+, so. It's not as straightforward as simply copying a block of text, that's for sure. I remember dealing with a similar problem years ago when I was part of a team working on a custom deep learning framework. We needed to introspect user-defined network architectures to apply automated performance optimizations, but executing the user's code was out of the question for security and stability concerns. It forced us to really dive into the mechanisms of how these frameworks construct networks.
 
 The key here is to focus on the _declarative_ aspect of neural network construction rather than the imperative execution. Most modern deep learning frameworks, such as tensorflow, pytorch, and keras, employ a symbolic approach to defining neural networks. This means that the user's code primarily establishes a _graph_ of operations rather than actually performing computations during the construction phase. This graph represents the structure of the network—layers, activation functions, connections, etc.—and it's this symbolic representation that we can target for extraction.
 

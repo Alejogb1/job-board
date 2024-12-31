@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-somefutureonsuccess-returning-null-instead-of-a-future-in-vertx-v425"
 ---
 
-, let's unpack this. The behavior you're observing with `someFuture.onSuccess()` seemingly returning null, instead of a new future, is a classic gotcha that I've bumped into a few times, particularly when things get a little complex with asynchronous flows in Vert.x. It's not a bug, as such, but rather a misunderstanding of how `onSuccess` (and its counterparts) are designed to function within the context of Vert.x’s asynchronous model and composability.
+. The behavior you're observing with `someFuture.onSuccess()` seemingly returning null, instead of a new future, is a classic gotcha that I've bumped into a few times, particularly when things get a little complex with asynchronous flows in Vert.x. It's not a bug, as such, but rather a misunderstanding of how `onSuccess` (and its counterparts) are designed to function within the context of Vert.x’s asynchronous model and composability.
 
 In essence, the core issue isn't that `onSuccess` is _failing_ to return anything; it's that it’s _not supposed to return a future directly_. What it actually does is register a callback to be executed when the original future completes successfully. The return type of `onSuccess` itself is void, which means it doesn’t yield a new future you can chain off of directly in the conventional manner where you expect subsequent asynchronous steps. This is a subtle but important distinction.
 

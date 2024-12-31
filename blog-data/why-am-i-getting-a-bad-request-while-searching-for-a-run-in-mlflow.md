@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-bad-request-while-searching-for-a-run-in-mlflow"
 ---
 
-, let's unpack why you might be seeing that "bad request" when searching for a run in mlflow. It's a frustrating situation, I know, and I’ve definitely debugged my share of these over the years. Usually, this points to a disconnect between what you're asking for and what the mlflow server is expecting. It's less about the overall concept of mlflow and more about the specifics of your search query. We need to examine the request itself and the environment it’s being sent within.
+why you might be seeing that "bad request" when searching for a run in mlflow. It's a frustrating situation, I know, and I’ve definitely debugged my share of these over the years. Usually, this points to a disconnect between what you're asking for and what the mlflow server is expecting. It's less about the overall concept of mlflow and more about the specifics of your search query. We need to examine the request itself and the environment it’s being sent within.
 
 When I first started working with mlflow at a previous company—we were tracking a lot of concurrent experiments across multiple teams—we ran into a similar issue. The initial diagnosis, and often the culprit, revolves around the formatting of your search query or the arguments you're passing to the mlflow client. It’s rarely a fundamental flaw in mlflow itself but more of a misconfiguration or a syntax error in our requests.
 

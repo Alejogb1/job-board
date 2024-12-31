@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "is-activation-applied-by-a-function-or-a-layer-in-neural-networks"
 ---
 
-Let's unpack this. It's a common point of confusion, and honestly, I've seen this trip up even experienced folks. The core of the matter is about how we conceptualize and implement neural networks, rather than any inherent property of the activation itself. In my time architecting and deploying models – spanning from rudimentary convolutional networks to more complex recurrent architectures – I've seen activations handled in a variety of ways, and the implementation details often blur the lines.
+this. It's a common point of confusion, and honestly, I've seen this trip up even experienced folks. The core of the matter is about how we conceptualize and implement neural networks, rather than any inherent property of the activation itself. In my time architecting and deploying models – spanning from rudimentary convolutional networks to more complex recurrent architectures – I've seen activations handled in a variety of ways, and the implementation details often blur the lines.
 
-The short answer? An activation *function* is applied by the *layer* but it’s not intrinsic to the layer itself, it's an operation performed *within* a layer's processing. Let’s delve into why this distinction is crucial and how it manifests in practice.
+The short answer? An activation _function_ is applied by the _layer_ but it’s not intrinsic to the layer itself, it's an operation performed _within_ a layer's processing. Let’s delve into why this distinction is crucial and how it manifests in practice.
 
 When we talk about a layer – say a dense (fully connected) layer, a convolutional layer, or a recurrent layer – we're usually referring to a component that performs a specific type of transformation on its input. This transformation generally involves a weighted sum of inputs, often with a bias term added. This operation alone is linear. Without activation functions, you're essentially just performing a series of linear transformations which can, mathematically, be reduced to a single linear transformation; not exactly what we need for learning complex patterns.
 
-The activation function introduces *non-linearity* into this process. It’s the crucial step that gives neural networks their power to model complex relationships. This activation function is not part of the fundamental math of the layer’s linear transformation itself. It's a separate function that is applied element-wise to the result of that layer's computation. Therefore, the layer doesn’t inherently *contain* the activation, but rather, the activation *operation* is performed *within the context* of the layer. The layer uses the activation function as part of its overall functionality.
+The activation function introduces _non-linearity_ into this process. It’s the crucial step that gives neural networks their power to model complex relationships. This activation function is not part of the fundamental math of the layer’s linear transformation itself. It's a separate function that is applied element-wise to the result of that layer's computation. Therefore, the layer doesn’t inherently _contain_ the activation, but rather, the activation _operation_ is performed _within the context_ of the layer. The layer uses the activation function as part of its overall functionality.
 
 Think about it in terms of code. You wouldn't write a `dense_layer` class where the sigmoid activation was fundamentally tied to it – instead, you’d likely have a `dense_layer` method or function that calculates the linear transform, and separately, you'd pass the result through the activation function.
 
@@ -57,7 +57,7 @@ print("Output with ReLU:", result_relu)
 
 ```
 
-In this first snippet, you can see that `linear_transform`, `sigmoid` and `relu` are independent functions. The activation function isn't bound to the linear layer. The `dense_layer_with_sigmoid` and `dense_layer_with_relu` functions show that the *application* of an activation is part of a sequence of operations that define the *functionality* of the layer. This is how it is generally treated.
+In this first snippet, you can see that `linear_transform`, `sigmoid` and `relu` are independent functions. The activation function isn't bound to the linear layer. The `dense_layer_with_sigmoid` and `dense_layer_with_relu` functions show that the _application_ of an activation is part of a sequence of operations that define the _functionality_ of the layer. This is how it is generally treated.
 
 **Example 2: Using Classes for Encapsulation (Conceptual)**
 
@@ -142,8 +142,8 @@ print("layer2_output_act:", layer2_output_act)
 
 ```
 
-This abstract snippet, though not real code from a specific library, demonstrates the same fundamental principle: the activation is *applied* to the *output* of the layer transformation.
+This abstract snippet, though not real code from a specific library, demonstrates the same fundamental principle: the activation is _applied_ to the _output_ of the layer transformation.
 
-To deepen your understanding, I recommend exploring the works of Michael Nielsen's book, *Neural Networks and Deep Learning*, which goes into the theory and implementation of basic networks. Also, "Deep Learning" by Goodfellow, Bengio, and Courville provides a very thorough mathematical view of the underlying computations, including how these are applied within a broader network context. Studying the source code of deep learning frameworks like PyTorch or TensorFlow would also provide direct confirmation of these concepts. You can also search the arXiv pre-print server for research papers that detail novel activation functions or layer structures which will also demonstrate the independence of these two elements.
+To deepen your understanding, I recommend exploring the works of Michael Nielsen's book, _Neural Networks and Deep Learning_, which goes into the theory and implementation of basic networks. Also, "Deep Learning" by Goodfellow, Bengio, and Courville provides a very thorough mathematical view of the underlying computations, including how these are applied within a broader network context. Studying the source code of deep learning frameworks like PyTorch or TensorFlow would also provide direct confirmation of these concepts. You can also search the arXiv pre-print server for research papers that detail novel activation functions or layer structures which will also demonstrate the independence of these two elements.
 
 In conclusion, an activation function is applied to the output of a neural network layer, it’s not integral to the layer itself. The layer computes a linear transformation, and the activation introduces the necessary non-linearity. Understanding this distinction is key to mastering how these complex systems work. I hope this clarifies the issue for you.

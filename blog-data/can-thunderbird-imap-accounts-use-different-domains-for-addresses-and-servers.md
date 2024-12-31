@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-thunderbird-imap-accounts-use-different-domains-for-addresses-and-servers"
 ---
 
-, let's unpack this. It's a question that crops up more often than one might think, especially in environments with complex email setups. The short answer is: yes, Thunderbird, with its robust IMAP client, absolutely can handle situations where the email address domain differs from the IMAP server domain. I've personally tackled this scenario several times over my years as a systems engineer, and it often stems from legacy systems, acquisitions, or specialized email hosting configurations.
+. It's a question that crops up more often than one might think, especially in environments with complex email setups. The short answer is: yes, Thunderbird, with its robust IMAP client, absolutely can handle situations where the email address domain differs from the IMAP server domain. I've personally tackled this scenario several times over my years as a systems engineer, and it often stems from legacy systems, acquisitions, or specialized email hosting configurations.
 
 The key concept here revolves around the separation of identity and delivery. Your email address – the `you@yourdomain.com` part – serves as your identifier. The IMAP server, on the other hand, is where your emails are physically stored and accessed. These two domains don’t need to be identical, and Thunderbird, by design, allows this flexibility.
 

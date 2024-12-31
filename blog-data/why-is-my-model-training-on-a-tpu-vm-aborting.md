@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-my-model-training-on-a-tpu-vm-aborting"
 ---
 
-Let's unpack this. A model training unexpectedly aborting on a TPU VM can stem from a variety of factors, and while the error messages can sometimes be cryptic, a systematic approach usually reveals the culprit. I've personally spent quite a few late nights tracking down these gremlins, so let me share some insights based on my experiences.
+this. A model training unexpectedly aborting on a TPU VM can stem from a variety of factors, and while the error messages can sometimes be cryptic, a systematic approach usually reveals the culprit. I've personally spent quite a few late nights tracking down these gremlins, so let me share some insights based on my experiences.
 
 Firstly, we need to distinguish between issues within the model definition and those arising from the TPU environment itself. Often, the problem lies in how your model interacts with the TPU's specialized architecture. The most frequent culprits I've encountered fall into three main categories: data input pipelines, model compatibility, and resource constraints.
 
@@ -100,4 +100,4 @@ Third, resource constraints can also be a factor. Memory issues, insufficient TP
 
 In summary, when a TPU VM training process aborts, thoroughly check your data loading pipeline, ensuring it utilizes TPU-optimized operations and avoid excessive host-side calculations. Second, verify your model's compatibility with the TPU, refactoring any layers or operations which might impede TPU operation. Finally, be mindful of resource limitations. Pay close attention to the TPU resource usage, batch sizes, and memory usage for optimal utilization.
 
-For a deeper understanding, consider reading *TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems*, which covers in detail the architecture and optimization of TensorFlow on specialized hardware like TPUs. Another resource, though more specific, *High Performance Computing Using TensorFlow and TPUs* presents a comprehensive guide to programming on TPUs. These papers and books should give you a foundation for identifying and resolving the root cause of your issues. This systematic approach, in my experience, significantly reduces the time it takes to get your model training on a TPU.
+For a deeper understanding, consider reading _TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems_, which covers in detail the architecture and optimization of TensorFlow on specialized hardware like TPUs. Another resource, though more specific, _High Performance Computing Using TensorFlow and TPUs_ presents a comprehensive guide to programming on TPUs. These papers and books should give you a foundation for identifying and resolving the root cause of your issues. This systematic approach, in my experience, significantly reduces the time it takes to get your model training on a TPU.

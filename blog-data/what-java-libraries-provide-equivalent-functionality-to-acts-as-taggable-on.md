@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-java-libraries-provide-equivalent-functionality-to-acts-as-taggable-on"
 ---
 
-Let's unpack this. It’s a question I've wrestled with many times over the years, especially coming from Ruby on Rails environments where `acts_as_taggable_on` was, frankly, a very convenient way to manage tagging functionalities. The challenge when transitioning to Java ecosystems isn't finding *a* solution, but finding one that matches that specific library's simplicity and feature set while fitting in with enterprise-level Java best practices. We're not looking for "a way to tag things"; we need a robust, maintainable, and usually, database-agnostic approach that doesn't introduce a maintenance nightmare.
+this. It’s a question I've wrestled with many times over the years, especially coming from Ruby on Rails environments where `acts_as_taggable_on` was, frankly, a very convenient way to manage tagging functionalities. The challenge when transitioning to Java ecosystems isn't finding _a_ solution, but finding one that matches that specific library's simplicity and feature set while fitting in with enterprise-level Java best practices. We're not looking for "a way to tag things"; we need a robust, maintainable, and usually, database-agnostic approach that doesn't introduce a maintenance nightmare.
 
 My first big foray into this was back in the early 2010s while migrating a large e-commerce platform from RoR to a Java Spring-based architecture. We needed tagging features for products, blog posts, and even some internal user resources, and quickly hit this gap. We started off with a custom, home-grown solution, which worked fine at first, but rapidly became complex and error-prone. That's when I realized the need for a more established, well-supported library.
 
@@ -161,10 +161,10 @@ Here, we've added a `findByTagName` method to the repository using a JPQL query.
 
 **Key Considerations**
 
-*   **Scalability:** For high-volume use cases, consider denormalization and other performance optimization techniques, possibly using database-specific features or a search engine as mentioned earlier.
-*   **Performance:** Fetch strategies and lazy loading can significantly impact performance. Careful planning and testing are crucial. You might need to explicitly control loading using `@EntityGraph` or similar mechanisms.
-*   **Database Choice:** The approach is generally applicable across many SQL databases supported by JPA, but syntax differences in full-text search or other query specifics might require adjustments.
-*   **Advanced Tagging Features:** If you require more complex tag features like tagging contexts (e.g., "category" vs. "style") or tag hierarchies, you'll need to adjust your entities and business logic accordingly. A good reference for relational database modeling can be found in "Database Design for Mere Mortals" by Michael J. Hernandez and John L. Viescas.
+- **Scalability:** For high-volume use cases, consider denormalization and other performance optimization techniques, possibly using database-specific features or a search engine as mentioned earlier.
+- **Performance:** Fetch strategies and lazy loading can significantly impact performance. Careful planning and testing are crucial. You might need to explicitly control loading using `@EntityGraph` or similar mechanisms.
+- **Database Choice:** The approach is generally applicable across many SQL databases supported by JPA, but syntax differences in full-text search or other query specifics might require adjustments.
+- **Advanced Tagging Features:** If you require more complex tag features like tagging contexts (e.g., "category" vs. "style") or tag hierarchies, you'll need to adjust your entities and business logic accordingly. A good reference for relational database modeling can be found in "Database Design for Mere Mortals" by Michael J. Hernandez and John L. Viescas.
 
 **Alternatives**
 

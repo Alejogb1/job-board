@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-airflows-onfailurecallback-triggered"
 ---
 
-, let's unpack this perplexing issue with Airflow's `on_failure_callback`. I've certainly seen my share of head-scratching moments involving these callbacks, and it's rarely a simple case of ‘it just doesn’t work.’ More often than not, the problem lies within the nuanced way Airflow handles task lifecycles and exceptions. You see, the `on_failure_callback` isn't a catch-all for every conceivable error. It's designed to react to _specific_ types of failures within the context of a task execution.
+perplexing issue with Airflow's `on_failure_callback`. I've certainly seen my share of head-scratching moments involving these callbacks, and it's rarely a simple case of ‘it just doesn’t work.’ More often than not, the problem lies within the nuanced way Airflow handles task lifecycles and exceptions. You see, the `on_failure_callback` isn't a catch-all for every conceivable error. It's designed to react to _specific_ types of failures within the context of a task execution.
 
 Let’s start with a brief overview of how Airflow manages tasks. When a task is scheduled, it moves through several states – queued, running, success, failed, etc. The `on_failure_callback` is specifically triggered when a task transitions into the 'failed' state. However, the crucial point is _how_ and _why_ the task enters that failed state. If the failure occurs _outside_ the task execution context—say, during the process of queuing or while the scheduler is trying to hand it off to an executor—the callback simply won't fire. It's important to remember that `on_failure_callback` is a _task-level_ construct, meaning it operates within the boundaries of the task's code execution.
 

@@ -12,7 +12,7 @@ The core challenge revolves around efficiency and memory management. Loading ful
 2.  **Lazy Loading:** Loading full-sized images only when the user clicks a specific thumbnail.
 3.  **Efficient Image Handling:** Employing techniques like caching, and proper bitmap management, to prevent memory leaks and ensure smooth transitions.
 
-Let's unpack these points with code examples.
+these points with code examples.
 
 Firstly, concerning thumbnail creation: it's seldom a good practice to resize an image manually each time the thumbnail is required. Instead, it’s preferable to either: (a) generate thumbnails during the image upload phase on the server side and serve them alongside the larger images, or (b) generate these once client-side and store them in a local cache. If we consider the situation where thumbnails are not pre-generated and we must do it on the client, we can do this with something like the following:
 

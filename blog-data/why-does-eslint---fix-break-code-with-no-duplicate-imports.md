@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-eslint---fix-break-code-with-no-duplicate-imports"
 ---
 
-, let's unpack this. I remember a particularly frustrating project a few years back, where a seemingly innocuous eslint configuration change triggered a cascade of code breakages. It involved exactly this: `eslint --fix` and the `no-duplicate-imports` rule going rogue. Let's get into why that happens, from a practical angle.
+. I remember a particularly frustrating project a few years back, where a seemingly innocuous eslint configuration change triggered a cascade of code breakages. It involved exactly this: `eslint --fix` and the `no-duplicate-imports` rule going rogue. Let's get into why that happens, from a practical angle.
 
 The `no-duplicate-imports` rule, at its core, aims to enforce a clean and maintainable import structure. It's designed to catch instances where the same module is imported multiple times within a single file, which can lead to confusion and potentially unnecessary resource consumption. When eslint encounters such duplication, and if `--fix` is enabled, it attempts to merge these imports. This merge operation is where the trouble often begins.
 

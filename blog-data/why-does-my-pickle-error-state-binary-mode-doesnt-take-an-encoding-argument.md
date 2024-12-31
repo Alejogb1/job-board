@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-pickle-error-state-binary-mode-doesnt-take-an-encoding-argument"
 ---
 
-Ah, yes, the dreaded "binary mode doesn't take an encoding argument" error with `pickle`. I’ve bumped into that one more times than I care to recall. Let's unpack what's happening, because it's a classic example of how default behavior can sometimes trip us up, especially when working with serialization.
+Ah, yes, the dreaded "binary mode doesn't take an encoding argument" error with `pickle`. I’ve bumped into that one more times than I care to recall. what's happening, because it's a classic example of how default behavior can sometimes trip us up, especially when working with serialization.
 
 Essentially, the error arises when you attempt to specify an `encoding` parameter when opening a file in binary mode (`'wb'` or `'rb'`) for use with `pickle`. The `pickle` module, by design, operates directly on bytes—it's designed to handle raw data streams representing python objects. When you introduce an encoding, you’re telling the underlying file system or file handler that you're working with textual data and not raw bytes, which contradicts the fundamental premise of how pickle works. It's a bit like trying to force a square peg into a round hole; the operations just don't align.
 
@@ -50,7 +50,7 @@ print(f"Loaded data: {loaded_data}")
 
 This version correctly omits the encoding argument when opening in binary mode. The `pickle.dump()` method serializes the data into a byte stream, which is then written to the file. Subsequently, `pickle.load()` reads the byte stream from the file and reconstructs the original object. The correct approach, in this case, is always to treat the file as a raw byte stream when using `pickle`, which is what is expected with `wb` and `rb` file modes.
 
-**Example 3: Correct usage with text file when *not* using pickle**
+**Example 3: Correct usage with text file when _not_ using pickle**
 
 To illustrate that encoding has its place, consider this simple example:
 
@@ -67,6 +67,7 @@ with open("data.txt", "r", encoding='utf-8') as file:
 print(f"Loaded data: {loaded_data}")
 
 ```
+
 Here the file is opened in 'w' and 'r' mode, and the correct encoding argument is provided to read and write the string data. The encoding is necessary here because the `open()` function is converting between characters and bytes which is needed when handling textual data.
 
 The solution is consistently simple: do not use the `encoding` argument when your intention is to use pickle serialization which requires working with byte streams. Stick to binary modes such as 'wb' and 'rb' without specifying an encoding.

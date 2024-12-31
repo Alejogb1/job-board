@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-proper-rust-trait-return-type-using-result"
 ---
 
-, let's unpack this `Result` return type situation in Rust, focusing on traits. It's a topic that, in my experience, seems simple at first glance, but can get surprisingly nuanced, especially when you're dealing with evolving APIs or complex error handling scenarios. I've seen projects where a mishandled `Result` return in a trait led to cascading maintenance nightmares, so let’s delve into the details.
+`Result` return type situation in Rust, focusing on traits. It's a topic that, in my experience, seems simple at first glance, but can get surprisingly nuanced, especially when you're dealing with evolving APIs or complex error handling scenarios. I've seen projects where a mishandled `Result` return in a trait led to cascading maintenance nightmares, so let’s delve into the details.
 
 The core of the matter lies in how we define a trait method that might fail and the ramifications that follow. You'll frequently encounter situations where you need to define an interface for an operation that could return a value _or_ an error. `Result<T, E>` in Rust is the perfect vehicle for this: `T` represents the successful outcome, and `E` holds the error. Now, how do we integrate this into a trait definition?
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-handle-unterminated-strings-encountering-the-end-of-a-file-in-rails"
 ---
 
-, let's unpack this. Encountering unterminated strings when reading data, especially when dealing with file inputs in a Rails environment, is a classic problem, and one I've seen crop up in more projects than I care to remember. It’s a corner case that, when missed, can lead to all sorts of unpredictable behavior, from silent data corruption to outright application crashes. So, how do we handle it with grace and robustness? I'll walk you through the approach I've found most effective, drawing on experience from a legacy data migration project I worked on some time ago.
+. Encountering unterminated strings when reading data, especially when dealing with file inputs in a Rails environment, is a classic problem, and one I've seen crop up in more projects than I care to remember. It’s a corner case that, when missed, can lead to all sorts of unpredictable behavior, from silent data corruption to outright application crashes. So, how do we handle it with grace and robustness? I'll walk you through the approach I've found most effective, drawing on experience from a legacy data migration project I worked on some time ago.
 
 The essence of the issue lies in the fact that your parsing logic is expecting a specific sequence, in this case, a beginning quote and its matching end quote, to define a string literal. When a file ends before encountering this closing delimiter, you're left in an ambiguous state. The naive approach of simply trying to read the rest of the file will not work, and often throws an exception or results in parsing garbage. What we need is a more controlled, anticipatory strategy.
 

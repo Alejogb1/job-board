@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-relationship-between-two-variables-in-a-glm"
 ---
 
-, let's unpack this. We're talking about the relationship between two variables within the context of a Generalized Linear Model (glm). Now, before diving into the specifics, I want to recount a project I worked on years ago. We were modeling customer churn for a large telco, and the complexity of variable relationships was a real headache, especially when we transitioned from simple linear models to glms. It was then I really grasped the nuance here.
+. We're talking about the relationship between two variables within the context of a Generalized Linear Model (glm). Now, before diving into the specifics, I want to recount a project I worked on years ago. We were modeling customer churn for a large telco, and the complexity of variable relationships was a real headache, especially when we transitioned from simple linear models to glms. It was then I really grasped the nuance here.
 
 So, what's the core of the matter? It's not as simple as saying x increases, so y increases – at least, not directly in most cases with glms. In a general linear model (think basic linear regression), the relationship is typically described as a linear one, meaning changes in one variable are linearly mapped to changes in another through a coefficient. However, a glm extends this by incorporating a _link function_ and a _distribution_. This added flexibility allows us to model a much broader range of data characteristics than a standard linear model.
 

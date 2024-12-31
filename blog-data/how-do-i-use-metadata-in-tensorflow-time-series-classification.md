@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-metadata-in-tensorflow-time-series-classification"
 ---
 
-Right, let’s get into this. It’s not uncommon to encounter time series data where the associated metadata holds significant predictive power, and it’s definitely a case I’ve tackled more than once. I remember a particularly challenging project involving sensor data from industrial machinery; the timestamps alone weren’t enough. We had to incorporate machine type, ambient temperature, and even the technician who last performed maintenance to achieve any semblance of accuracy in predicting failure modes. So, let's unpack how to effectively leverage metadata within a TensorFlow-based time series classification framework.
+Right, let’s get into this. It’s not uncommon to encounter time series data where the associated metadata holds significant predictive power, and it’s definitely a case I’ve tackled more than once. I remember a particularly challenging project involving sensor data from industrial machinery; the timestamps alone weren’t enough. We had to incorporate machine type, ambient temperature, and even the technician who last performed maintenance to achieve any semblance of accuracy in predicting failure modes. So how to effectively leverage metadata within a TensorFlow-based time series classification framework.
 
 At its core, the challenge is to fuse time-dependent data with static or slowly changing attributes. TensorFlow provides a flexible environment to handle this, but proper handling is paramount for success. Think about it as having two streams of information that require careful alignment. The time series, typically represented as sequences, and the metadata, which often comes as a set of features for each sequence. The trick is combining them in a way that the model can learn from both.
 
@@ -78,16 +78,16 @@ def build_embedding_model(sequence_length, num_features, num_metadata_features, 
     # Categorical metadata embedding
     machine_type_embedded = layers.Embedding(input_dim=num_machine_types, output_dim=embedding_dim)(machine_type_input)
     machine_type_embedded = layers.Flatten()(machine_type_embedded) # flatten from sequence
-    
+
     # Numerical metadata branch
     metadata_encoded = layers.Dense(64, activation='relu')(metadata_input)
-    
+
     # Combine metadata features
     merged_metadata = layers.concatenate([machine_type_embedded, metadata_encoded])
 
     # Concatenate all inputs
     merged = layers.concatenate([time_series_encoded, merged_metadata])
-    
+
     # Classifier
     output = layers.Dense(num_classes, activation='softmax')(merged)
 
@@ -120,7 +120,7 @@ from tensorflow.keras import layers
 def build_attention_model(sequence_length, num_features, num_metadata_features, num_classes):
     time_series_input = tf.keras.Input(shape=(sequence_length, num_features))
     metadata_input = tf.keras.Input(shape=(num_metadata_features,))
-    
+
     # Time Series Encoder
     lstm = layers.LSTM(units=64, return_sequences=True)(time_series_input)
 
@@ -135,10 +135,10 @@ def build_attention_model(sequence_length, num_features, num_metadata_features, 
     # Combine with original LSTM output (optional, depends on desired functionality)
     merged = layers.concatenate([lstm, context_vector])
     merged = layers.GlobalAveragePooling1D()(merged)
-    
+
     # Classifier
     output = layers.Dense(num_classes, activation='softmax')(merged)
-    
+
     model = tf.keras.Model(inputs=[time_series_input, metadata_input], outputs=output)
     return model
 

@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "why-do-i-need-new-to-nlp-help-using-spacy-to-get-pos"
 ---
 
-so, you're asking about why you need `new` when working with spaCy and part-of-speech (pos) tagging, specifically. i get it, it's one of those things that can feel kinda opaque at first, but let's unpack it a bit, i've been there myself. trust me.
+so, you're asking about why you need `new` when working with spaCy and part-of-speech (pos) tagging, specifically. i get it, it's one of those things that can feel kinda opaque at first, but it a bit, i've been there myself. trust me.
 
 basically, when you're using spaCy, you're not just working with raw text strings. spaCy is designed to handle text as a sequence of tokens, each with its own set of attributes. this lets you do really powerful things, like pos tagging, dependency parsing, named entity recognition and more all efficiently. it doesn't do it magically, though.
 
 the core issue here revolves around spaCy's processing pipeline. when you load a spaCy model, you're essentially loading a series of pre-trained components that perform different tasks, such as tokenization, pos tagging and parsing. if you have tried loading a model like `en_core_web_sm` or similar, you have already been interacting with this machinery. spaCy models aren't just glorified dictionaries; they're complex statistical models trained on vast amounts of text data. they learn patterns in language that enable them to make informed predictions about the structure and meaning of new texts.
 
-now, the `new` keyword, or at least the concept of creating a new `doc` object, is crucial because you need to actually *apply* these models to the text that you're working with. spaCy does not automatically parse or apply processing to raw text strings, that wouldn't make much sense. a `doc` object is spaCy's container for holding the output of this processing pipeline.
+now, the `new` keyword, or at least the concept of creating a new `doc` object, is crucial because you need to actually _apply_ these models to the text that you're working with. spaCy does not automatically parse or apply processing to raw text strings, that wouldn't make much sense. a `doc` object is spaCy's container for holding the output of this processing pipeline.
 
 let me give you an analogy. think about a factory assembly line, you wouldn't just place the raw material randomly on the floor. you put it on the conveyor belt where the different machines do their part to transform it. spaCy pipeline is that conveyor belt and your raw text string is the raw material. the `doc` object is that finished product, and only when you have this finished product, a `doc` object, can you start to inspect its parts, in your case, the pos tags.
 
@@ -27,7 +27,7 @@ nlp = spacy.load("en_core_web_sm")
 text = "the quick brown fox jumps over the lazy dog"
 ```
 
-if you stop there, you just have a string called `text`. you haven’t actually asked spacy to *do* anything with it. if you were to start asking for pos information on `text` it would be like asking your washing machine what it thinks about quantum physics, it just wouldn’t make sense. the key is to create the `doc` object:
+if you stop there, you just have a string called `text`. you haven’t actually asked spacy to _do_ anything with it. if you were to start asking for pos information on `text` it would be like asking your washing machine what it thinks about quantum physics, it just wouldn’t make sense. the key is to create the `doc` object:
 
 ```python
 doc = nlp(text)

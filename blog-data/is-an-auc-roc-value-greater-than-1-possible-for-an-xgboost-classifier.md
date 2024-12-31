@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-an-auc-roc-value-greater-than-1-possible-for-an-xgboost-classifier"
 ---
 
-, let's unpack this. The notion of an AUC-ROC value exceeding 1 certainly raises a red flag, and it's a situation I’ve had to troubleshoot more than once in my time. It usually points to a misunderstanding of the metric, a bug in the calculation, or a really, really unusual edge case – likely involving data leakage or an improperly configured evaluation setup. Let’s break down why this is generally not possible, and what situations might _appear_ to produce such a result.
+. The notion of an AUC-ROC value exceeding 1 certainly raises a red flag, and it's a situation I’ve had to troubleshoot more than once in my time. It usually points to a misunderstanding of the metric, a bug in the calculation, or a really, really unusual edge case – likely involving data leakage or an improperly configured evaluation setup. Let’s break down why this is generally not possible, and what situations might _appear_ to produce such a result.
 
 The area under the receiver operating characteristic curve, or AUC-ROC, is a performance metric used to evaluate the effectiveness of binary classifiers. The ROC curve itself is a graphical representation of the trade-off between the true positive rate (sensitivity) and the false positive rate (1 - specificity) as you vary the classification threshold. The AUC-ROC quantifies this tradeoff, representing the probability that the classifier will rank a randomly chosen positive instance higher than a randomly chosen negative one.
 

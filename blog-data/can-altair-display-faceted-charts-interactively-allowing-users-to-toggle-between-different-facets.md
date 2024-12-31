@@ -8,7 +8,7 @@ Let's dive into this; I remember wrestling with a similar challenge back in my d
 
 The core issue, from an architectural point of view, isn't with Altair itself, but rather with the way web browsers handle interactivity. Altair generates JSON representations of charts conforming to the Vega-Lite specification. Vega-Lite, and by extension Altair, is primarily geared towards producing static charts. To introduce interactive elements, we need something that can handle the rendering and dynamic updates. This is where libraries like ipywidgets and, more generally, JavaScript come into play.
 
-To explain how this works, let's unpack the strategy. The basic principle is to create multiple Altair charts, each representing a different facet, and then to use external controls (widgets) to toggle visibility. Think of it as having a set of "cards" (the charts), where only one or a few are shown at any given time, and the user controls which "cards" are visible. The key is to wrap each of these charts inside a `VBox` or `HBox` with widgets handling their `display` property.
+To explain how this works the strategy. The basic principle is to create multiple Altair charts, each representing a different facet, and then to use external controls (widgets) to toggle visibility. Think of it as having a set of "cards" (the charts), where only one or a few are shown at any given time, and the user controls which "cards" are visible. The key is to wrap each of these charts inside a `VBox` or `HBox` with widgets handling their `display` property.
 
 Here’s a simplified demonstration using ipywidgets. Let’s assume we want to facet a scatterplot based on the 'species' column from the well-known iris dataset.
 
@@ -34,13 +34,13 @@ def display_charts(facet_list):
   charts = [create_faceted_chart(facet) for facet in facet_list]
 
   visibility_toggles = [widgets.Checkbox(description=facet, value = True) for facet in facet_list]
-  
+
   def update_display(**kwargs):
       to_display = []
       for index, facet in enumerate(facet_list):
           if kwargs[facet]:
               to_display.append(charts[index])
-      
+
       display(alt.vconcat(*to_display).resolve_scale(
           color='shared'
       ))
@@ -139,9 +139,9 @@ It's important to mention that these examples rely on the ipywidgets library, wh
 
 For further study, consider looking into the following resources:
 
-*   **The Vega-Lite Documentation:** This is the underlying specification that Altair utilizes. Understanding the syntax and capabilities of Vega-Lite is crucial for advanced data visualization with Altair. Specifically, explore the sections on transformations, encodings, and compositing charts.
-*   **The Altair Documentation:** The official Altair documentation is a must-read. It provides a comprehensive overview of all available features and how to implement them in Python. Focus on sections detailing layering, concatenation, and data transformations, which are key for advanced composition.
-*   **"Interactive Data Visualization for the Web" by Scott Murray:** This book provides a great understanding of the principles behind interactive visualizations and covers the fundamentals of JavaScript, HTML, and CSS in the context of data visualization. It's a solid foundation for exploring how to move beyond static Altair charts.
-*  **"Hands-On Data Visualization with Altair" by James Bednar:** This text provides a more direct, hands-on approach to using Altair effectively with detailed examples. It also covers various techniques for creating complex and layered visualizations, which are useful for developing interactive experiences.
+- **The Vega-Lite Documentation:** This is the underlying specification that Altair utilizes. Understanding the syntax and capabilities of Vega-Lite is crucial for advanced data visualization with Altair. Specifically, explore the sections on transformations, encodings, and compositing charts.
+- **The Altair Documentation:** The official Altair documentation is a must-read. It provides a comprehensive overview of all available features and how to implement them in Python. Focus on sections detailing layering, concatenation, and data transformations, which are key for advanced composition.
+- **"Interactive Data Visualization for the Web" by Scott Murray:** This book provides a great understanding of the principles behind interactive visualizations and covers the fundamentals of JavaScript, HTML, and CSS in the context of data visualization. It's a solid foundation for exploring how to move beyond static Altair charts.
+- **"Hands-On Data Visualization with Altair" by James Bednar:** This text provides a more direct, hands-on approach to using Altair effectively with detailed examples. It also covers various techniques for creating complex and layered visualizations, which are useful for developing interactive experiences.
 
 In conclusion, while Altair doesn’t provide a direct "toggle facet" feature, the methods illustrated here can be implemented by combining Altair with Python and the Jupyter ecosystem or through more involved JavaScript-based approaches, allowing you to create surprisingly robust and dynamic interactive visualizations. The key to creating sophisticated interactive dashboards lies in mastering the fundamentals of both Vega-Lite and interactive development techniques in your chosen environment.

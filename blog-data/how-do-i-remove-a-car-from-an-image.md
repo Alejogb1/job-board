@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-remove-a-car-from-an-image"
 ---
 
-, let's talk about removing a car from an image. This isn’t a trivial task, and there are multiple ways to approach it depending on the desired outcome and the complexity of the image. In my experience, having spent considerable time on image processing projects, I've found that a combination of techniques often yields the best results. It's not a single solution but rather a careful process leveraging a few key concepts. Let's unpack this.
+, let's talk about removing a car from an image. This isn’t a trivial task, and there are multiple ways to approach it depending on the desired outcome and the complexity of the image. In my experience, having spent considerable time on image processing projects, I've found that a combination of techniques often yields the best results. It's not a single solution but rather a careful process leveraging a few key concepts. this.
 
 First off, the core challenge revolves around _in-painting_, which is the art of filling in missing or removed areas of an image in a plausible way. We're not just erasing pixels; we're essentially reconstructing what _should_ be behind the car, as the image would appear if the car wasn’t there. This is where the algorithms come into play.
 

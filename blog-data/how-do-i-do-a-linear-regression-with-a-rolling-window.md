@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-do-a-linear-regression-with-a-rolling-window"
 ---
 
-, let’s tackle this. I remember quite vividly a project back at 'Aetheria Labs' where we had to model energy consumption patterns based on a continuous stream of sensor data. Standard linear regression was just too static; we needed to adapt to the changing trends, and that’s where rolling window regression became indispensable. So, let's unpack this.
+, let’s tackle this. I remember quite vividly a project back at 'Aetheria Labs' where we had to model energy consumption patterns based on a continuous stream of sensor data. Standard linear regression was just too static; we needed to adapt to the changing trends, and that’s where rolling window regression became indispensable. So.
 
 The core idea behind a rolling window linear regression is to apply linear regression not to the entire dataset at once but to a sliding subset or window of the data. This approach acknowledges that relationships between variables are rarely constant over long periods. Instead of fitting a single model to the entire range, you fit multiple models, each to a small, localized window of data, and move this window across the data. This technique is incredibly beneficial when dealing with time-series data or any dataset where the underlying relationships may evolve. It allows you to capture short-term changes and produce a model that's more reflective of the immediate data context.
 

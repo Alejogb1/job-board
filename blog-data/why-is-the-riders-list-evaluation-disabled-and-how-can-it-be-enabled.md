@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-riders-list-evaluation-disabled-and-how-can-it-be-enabled"
 ---
 
-Let's unpack this. The rider's list evaluation you're encountering – the mechanism that typically determines, among other things, which code inspections, refactorings, or live templates are available within your IDE context – being disabled is often less a deliberate feature and more a consequence of how the IDE, specifically JetBrains Rider in our case, manages resources and optimizes performance. In my experience, and I’ve dealt with this situation on a number of occasions, especially with large, complex solutions, the core issue usually stems from an attempt to prevent resource overload and maintain a responsive user experience.
+this. The rider's list evaluation you're encountering – the mechanism that typically determines, among other things, which code inspections, refactorings, or live templates are available within your IDE context – being disabled is often less a deliberate feature and more a consequence of how the IDE, specifically JetBrains Rider in our case, manages resources and optimizes performance. In my experience, and I’ve dealt with this situation on a number of occasions, especially with large, complex solutions, the core issue usually stems from an attempt to prevent resource overload and maintain a responsive user experience.
 
 Think of it this way: every time Rider needs to evaluate the available features, it’s essentially performing a series of analysis passes over your codebase. With extensive projects, this evaluation process can become exceedingly resource-intensive, consuming significant cpu cycles and memory, often resulting in a noticeable performance slowdown or, in the worst case, unresponsiveness. Thus, to mitigate these risks, the IDE often employs heuristics and safeguards. These include automatic disabling of the rider's list evaluation under certain conditions.
 
@@ -25,6 +25,7 @@ The first, and generally most effective solution for re-enabling it involves man
 -Djdk.http.auth.tunneling.disabledSchemes=""
 -Djna.nosys=true
 ```
+
 In this snippet, the `-Xmx4096m` setting allocates 4GB to Rider’s JVM. Note that these configurations will vary based on system specs. I usually recommend increasing in increments, observing performance, until you achieve the optimal balance between memory use and responsiveness. You should also look into other relevant JVM arguments such as `-XX:ReservedCodeCacheSize` to further optimize performance.
 
 Another key aspect to examine is Rider's "Power Save Mode". When active, this mode aggressively reduces IDE functionality to conserve system resources. To disable it, navigate through `File` -> `Power Save Mode`, and untick the checkbox. It might seem obvious, but you’d be surprised how often this can be a source of the disabled list evaluation. Additionally, consider disabling some of the less critical analysis features. By streamlining what the IDE needs to evaluate, we reduce the likelihood of the heuristics kicking in. Look for options under: `File` -> `Settings` -> `Editor` -> `Inspections`. You can selectively disable inspections that are less relevant to your day-to-day work. Disabling some of these background processes will, in turn, help alleviate the pressure and allow the rider’s list evaluation to work as expected.

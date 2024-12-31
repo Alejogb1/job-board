@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-seeing-repeated-859-unexpected-token-exceptions-in-a-rails-6-application"
 ---
 
-Let's unpack this '859: unexpected token' error you're encountering in your Rails 6 application. It's a frustrating one, I know. I’ve spent my fair share of late nights staring at similar error logs, especially back in the early days of Rails 6 adoption. This error, specifically, usually isn't about an outright syntax error in your code, but rather a parsing issue arising from how webpacker is processing your javascript assets. And it's almost always about the interaction between webpacker's configuration and how you are trying to incorporate javascript code that webpacker finds unsuitable as an input module.
+this '859: unexpected token' error you're encountering in your Rails 6 application. It's a frustrating one, I know. I’ve spent my fair share of late nights staring at similar error logs, especially back in the early days of Rails 6 adoption. This error, specifically, usually isn't about an outright syntax error in your code, but rather a parsing issue arising from how webpacker is processing your javascript assets. And it's almost always about the interaction between webpacker's configuration and how you are trying to incorporate javascript code that webpacker finds unsuitable as an input module.
 
 Essentially, webpacker, which Rails 6 uses by default for asset packaging, expects to work with javascript files that are formatted as valid ES modules or CommonJS modules. The '859: unexpected token' error indicates that the parser, often Babel, encountered something in your javascript file that doesn’t conform to those expectations. This could be due to a variety of reasons, but I’ve found a few specific culprits to be most common.
 
@@ -22,7 +22,7 @@ Let’s assume you have a snippet of legacy javascript like this somewhere:
 
 ```javascript
 // this is some legacy script in a partial
-(function(){
+(function () {
   var globalVar = "hello";
   function legacyFunc() {
     console.log(globalVar);
@@ -31,9 +31,10 @@ Let’s assume you have a snippet of legacy javascript like this somewhere:
 })();
 ```
 
-This, if included directly, perhaps within a `<script>` tag, would confuse webpacker. This is *not* a module, and thus webpacker doesn't know how to handle it directly. You should convert this into a module. Here’s what you might do to integrate it into your `application.js` pack:
+This, if included directly, perhaps within a `<script>` tag, would confuse webpacker. This is _not_ a module, and thus webpacker doesn't know how to handle it directly. You should convert this into a module. Here’s what you might do to integrate it into your `application.js` pack:
 
 First, move this code into `app/javascript/packs/legacy_script.js` and change the code into:
+
 ```javascript
 // app/javascript/packs/legacy_script.js
 const globalVar = "hello";
@@ -46,11 +47,12 @@ export { legacyFunc };
 ```
 
 Then import and use it in `app/javascript/packs/application.js`:
+
 ```javascript
 // app/javascript/packs/application.js
-import { legacyFunc } from './legacy_script';
+import { legacyFunc } from "./legacy_script";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   legacyFunc();
 });
 ```
@@ -63,26 +65,29 @@ Suppose your webpack config (`config/webpack/environment.js`) is missing a cruci
 
 ```javascript
 // config/webpack/environment.js
-const { environment } = require('@rails/webpacker')
+const { environment } = require("@rails/webpacker");
 
-environment.loaders.append('babel', {
+environment.loaders.append("babel", {
   test: /\.(js|jsx|mjs|cjs)?(\.erb)?$/,
   exclude: /node_modules/,
   use: {
-    loader: 'babel-loader',
+    loader: "babel-loader",
     options: {
       presets: [
-        ['@babel/preset-env', {
+        [
+          "@babel/preset-env",
+          {
             targets: { browsers: "last 2 versions, not ie <= 10" },
             useBuiltIns: "usage",
-            corejs: 3
-        }]
-        ]
-    }
-  }
-})
+            corejs: 3,
+          },
+        ],
+      ],
+    },
+  },
+});
 
-module.exports = environment
+module.exports = environment;
 ```
 
 Without the correct Babel presets, webpacker might incorrectly parse more recent syntax causing errors. In the example, I'm explicitly using `@babel/preset-env` along with `useBuiltIns` and `corejs` to handle polyfills.
@@ -93,7 +98,7 @@ Imagine you have a React component in `app/javascript/components/MyComponent.jsx
 
 ```javascript
 // app/javascript/components/MyComponent.jsx
-import { someFunc } from '../utils/someutil'; // Note the lowercase path
+import { someFunc } from "../utils/someutil"; // Note the lowercase path
 
 function MyComponent() {
   // ...component logic
@@ -108,7 +113,7 @@ The correct import should be:
 
 ```javascript
 // app/javascript/components/MyComponent.jsx
-import { someFunc } from '../utils/SomeUtil.js'; // Corrected path
+import { someFunc } from "../utils/SomeUtil.js"; // Corrected path
 
 function MyComponent() {
   // ...component logic
@@ -121,6 +126,6 @@ Ensuring paths are precise and extensions are present is vital for avoiding this
 
 So, what to do? I'd suggest first checking for directly embedded javascript within your views or layouts, then closely examine your webpack and babel configurations. Review the exact file referenced in the error message, especially focusing on any legacy or third-party javascript. Verify that `babel-loader` is properly configured and is utilizing the appropriate presets. Finally, check for any misnamed files or incorrect paths within import/require statements.
 
-For further reading, I highly recommend *Webpack: Concepts and Techniques* by James Nelson, as it gives a comprehensive explanation of Webpack's internals and its configuration. Another invaluable resource is the official *Babel Handbook*, which provides a deep understanding of Babel's capabilities and how to configure it effectively. Additionally, the webpacker documentation, especially the parts regarding javascript, loaders, and the default configuration, should provide more specific information for your Rails 6 setup.
+For further reading, I highly recommend _Webpack: Concepts and Techniques_ by James Nelson, as it gives a comprehensive explanation of Webpack's internals and its configuration. Another invaluable resource is the official _Babel Handbook_, which provides a deep understanding of Babel's capabilities and how to configure it effectively. Additionally, the webpacker documentation, especially the parts regarding javascript, loaders, and the default configuration, should provide more specific information for your Rails 6 setup.
 
 Debugging these types of issues often requires a methodical approach, checking each point of potential failure one by one. Don’t hesitate to use `console.log` or debugger statements liberally, as these tools are still your friends, even when dealing with complex asset processing pipelines. You'll get to the bottom of it.

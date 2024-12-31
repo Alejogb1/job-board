@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-finite-state-bot-be-implemented-using-aiogram-webhooks"
 ---
 
-, let's unpack this. Implementing a finite state machine (fsm) for a Telegram bot using aiogram webhooks is a fairly common requirement, and over the years I’ve seen it implemented… well, let’s just say there’s a spectrum of approaches out there. I’ve certainly had my share of learning experiences – that one project involving a multi-level onboarding process and a botched state transition still makes me shudder a little. But enough reminiscing; let's focus on a clean and robust implementation.
+. Implementing a finite state machine (fsm) for a Telegram bot using aiogram webhooks is a fairly common requirement, and over the years I’ve seen it implemented… well, let’s just say there’s a spectrum of approaches out there. I’ve certainly had my share of learning experiences – that one project involving a multi-level onboarding process and a botched state transition still makes me shudder a little. But enough reminiscing; let's focus on a clean and robust implementation.
 
 The core idea is to manage the bot's conversational flow using defined states. Each state represents a particular point in the conversation, dictating which handlers are active and what kind of input the bot expects. Think of it like a flowchart, where each node is a state, and the arrows are the transitions triggered by user messages or other events. Aiogram, with its built-in support for state management, makes this relatively straightforward, especially when coupled with webhooks.
 

@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-is-the-first-row-missing-from-my-mysql-result-set"
 ---
 
-Let's unpack this. I've seen this particular head-scratcher surface more times than I care to count, and it usually boils down to a few common culprits, rather than some deeply ingrained bug in MySQL itself. It's rarely ever 'missing' data as such; more often than not, it's a matter of how the data is being interpreted or accessed on the client-side after MySQL has dutifully delivered its results.
+this. I've seen this particular head-scratcher surface more times than I care to count, and it usually boils down to a few common culprits, rather than some deeply ingrained bug in MySQL itself. It's rarely ever 'missing' data as such; more often than not, it's a matter of how the data is being interpreted or accessed on the client-side after MySQL has dutifully delivered its results.
 
 Over the years, I've personally tackled this issue in various guises. Once, I was working on an inventory management system where a critical report was consistently excluding the very first item listed in the database. Turns out, a subtle error in the iteration logic of the reporting script was the offender, not the database query itself. Another time, it involved a complex join operation with a subtle timing issue, which caused the first row to be essentially 'skipped' during processing. It’s a common scenario where a seemingly flawless query can still lead to data omissions. So, let's dive into some likely causes and what you can do about them, along with practical code examples to make things clearer.
 
-The core issues generally fall into these categories: *cursor handling errors,* *client-side data processing flaws,* and *complex query conditions.* Let's explore each in detail.
+The core issues generally fall into these categories: _cursor handling errors,_ _client-side data processing flaws,_ and _complex query conditions._ Let's explore each in detail.
 
 **1. Cursor Handling Errors:**
 
-One of the most frequent sources of this problem revolves around how the client application iterates through the result set retrieved from MySQL. Databases often return data via cursors, essentially pointers to data rows. Improper handling of these cursors can lead to rows being skipped. Typically, the first fetch of the cursor advances it *past* the first row, especially if you are using procedural methods and are not careful about how and when you start processing.
+One of the most frequent sources of this problem revolves around how the client application iterates through the result set retrieved from MySQL. Databases often return data via cursors, essentially pointers to data rows. Improper handling of these cursors can lead to rows being skipped. Typically, the first fetch of the cursor advances it _past_ the first row, especially if you are using procedural methods and are not careful about how and when you start processing.
 
 For example, imagine using a PHP-based mysql extension (or similar older style extension) where you're not using a modern abstraction layer. A naive implementation might look like this:
 
@@ -38,7 +38,8 @@ mysqli_close($conn);
 
 ?>
 ```
-In this scenario, the loop condition `while($row = mysqli_fetch_assoc($result))` immediately fetches the first row and then starts processing. If the assumption is to perform something before the loop such as display headers or similar operations, this initial fetch is skipped. The first data row is effectively consumed by the loop's condition rather than being processed. A correct approach would be to fetch the row *inside* the loop:
+
+In this scenario, the loop condition `while($row = mysqli_fetch_assoc($result))` immediately fetches the first row and then starts processing. If the assumption is to perform something before the loop such as display headers or similar operations, this initial fetch is skipped. The first data row is effectively consumed by the loop's condition rather than being processed. A correct approach would be to fetch the row _inside_ the loop:
 
 ```php
 <?php
@@ -134,7 +135,7 @@ This version does not impose unnecessary restrictions and iterates over each row
 
 While less frequent, complex queries with intricate `JOIN`s or `WHERE` clauses can sometimes give the impression that the first row is missing. However, it’s more likely that the query conditions might exclude that row, possibly unintentionally, or that there is a timing issue associated with the result set, especially during heavy loads.
 
-For example, consider a join with a table that changes with time, where we retrieve sales data. Let's say, in this example, we are joining *sales* and *products* on `product_id` and we filter the query to only get sales which happened after a specific date, but due to data inconsistencies, the first sales entry may not have an accurate timestamp.
+For example, consider a join with a table that changes with time, where we retrieve sales data. Let's say, in this example, we are joining _sales_ and _products_ on `product_id` and we filter the query to only get sales which happened after a specific date, but due to data inconsistencies, the first sales entry may not have an accurate timestamp.
 
 ```sql
 SELECT s.sale_id, p.product_name, s.sale_date

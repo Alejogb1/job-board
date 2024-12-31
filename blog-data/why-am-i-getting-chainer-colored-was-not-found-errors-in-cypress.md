@@ -10,7 +10,7 @@ Essentially, this error arises when Cypress's command chaining encounters a prob
 
 Cypress uses a "chainer" system, and a 'colored' chainer in the error message implies you're probably trying to work with something that Cypress expects to have colors, typically styles or classes associated with it. The specific error means that the preceding command, instead of returning something Cypress can parse for visual properties, isn't returning an element suitable for the chainer being used.
 
-Let's unpack this further, diving into a few potential causes and, more importantly, providing practical solutions with working code examples. I've seen these trip up even seasoned engineers:
+this further, diving into a few potential causes and, more importantly, providing practical solutions with working code examples. I've seen these trip up even seasoned engineers:
 
 **1. The Asynchronous Nature of Cypress and Incorrectly Chained Commands:**
 

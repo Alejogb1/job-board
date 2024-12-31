@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-neural-network-consistently-predicting-the-average-value"
 ---
 
-Let's unpack this common yet often perplexing issue – a neural network that's consistently outputting the average, rather than exhibiting learning behavior. I've seen this numerous times across different projects, from early image classification attempts to more complex time-series forecasting. It's frustrating, for sure, but typically solvable when approached systematically. The root cause generally falls into a few distinct, yet sometimes overlapping, categories: issues with data, problems in the network architecture, or flawed training procedures.
+this common yet often perplexing issue – a neural network that's consistently outputting the average, rather than exhibiting learning behavior. I've seen this numerous times across different projects, from early image classification attempts to more complex time-series forecasting. It's frustrating, for sure, but typically solvable when approached systematically. The root cause generally falls into a few distinct, yet sometimes overlapping, categories: issues with data, problems in the network architecture, or flawed training procedures.
 
 Firstly, the data. More often than not, a stagnant output points to issues in the data provided to the neural net. If the target variable – the value we're trying to predict – exhibits minimal variance, the simplest solution for the network is indeed to predict the mean. Think of it this way: the network is learning to minimize loss. If predicting the mean consistently results in a low loss, why would it bother learning anything more complex? It's essentially taking the path of least resistance. I recall a particular project where we were predicting daily website traffic based on various marketing spend metrics. We realized the target variable had been smoothed too aggressively during preprocessing. The variability we were looking for was gone; it was effectively a noisy constant. The network, predictably, output the average traffic level.
 
@@ -46,6 +46,7 @@ print(f"Mean of predictions: {np.mean(predictions)}")
 print(f"Variance of target: {np.var(target)}")
 print(f"Variance of predictions: {np.var(predictions)}")
 ```
+
 Run this, and you'll see both the predicted and actual values cluster around the mean. Pay close attention to the variance - it’s extremely low for both.
 
 Beyond low target variance, feature scaling issues can also contribute. If your input features have significantly different scales, the network may favor the larger features, while effectively ignoring the smaller ones. This can impede proper learning, as the gradient descent algorithm will struggle to navigate the loss landscape effectively. For instance, in the website traffic case, if we fed the model marketing spend in dollars (ranging from, say, thousands to millions) directly alongside the number of website clicks (ranging from tens to thousands), the dollar spend would dominate. The fix is standardizing or normalizing features before they're passed into the model.
@@ -53,6 +54,7 @@ Beyond low target variance, feature scaling issues can also contribute. If your 
 Moving on from data, we arrive at network architecture problems. If your network lacks sufficient complexity or is fundamentally inappropriate for the data, it can also get stuck predicting the average. A model that is too shallow, or that lacks appropriate non-linear activation functions, may not be able to capture the underlying patterns in the data. This is a case of underfitting: the model simply does not have the capacity to learn the relationships. I once spent far too long trying to get a linear model to recognize non-linear patterns. The model consistently predicted the average, despite our best efforts at data engineering.
 
 Let's demonstrate a very basic case, creating a simple neural network, but with only linear activations:
+
 ```python
 import numpy as np
 import tensorflow as tf

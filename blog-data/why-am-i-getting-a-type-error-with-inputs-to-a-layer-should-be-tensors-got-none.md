@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-type-error-with-inputs-to-a-layer-should-be-tensors-got-none"
 ---
 
-Let's unpack that error message. “Inputs to a layer should be tensors. Got: None.” I’ve seen this particular issue rear its head more times than I care to recall, and it usually boils down to a few common culprits in the deep learning pipeline. It’s frustrating, no doubt, but understanding the root causes allows you to diagnose and fix it effectively. In my past projects, particularly those involving custom model architectures and data processing pipelines, this type of error became quite familiar, and I developed a few go-to strategies for tracking down its source.
+that error message. “Inputs to a layer should be tensors. Got: None.” I’ve seen this particular issue rear its head more times than I care to recall, and it usually boils down to a few common culprits in the deep learning pipeline. It’s frustrating, no doubt, but understanding the root causes allows you to diagnose and fix it effectively. In my past projects, particularly those involving custom model architectures and data processing pipelines, this type of error became quite familiar, and I developed a few go-to strategies for tracking down its source.
 
 Essentially, the error means that your neural network layer expects a tensor (a multi-dimensional array – think of it as a matrix generalization) as its input but instead received `None`. This `None` value signifies a lack of data or a problem in how your data is flowing through the model. The framework, in this case, likely TensorFlow or PyTorch (though the underlying principle is the same regardless of the specifics), expects tensor inputs so it can perform the necessary mathematical operations.
 

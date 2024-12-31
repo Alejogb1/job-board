@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-gas-estimation-errors-when-using-chainlink-with-remix"
 ---
 
-, let's unpack gas estimation errors when interacting with Chainlink through Remix. I've seen this scenario play out more times than I can count, and it's a common point of friction for developers, especially those new to the ecosystem. It often stems from a misunderstanding of how gas estimation works in the context of external contract calls, particularly when involving a complex oracle network like Chainlink.
+gas estimation errors when interacting with Chainlink through Remix. I've seen this scenario play out more times than I can count, and it's a common point of friction for developers, especially those new to the ecosystem. It often stems from a misunderstanding of how gas estimation works in the context of external contract calls, particularly when involving a complex oracle network like Chainlink.
 
 The crux of the issue isn’t necessarily _with_ Remix or _with_ Chainlink itself, but rather with the inherent challenges in predicting the precise gas consumption of operations that are partly executed off-chain, or involve multiple contract interactions that aren't entirely transparent to the local development environment. Remix, being a development tool that typically works with local or simulated environments, attempts to estimate gas usage based on the _apparent_ complexity of the transactions you're sending. However, Chainlink oracles introduce a layer of indirection that complicates this process.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-input-shape-for-conv2dtranspose4-incompatible-with-its-expected-dimensionality"
 ---
 
-, let's unpack this conv2d_transpose_4 dimensionality issue. I've bumped into this exact problem more than once, and it usually boils down to a subtle mismatch in how we perceive transposed convolutions versus how they actually operate under the hood. It's not always immediately obvious, so let's break it down methodically.
+conv2d_transpose_4 dimensionality issue. I've bumped into this exact problem more than once, and it usually boils down to a subtle mismatch in how we perceive transposed convolutions versus how they actually operate under the hood. It's not always immediately obvious, so let's break it down methodically.
 
 The core of the problem typically resides in a misunderstanding of how `conv2d_transpose`, often also termed a deconvolution layer, manipulates spatial dimensions. Remember that this isn't quite the inverse operation of a regular `conv2d`. Instead, think of it as performing an operation similar to a convolution but going 'backwards', or more precisely, upsampling feature maps. The operation involves padding and stride which effectively control the output's shape based on the input. The output size isn't simply determined by flipping the operations of a normal convolution and the input size; it is heavily determined by the parameters of the transposed convolution operation itself.
 

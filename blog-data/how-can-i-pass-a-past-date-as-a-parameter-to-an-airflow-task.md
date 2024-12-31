@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-pass-a-past-date-as-a-parameter-to-an-airflow-task"
 ---
 
-Let's unpack this, shall we? Passing past dates into Airflow tasks is a frequent requirement, and it’s understandable you’re looking for clarity on how best to approach it. The short answer is, you can do it quite easily leveraging Airflow’s template engine and built-in macros, but the *how* is dependent on the specific use case and desired degree of dynamicism. I've certainly encountered my fair share of headaches around this in various data pipelines I've constructed, so let me share what I've learned.
+this, shall we? Passing past dates into Airflow tasks is a frequent requirement, and it’s understandable you’re looking for clarity on how best to approach it. The short answer is, you can do it quite easily leveraging Airflow’s template engine and built-in macros, but the _how_ is dependent on the specific use case and desired degree of dynamicism. I've certainly encountered my fair share of headaches around this in various data pipelines I've constructed, so let me share what I've learned.
 
-First, it’s crucial to understand that Airflow inherently works with a concept of “logical date.” This represents the intended execution time of a task, not the wall clock time when it actually runs. When dealing with past dates, you're usually working with the logical date, which Airflow provides via the `ds` macro. However, sometimes, you need to pass an even *earlier* date, and that’s where things get more involved.
+First, it’s crucial to understand that Airflow inherently works with a concept of “logical date.” This represents the intended execution time of a task, not the wall clock time when it actually runs. When dealing with past dates, you're usually working with the logical date, which Airflow provides via the `ds` macro. However, sometimes, you need to pass an even _earlier_ date, and that’s where things get more involved.
 
 Let's say you have a daily pipeline, and a particular task needs to process data from, say, three days before the current logical date. You could directly manipulate the `ds` macro combined with relative date modifications.
 

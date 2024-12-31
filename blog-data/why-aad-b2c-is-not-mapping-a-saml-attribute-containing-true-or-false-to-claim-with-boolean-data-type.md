@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-aad-b2c-is-not-mapping-a-saml-attribute-containing-true-or-false-to-claim-with-boolean-data-type"
 ---
 
-, so, you’re hitting that classic snag with azure ad b2c and saml attribute mapping to boolean claims, and yeah, it's a head-scratcher initially. i've been down this rabbit hole more times than i care to count, and it usually boils down to a few common culprits. let's unpack it, based on my own painful learnings and lots of late-night debugging sessions.
+, so, you’re hitting that classic snag with azure ad b2c and saml attribute mapping to boolean claims, and yeah, it's a head-scratcher initially. i've been down this rabbit hole more times than i care to count, and it usually boils down to a few common culprits. it, based on my own painful learnings and lots of late-night debugging sessions.
 
 first off, the core problem isn't really that b2c _can't_ map a 'true' or 'false' value to a boolean claim; it's more about how b2c interprets what it receives from the saml identity provider (idp) and what it expects for a boolean data type on the claim. by default, b2c treats all incoming saml attributes as string values. so, if your saml idp sends 'true' as a string, b2c simply sees "t", "r", "u", "e" as a string of characters. it doesn't inherently know that string should be interpreted as a boolean. this is the fundamental impedance mismatch we’re dealing with.
 

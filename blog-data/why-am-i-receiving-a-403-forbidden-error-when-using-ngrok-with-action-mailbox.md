@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-receiving-a-403-forbidden-error-when-using-ngrok-with-action-mailbox"
 ---
 
-, let's unpack this 403 Forbidden error you're experiencing with ngrok and Action Mailbox. I've seen this particular flavor of headache more than a few times over the years, and it typically stems from how webhooks and security interact, especially in development environments. It’s not an issue that’s immediately apparent, but understanding the underlying mechanisms makes it quite solvable.
+403 Forbidden error you're experiencing with ngrok and Action Mailbox. I've seen this particular flavor of headache more than a few times over the years, and it typically stems from how webhooks and security interact, especially in development environments. It’s not an issue that’s immediately apparent, but understanding the underlying mechanisms makes it quite solvable.
 
 Firstly, a 403 Forbidden error, in the context of HTTP, signifies that the server understands the request, but refuses to authorize it. It's a server-side response, and in this case, it means your Rails application, specifically its Action Mailbox endpoint, is rejecting the requests coming from ngrok. The key thing here isn't that ngrok itself is causing the problem, but rather, it’s exposing a configuration quirk, or more accurately, a missing security check within your app.
 

@@ -6,9 +6,9 @@ id: "why-is-my-docker-volume-lost-files-rights-in-a-container"
 
 ah, i see what you're running into. it's a classic docker volume permissions snafu, something i've banged my head against more times than i care to remember. the good news is, it's usually not that hard to fix once you understand the underlying mechanics. basically, the issue boils down to the way docker handles user ids (uids) and group ids (gids) between your host machine and the container.
 
-let's unpack this a bit. when you mount a volume, docker just plops that directory from your host machine directly into the container’s filesystem. it does not remap user ids. so, if the user inside the container has a different uid than the user who owns the files on your host machine, you are going to have a bad time. the containerized process will see the files, sure, but it will probably lack the necessary permissions to read, write, or execute them. this often manifests as “permission denied” errors, or weird behavior where the container can create files but can't edit or delete them.
+this a bit. when you mount a volume, docker just plops that directory from your host machine directly into the container’s filesystem. it does not remap user ids. so, if the user inside the container has a different uid than the user who owns the files on your host machine, you are going to have a bad time. the containerized process will see the files, sure, but it will probably lack the necessary permissions to read, write, or execute them. this often manifests as “permission denied” errors, or weird behavior where the container can create files but can't edit or delete them.
 
-i remember one project i was working on a while back, a complex microservice setup that used docker-compose. i had my dev environment setup perfectly on my mac, everything working as expected. then, when i tried to run it on our linux staging server, suddenly *everything* broke. database volumes were giving me "cannot create directory" errors, logs weren't being written, it was chaos. turns out, my local user id on my mac was not what the application expected inside the container. it took me a good half a day of debugging to finally isolate the permissions issue. that's when i started religiously mapping uids and gids in my docker setups.
+i remember one project i was working on a while back, a complex microservice setup that used docker-compose. i had my dev environment setup perfectly on my mac, everything working as expected. then, when i tried to run it on our linux staging server, suddenly _everything_ broke. database volumes were giving me "cannot create directory" errors, logs weren't being written, it was chaos. turns out, my local user id on my mac was not what the application expected inside the container. it took me a good half a day of debugging to finally isolate the permissions issue. that's when i started religiously mapping uids and gids in my docker setups.
 
 it is not just about you, i mean, many people get caught by this. it's a very common gotcha for docker users. there are a few standard ways to approach resolving it, none of which are particularly tricky. they come in three general ways that i know work: changing user inside the container, change volume ownership from host side or even a mix of both.
 
@@ -43,7 +43,7 @@ this approach is neat, because you are modifying your docker image. it creates a
 alternatively, you can override the user using the `user` instruction in the `docker-compose.yml`. this does not change your image itself, but only modify its runtime configuration, letting you specify the `uid:gid` for each specific container. i find this useful for local development environments or when you need to easily switch the uid/gid to a different value. here is an example:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   my_service:
     image: my_image
@@ -61,7 +61,8 @@ sometimes, it's easier to just change the permissions of the directory on your h
 ```bash
 sudo chown -R 1000:1000 ./my_volume
 ```
-this command will recursively change the ownership of the `./my_volume` directory to the user with uid 1000 and group with gid 1000. you can replace these values to match the ones the container is expecting. *be careful with this*, i cannot stress this enough, it will change permissions for any user on your operating system. so ideally you should only change folders you created for the container in the first place, and not other system files. you can always add a `chmod -R 775 ./my_volume` after you `chown` command in order to provide read, write and execute permission for everybody (not ideal, but it is the easiest way out) .
+
+this command will recursively change the ownership of the `./my_volume` directory to the user with uid 1000 and group with gid 1000. you can replace these values to match the ones the container is expecting. _be careful with this_, i cannot stress this enough, it will change permissions for any user on your operating system. so ideally you should only change folders you created for the container in the first place, and not other system files. you can always add a `chmod -R 775 ./my_volume` after you `chown` command in order to provide read, write and execute permission for everybody (not ideal, but it is the easiest way out) .
 
 a mixed solution i have also used and which combines some aspects of the three approaches is to use a dynamic user. this solution is a mix of method one and two and it uses a dockerfile argument that can be set via the docker-compose file. that's a more complex solution that i don't want to get into now but that in short you define a default value in your dockerfile and then override the user and group via an argument in your docker-compose.
 
@@ -73,4 +74,4 @@ as for resources, i'd steer clear of generic online blog posts. instead, look fo
 
 i always prefer a book since it is easier to get through the topic from start to end. internet resources can be a good source of specific answers to concrete problems but not the best to approach an issue like this from the ground up. it is generally a bit more difficult to understand the big picture if you just pick information from different sources.
 
-anyway, i hope this helped you debug your problem, you would be surprised to know how common this problem is. in one of my jobs we had a joke that the user id issue is why containers sometimes feel like they are “in a *container*”. ah, sorry for the poor humor. in any case, i hope this is now clearer. good luck.
+anyway, i hope this helped you debug your problem, you would be surprised to know how common this problem is. in one of my jobs we had a joke that the user id issue is why containers sometimes feel like they are “in a _container_”. ah, sorry for the poor humor. in any case, i hope this is now clearer. good luck.

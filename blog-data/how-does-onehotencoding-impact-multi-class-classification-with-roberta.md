@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-onehotencoding-impact-multi-class-classification-with-roberta"
 ---
 
-Let's unpack how one-hot encoding plays a pivotal role, and sometimes a problematic one, when paired with a Roberta model for multi-class classification. I've grappled with this particular combination quite a bit in the past, especially when dealing with text datasets that have a large number of distinct categories. The interaction isn't always straightforward, and understanding the nuances is key to achieving good results.
+how one-hot encoding plays a pivotal role, and sometimes a problematic one, when paired with a Roberta model for multi-class classification. I've grappled with this particular combination quite a bit in the past, especially when dealing with text datasets that have a large number of distinct categories. The interaction isn't always straightforward, and understanding the nuances is key to achieving good results.
 
 To begin, consider the nature of multi-class classification. We are aiming to categorize data into more than two classes. Roberta, being a transformer-based model, excels at capturing intricate relationships within text. However, the input format for these models is typically numerical. One-hot encoding bridges this gap when dealing with categorical data. Instead of representing categories as simple numbers, which might imply an ordinal relationship that doesn't exist, we use binary vectors. Each vector has a length equal to the number of classes, with a single '1' indicating the active class, and '0's for the rest. For example, with 3 classes, a class labeled as 'class 2' would be represented as [0, 1, 0].
 
@@ -38,6 +38,7 @@ print(encoded_categories)
 print(encoder.categories_)
 
 ```
+
 This snippet demonstrates the straightforward application of one-hot encoding using sklearn. You provide the categorical labels, and it outputs a binary matrix ready to be used by Roberta after being pre-processed as token ids. The `sparse_output=False` argument makes sure you get a dense matrix as opposed to a sparse matrix, which for smaller scale usage is better for debugging. In actual applications, this encoded output would then be passed through the Roberta model's embedding layers after being converted into the appropriate token indices via a tokenizer.
 
 **Example 2: Dealing with a Large Number of Classes**
@@ -84,6 +85,7 @@ print(f"Input shape: {input_batch.shape}")
 print(f"Output Shape: {output.shape}")
 
 ```
+
 This illustrates a key issue: each input vector's length equals the number of classes. This impacts the size of your weight matrices in the classification layer which grows along with the number of classes. While Roberta typically has a pre-trained embedding layer, the number of nodes in your output layer (here, linear layer) will be directly related to the number of classes you are predicting, so it becomes something to watch out for.
 
 **Example 3: Sparse Tensor Representations with Pytorch**
@@ -138,6 +140,7 @@ print(f"Input Shape {input_batch.shape}")
 print(f"Output shape {output.shape}")
 
 ```
+
 Here we see a potential optimization. By representing the data as a sparse tensor, we only store the location of the ‘1’ values, potentially saving substantial memory. However, most layers in pytorch such as nn.linear will expect a dense input, so conversion to dense form is necessary. This approach, while more computationally nuanced, demonstrates how the sparsity can be exploited, especially in large-scale, real-world applications where one-hot encoding can be a limiting factor.
 
 It's critical to understand that these one-hot encoded vectors must ultimately be fed into Roberta via the model’s embedding layer which first converts the token indices of the raw text into embeddings. So, this one-hot encoding must only be applied to the categorical targets for your classification problem, not the inputs (the input text). The actual text input for roberta needs to be processed into token IDs via the tokenizer which will then be used for the embedding lookups. This distinction is crucial.

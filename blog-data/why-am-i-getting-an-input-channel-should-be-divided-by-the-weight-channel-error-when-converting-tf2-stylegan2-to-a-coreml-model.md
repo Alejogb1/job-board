@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-input-channel-should-be-divided-by-the-weight-channel-error-when-converting-tf2-stylegan2-to-a-coreml-model"
 ---
 
-so, you're hitting that classic "input channel should be divided by the weight channel" error when moving a tensorflow stylegan2 model over to coreml. yeah, i've been there, more times than i care to remember. it's a frustrating one, and the error message itself isn't exactly a beacon of clarity. let's unpack it.
+so, you're hitting that classic "input channel should be divided by the weight channel" error when moving a tensorflow stylegan2 model over to coreml. yeah, i've been there, more times than i care to remember. it's a frustrating one, and the error message itself isn't exactly a beacon of clarity. it.
 
 basically, this error boils down to a mismatch in the expected tensor shapes during a convolution operation, specifically between the input to the convolution and the weights of the convolution kernel, when coreml is trying to interpret the tensorflow model. it means coreml expects the number of input channels to a convolutional layer to be perfectly divisible by the number of channels in the convolution kernel. stylegan2, in its tensorflow implementation, often uses operations that while perfectly valid in tensorflow, don't cleanly translate to coreml's strict channel requirements for convolution.
 
@@ -26,173 +26,174 @@ so, how do we fix this? well, there isn't one magic bullet, but here's what i've
 
 **code examples (tensorflow to coreml conversion with fixes):**
 
-*   **example 1: custom upsampling replacement (basic):**
+- **example 1: custom upsampling replacement (basic):**
 
-    ```python
-    import tensorflow as tf
-    import coremltools as ct
+  ```python
+  import tensorflow as tf
+  import coremltools as ct
 
-    # assume your custom upsampling function is like this in tensorflow
-    def custom_upsample_tf(x):
-        s = tf.shape(x)
-        return tf.transpose(tf.reshape(x, [s[0], s[1], s[2] // 2, 2, s[3]]), perm=[0, 1, 2, 4, 3])
+  # assume your custom upsampling function is like this in tensorflow
+  def custom_upsample_tf(x):
+      s = tf.shape(x)
+      return tf.transpose(tf.reshape(x, [s[0], s[1], s[2] // 2, 2, s[3]]), perm=[0, 1, 2, 4, 3])
 
-    # convert the custom tensorflow upsampling to an actual transposed convolution, since coreml is bad at translating pixelshuffles.
-    def custom_upsample_coreml(x, channels):
-      return tf.layers.conv2d_transpose(x, filters=channels, kernel_size=3, strides=2, padding='same', use_bias=False)
-
-
-    # a very simple tensorflow model just for this example that uses the custom_upsample_tf
-    class TestModel(tf.keras.Model):
-      def __init__(self, channels):
-        super(TestModel, self).__init__()
-        self.conv1 = tf.keras.layers.Conv2D(channels // 2, (3,3), padding='same')
-        self.up_sample = custom_upsample_tf
-        self.conv2 = tf.keras.layers.Conv2D(channels, (3,3), padding='same')
-      def call(self, x):
-        x = self.conv1(x)
-        x = self.up_sample(x)
-        x = self.conv2(x)
-        return x
-
-    # a tensorflow model that uses the custom_upsample_coreml instead, for coreml
-    class TestModelFixed(tf.keras.Model):
-      def __init__(self, channels):
-        super(TestModelFixed, self).__init__()
-        self.conv1 = tf.keras.layers.Conv2D(channels // 2, (3,3), padding='same')
-        self.up_sample = lambda x : custom_upsample_coreml(x, channels // 2) # i know...
-        self.conv2 = tf.keras.layers.Conv2D(channels, (3,3), padding='same')
-      def call(self, x):
-        x = self.conv1(x)
-        x = self.up_sample(x)
-        x = self.conv2(x)
-        return x
-
-    channels = 32
-    input_shape = (1,32,32,3)
-
-    #create test data
-    input_data = tf.random.normal(input_shape)
+  # convert the custom tensorflow upsampling to an actual transposed convolution, since coreml is bad at translating pixelshuffles.
+  def custom_upsample_coreml(x, channels):
+    return tf.layers.conv2d_transpose(x, filters=channels, kernel_size=3, strides=2, padding='same', use_bias=False)
 
 
-    # example of wrong conversion
-    tf_model_wrong = TestModel(channels)
-    tf_model_wrong(input_data) #run to build the graph
-    #this is what will fail
-    #coreml_model_wrong = ct.convert(tf_model_wrong, inputs=[ct.TensorType(shape=input_shape)])
+  # a very simple tensorflow model just for this example that uses the custom_upsample_tf
+  class TestModel(tf.keras.Model):
+    def __init__(self, channels):
+      super(TestModel, self).__init__()
+      self.conv1 = tf.keras.layers.Conv2D(channels // 2, (3,3), padding='same')
+      self.up_sample = custom_upsample_tf
+      self.conv2 = tf.keras.layers.Conv2D(channels, (3,3), padding='same')
+    def call(self, x):
+      x = self.conv1(x)
+      x = self.up_sample(x)
+      x = self.conv2(x)
+      return x
 
-    # example of correct conversion
-    tf_model_fixed = TestModelFixed(channels)
-    tf_model_fixed(input_data) #run to build the graph
-    # this will work.
-    coreml_model_fixed = ct.convert(tf_model_fixed, inputs=[ct.TensorType(shape=input_shape)])
+  # a tensorflow model that uses the custom_upsample_coreml instead, for coreml
+  class TestModelFixed(tf.keras.Model):
+    def __init__(self, channels):
+      super(TestModelFixed, self).__init__()
+      self.conv1 = tf.keras.layers.Conv2D(channels // 2, (3,3), padding='same')
+      self.up_sample = lambda x : custom_upsample_coreml(x, channels // 2) # i know...
+      self.conv2 = tf.keras.layers.Conv2D(channels, (3,3), padding='same')
+    def call(self, x):
+      x = self.conv1(x)
+      x = self.up_sample(x)
+      x = self.conv2(x)
+      return x
 
-    print("coreml model created correctly (maybe)")
-    ```
+  channels = 32
+  input_shape = (1,32,32,3)
 
-    in this example, the `custom_upsample_tf` function was the issue, since coreml is having a hard time translating it, we rewrote it with a tensorflow transposed convolution. the important part of this example is that i am using layers coreml knows how to handle instead.
-
-*   **example 2: explicit channel specification (sometimes needed):**
-
-    ```python
-    import tensorflow as tf
-    import coremltools as ct
-
-    class TestModelChannels(tf.keras.Model):
-      def __init__(self, channels):
-        super(TestModelChannels, self).__init__()
-        self.conv1 = tf.keras.layers.Conv2D(channels // 2, (3,3), padding='same')
-        self.conv2 = tf.keras.layers.Conv2D(channels, (3,3), padding='same')
-      def call(self, x):
-        x = self.conv1(x)
-        x = self.conv2(x)
-        return x
-
-    channels = 32
-    input_shape = (1,32,32,3)
-
-    #create test data
-    input_data = tf.random.normal(input_shape)
+  #create test data
+  input_data = tf.random.normal(input_shape)
 
 
-    # this might fail because coreml auto-infer the channels incorrectly
-    tf_model = TestModelChannels(channels)
-    tf_model(input_data) #run to build the graph
-    # this might fail because of wrong channel inference
-    #coreml_model = ct.convert(tf_model, inputs=[ct.TensorType(shape=input_shape)])
+  # example of wrong conversion
+  tf_model_wrong = TestModel(channels)
+  tf_model_wrong(input_data) #run to build the graph
+  #this is what will fail
+  #coreml_model_wrong = ct.convert(tf_model_wrong, inputs=[ct.TensorType(shape=input_shape)])
 
-    # we force coreml to see the channels correctly
-    tf_model_fixed = TestModelChannels(channels)
-    tf_model_fixed(input_data) #run to build the graph
-    coreml_model_fixed = ct.convert(tf_model_fixed,
-                            inputs=[ct.TensorType(shape=input_shape)],
-                            outputs=[ct.TensorType(shape=(1,32,32, channels))]
-                            )
+  # example of correct conversion
+  tf_model_fixed = TestModelFixed(channels)
+  tf_model_fixed(input_data) #run to build the graph
+  # this will work.
+  coreml_model_fixed = ct.convert(tf_model_fixed, inputs=[ct.TensorType(shape=input_shape)])
 
-    print("coreml model created correctly with explicit channels specification (maybe)")
-    ```
+  print("coreml model created correctly (maybe)")
+  ```
 
-    in this example, we are explicitly providing coreml with the output shape, this is sometimes needed because coreml tools might not infer the correct shapes.
+  in this example, the `custom_upsample_tf` function was the issue, since coreml is having a hard time translating it, we rewrote it with a tensorflow transposed convolution. the important part of this example is that i am using layers coreml knows how to handle instead.
 
-*   **example 3: simplifying the convolution kernel (rare case):**
-    ```python
-    import tensorflow as tf
-    import coremltools as ct
+- **example 2: explicit channel specification (sometimes needed):**
 
+  ```python
+  import tensorflow as tf
+  import coremltools as ct
 
-    class TestModelKernelSize(tf.keras.Model):
-      def __init__(self, channels):
-        super(TestModelKernelSize, self).__init__()
-        self.conv1 = tf.keras.layers.Conv2D(channels // 2, (5,5), padding='same') # weird size
-        self.conv2 = tf.keras.layers.Conv2D(channels, (3,3), padding='same')
-      def call(self, x):
-        x = self.conv1(x)
-        x = self.conv2(x)
-        return x
+  class TestModelChannels(tf.keras.Model):
+    def __init__(self, channels):
+      super(TestModelChannels, self).__init__()
+      self.conv1 = tf.keras.layers.Conv2D(channels // 2, (3,3), padding='same')
+      self.conv2 = tf.keras.layers.Conv2D(channels, (3,3), padding='same')
+    def call(self, x):
+      x = self.conv1(x)
+      x = self.conv2(x)
+      return x
 
+  channels = 32
+  input_shape = (1,32,32,3)
 
-    class TestModelKernelSizeFixed(tf.keras.Model):
-      def __init__(self, channels):
-        super(TestModelKernelSizeFixed, self).__init__()
-        self.conv1 = tf.keras.layers.Conv2D(channels // 2, (3,3), padding='same') # now it has a standard size
-        self.conv2 = tf.keras.layers.Conv2D(channels, (3,3), padding='same')
-      def call(self, x):
-        x = self.conv1(x)
-        x = self.conv2(x)
-        return x
+  #create test data
+  input_data = tf.random.normal(input_shape)
 
 
-    channels = 32
-    input_shape = (1,32,32,3)
+  # this might fail because coreml auto-infer the channels incorrectly
+  tf_model = TestModelChannels(channels)
+  tf_model(input_data) #run to build the graph
+  # this might fail because of wrong channel inference
+  #coreml_model = ct.convert(tf_model, inputs=[ct.TensorType(shape=input_shape)])
 
-    #create test data
-    input_data = tf.random.normal(input_shape)
+  # we force coreml to see the channels correctly
+  tf_model_fixed = TestModelChannels(channels)
+  tf_model_fixed(input_data) #run to build the graph
+  coreml_model_fixed = ct.convert(tf_model_fixed,
+                          inputs=[ct.TensorType(shape=input_shape)],
+                          outputs=[ct.TensorType(shape=(1,32,32, channels))]
+                          )
+
+  print("coreml model created correctly with explicit channels specification (maybe)")
+  ```
+
+  in this example, we are explicitly providing coreml with the output shape, this is sometimes needed because coreml tools might not infer the correct shapes.
+
+- **example 3: simplifying the convolution kernel (rare case):**
+
+  ```python
+  import tensorflow as tf
+  import coremltools as ct
 
 
-    # this might fail because of unsupported kernel sizes
-    tf_model_kernel = TestModelKernelSize(channels)
-    tf_model_kernel(input_data) #run to build the graph
-    # this might fail because of kernel size
-    #coreml_model_kernel = ct.convert(tf_model_kernel, inputs=[ct.TensorType(shape=input_shape)])
+  class TestModelKernelSize(tf.keras.Model):
+    def __init__(self, channels):
+      super(TestModelKernelSize, self).__init__()
+      self.conv1 = tf.keras.layers.Conv2D(channels // 2, (5,5), padding='same') # weird size
+      self.conv2 = tf.keras.layers.Conv2D(channels, (3,3), padding='same')
+    def call(self, x):
+      x = self.conv1(x)
+      x = self.conv2(x)
+      return x
 
 
-    tf_model_kernel_fixed = TestModelKernelSizeFixed(channels)
-    tf_model_kernel_fixed(input_data) #run to build the graph
-    # this should work with a standard size
-    coreml_model_kernel_fixed = ct.convert(tf_model_kernel_fixed, inputs=[ct.TensorType(shape=input_shape)])
+  class TestModelKernelSizeFixed(tf.keras.Model):
+    def __init__(self, channels):
+      super(TestModelKernelSizeFixed, self).__init__()
+      self.conv1 = tf.keras.layers.Conv2D(channels // 2, (3,3), padding='same') # now it has a standard size
+      self.conv2 = tf.keras.layers.Conv2D(channels, (3,3), padding='same')
+    def call(self, x):
+      x = self.conv1(x)
+      x = self.conv2(x)
+      return x
 
-    print("coreml model created correctly with kernel size fix (maybe)")
 
-    ```
+  channels = 32
+  input_shape = (1,32,32,3)
 
-   sometimes coreml does not support unusual kernel sizes, like the 5x5 kernel in the example. by simplifying it you might solve the issue. this example is more an edge case but i did have this happening in a very specific model architecture.
+  #create test data
+  input_data = tf.random.normal(input_shape)
+
+
+  # this might fail because of unsupported kernel sizes
+  tf_model_kernel = TestModelKernelSize(channels)
+  tf_model_kernel(input_data) #run to build the graph
+  # this might fail because of kernel size
+  #coreml_model_kernel = ct.convert(tf_model_kernel, inputs=[ct.TensorType(shape=input_shape)])
+
+
+  tf_model_kernel_fixed = TestModelKernelSizeFixed(channels)
+  tf_model_kernel_fixed(input_data) #run to build the graph
+  # this should work with a standard size
+  coreml_model_kernel_fixed = ct.convert(tf_model_kernel_fixed, inputs=[ct.TensorType(shape=input_shape)])
+
+  print("coreml model created correctly with kernel size fix (maybe)")
+
+  ```
+
+sometimes coreml does not support unusual kernel sizes, like the 5x5 kernel in the example. by simplifying it you might solve the issue. this example is more an edge case but i did have this happening in a very specific model architecture.
 
 **recommended resources:**
 
-*   **the coremltools documentation:** this is your first go-to. it provides the most accurate information on how to convert models to coreml. look at how to use the `ct.convert()` function correctly and all the parameters that it takes. you might find the answer there. i know that it is painful, but it is the best resource available.
-*   **the tensorflow documentation:** review the tensorflow documentation for information about layers and upsampling. knowing the operations you're using in detail can sometimes reveal how they might be problematic during the conversion process.
-*   **the "deep learning with tensorflow" book:** this provides a thorough knowledge of tensorflow operations, which can assist you in identifying potential conflicts during the transition to coreml.
-*   **research papers related to stylegan2's architecture:** understanding the specifics of the architecture, will give you valuable information to troubleshoot your model issues.
+- **the coremltools documentation:** this is your first go-to. it provides the most accurate information on how to convert models to coreml. look at how to use the `ct.convert()` function correctly and all the parameters that it takes. you might find the answer there. i know that it is painful, but it is the best resource available.
+- **the tensorflow documentation:** review the tensorflow documentation for information about layers and upsampling. knowing the operations you're using in detail can sometimes reveal how they might be problematic during the conversion process.
+- **the "deep learning with tensorflow" book:** this provides a thorough knowledge of tensorflow operations, which can assist you in identifying potential conflicts during the transition to coreml.
+- **research papers related to stylegan2's architecture:** understanding the specifics of the architecture, will give you valuable information to troubleshoot your model issues.
 
 remember, debugging this sort of issue is usually a process of trying, failing and trying again, and making one step at a time, so don't give up easily. and here's a little joke for you: why was the neural network always tired? because it had too many layers! (i know, i know, i'll see myself out)
 

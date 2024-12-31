@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-dynamic-glue-operators-affect-task-group-runtime"
 ---
 
-, let's unpack this. I’ve seen firsthand how dynamic glue operators, when used improperly, can become the Achilles' heel of even the most carefully planned task group. The impact on runtime isn't always obvious initially; it's often a cumulative effect that manifests as performance bottlenecks down the line. My early experiences involved distributed systems processing high volumes of sensor data, where subtle inefficiencies in data flow could compound dramatically. We ended up spending significant time profiling to identify these "hidden costs."
+. I’ve seen firsthand how dynamic glue operators, when used improperly, can become the Achilles' heel of even the most carefully planned task group. The impact on runtime isn't always obvious initially; it's often a cumulative effect that manifests as performance bottlenecks down the line. My early experiences involved distributed systems processing high volumes of sensor data, where subtle inefficiencies in data flow could compound dramatically. We ended up spending significant time profiling to identify these "hidden costs."
 
 So, what are these dynamic glue operators we're talking about? In the context of task group execution, these are operations, typically functional or data transformations, that are decided or parameterized _at runtime_, rather than being static parts of the pipeline's definition. This is in contrast to statically defined pipelines, where the data flow is explicitly laid out in advance. Think about scenarios where a configuration parameter dictates which filtering function should be applied to a data stream, or which format conversion step is needed depending on the incoming data type.
 

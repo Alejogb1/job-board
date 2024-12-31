@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-isnt-best-net-found-using-deepcopy-and-stochastic-gradient-descent"
 ---
 
-, let's unpack this. it's a question that hits close to home, having been there myself a few times, staring at a model that just wouldn't learn as expected. the core issue, as i see it, is with how we often _think_ about the optimization process versus how it actually plays out when we're using stochastic gradient descent (sgd) with a copied model.
+. it's a question that hits close to home, having been there myself a few times, staring at a model that just wouldn't learn as expected. the core issue, as i see it, is with how we often _think_ about the optimization process versus how it actually plays out when we're using stochastic gradient descent (sgd) with a copied model.
 
 so, you've got your neural network, probably a decently complex one if you're concerned about deep copying, and you're iterating over your training data. within each iteration, you likely expect to see the model gradually converge towards better parameters, specifically those that minimize the loss function. we hope it's going to find the 'best' net. now, let's say that, for some reason, instead of updating the _original_ model, you take a deep copy of it before each update, apply the gradients, and then discard the copy. that's a bit like trying to build a house by drawing a new blueprint every time you want to place a brick—doesn't work.
 

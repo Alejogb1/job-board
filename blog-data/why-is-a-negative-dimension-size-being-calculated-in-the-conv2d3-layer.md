@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-negative-dimension-size-being-calculated-in-the-conv2d3-layer"
 ---
 
-, let's unpack this negative dimension issue in your `conv2d_3` layer. I’ve seen this happen a few times in my work, particularly when dealing with custom neural network architectures or when working with legacy codebases that weren't as clearly documented as we might like. You’re getting a negative dimension size, which is, fundamentally, a mathematical impossibility for spatial dimensions, and that means something went off the rails before the layer calculation. We need to investigate what went wrong upstream.
+negative dimension issue in your `conv2d_3` layer. I’ve seen this happen a few times in my work, particularly when dealing with custom neural network architectures or when working with legacy codebases that weren't as clearly documented as we might like. You’re getting a negative dimension size, which is, fundamentally, a mathematical impossibility for spatial dimensions, and that means something went off the rails before the layer calculation. We need to investigate what went wrong upstream.
 
 The core issue here is that a convolutional layer's output dimension calculation is a function of its input dimensions, kernel size, stride, padding, and dilation, and if these parameters are configured such that they lead to a non-positive integer during computation, that’s where things break down. It typically means that during the calculation of the output dimension, the input size is essentially "too small" for the operation specified.
 

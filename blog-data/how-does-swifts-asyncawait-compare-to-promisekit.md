@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-swifts-asyncawait-compare-to-promisekit"
 ---
 
-, let's unpack this. It’s a comparison I’ve actually navigated quite a few times, particularly during a project involving a large-scale data migration pipeline a few years back. We initially leaned heavily on PromiseKit, then gradually transitioned to Swift’s `async`/`await` as the language evolved. My experience with both systems gives me some practical perspective on their differences, and ultimately, their place in modern iOS and macOS development.
+. It’s a comparison I’ve actually navigated quite a few times, particularly during a project involving a large-scale data migration pipeline a few years back. We initially leaned heavily on PromiseKit, then gradually transitioned to Swift’s `async`/`await` as the language evolved. My experience with both systems gives me some practical perspective on their differences, and ultimately, their place in modern iOS and macOS development.
 
 Fundamentally, both PromiseKit and `async`/`await` aim to address the same core challenge: managing asynchronous operations. This was a real headache before structured concurrency tools emerged. Callbacks, the old approach, frequently led to nested code pyramids – the infamous "callback hell" – that were difficult to understand, debug, and maintain. PromiseKit offered an elegant solution to that, introducing a cleaner, more linear way to reason about asynchronous flows. You chain asynchronous operations using `then`, `catch`, and similar methods, effectively transforming complex, deeply nested callback structures into something more readable.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "where-does-portainer-find-the-container-environment-variable-manager"
 ---
 
-, let's unpack this. I've seen my share of kubernetes clusters and docker setups over the years, and the question of how Portainer handles environment variables is a common one, especially when things aren't behaving as expected. It's not always a single place, and the answer is nuanced by the environment Portainer is managing, be it a local docker daemon, a swarm cluster, or a kubernetes setup.
+. I've seen my share of kubernetes clusters and docker setups over the years, and the question of how Portainer handles environment variables is a common one, especially when things aren't behaving as expected. It's not always a single place, and the answer is nuanced by the environment Portainer is managing, be it a local docker daemon, a swarm cluster, or a kubernetes setup.
 
 From my experience, when someone asks about where Portainer "finds" environment variable managers, they're usually encountering one of a few scenarios, often involving a mismatch between expectations and how Portainer actually interacts with the underlying container orchestration system. It's less about Portainer having some magical database of variables, and more about it acting as a mediator, querying and presenting information that's already configured in the host environment.
 

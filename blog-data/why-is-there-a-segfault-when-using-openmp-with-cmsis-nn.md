@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-there-a-segfault-when-using-openmp-with-cmsis-nn"
 ---
 
-, let's unpack this. A segmentation fault (segfault) when combining OpenMP with CMSIS-NN, specifically on embedded systems, isn't uncommon, and there's usually a clear reason behind it. I’ve encountered this kind of headache more than a few times across different platforms. It often boils down to shared resource contention, memory alignment, or incorrect handling of the execution environment's peculiarities.
+. A segmentation fault (segfault) when combining OpenMP with CMSIS-NN, specifically on embedded systems, isn't uncommon, and there's usually a clear reason behind it. I’ve encountered this kind of headache more than a few times across different platforms. It often boils down to shared resource contention, memory alignment, or incorrect handling of the execution environment's peculiarities.
 
 First, understand that CMSIS-NN is designed for single-threaded execution on resource-constrained microcontrollers. It assumes full control over memory and execution contexts. OpenMP, on the other hand, introduces multi-threading, potentially leading to conflicts. The crux of the problem typically isn't that OpenMP and CMSIS-NN are fundamentally incompatible, but rather how they're interacting within the system’s limitations, and how developers manage concurrency.
 

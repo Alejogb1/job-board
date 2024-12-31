@@ -8,7 +8,7 @@ one. I've spent a fair share of time architecting applications, and dependency i
 
 Early in my career, I recall a large enterprise application we were developing. We initially took a very manual dependency management approach, which, as you can probably guess, quickly devolved into a chaotic mess of tightly coupled components. Moving to a dependency injection (DI) container like Unity was transformational for us. It streamlined our architecture and improved the testability significantly.
 
-Now, let's unpack this. When we talk about “registering a class” with Unity, we're generally referring to the process of informing the container how to create an instance of that class when a dependency is requested. The most basic form is registering a class against itself. This means, when the container encounters a request for a type, it knows to instantiate that same type using its public constructor.
+Now. When we talk about “registering a class” with Unity, we're generally referring to the process of informing the container how to create an instance of that class when a dependency is requested. The most basic form is registering a class against itself. This means, when the container encounters a request for a type, it knows to instantiate that same type using its public constructor.
 
 For instance, consider a simple logging class:
 

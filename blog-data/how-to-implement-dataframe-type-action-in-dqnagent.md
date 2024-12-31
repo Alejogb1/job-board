@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-implement-dataframe-type-action-in-dqnagent"
 ---
 
-, so you're looking at how to get a dataframe-like structure into your dqn agent, specifically for actions. i’ve been down this road myself, and it can get a little hairy if you're not careful. let's unpack it.
+, so you're looking at how to get a dataframe-like structure into your dqn agent, specifically for actions. i’ve been down this road myself, and it can get a little hairy if you're not careful. it.
 
 first off, the core issue is that a standard dqn agent expects actions to be discrete, often represented as a single integer indicating which action to take from a set of possibilities. but a dataframe is a different beast, it’s about structured, multi-dimensional data. you’re essentially wanting actions with features, right? think columns in a table, each with its own possible values. this means we need to adapt the way the dqn outputs actions and how we interpret those outputs in our environment.
 

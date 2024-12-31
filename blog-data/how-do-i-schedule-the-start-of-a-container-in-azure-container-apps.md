@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-schedule-the-start-of-a-container-in-azure-container-apps"
 ---
 
-, let's unpack how to schedule the start of a container in Azure Container Apps. It’s a common need, and having encountered it many times in my years of working with cloud infrastructure, I've found there's not a single silver bullet, but rather a combination of strategies depending on the specific scenario. Let me share some practical approaches, along with code examples, based on situations I’ve personally faced.
+how to schedule the start of a container in Azure Container Apps. It’s a common need, and having encountered it many times in my years of working with cloud infrastructure, I've found there's not a single silver bullet, but rather a combination of strategies depending on the specific scenario. Let me share some practical approaches, along with code examples, based on situations I’ve personally faced.
 
 The core challenge with Azure Container Apps isn’t necessarily the _scheduling_ itself; the platform is designed to manage that. The difficulty lies in triggering the container to start at a _specific_ time, or under specific conditions not natively provided by the standard scaling parameters. So, what we’re really discussing is how to leverage or work _around_ the container apps platform’s default behavior to achieve our targeted timing.
 

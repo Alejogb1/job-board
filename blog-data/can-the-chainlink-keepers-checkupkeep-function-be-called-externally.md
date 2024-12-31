@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-the-chainlink-keepers-checkupkeep-function-be-called-externally"
 ---
 
-, let's unpack this Chainlink Keeper query – specifically the external invocation of `checkUpkeep()`. It's a crucial point when thinking about the security model and the practical usage of Chainlink Keepers, and it's one I've grappled with firsthand back when I was setting up a high-throughput data aggregation system leveraging Chainlink for a decentralized trading platform.
+Chainlink Keeper query – specifically the external invocation of `checkUpkeep()`. It's a crucial point when thinking about the security model and the practical usage of Chainlink Keepers, and it's one I've grappled with firsthand back when I was setting up a high-throughput data aggregation system leveraging Chainlink for a decentralized trading platform.
 
 The short answer, if you're just after the headline, is: _no, you cannot directly call `checkUpkeep()` externally, at least not in the way you might initially think_. It isn't designed to be a public function that anyone can trigger. The design specifically prohibits this for security and economic reasons. However, the underlying mechanism for upkeep triggers _can_ be influenced indirectly. That's where things get interesting, and where a deeper understanding is essential to building robust decentralized automation.
 

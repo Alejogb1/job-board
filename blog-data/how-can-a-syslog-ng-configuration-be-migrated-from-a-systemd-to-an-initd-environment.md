@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-syslog-ng-configuration-be-migrated-from-a-systemd-to-an-initd-environment"
 ---
 
-, let's unpack this. Migrating a syslog-ng configuration from a systemd environment to an initd one – it’s a situation I’ve seen more times than I care to remember, particularly in legacy environments where modernization efforts are a constant. It’s not just a matter of copying config files; there are some key differences in how these systems manage services that need to be accounted for. My experiences working with various legacy data pipelines, where syslogging was the bedrock, have taught me that a systematic approach is critical.
+. Migrating a syslog-ng configuration from a systemd environment to an initd one – it’s a situation I’ve seen more times than I care to remember, particularly in legacy environments where modernization efforts are a constant. It’s not just a matter of copying config files; there are some key differences in how these systems manage services that need to be accounted for. My experiences working with various legacy data pipelines, where syslogging was the bedrock, have taught me that a systematic approach is critical.
 
 The core issue here isn't about syslog-ng itself, but rather the environment it runs within. Systemd uses service files, while initd uses shell scripts. Syslog-ng is agnostic to this, but how we _start_ and _manage_ it varies significantly. We're effectively moving from a declarative setup in systemd to a more imperative scripting approach in initd. A simple copy-paste job will not do the trick.
 

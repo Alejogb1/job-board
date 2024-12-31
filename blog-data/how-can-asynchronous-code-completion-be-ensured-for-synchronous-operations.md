@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-asynchronous-code-completion-be-ensured-for-synchronous-operations"
 ---
 
-, let's unpack this. The challenge of ensuring asynchronous code completion when dealing with inherently synchronous operations is something I've encountered a fair few times, particularly back when I was knee-deep in legacy system integration. It's a common stumbling block, but there are definitely strategies we can employ to bridge that gap, rather than fighting the synchronous nature of the operations.
+. The challenge of ensuring asynchronous code completion when dealing with inherently synchronous operations is something I've encountered a fair few times, particularly back when I was knee-deep in legacy system integration. It's a common stumbling block, but there are definitely strategies we can employ to bridge that gap, rather than fighting the synchronous nature of the operations.
 
 The core problem stems from the fact that synchronous operations, by their very definition, block the execution thread until they complete. This means that when you’re interacting with something synchronous in an asynchronous context, your application can easily become unresponsive. What we aim to do, then, is to encapsulate these synchronous calls in a manner that won't hinder our asynchronous workflow. We want to ensure that our asynchronous code can continue operating without being held hostage by the synchronous process, and that it receives confirmation that the operation has completed.
 

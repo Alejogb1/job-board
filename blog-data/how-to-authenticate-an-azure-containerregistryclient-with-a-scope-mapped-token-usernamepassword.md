@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-authenticate-an-azure-containerregistryclient-with-a-scope-mapped-token-usernamepassword"
 ---
 
-, so you're hitting the classic problem of wanting to access an azure container registry (acr) using a service principal and a token that's scoped down to just what it needs, instead of using, say, the admin user or a full access key. been there, done that, got the t-shirt (and several all-nighters). let's unpack this.
+, so you're hitting the classic problem of wanting to access an azure container registry (acr) using a service principal and a token that's scoped down to just what it needs, instead of using, say, the admin user or a full access key. been there, done that, got the t-shirt (and several all-nighters). this.
 
 the crux of it is that the azure container registry client library, specifically the `containerregistryclient` class, needs some form of authentication to know who's calling and whether they're allowed to do what they're asking. using a username and password combo with a scoped token is a pretty secure way to go, and it's absolutely what you should be doing in any kind of production environment. hardcoding keys is just asking for trouble (lessons learned the hard way, i assure you).
 

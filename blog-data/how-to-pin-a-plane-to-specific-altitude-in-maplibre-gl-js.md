@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-pin-a-plane-to-specific-altitude-in-maplibre-gl-js"
 ---
 
-, let's unpack how we'd tackle pinning a plane to a specific altitude using MapLibre GL JS. This is a situation I've encountered quite a few times in past projects, particularly when visualizing flight paths or creating detailed 3d simulations. It's not as straightforward as just setting a Z value, as we need to consider how MapLibre interprets its coordinate systems, specifically when dealing with 3d models like our plane.
+how we'd tackle pinning a plane to a specific altitude using MapLibre GL JS. This is a situation I've encountered quite a few times in past projects, particularly when visualizing flight paths or creating detailed 3d simulations. It's not as straightforward as just setting a Z value, as we need to consider how MapLibre interprets its coordinate systems, specifically when dealing with 3d models like our plane.
 
 Essentially, you're not working with a direct height value in the same way you might in a typical 3d graphics API like WebGL directly. Instead, MapLibre builds upon the concept of 'terrain'. If you’re adding a 3d model to the map, and wish to position that model at a specific altitude, you need to work with the map's terrain elevation. The core process revolves around translating your desired altitude into a relative offset to the elevation of the underlying map geometry at the plane’s location.
 

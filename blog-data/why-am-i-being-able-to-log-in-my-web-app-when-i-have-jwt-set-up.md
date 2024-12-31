@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-being-able-to-log-in-my-web-app-when-i-have-jwt-set-up"
 ---
 
-, let's unpack this. the fact that you can log in even with jwt in place is a classic head-scratcher, and i've been there more times than i care to remember. it's usually one of a few culprits, and trust me, i’ve chased my tail on this particular issue more than once. from my early days building web apps with nothing but vanilla php and a healthy dose of sql injections (don't judge, we all started somewhere), to more modern frameworks, jwt issues like this one pop up. back then, debugging was mostly print statements and a lot of caffeine. good times, sort of.
+. the fact that you can log in even with jwt in place is a classic head-scratcher, and i've been there more times than i care to remember. it's usually one of a few culprits, and trust me, i’ve chased my tail on this particular issue more than once. from my early days building web apps with nothing but vanilla php and a healthy dose of sql injections (don't judge, we all started somewhere), to more modern frameworks, jwt issues like this one pop up. back then, debugging was mostly print statements and a lot of caffeine. good times, sort of.
 
 so, the core idea of jwt is to avoid needing a session for authentication. the server gives you a jwt when you log in, which is basically a signed token proving that you are, well, you. your client then sends this token with each request, and the server validates it. no need to keep a session id around. if you're logging in, then you’ve effectively circumvented the expected auth flow.
 

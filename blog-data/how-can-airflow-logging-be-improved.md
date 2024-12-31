@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-logging-be-improved"
 ---
 
-, let's unpack the question of improving Airflow logging. It's a topic I've spent a fair amount of time grappling with, particularly during a stint working with a large-scale data pipeline at _Acme Corp._ a few years back. We were ingesting terabytes of data daily, and pinpointing issues amidst the sheer volume of task executions became a real challenge. The default Airflow logging, while functional, often left us wanting more granular control and easier analysis.
+the question of improving Airflow logging. It's a topic I've spent a fair amount of time grappling with, particularly during a stint working with a large-scale data pipeline at _Acme Corp._ a few years back. We were ingesting terabytes of data daily, and pinpointing issues amidst the sheer volume of task executions became a real challenge. The default Airflow logging, while functional, often left us wanting more granular control and easier analysis.
 
 So, what are the primary areas where we can make things better? I see three key aspects: granularity of logs, efficient log storage and retrieval, and finally, the ease of parsing and analysis.
 

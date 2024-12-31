@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-multinomialnb-expecting-one-more-feature"
 ---
 
-, let's unpack this curious situation with MultinomialNB seemingly demanding an extra feature. I've bumped into this specific gotcha a few times over the years, and it often stems from a misunderstanding of how Multinomial Naive Bayes handles input data, especially in the context of text classification. It's not so much that it's _expecting_ an extra feature in the sense of an explicit requirement, but rather that it's interpreting the shape of your input incorrectly, often due to a subtle issue with how your features are prepared.
+curious situation with MultinomialNB seemingly demanding an extra feature. I've bumped into this specific gotcha a few times over the years, and it often stems from a misunderstanding of how Multinomial Naive Bayes handles input data, especially in the context of text classification. It's not so much that it's _expecting_ an extra feature in the sense of an explicit requirement, but rather that it's interpreting the shape of your input incorrectly, often due to a subtle issue with how your features are prepared.
 
 The core problem typically arises when your feature matrix, which is the input to MultinomialNB, is not presented in the shape it anticipates. This often involves a misunderstanding of how the scikit-learn library and specifically, the `fit()` method of MultinomialNB expects the structure of the input matrix when it is a single document and when it is more than one document. In essence, we're dealing with a dimensionality mismatch, not necessarily an extra feature. Let’s see how it happens.
 

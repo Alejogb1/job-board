@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-view-datadog-container-logs"
 ---
 
-Let's unpack this. Viewing container logs within Datadog, while seemingly straightforward, actually touches on several critical aspects of modern observability. I’ve dealt with this countless times, particularly during my tenure at a fintech company where meticulous log analysis was paramount for regulatory compliance and incident resolution. It's not simply about 'seeing' the logs, but understanding how they are collected, processed, and presented within the Datadog platform.
+this. Viewing container logs within Datadog, while seemingly straightforward, actually touches on several critical aspects of modern observability. I’ve dealt with this countless times, particularly during my tenure at a fintech company where meticulous log analysis was paramount for regulatory compliance and incident resolution. It's not simply about 'seeing' the logs, but understanding how they are collected, processed, and presented within the Datadog platform.
 
 The core principle revolves around the Datadog Agent, which acts as your primary data collector. It needs to be deployed within your container environment, typically as a sidecar container or as part of your node setup. It’s the agent that’s scraping those standard output and standard error streams that your containers produce. The agent is preconfigured with sensible defaults but in more complex setups, understanding the configuration options is key to getting the log aggregation just the way you need it.
 
@@ -43,8 +43,8 @@ metadata:
     ad.datadoghq.com/my-app.logs: '[{"source": "my-app", "service": "my-app-svc"}]'
 spec:
   containers:
-  - name: my-app-container
-    image: my-app-image
+    - name: my-app-container
+      image: my-app-image
 ```
 
 Here, the annotation `ad.datadoghq.com/my-app.logs` provides explicit instructions to the Datadog agent. It specifies the `source` as "my-app" and the `service` as "my-app-svc". This provides more precise control and ensures logs are correctly attributed within Datadog. Without this, Datadog tries to infer the service from the docker image name, which can lead to inconsistencies in complex microservices landscapes. Notice that kubernetes annotations have a special format, being a json string array of configurations.
@@ -58,12 +58,12 @@ Now, what if you’re not using standard output, but writing to a specific file 
 logs_config:
   open_files_limit: 10000
   logs:
-  - type: file
-    path: /var/log/my-app.log
-    source: my-app-log
-    service: my-app-svc
-    #  Optional tags to add more metadata:
-    #   tags: ["env:production", "region:us-east-1"]
+    - type: file
+      path: /var/log/my-app.log
+      source: my-app-log
+      service: my-app-svc
+      #  Optional tags to add more metadata:
+      #   tags: ["env:production", "region:us-east-1"]
 ```
 
 In this example, the `logs` section defines a new log source. The `path` specifies the absolute location of the log file within the container's file system (that has to match the relative path of the file in the container), `source` and `service` provide the required metadata. Notice here that the `container_collect_all` is not present. In this case, only this specific log file is being monitored. The optional tags are not present, but they can be used to provide more context to the logs. This scenario assumes that the container has the log file in the provided location, if not, then datadog won't find the file.

@@ -10,7 +10,7 @@ The root of the issue predominantly revolves around how session cookies are mana
 
 My first encounter with this was during a project where we were rapidly prototyping a web application using Flask. Everything worked flawlessly locally with Flask's `app.run()`. However, upon deploying using Waitress, we noticed that the session data wasn’t persisting. Users were logged out after every request, and the application felt broken. The problem was not the Flask code itself, but rather, how the `Set-Cookie` header was being generated and interpreted by the browser, with differences stemming from the change in server.
 
-Let's unpack the common pitfalls:
+the common pitfalls:
 
 1.  **The `SERVER_NAME` Configuration:** When Flask generates session cookies, it needs to know the hostname or domain for which the cookie is valid. Flask often infers this from the incoming request’s host header. When you run `app.run()`, the host is usually 'localhost'. Waitress, on the other hand, typically doesn't make assumptions about hostname. If your `SERVER_NAME` is not set, Flask might use a generic default that may not match your server's hostname, leading to session cookies not being sent back by the browser. The `SERVER_NAME` needs to precisely match the domain where your Waitress server is running, or, if behind a proxy, the public facing domain.
 

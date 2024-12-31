@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-reference-values-accessed-using-stdpairstdarraystdarrayuint16t21stdstring"
 ---
 
-, let's unpack accessing reference values within a `std::pair` that holds a nested structure like that. I've seen this sort of data structure pop up more often than you might think, usually in scenarios where compact data representation is key, perhaps something like storing configuration settings for a sensor or an embedded system. It's not inherently complex, but the nested nature can sometimes throw people off if they’re not careful with their accessors. So, let's get into it.
+accessing reference values within a `std::pair` that holds a nested structure like that. I've seen this sort of data structure pop up more often than you might think, usually in scenarios where compact data representation is key, perhaps something like storing configuration settings for a sensor or an embedded system. It's not inherently complex, but the nested nature can sometimes throw people off if they’re not careful with their accessors. So, let's get into it.
 
 The core of the issue is understanding how `std::pair` and `std::array` behave in combination. `std::pair`, as you probably know, is a simple container holding two elements of potentially different types. In this case, we’re dealing with `std::pair<std::array<std::array<u_int16_t,2>,1>, std::string>`. The first element of the pair is an array of an array of `u_int16_t` (unsigned 16-bit integers), structured as a single element outer array containing one two-element inner array. The second element is simply a `std::string`.
 

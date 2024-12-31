@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-3-channel-input-not-match-the-expected-16-channels-for-the-given-convolutional-layer"
 ---
 
-, let's unpack this. It’s a situation I've encountered more times than I'd care to recall, and usually, it boils down to understanding the core mechanics of convolution operations in deep learning. The short answer is: your input channels, output channels, and kernel filter structure aren't aligned correctly. A 3-channel input not producing 16 output channels directly isn't a bug; it's a consequence of how convolutional layers function with regards to their parameters and the underlying math. Let me walk you through it, drawing from some of my past experiences, which included quite a few debugging sessions on this very issue.
+. It’s a situation I've encountered more times than I'd care to recall, and usually, it boils down to understanding the core mechanics of convolution operations in deep learning. The short answer is: your input channels, output channels, and kernel filter structure aren't aligned correctly. A 3-channel input not producing 16 output channels directly isn't a bug; it's a consequence of how convolutional layers function with regards to their parameters and the underlying math. Let me walk you through it, drawing from some of my past experiences, which included quite a few debugging sessions on this very issue.
 
 In the realm of convolutional neural networks (CNNs), the ‘channels’ represent the depth of your input data or feature maps. Think of it like a stack of images, or, more precisely, feature maps, where each layer represents a distinct aspect or filter outcome. A color image, for example, is often represented by three channels: red, green, and blue. When you feed this into a convolutional layer, the _number_ of channels in the input data determines the size and structure of the filters that will act on that input. Crucially, it does _not_ directly dictate the number of output channels of a conv layer. That's an independent parameter defined in the conv layer architecture.
 
@@ -70,7 +70,7 @@ except ValueError as e:
 # Output: ValueError: Expected more than 1 value per channel when operating on data with dimension 1
 ```
 
-Here, the error message points to a mismatch. The input data is still 3 channel, so you can’t define a convolution layer with 16 'in_channels' if the data has only 3 channels. It clarifies that you need to use the _correct input channel value as the `in_channels` parameter of the convolutional layer._ This demonstrates that incorrect assumptions about in and out channels lead to errors. The `out_channels` parameter specifies the desired number of output channels.
+Here, the error message points to a mismatch. The input data is still 3 channel, so you can’t define a convolution layer with 16 'in*channels' if the data has only 3 channels. It clarifies that you need to use the \_correct input channel value as the `in_channels` parameter of the convolutional layer.* This demonstrates that incorrect assumptions about in and out channels lead to errors. The `out_channels` parameter specifies the desired number of output channels.
 
 **Example 3: Illustrating a multi-layered scenario.**
 

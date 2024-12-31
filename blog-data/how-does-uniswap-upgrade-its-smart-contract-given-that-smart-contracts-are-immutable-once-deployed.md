@@ -12,7 +12,7 @@ Instead of interacting directly with a contract that contains all the logic, use
 
 When an upgrade is needed, you don't modify the deployed implementation contract; you deploy a _new_ version. Then, the proxy contract's stored implementation address is updated to point to this new version. This seamlessly switches users to the new logic. This also preserves the storage, which remains with the proxy contract and is still accessed by the new logic. This separation of storage and logic is crucial.
 
-Now, let's unpack how this process unfolds with some more detail and examples.
+Now how this process unfolds with some more detail and examples.
 
 Firstly, there are a few common proxy patterns we’d consider. The transparent proxy pattern, often used in projects of this scale, uses fallback functions to delegate calls. This approach maintains compatibility with existing interfaces. I've found it’s effective when maintaining interoperability between contract versions is paramount. Another option is the Universal Upgradeable Proxy Standard (UUPS), where the proxy contract includes upgrade logic directly. The choice often comes down to the desired level of gas efficiency, security implications, and how centralized the upgrade process should be.
 

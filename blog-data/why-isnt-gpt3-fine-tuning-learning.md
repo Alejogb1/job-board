@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "why-isnt-gpt3-fine-tuning-learning"
 ---
 
-Let's unpack this. Having spent a fair amount of time wrestling with similar issues during a large language model (llm) deployment project a couple of years back, I can offer some practical insights into why fine-tuning, particularly with models like gpt-3, might not always yield the expected results. It’s not usually a single, easily-diagnosed issue, but rather a confluence of factors that can collectively hinder the learning process.
+this. Having spent a fair amount of time wrestling with similar issues during a large language model (llm) deployment project a couple of years back, I can offer some practical insights into why fine-tuning, particularly with models like gpt-3, might not always yield the expected results. It’s not usually a single, easily-diagnosed issue, but rather a confluence of factors that can collectively hinder the learning process.
 
-One of the common pitfalls, in my experience, stems from insufficient or inappropriate data. We often think throwing a mass of information at a model will magically make it smarter. That’s rarely the case. What I saw quite often was a mismatch between the fine-tuning dataset and the desired outcome. For instance, if you're aiming for gpt-3 to generate summaries of technical documents in a specific field, a generic dataset of news articles or social media posts simply won't cut it. The model may, at best, produce superficial or semantically incoherent results; at worst, it could exhibit what we call ‘catastrophic forgetting’, losing some of the general linguistic knowledge it initially possessed. Essentially, the model learns to mimic the *structure* of the training data, but not necessarily the underlying *meaning* or task specificity.
+One of the common pitfalls, in my experience, stems from insufficient or inappropriate data. We often think throwing a mass of information at a model will magically make it smarter. That’s rarely the case. What I saw quite often was a mismatch between the fine-tuning dataset and the desired outcome. For instance, if you're aiming for gpt-3 to generate summaries of technical documents in a specific field, a generic dataset of news articles or social media posts simply won't cut it. The model may, at best, produce superficial or semantically incoherent results; at worst, it could exhibit what we call ‘catastrophic forgetting’, losing some of the general linguistic knowledge it initially possessed. Essentially, the model learns to mimic the _structure_ of the training data, but not necessarily the underlying _meaning_ or task specificity.
 
 To illustrate this, consider a scenario where we have two datasets. The first, `dataset_1`, contains a set of examples intended to make the model generate technical explanations, while the second, `dataset_2`, has conversational data. Here’s how such datasets might be structured in a simplistic python example, using the format typically used for fine-tuning:
 
@@ -60,13 +60,13 @@ Finally, and this is perhaps the most subtle point, is the inherent limitation o
 
 This is better illustrated with an example where an llm is fine-tuned on a list of programming questions, but the task requires it to learn how to generate complex code that includes loops and conditionals.
 
-```python
+````python
 programming_questions_dataset = [
     {"prompt": "Write a function to print the first 10 integers.", "completion": "Here's a function that does that:\n\n```python\ndef print_integers():\n  for i in range(10):\n    print(i)\nprint_integers()```"},
     {"prompt": "Create a function to add two numbers.", "completion": "```python\ndef add(a, b):\n  return a + b\n```"}
     ]
 
-```
+````
 
 While the model can mimic the generation of such functions, it might not be able to independently generate a function that loops based on some external factor or does complex conditional operations, unless it was sufficiently trained to do so. This is a limitation of the fine-tuning process itself.
 

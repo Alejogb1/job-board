@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-can-trait-objects-implementing-iterator-be-used-with-foreach"
 ---
 
-, let's unpack this. It's not immediately obvious why a trait object for `Iterator` works so seamlessly with `for_each()`, and I remember hitting a similar snag myself a few years back while working on a data processing pipeline in rust. The key, like many things in rust, lies in the combination of generics, trait bounds, and how rust handles trait object dispatch.
+. It's not immediately obvious why a trait object for `Iterator` works so seamlessly with `for_each()`, and I remember hitting a similar snag myself a few years back while working on a data processing pipeline in rust. The key, like many things in rust, lies in the combination of generics, trait bounds, and how rust handles trait object dispatch.
 
 The initial challenge usually stems from the fact that `Iterator` is a trait, not a concrete type. A trait object, such as `Box<dyn Iterator<Item = i32>>`, essentially represents any type that implements the `Iterator` trait, at runtime. Now, `for_each()` itself is defined on the `Iterator` trait. This might lead you to wonder: how can a function defined on a trait directly act on a dynamically dispatched trait object? The answer is, fundamentally, through the magic of generics.
 

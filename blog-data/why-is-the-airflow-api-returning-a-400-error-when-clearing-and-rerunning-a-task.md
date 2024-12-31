@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-airflow-api-returning-a-400-error-when-clearing-and-rerunning-a-task"
 ---
 
-, let's unpack this peculiar 400 error when you're trying to clear and rerun a task in Airflow. It's a situation I've seen pop up more than a few times in my career, and it's usually not as straightforward as it initially appears. The 400, or "Bad Request," error from the Airflow API typically points to an issue with the data you're sending in your request, rather than a problem with the Airflow server itself. It's a message saying, "Hey, I received your request, but something about it isn't right," which can be quite broad.
+peculiar 400 error when you're trying to clear and rerun a task in Airflow. It's a situation I've seen pop up more than a few times in my career, and it's usually not as straightforward as it initially appears. The 400, or "Bad Request," error from the Airflow API typically points to an issue with the data you're sending in your request, rather than a problem with the Airflow server itself. It's a message saying, "Hey, I received your request, but something about it isn't right," which can be quite broad.
 
 Specifically, when you're clearing and rerunning a task, you're essentially interacting with the airflow’s `/api/v1/dags/{dag_id}/dagRuns/{dag_run_id}/taskInstances/{task_id}` endpoint, often through the CLI command or a custom script. The issue almost always resides in the payload of this request. Think of this payload as the specific instructions you're giving the api. It must contain the right data structure and valid parameters.
 

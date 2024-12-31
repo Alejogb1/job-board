@@ -10,7 +10,7 @@ The core issue revolves around the fact that when you pad sequences, usually wit
 
 To illustrate this, imagine I was working on a project a while back that involved predicting protein secondary structure. We had a dataset where each protein sequence varied in length, represented as one-hot encoded amino acids (our input), and the corresponding secondary structure labels were one-hot encoded as well. I recall facing this exact padding/masking dilemma. We used a one-dimensional cnn to capture the local context of the amino acids and predict the labels accordingly.
 
-The approach can be broken down into a few key parts: _padding the sequences uniformly_, _creating mask tensors that represent which labels are valid_, and _modifying the loss function or the model's behavior to account for the mask_. Let's unpack these with some examples.
+The approach can be broken down into a few key parts: _padding the sequences uniformly_, _creating mask tensors that represent which labels are valid_, and _modifying the loss function or the model's behavior to account for the mask_. these with some examples.
 
 **Padding and Masking Basics**
 

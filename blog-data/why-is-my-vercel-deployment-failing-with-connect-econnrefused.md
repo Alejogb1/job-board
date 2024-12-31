@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-vercel-deployment-failing-with-connect-econnrefused"
 ---
 
-, let's unpack this `ECONNREFUSED` error you're seeing with your Vercel deployment. I’ve definitely banged my head against that wall more times than I care to count, particularly in those late-night debugging sessions. It’s a beast, but usually traceable to a core set of issues. Essentially, `ECONNREFUSED` means that the TCP connection attempt your application is making was actively refused by the target machine. Think of it like trying to ring a doorbell and getting an immediate "no" rather than a busy signal. It’s not that the service is unavailable; it’s actively refusing the connection.
+`ECONNREFUSED` error you're seeing with your Vercel deployment. I’ve definitely banged my head against that wall more times than I care to count, particularly in those late-night debugging sessions. It’s a beast, but usually traceable to a core set of issues. Essentially, `ECONNREFUSED` means that the TCP connection attempt your application is making was actively refused by the target machine. Think of it like trying to ring a doorbell and getting an immediate "no" rather than a busy signal. It’s not that the service is unavailable; it’s actively refusing the connection.
 
 The typical culprits, in my experience, fall under three main categories when dealing with Vercel deployments: incorrect target address, service not running, or firewall/network issues. Let's break them down with some illustrative examples.
 

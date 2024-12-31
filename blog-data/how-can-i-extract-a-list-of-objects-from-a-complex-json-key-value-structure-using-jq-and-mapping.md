@@ -107,7 +107,7 @@ Here, the key we are interested in is `itemName`, however not all departments ha
 .departments | .[] | (.items // .products) | .[] | select(has("itemName"))
 ```
 
-Let's unpack this filter:
+this filter:
 
 - `.departments` selects the departments object.
 - `.[]` iterates through the values of departments, which is each individual department object.

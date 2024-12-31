@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-can-a-class-call-a-proc-object-created-from-a-block"
 ---
 
-Let's unpack this. I’ve seen this tripping up a fair few folks over the years, and it really boils down to a fundamental understanding of closures and how Ruby handles them, specifically when dealing with blocks and `Proc` objects. It's not a magical leap, but rather a consequence of how Ruby's internals manage execution contexts. I remember once debugging a gnarly event system where this behavior was causing unexpected side effects—lesson learned, and it emphasized the need for clarity on this topic.
+this. I’ve seen this tripping up a fair few folks over the years, and it really boils down to a fundamental understanding of closures and how Ruby handles them, specifically when dealing with blocks and `Proc` objects. It's not a magical leap, but rather a consequence of how Ruby's internals manage execution contexts. I remember once debugging a gnarly event system where this behavior was causing unexpected side effects—lesson learned, and it emphasized the need for clarity on this topic.
 
-The short answer is this: a `Proc` object, instantiated from a block, encapsulates the code within the block and, crucially, the *lexical scope* in which that block was defined. This scope includes any variables accessible at the time of the block's creation. Consequently, when this `Proc` is called, even from within a different class or method, it can still access those variables, or indeed, execute code reliant on the environment present at its definition. It’s all about that closed-over environment, the very essence of a closure.
+The short answer is this: a `Proc` object, instantiated from a block, encapsulates the code within the block and, crucially, the _lexical scope_ in which that block was defined. This scope includes any variables accessible at the time of the block's creation. Consequently, when this `Proc` is called, even from within a different class or method, it can still access those variables, or indeed, execute code reliant on the environment present at its definition. It’s all about that closed-over environment, the very essence of a closure.
 
 Now, let's get more granular.
 
-When you use a block with methods like `each`, `map`, or define your own custom methods using `yield` or the `&block` parameter, you're essentially creating anonymous code snippets. These blocks are not directly executable as standalone entities. However, by wrapping them into a `Proc` object using `Proc.new { ... }` or utilizing the `&` syntax in method definitions (e.g., `def my_method(&block)`), you convert them into first-class objects. These objects can be passed around, stored in variables, and importantly, *called* using the `.call` method.
+When you use a block with methods like `each`, `map`, or define your own custom methods using `yield` or the `&block` parameter, you're essentially creating anonymous code snippets. These blocks are not directly executable as standalone entities. However, by wrapping them into a `Proc` object using `Proc.new { ... }` or utilizing the `&` syntax in method definitions (e.g., `def my_method(&block)`), you convert them into first-class objects. These objects can be passed around, stored in variables, and importantly, _called_ using the `.call` method.
 
 Crucially, when `Proc.new` is used to convert a block into a `Proc` object, it doesn't merely copy the code. It also captures the environment where the block was defined. This environment is known as a closure. The closure allows the `Proc` to access and modify the variables and contexts that were within scope when the block was created, even after that scope has technically ended. This mechanism enables the `Proc` to perform as the programmer intended, regardless of where it’s eventually invoked. Think of it as a sealed container, which stores not just the instructions but also the context in which they make sense.
 
@@ -63,7 +63,7 @@ puts counter1.call # Output: 3
 puts counter2.call # Output: 2
 ```
 
-Here, each call to `counter_generator` returns a *new* `Proc` object. Each of these `Proc` objects has its own independent `count` variable from the outer scope, which it manipulates. This shows that the `Proc` doesn’t just see the variable’s value but also can modify it within its captured scope. The key idea here is that each `Proc` has its *own* copy of the `count` variable in its closure.
+Here, each call to `counter_generator` returns a _new_ `Proc` object. Each of these `Proc` objects has its own independent `count` variable from the outer scope, which it manipulates. This shows that the `Proc` doesn’t just see the variable’s value but also can modify it within its captured scope. The key idea here is that each `Proc` has its _own_ copy of the `count` variable in its closure.
 
 **Example 3: Using a Block Passed to a Method**
 

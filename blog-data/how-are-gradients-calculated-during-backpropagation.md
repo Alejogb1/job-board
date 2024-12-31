@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-gradients-calculated-during-backpropagation"
 ---
 
-, let's unpack backpropagation and gradient calculation – a topic I've spent a fair bit of time navigating, especially back when I was optimizing a complex image segmentation network for a medical imaging company. Seeing the need for efficiency firsthand definitely drove home the nuances of these calculations.
+backpropagation and gradient calculation – a topic I've spent a fair bit of time navigating, especially back when I was optimizing a complex image segmentation network for a medical imaging company. Seeing the need for efficiency firsthand definitely drove home the nuances of these calculations.
 
 The core of backpropagation, at its heart, lies in the application of the chain rule from calculus. We use it to compute the gradient of a loss function with respect to the weights and biases of our neural network. This gradient indicates the direction in which we need to adjust these parameters to minimize the loss – that is, to make our predictions closer to the actual values. It's important to understand this process isn't about magically knowing the 'best' weights; rather, we are incrementally improving them step by step.
 

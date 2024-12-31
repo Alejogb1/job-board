@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-my-rails-7-api-only-app-require-a-session-store-with-devise"
 ---
 
-Let's unpack this. So, you've built a Rails 7 API-only application and, like many of us initially trying to keep things minimal, bumped into that unexpected Devise dependency on a session store. It feels counterintuitive at first, doesn't it? We consciously chose API-only to avoid view rendering and thought we'd be free of session-related baggage, but alas. I've seen this issue pop up in projects I've worked on, usually when migrating from traditional Rails setups or when folks are new to the api-only architecture.
+this. So, you've built a Rails 7 API-only application and, like many of us initially trying to keep things minimal, bumped into that unexpected Devise dependency on a session store. It feels counterintuitive at first, doesn't it? We consciously chose API-only to avoid view rendering and thought we'd be free of session-related baggage, but alas. I've seen this issue pop up in projects I've worked on, usually when migrating from traditional Rails setups or when folks are new to the api-only architecture.
 
-The core of the issue lies in Devise's default authentication flow, even within an API-only context. While you're not rendering html views that typically manage cookies and sessions via browsers, Devise still *defaults* to using sessions as its primary mechanism for maintaining user login states. In traditional web apps, the browser transparently handles the back-and-forth of session cookies, but in an api context, our clients (say a javascript frontend or mobile app) don't operate in that realm. That means even in API mode where you'd expect it not to have anything to do with the browser or sessions the code needs it.
+The core of the issue lies in Devise's default authentication flow, even within an API-only context. While you're not rendering html views that typically manage cookies and sessions via browsers, Devise still _defaults_ to using sessions as its primary mechanism for maintaining user login states. In traditional web apps, the browser transparently handles the back-and-forth of session cookies, but in an api context, our clients (say a javascript frontend or mobile app) don't operate in that realm. That means even in API mode where you'd expect it not to have anything to do with the browser or sessions the code needs it.
 
 It's less about "requiring" and more about "being configured by default" for session storage. When Devise attempts to persist login information, it's leaning into Rails' built-in session management by default, which is primarily designed for cookie-based sessions. This is where your “api-only” directive conflicts.
 
@@ -149,9 +149,9 @@ You need to make a conscious decision of which strategy works best for the situa
 
 **Recommendations and Resources:**
 
-*   **"Securing APIs with OAuth 2.0" by Aaron Parecki:** This is an excellent, practical guide on securing APIs using OAuth 2.0, though it’s more high-level, it’s useful. While the example here is using JWT, it gives a good overview of API authentication.
-*   **"Crafting Rails 4 Applications" by José Valim:** While this book covers an older version of Rails, its sections on authentication patterns and customization remain highly relevant. Understanding how Rails and Devise are put together can help with the more advanced use cases.
-*  **`devise` and `devise-token-auth` Github Repositories:** The source code for these gems can be invaluable when learning how everything is connected and how you might want to use these solutions differently.
-*   **The official JWT website (jwt.io):** It provides detailed explanations of JWT concepts and how to use them.
+- **"Securing APIs with OAuth 2.0" by Aaron Parecki:** This is an excellent, practical guide on securing APIs using OAuth 2.0, though it’s more high-level, it’s useful. While the example here is using JWT, it gives a good overview of API authentication.
+- **"Crafting Rails 4 Applications" by José Valim:** While this book covers an older version of Rails, its sections on authentication patterns and customization remain highly relevant. Understanding how Rails and Devise are put together can help with the more advanced use cases.
+- **`devise` and `devise-token-auth` Github Repositories:** The source code for these gems can be invaluable when learning how everything is connected and how you might want to use these solutions differently.
+- **The official JWT website (jwt.io):** It provides detailed explanations of JWT concepts and how to use them.
 
 In summary, the default session reliance in Devise within an API-only context is more of a default setup issue than a hard requirement. By transitioning to token-based authentication or a custom strategy, you can effectively achieve a stateless API, which is generally more appropriate and often cleaner in most modern api setups. The examples I’ve provided are starting points, and your specific solution will likely need some adjustments depending on the overall architecture.

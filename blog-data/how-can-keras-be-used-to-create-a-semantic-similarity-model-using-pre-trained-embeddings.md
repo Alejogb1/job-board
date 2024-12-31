@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-keras-be-used-to-create-a-semantic-similarity-model-using-pre-trained-embeddings"
 ---
 
-, let's unpack this. Semantic similarity modelling with Keras, using pre-trained embeddings—it’s a challenge I've tackled more than a few times in past projects, specifically when we were trying to build a custom document similarity engine for an internal knowledge base a few years back. It's a powerful technique, and I think I can offer some clear, practical guidance on how to approach it.
+. Semantic similarity modelling with Keras, using pre-trained embeddings—it’s a challenge I've tackled more than a few times in past projects, specifically when we were trying to build a custom document similarity engine for an internal knowledge base a few years back. It's a powerful technique, and I think I can offer some clear, practical guidance on how to approach it.
 
 The core idea is to represent words or sentences as vectors in a high-dimensional space, where the relative positions of those vectors indicate their semantic relatedness. Pre-trained embeddings—think word2vec, GloVe, or fastText—provide the initial coordinates for these vectors, allowing us to leverage massive amounts of pre-existing language data without starting from scratch. Keras, with its clean api, is perfect for gluing all this together.
 

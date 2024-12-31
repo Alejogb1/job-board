@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-airflow-impersonation-be-authorized"
 ---
 
-, let's unpack the question of whether airflow impersonation can be authorized. I’ve seen this come up a few times in my career, and it’s a nuanced area where security intersects with operational flexibility. The short answer is: yes, with caveats, and it absolutely needs to be carefully managed. It's not simply about a binary yes or no; the devil, as they say, is in the details.
+the question of whether airflow impersonation can be authorized. I’ve seen this come up a few times in my career, and it’s a nuanced area where security intersects with operational flexibility. The short answer is: yes, with caveats, and it absolutely needs to be carefully managed. It's not simply about a binary yes or no; the devil, as they say, is in the details.
 
 My experience with this started several years ago when I was helping a large financial institution migrate their existing batch processing pipelines to airflow. They had a complex system of user roles and permissions defined in their central identity provider (IdP). The initial request was for airflow to execute tasks as the user who initiated the DAG run, a tempting idea on the surface. This quickly revealed the practical complexities involved.
 

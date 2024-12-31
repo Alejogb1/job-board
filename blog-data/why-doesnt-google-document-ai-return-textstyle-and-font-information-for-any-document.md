@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-doesnt-google-document-ai-return-textstyle-and-font-information-for-any-document"
 ---
 
-, let's unpack this document ai situation. It's not unusual to run into cases where the anticipated metadata, particularly concerning `textStyle` and `font`, doesn't materialize from Google's Document AI platform. Having spent a fair chunk of time integrating document analysis pipelines, I can tell you that the absence of these details isn't an outright bug, but rather a consequence of how the engine processes and interprets document layouts. It stems from both design choices and inherent challenges with complex document formats.
+document ai situation. It's not unusual to run into cases where the anticipated metadata, particularly concerning `textStyle` and `font`, doesn't materialize from Google's Document AI platform. Having spent a fair chunk of time integrating document analysis pipelines, I can tell you that the absence of these details isn't an outright bug, but rather a consequence of how the engine processes and interprets document layouts. It stems from both design choices and inherent challenges with complex document formats.
 
 Specifically, I've encountered this behavior during past projects involving analysis of diverse contracts and legal documents. My initial expectation, much like yours, was that a comprehensive analysis would include readily available stylistic information. Instead, what we often get is the raw extracted text along with layout information (bounding boxes, page numbers), but _not_ direct font data. Let's delve into why.
 

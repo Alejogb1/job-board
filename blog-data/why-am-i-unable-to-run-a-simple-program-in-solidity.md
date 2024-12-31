@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-unable-to-run-a-simple-program-in-solidity"
 ---
 
-Let's dive into this. It's frustrating, I get it. The seemingly straightforward path from a Solidity program to a functioning smart contract can often hit snags, and those early stumbling blocks can feel particularly perplexing. I've seen this countless times, especially with newcomers to blockchain development, and usually the root cause isn't a flaw in Solidity itself but more often a gap in understanding of the surrounding ecosystem. Let's unpack this.
+Let's dive into this. It's frustrating, I get it. The seemingly straightforward path from a Solidity program to a functioning smart contract can often hit snags, and those early stumbling blocks can feel particularly perplexing. I've seen this countless times, especially with newcomers to blockchain development, and usually the root cause isn't a flaw in Solidity itself but more often a gap in understanding of the surrounding ecosystem. this.
 
 When you mention "a simple program," we need to first nail down what that even means in the Solidity context. It could range from a basic "Hello World" contract to something slightly more complex involving variable manipulation or basic function calls. Regardless, the typical pitfalls generally cluster into a few key areas, and I've spent enough time debugging these to have a pretty good sense of where things tend to go south. First, the code itself might have issues. Second, there could be problems with the environment setup, and finally, there are deployment and interaction challenges. I've encountered all three, usually in that exact sequence of head-scratching moments.
 
@@ -55,13 +55,13 @@ require("@nomicfoundation/hardhat-toolbox");
 module.exports = {
   solidity: "0.8.0",
   networks: {
-      hardhat: {
-        chainId: 1337
-      },
-      goerli: {
-        url: "https://eth-goerli.g.alchemy.com/v2/<your-api-key>", // Missing API key!
-        accounts: [`<your-private-key>`], // Missing Private key!
-      }
+    hardhat: {
+      chainId: 1337,
+    },
+    goerli: {
+      url: "https://eth-goerli.g.alchemy.com/v2/<your-api-key>", // Missing API key!
+      accounts: [`<your-private-key>`], // Missing Private key!
+    },
   },
 };
 ```
@@ -75,7 +75,9 @@ Finally, deployment and interaction can be a challenge. Once you’ve got a comp
 const { ethers } = require("ethers");
 
 const contractAddress = "0x..."; // Assume you have the address
-const abi = [ /*Your Contract ABI*/ ];
+const abi = [
+  /*Your Contract ABI*/
+];
 
 async function main() {
   const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545"); // Replace if you're using a different provider.
@@ -83,13 +85,13 @@ async function main() {
   const contract = new ethers.Contract(contractAddress, abi, wallet);
 
   try {
-    const tx = await contract.store(10);  // Incorrect interaction
+    const tx = await contract.store(10); // Incorrect interaction
     await tx.wait();
     console.log("Transaction completed!");
     const storedValue = await contract.retrieve();
     console.log("Stored Value:", storedValue);
   } catch (error) {
-      console.error("Interaction error", error);
+    console.error("Interaction error", error);
   }
 }
 

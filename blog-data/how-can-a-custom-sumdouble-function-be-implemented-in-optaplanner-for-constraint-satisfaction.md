@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-custom-sumdouble-function-be-implemented-in-optaplanner-for-constraint-satisfaction"
 ---
 
-, let's unpack implementing a custom `sumDouble()` function within the OptaPlanner framework for constraint satisfaction. It’s a scenario I've encountered a few times over the years, particularly when dealing with resource allocation problems where aggregated values play a crucial role in defining constraints. It’s not always a direct solution and requires a bit of understanding of how OptaPlanner handles score calculation.
+implementing a custom `sumDouble()` function within the OptaPlanner framework for constraint satisfaction. It’s a scenario I've encountered a few times over the years, particularly when dealing with resource allocation problems where aggregated values play a crucial role in defining constraints. It’s not always a direct solution and requires a bit of understanding of how OptaPlanner handles score calculation.
 
 The challenge, at its core, is this: OptaPlanner's score calculation operates on a per-entity basis, typically, and we need a method to calculate a sum of a specific property across multiple planning entities, and then use this summed value in our constraint definitions. Simply put, we can't directly use a traditional imperative loop within a `@Constraint` annotated method because it violates OptaPlanner's reactive, incremental scoring mechanism. This isn’t some theoretical edge case; it’s a very common hurdle when you move beyond basic examples and deal with real-world scenarios with interdependent constraints.
 

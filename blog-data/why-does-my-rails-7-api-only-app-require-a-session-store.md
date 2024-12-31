@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-my-rails-7-api-only-app-require-a-session-store"
 ---
 
-, let's unpack this. It's a question that pops up more often than you'd think, especially when you're diving deep into api-only architectures with Rails 7. I recall a project back in '21; we were building a decoupled frontend and backend, and we ran headfirst into a similar situation. It felt initially counterintuitive – an _api-only_ app needing a session store? It seemed like a vestigial limb from the server-rendered days. So, let's get into the nitty-gritty of why this happens, and what we can do about it.
+. It's a question that pops up more often than you'd think, especially when you're diving deep into api-only architectures with Rails 7. I recall a project back in '21; we were building a decoupled frontend and backend, and we ran headfirst into a similar situation. It felt initially counterintuitive – an _api-only_ app needing a session store? It seemed like a vestigial limb from the server-rendered days. So, let's get into the nitty-gritty of why this happens, and what we can do about it.
 
 The crux of the matter lies in how Rails' ActionController::Base and its associated middleware operate. Even in an api-only configuration, Rails still inherits many of the default behaviours designed for traditional web applications. This includes middleware components that are fundamentally intertwined with session management.
 

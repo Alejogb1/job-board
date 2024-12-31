@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multidimensional-action-spaces-be-effectively-handled-in-reinforcement-learning"
 ---
 
-, let's unpack this. Multidimensional action spaces in reinforcement learning. I’ve certainly spent my fair share of time tackling that particular beast, and it's rarely a straightforward situation. It’s not just about having more actions; it's about the intricate relationships and dependencies those actions introduce, which, if not handled carefully, can absolutely tank your training.
+. Multidimensional action spaces in reinforcement learning. I’ve certainly spent my fair share of time tackling that particular beast, and it's rarely a straightforward situation. It’s not just about having more actions; it's about the intricate relationships and dependencies those actions introduce, which, if not handled carefully, can absolutely tank your training.
 
 The core issue, as I’ve experienced firsthand, arises from the exponential growth of the action space's size with each added dimension. Think about it: a simple discrete action space of, say, 5 choices can become a combinatorial nightmare very quickly. If you have two independent dimensions each with 5 choices, you suddenly have 25 possible actions. And if those aren’t independent, the complexity leaps further. I recall working on a robotics project involving a manipulator arm; the control space encompassed both joint angles and gripper force, each with its own continuous range. That’s when I learned to genuinely appreciate the nuances of this problem.
 

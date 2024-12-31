@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-cdn-caching-my-private-active-storage-assets-in-rails"
 ---
 
-, let's unpack this. I've seen this specific headache rear its head more than a few times in my career, and it's almost always rooted in a subtle misunderstanding of how CDNs interact with Rails and, crucially, Active Storage. The short answer is: your CDN isn't _intentionally_ caching your private assets; it's doing what it's designed to do—cache based on headers. The real culprit is often a misconfigured caching policy or an inadvertent exposure of your private asset URLs that we need to address.
+. I've seen this specific headache rear its head more than a few times in my career, and it's almost always rooted in a subtle misunderstanding of how CDNs interact with Rails and, crucially, Active Storage. The short answer is: your CDN isn't _intentionally_ caching your private assets; it's doing what it's designed to do—cache based on headers. The real culprit is often a misconfigured caching policy or an inadvertent exposure of your private asset URLs that we need to address.
 
 First, let’s set the stage. Active Storage, by default, generates presigned URLs when you access private assets. These URLs are time-limited and should, theoretically, only grant access within their validity window. However, most CDNs, being content-agnostic, primarily operate on HTTP caching headers (like `Cache-Control` and `Expires`) and the `ETag`. If these headers are present, the CDN will happily cache the response, regardless of whether the URL is supposed to be temporary. Herein lies the issue. Let's explore the typical scenarios that lead to this.
 

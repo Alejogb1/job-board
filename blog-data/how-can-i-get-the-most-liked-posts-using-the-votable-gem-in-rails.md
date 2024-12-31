@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-the-most-liked-posts-using-the-votable-gem-in-rails"
 ---
 
-, let's unpack this. I remember back in the day, working on a social platform for amateur photographers, we had a similar challenge. Users were constantly creating new posts, and the need to surface the "most liked" content became critical for user engagement. The votable gem, as you mentioned, is a solid choice for implementing voting functionality in Rails, and extracting that 'most liked' data efficiently is certainly achievable. Here's how I approach this, combining database optimization techniques with straightforward ActiveRecord queries.
+. I remember back in the day, working on a social platform for amateur photographers, we had a similar challenge. Users were constantly creating new posts, and the need to surface the "most liked" content became critical for user engagement. The votable gem, as you mentioned, is a solid choice for implementing voting functionality in Rails, and extracting that 'most liked' data efficiently is certainly achievable. Here's how I approach this, combining database optimization techniques with straightforward ActiveRecord queries.
 
 Essentially, the core concept hinges on using the `votes_for` association, which `votable` provides and leverages SQL aggregations to retrieve our top content. The key is to craft our queries to work with the underlying data in a performant manner, especially as the data scales.
 

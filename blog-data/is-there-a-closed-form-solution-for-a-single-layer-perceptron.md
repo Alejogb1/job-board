@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-there-a-closed-form-solution-for-a-single-layer-perceptron"
 ---
 
-, let's unpack this. The question of a closed-form solution for a single-layer perceptron is something I’ve encountered more than once in my career, particularly when working on early attempts at machine learning implementations. The short answer is: _it depends_, but mostly, no, not in the way you might initially hope. Let me elaborate.
+. The question of a closed-form solution for a single-layer perceptron is something I’ve encountered more than once in my career, particularly when working on early attempts at machine learning implementations. The short answer is: _it depends_, but mostly, no, not in the way you might initially hope. Let me elaborate.
 
 By "closed-form solution," we’re generally referring to a mathematical expression that provides a direct calculation of the optimal parameters (weights) of our model without needing an iterative process like gradient descent. It’s the kind of solution that, given input data, spits out the perfect answer in a single step. With linear regression, for instance, you can find the weights using the normal equation. This elegant, direct approach is what we'd ideally want with every problem.
 

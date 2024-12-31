@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-railsbloburl-generate-different-urls-in-the-application-and-test-environments"
 ---
 
-Let's unpack this. I recall dealing with a particularly frustrating bug early in my career that directly stemmed from this very issue—the inconsistent behavior of `rails_blob_url` between application and test environments. It's not uncommon, and often arises from a subtle interplay of configuration and context. It's not that the method itself is faulty; rather, it's how those environments configure their underlying storage services that leads to divergent output. The core problem lies in understanding that `rails_blob_url` doesn't directly produce URLs out of thin air. Instead, it generates a URL based on the currently configured *active storage service* and its associated settings.
+this. I recall dealing with a particularly frustrating bug early in my career that directly stemmed from this very issue—the inconsistent behavior of `rails_blob_url` between application and test environments. It's not uncommon, and often arises from a subtle interplay of configuration and context. It's not that the method itself is faulty; rather, it's how those environments configure their underlying storage services that leads to divergent output. The core problem lies in understanding that `rails_blob_url` doesn't directly produce URLs out of thin air. Instead, it generates a URL based on the currently configured _active storage service_ and its associated settings.
 
 In a nutshell, different environments often utilize different active storage configurations. You might, for example, use a locally stored disk service for development and testing and then switch to an s3 bucket in production. This discrepancy is precisely what causes those URLs to change—the underlying storage mechanism is actually different. The `rails_blob_url` method simply asks the current active storage service to provide the correct URL for the blob. If the service changes, naturally the URL generated will also change.
 
@@ -94,7 +94,7 @@ end
 
 Here, we override the `url` method to generate URLs using our custom routing system and the provided id. This shows that each service is fundamentally responsible for the way it generates urls. This service could be anything from cloud storage, to a custom solution like above. That’s really the root of the issue, the method for url generation is not a function of rails’ `rails_blob_url`, but of the `ActiveStorage::Service` it's delegating to.
 
-The key takeaway here is that the `rails_blob_url` does not directly create the url itself. It is not a magical function. Instead, it calls the appropriate url generation method of the currently configured storage service. So, each environment behaves differently not because `rails_blob_url` is doing anything different, but because the *storage service* itself is configured differently.
+The key takeaway here is that the `rails_blob_url` does not directly create the url itself. It is not a magical function. Instead, it calls the appropriate url generation method of the currently configured storage service. So, each environment behaves differently not because `rails_blob_url` is doing anything different, but because the _storage service_ itself is configured differently.
 
 **Practical Steps to Avoid Confusion**
 
@@ -108,10 +108,10 @@ The key takeaway here is that the `rails_blob_url` does not directly create the 
 
 **Recommended Resources**
 
-*   **The Official Rails Guides:** Specifically, the Active Storage guide is an essential read. It covers configuration, different service options, and testing.
+- **The Official Rails Guides:** Specifically, the Active Storage guide is an essential read. It covers configuration, different service options, and testing.
 
-*   **"Crafting Rails Applications" by Jose Valim:** This book, while not exclusively on active storage, does have a section on file uploads and demonstrates how to approach these types of problems in an idiomatic way.
+- **"Crafting Rails Applications" by Jose Valim:** This book, while not exclusively on active storage, does have a section on file uploads and demonstrates how to approach these types of problems in an idiomatic way.
 
-*   **"The Rails 7 Way" by Obie Fernandez:** This book offers a more generalized perspective on rails, including how settings are applied in different contexts, and it's an excellent resource for better understanding rails.
+- **"The Rails 7 Way" by Obie Fernandez:** This book offers a more generalized perspective on rails, including how settings are applied in different contexts, and it's an excellent resource for better understanding rails.
 
 In conclusion, the variance in URLs produced by `rails_blob_url` across environments isn't arbitrary. It's a direct consequence of using different storage configurations. Understanding this relationship is essential for a solid debugging foundation and can prevent frustrating issues. Remember, the `rails_blob_url` function is a reflection of the currently configured service and does not perform any internal url processing itself; it's just a helper method that delegates to the appropriate service provider, and those providers are configured within your `storage.yml` file. Always verify your configurations and ensure all services are setup and working as intended in all environments.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-have-trouble-with-traits-with-lifetime-parameters-in-rust"
 ---
 
-, let’s tackle lifetime parameters in Rust traits. This is a common pain point, and I remember when I first encountered it while building a custom caching library—it took a fair bit of head-scratching. The core issue stems from how Rust's borrow checker enforces memory safety. Let's unpack it systematically.
+, let’s tackle lifetime parameters in Rust traits. This is a common pain point, and I remember when I first encountered it while building a custom caching library—it took a fair bit of head-scratching. The core issue stems from how Rust's borrow checker enforces memory safety. it systematically.
 
 First, it's vital to understand that lifetime parameters within traits are about defining contracts concerning how long references must remain valid when used within functions that implement that trait. They aren't just arbitrary type decorations; they're fundamental to Rust's memory management guarantees. Unlike other languages where the garbage collector handles memory automatically, Rust is explicit, placing the responsibility squarely on the developer. This can feel restrictive at first, but it leads to significant performance gains and the elimination of entire categories of bugs.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-a-custom-sortable-column-to-active-admin"
 ---
 
-, let's unpack this. Custom sortable columns in Active Admin. I’ve certainly spent some time on this, especially back when we were migrating a legacy e-commerce platform. We had this incredibly intricate order management system where sorting by calculated shipping costs or some equally convoluted customer segmentation metric was crucial. The default sort behaviors just didn’t cut it; we needed something more. It’s a common scenario. Let's walk through how you can approach this, and I’ll throw in some code examples to make it concrete.
+. Custom sortable columns in Active Admin. I’ve certainly spent some time on this, especially back when we were migrating a legacy e-commerce platform. We had this incredibly intricate order management system where sorting by calculated shipping costs or some equally convoluted customer segmentation metric was crucial. The default sort behaviors just didn’t cut it; we needed something more. It’s a common scenario. Let's walk through how you can approach this, and I’ll throw in some code examples to make it concrete.
 
 The core challenge with custom sortable columns lies in understanding that Active Admin, by default, relies on the underlying database model's columns for its sorting capabilities. When you introduce calculated values or values derived from associations that aren't directly stored, you have to intervene and provide the sorting logic yourself. The key here is using `ransack`, which Active Admin uses behind the scenes for searching and filtering. Essentially, we’ll extend `ransack` to understand how to sort on our custom field.
 

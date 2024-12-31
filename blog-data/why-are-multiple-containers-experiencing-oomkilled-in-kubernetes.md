@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-multiple-containers-experiencing-oomkilled-in-kubernetes"
 ---
 
-, let's unpack this. OOMKilled events in Kubernetes – not exactly the kind of morning notification you want to see, are they? I've had my fair share of late nights chasing down these issues, and it often boils down to a few core causes, each requiring a slightly different approach to diagnose and resolve. It's rarely just a single, isolated problem, more like a confluence of factors hitting at once.
+. OOMKilled events in Kubernetes – not exactly the kind of morning notification you want to see, are they? I've had my fair share of late nights chasing down these issues, and it often boils down to a few core causes, each requiring a slightly different approach to diagnose and resolve. It's rarely just a single, isolated problem, more like a confluence of factors hitting at once.
 
 When we're talking about multiple containers being OOMKilled, it indicates a systemic resource constraint, or at least a misconfiguration that's amplified at scale. It's not simply about individual containers exceeding their limits; it’s more likely a larger issue impacting several pods across your cluster. Let's dive into some common scenarios and what I've learned from battling them.
 
