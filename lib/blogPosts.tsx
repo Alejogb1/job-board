@@ -29,16 +29,10 @@ export function getSortedPostsData() {
       ...matterResult.data as PostData,
     };
   });
-  
-  console.log("All posts data before sorting:", allPostsData);
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
+
+
 }
+
 
 export function getAllPostIds() {
   const fileNames = fs.readdirSync(postsDirectory);

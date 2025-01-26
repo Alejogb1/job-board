@@ -2,22 +2,31 @@
 "use client";
 
 import { useEffect } from 'react';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/default.css'; // Import your preferred theme
+import MarkdownIt from 'markdown-it';
+import 'highlight.js/styles/default.css';
+import styles from './HighlightedPostContent.module.css';
 
 interface HighlightedPostContentProps {
   contentHtml: string;
 }
 
 const HighlightedPostContent: React.FC<HighlightedPostContentProps> = ({ contentHtml }) => {
-  // Apply syntax highlighting once the component mounts
   useEffect(() => {
-    hljs.highlightAll();
+    const md = new MarkdownIt({
+      html: true,
+      linkify: true,
+      typographer: true,
+      breaks: true,
+      tables: true
+    });
+    
+    // Enable table support
+    md.enable('table');
   }, []);
 
   return (
     <div
-      className="mt-4"
+      className={`mt-4 prose prose-slate max-w-none ${styles.markdown}`}
       dangerouslySetInnerHTML={{ __html: contentHtml }}
     />
   );

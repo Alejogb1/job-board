@@ -16,6 +16,11 @@ export default function Header() {
             {/* Desktop sign in links */}
             <div className="flex grow justify-end flex-wrap items-center">
               <div>
+                <Link className="text-sm font-medium text-black-500 hover:underline px-3 lg:px-5 py-2 flex items-center" href="/gpu">
+                  GPU
+                </Link>
+              </div>
+              <div>
                 <Link className="text-sm font-medium text-black-500 hover:underline px-3 lg:px-5 py-2 flex items-center" href="/blog">
                   Blog
                 </Link>
