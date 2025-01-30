@@ -24,13 +24,16 @@ export function getSortedPostsData() {
     const fullPath = path.join(postsDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const matterResult = matter(fileContents);
+    
     console.log("Matter result:", matterResult);
+
     return {
-      ...matterResult.data as PostData,
+      id, // Include the post ID
+      ...matterResult.data as Omit<PostData, "id" | "contentHtml">, // Exclude unnecessary fields
     };
   });
 
-
+  return allPostsData; // ✅ Return the processed array
 }
 
 
