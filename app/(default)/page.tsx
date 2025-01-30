@@ -1,7 +1,6 @@
 import Hero from '@/components/hero'
 import PressLogos from '@/components/press-logos'
 import Sidebar from '@/components/sidebar'
-import PostsList from './posts-list'
 import SearchField from '@/components/search-field'
 interface Post {
   id: number,
@@ -45,9 +44,6 @@ export default async function Home({
               <Sidebar/>
               <div className="md:grow">
                 <SearchField />
-                { query ? (
-                  <PostsList query={query} currentPage={currentPage}/>  
-                ): <PostsList query={""} currentPage={currentPage}/> }
               </div>
             </div>
           </div>
