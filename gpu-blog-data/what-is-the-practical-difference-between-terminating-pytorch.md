@@ -1,5 +1,5 @@
 ---
-title: "What is the practical difference between terminating PyTorch training with Ctrl-C and Ctrl-'\'?"
+title: "What is the practical difference between terminating PyTorch training with Ctrls?"
 date: "2025-01-30"
 id: "what-is-the-practical-difference-between-terminating-pytorch"
 ---
