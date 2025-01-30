@@ -1,9 +1,8 @@
 ---
 title: "Can WaitHandle.SignalAndWait calls be ignored during performance profiling?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-waithandlesignalandwait-calls-be-ignored-during-performance-profiling"
 ---
-
 The behavior of `WaitHandle.SignalAndWait` calls during performance profiling requires careful consideration, as their perceived impact can significantly mislead analysis. Specifically, while these calls involve thread synchronization and can *appear* computationally intensive, ignoring them entirely risks missing critical performance bottlenecks rooted in thread contention and delays. In my experience, developing highly concurrent network servers, proper profiling of these synchronization primitives has often revealed far more nuanced issues than simple CPU cycle counts ever could.
 
 The `WaitHandle.SignalAndWait` method, commonly found in .NET threading, attempts to atomically signal a wait handle and then wait on another. This mechanism is a cornerstone of inter-thread communication, enabling cooperative multitasking and protecting shared resources. The function itself involves minimal user-mode code execution, primarily transitioning to the operating system kernel for the signaling and subsequent blocking operations. The elapsed time measured during a profile may consist of multiple components: the brief CPU cycles executing the user-mode transition, the time spent in the kernel scheduler, and the time the thread remains blocked until the target handle is signaled. It’s this last component, the blocked duration, that often dominates the measurement but doesn’t represent computational *work* being done by the profiled thread.

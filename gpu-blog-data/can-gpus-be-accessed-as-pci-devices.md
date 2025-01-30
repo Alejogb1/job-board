@@ -1,9 +1,8 @@
 ---
 title: "Can GPUs be accessed as PCI devices?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-gpus-be-accessed-as-pci-devices"
 ---
-
 Modern graphics processing units (GPUs), despite their specialized architecture for parallel computation, are indeed fundamentally accessible as Peripheral Component Interconnect (PCI) devices within a computer system. This isn't a theoretical possibility, but a core aspect of how they integrate with the motherboard and the overall system architecture. I've worked extensively with low-level system programming, including custom device drivers, which has afforded me direct experience in this interaction.
 
 The PCI interface serves as the primary communication channel between the CPU, chipset, and numerous peripheral devices, and the GPU is no exception. The system BIOS (or UEFI firmware) initializes and enumerates all detected PCI devices at startup, assigning each a unique address within the PCI address space. The operating system then utilizes these addresses to interact with each device, including GPUs. This interaction involves memory-mapped I/O (MMIO), where certain regions of the PCI address space are mapped to memory addresses, allowing the CPU to send commands to the GPU and read responses. These commands are specific to the GPU architecture and include operations like loading shaders, launching computation kernels, and transferring data to and from the GPU's dedicated memory.

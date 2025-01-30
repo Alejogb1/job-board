@@ -1,9 +1,8 @@
 ---
 title: "How can an actor-critic agent be effectively trained?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-an-actor-critic-agent-be-effectively-trained"
 ---
-
 Reinforcement learning presents significant training challenges, and actor-critic methods, while powerful, are not immune to these difficulties. Specifically, achieving stable and efficient learning with actor-critic architectures often hinges on addressing variance in the gradient estimates used to update both the actor (policy) and critic (value function). I’ve encountered these issues firsthand during development of a robotic navigation system where the rewards were sparse and delayed.
 
 The core challenge lies in the inherent interdependence of the actor and critic. The critic aims to accurately estimate the value of states or state-action pairs, which then informs the actor on how to improve its policy. However, the critic’s accuracy is dependent on the behavior of the current policy. As the policy changes during training, so does the data distribution the critic observes, leading to non-stationary learning environments and potentially erratic convergence. In practice, we often witness oscillations in the learned policy if this isn't carefully managed. Furthermore, high variance in the returns, especially in environments with stochastic state transitions or delayed rewards, can further destabilize training.

@@ -1,9 +1,8 @@
 ---
 title: "How can ROC curves be visualized in TensorBoard?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-roc-curves-be-visualized-in-tensorboard"
 ---
-
 TensorBoard, a visualization tool within the TensorFlow ecosystem, does not inherently render Receiver Operating Characteristic (ROC) curves directly as a specific panel type. Instead, ROC curve data needs to be structured and logged in a manner that leverages TensorBoard’s existing capabilities, specifically scalar and image summaries, to achieve a visual representation. My experience building several fraud detection models has ingrained in me this particular approach due to the crucial nature of evaluating classifier performance at varying thresholds.
 
 The core challenge lies in the fact that an ROC curve is not a single scalar value but a two-dimensional plot illustrating the trade-off between the True Positive Rate (TPR) and False Positive Rate (FPR) across a range of classification thresholds. TensorBoard primarily handles scalar metrics and images. Thus, we must log sufficient data to recreate this plot. I found the most practical approach is to compute TPR and FPR at discrete thresholds and store these pairs as scalar summaries. While this allows for a reconstruction of the curve, another complimentary method would be to actually render the ROC plot as an image, especially for more complex models where threshold discretization may be too sparse.

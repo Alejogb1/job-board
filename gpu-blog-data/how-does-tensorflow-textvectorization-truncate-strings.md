@@ -1,9 +1,8 @@
 ---
 title: "How does TensorFlow TextVectorization truncate strings?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-tensorflow-textvectorization-truncate-strings"
 ---
-
 TextVectorization in TensorFlow, a crucial preprocessing layer for Natural Language Processing (NLP) tasks, employs a nuanced truncation strategy that primarily operates on tokens rather than raw characters. This distinction is fundamental to its design and directly impacts how effectively it handles variable-length input sequences, a common characteristic of textual data. Specifically, when a specified `max_tokens` parameter is provided (either explicitly during instantiation or implicitly through the vocabulary), the layer will limit the number of tokens in any given input string, effectively truncating the string. The crucial detail is that this truncation happens *after* tokenization, not before. This ensures consistent vector lengths for model inputs, while preserving as much of the relevant textual content as is practical.
 
 Before delving into implementation details, it’s important to acknowledge that `TextVectorization`'s tokenization process is configurable. By default, it uses a simple whitespace splitting, resulting in a series of space-delimited tokens. However, users can provide custom split functions for more complex tokenization needs, for example, incorporating punctuation rules or performing subword tokenization, like using WordPiece. The truncation process remains consistent, acting on the tokens produced by the chosen tokenizer.

@@ -1,9 +1,8 @@
 ---
 title: "How can WPF application performance be profiled?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-wpf-application-performance-be-profiled"
 ---
-
 WPF application performance profiling is crucial for delivering a responsive and fluid user experience, often requiring an in-depth look beyond surface-level observations. Profiling isn't a one-size-fits-all process; rather, it's an iterative investigation into various facets of application execution. Over the years, I've found that a methodical approach, focusing on specific problem areas, yields the most efficient performance improvements.
 
 The most effective method involves a combination of specialized tools provided by Microsoft and a disciplined diagnostic mindset. WPF performance bottlenecks often manifest in areas like rendering, layout calculations, data binding, and heavy processing on the UI thread. I'll illustrate how to pinpoint these issues using established profiling techniques.

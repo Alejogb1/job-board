@@ -1,9 +1,8 @@
 ---
 title: "Can autoencoders handle differing input and output shapes?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-autoencoders-handle-differing-input-and-output-shapes"
 ---
-
 The capacity for autoencoders to handle differing input and output shapes hinges on the architecture's latent space and its interpretation. Unlike strictly reconstructive models, autoencoders can, with careful design, be used for tasks where the input and output dimensions vary, even radically. However, this capability demands a conscious shift from directly mirroring the input in the output, and instead utilizing the compressed, latent representation as a transformational intermediary. I’ve tackled this particular challenge across several projects focused on modal data conversions – the core principle is applicable in many domains.
 
 Fundamentally, an autoencoder consists of an encoder and a decoder. The encoder maps the input to a lower-dimensional latent space, and the decoder reconstructs from this latent representation. In a traditional, reconstructive autoencoder, the output is designed to match the input precisely. However, when input and output shapes diverge, the core functionality pivots to leveraging the latent space for generating outputs not necessarily bound by the input's structure or dimension.

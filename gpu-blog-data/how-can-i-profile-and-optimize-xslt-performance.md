@@ -1,9 +1,8 @@
 ---
 title: "How can I profile and optimize XSLT performance?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-profile-and-optimize-xslt-performance"
 ---
-
 XSLT transformations, particularly complex ones, can become performance bottlenecks in applications. Years spent debugging sluggish data processing pipelines have taught me that a focused approach to profiling and optimization is critical. The challenge typically lies not in the logic itself, but in how that logic is executed by the XSLT processor. Profiling identifies hotspots, enabling targeted optimization.
 
 Fundamentally, XSLT performance hinges on the processor’s ability to efficiently navigate and transform the XML document. This involves three key phases: parsing the XML, applying the XSLT stylesheet, and serializing the transformed result. Bottlenecks can occur within any of these phases. My experience primarily shows that the application of the stylesheet—specifically, the repetitive execution of template rules, recursive calls, and inefficient node selection—are the most common culprits. Effective optimization therefore necessitates understanding how the XSLT processor interprets and executes each instruction.

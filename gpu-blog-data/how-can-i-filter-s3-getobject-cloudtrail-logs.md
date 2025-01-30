@@ -1,9 +1,8 @@
 ---
 title: "How can I filter S3 get_object CloudTrail logs?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-filter-s3-getobject-cloudtrail-logs"
 ---
-
 CloudTrail logs for `s3:GetObject` events often become voluminous, and efficient filtering is crucial for security analysis and operational troubleshooting. I've spent considerable time parsing these logs for incident response, and a straightforward grep approach quickly becomes impractical. The logs, being JSON objects, necessitate a more nuanced approach, typically leveraging tools designed for JSON processing or log aggregation systems.
 
 The fundamental challenge arises from the nested structure of the CloudTrail logs. Each log entry, representing a single event, contains various fields. The event details relevant for filtering, like the S3 bucket name, key, or user identity, are often deeply embedded within these JSON structures. Direct string matching is error-prone due to variations in formatting and potential extraneous data. Effective filtering requires extracting specific values based on their key path within the JSON.

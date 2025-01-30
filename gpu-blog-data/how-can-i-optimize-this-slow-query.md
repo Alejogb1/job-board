@@ -1,9 +1,8 @@
 ---
 title: "How can I optimize this slow query?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-optimize-this-slow-query"
 ---
-
 Given the provided context of a slow query, the immediate area to investigate is almost always the database's execution plan. From years of experience working with large relational databases, particularly in high-transaction environments, I’ve found that a seemingly innocuous query can perform poorly due to suboptimal plan selection by the query optimizer. The actual query code, while important, is often not the root cause; instead, it's usually the strategy the database employs to retrieve the requested data. Let’s break down how I would approach this.
 
 **Understanding the Problem: Execution Plan Analysis**

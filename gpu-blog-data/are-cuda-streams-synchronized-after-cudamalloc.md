@@ -1,9 +1,8 @@
 ---
 title: "Are CUDA streams synchronized after `cudaMalloc`?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "are-cuda-streams-synchronized-after-cudamalloc"
 ---
-
 No, CUDA streams are not implicitly synchronized after a `cudaMalloc` call. This misunderstanding is common, stemming from the desire for automatic memory management across concurrent operations. My extensive experience optimizing CUDA kernels reveals that `cudaMalloc` primarily operates on the host side, issuing a command to allocate device memory, but it does not inherently guarantee any ordering or completion with respect to operations launched on a CUDA stream.
 
 To understand why this is the case, it's crucial to differentiate between host-side commands and kernel launches within a stream. `cudaMalloc` is a synchronous host-side call. The host thread will block until the memory allocation on the device is complete. Crucially, this completion is with respect to the *device*, not with respect to specific ongoing kernel executions within a stream. The allocated memory is, however, readily available for subsequent kernels, which operate within the asynchronous environment of a stream. The stream acts as a pipeline of operations, including kernel launches and memory copies. `cudaMalloc` itself, being a host-side operation, does not directly impact the stream's execution order. Synchronization needs to be explicitly implemented using appropriate mechanisms if ordering with kernel execution is desired.

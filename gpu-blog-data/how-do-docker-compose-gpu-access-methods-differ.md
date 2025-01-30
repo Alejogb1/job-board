@@ -1,9 +1,8 @@
 ---
 title: "How do Docker Compose GPU access methods differ?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-do-docker-compose-gpu-access-methods-differ"
 ---
-
 Having spent considerable time orchestrating machine learning pipelines, I've encountered various approaches to granting Docker containers access to GPUs, especially within the Docker Compose framework. The core difference lies in how the host’s GPU resources are exposed and mapped into the container environment. This variation stems from the need to balance ease of use, security, and flexibility. Fundamentally, it’s about moving from a default CPU-centric container runtime to one that’s cognizant of, and can effectively leverage, the underlying GPU hardware.
 
 The fundamental problem addressed by GPU access methods is that Docker containers, by default, operate in isolation and are unaware of host hardware beyond the abstracted CPU. Without explicit configuration, a Docker container would be unable to detect or use any available GPUs. The methods for enabling this access fall into two primary categories: leveraging runtime flags at container creation and more sophisticated configurations through driver support and device mapping. The efficacy of each method is highly dependent on the host environment, container runtime, and the software libraries within the container that are used to access the GPU.

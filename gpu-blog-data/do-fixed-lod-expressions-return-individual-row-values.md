@@ -1,9 +1,8 @@
 ---
 title: "Do fixed LOD expressions return individual row values?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "do-fixed-lod-expressions-return-individual-row-values"
 ---
-
 In my experience, fixed Level of Detail (LOD) expressions, in the context of data analysis tools like Tableau, do not directly return individual row values in the same way that row-level calculations do. Instead, they compute an aggregated value at a specified level of granularity, and that aggregated result is then *attached* to each row that matches that specified granularity. Understanding this distinction is crucial when constructing complex analyses and anticipating the output of such calculations.
 
 The key to understanding this behavior lies in the 'fixed' clause itself. Unlike other LOD expressions that are computed based on the visualization's current dimensions or are relative to specific subsets, fixed LOD expressions calculate an aggregation irrespective of the dimensions in the view. They perform this aggregation at the level specified by the dimensions declared within the `FIXED()` syntax. For each row, the tool checks the specified dimensions to determine the group to which the row belongs. It then assigns the aggregated value for that group to the corresponding row. Thus, while it appears they return a value *for* each row, the value itself is based on an aggregated calculation. Therefore, a fixed LOD expression does not return a distinct row-level result but a repeated aggregated calculation at the given level.

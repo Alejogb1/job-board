@@ -1,9 +1,8 @@
 ---
 title: "How can transfer learning enhance federated learning?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-transfer-learning-enhance-federated-learning"
 ---
-
 Federated learning, by its distributed nature, often struggles with data heterogeneity and limited labeled data per client. Transfer learning, in my experience, directly addresses these limitations by enabling knowledge sharing across tasks and datasets, which proves particularly potent within the federated setting. The key benefit stems from the fact that a well-trained model on a rich, potentially centralized dataset can serve as a powerful initialization or feature extractor for client-specific models in a federated system.
 
 The core idea is that instead of each client starting from random weights and training a model from scratch using only their local dataset, we can leverage a pre-trained model. This initial model, often trained on a large, public dataset representative of the task domain, captures general patterns and features relevant to the problem. Clients then fine-tune this pre-trained model using their local data. This avoids the need for clients to individually learn these low-level features, accelerating convergence and improving the overall performance. In essence, the pre-trained model provides a common knowledge base, circumventing the challenges of sparse local data.

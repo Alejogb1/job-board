@@ -1,9 +1,8 @@
 ---
 title: "How do I compile on AIX?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-do-i-compile-on-aix"
 ---
-
 AIX, a proprietary UNIX operating system developed by IBM, presents unique challenges during software compilation due to its specific toolchain, libraries, and system architecture. Over the past decade working on legacy systems, I've encountered these nuances firsthand, and successfully navigated the process of compiling various applications, including C++, Fortran, and even legacy COBOL applications. Compilation on AIX demands familiarity with the `xlc` and `xlC` compilers (for C and C++ respectively) and often requires careful configuration of environment variables and linker flags. Unlike many Linux distributions, AIX doesn't typically include a readily available GNU toolchain, necessitating reliance on IBM's proprietary offerings.
 
 The core process fundamentally mirrors that of compilation on any UNIX-like system. We still have source code (e.g., `.c`, `.cpp`, `.f90`), which is fed to a compiler to generate object files (`.o`), which are then linked together with libraries to create an executable. The key differentiators are the specifics of the IBM XL compilers and the AIX environment.

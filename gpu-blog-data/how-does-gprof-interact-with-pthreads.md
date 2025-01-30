@@ -1,9 +1,8 @@
 ---
 title: "How does gprof interact with pthreads?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-gprof-interact-with-pthreads"
 ---
-
 The interaction between `gprof`, the GNU profiler, and POSIX threads (`pthreads`) is often a source of confusion because `gprof` was primarily designed for single-threaded applications. Its sampling-based approach inherently struggles with the concurrent execution model of multi-threaded programs, leading to inaccurate or misleading profile data when directly applied. This arises because `gprof` relies on timer-based interrupts that are delivered to the process as a whole, not specific threads, leading to an inconsistent mapping of time spent. I've observed this limitation firsthand in a large-scale simulation project where we transitioned from a single-threaded implementation to a multi-threaded one using `pthreads`, and our initial profiling results became largely nonsensical.
 
 The core issue stems from how `gprof` samples the program counter (PC). In a single-threaded application, each sample directly correlates to time spent in the currently executing function. However, with multiple threads, a sample taken might fall within a function executed by any of the threads currently running on the CPU cores. If thread A happens to be performing the most work and thus consuming the most CPU time, a disproportionate number of samples might fall within its execution context while other threads might not receive sufficient sampling, even if their operations are equally important to the overall performance. This leads to a skewed representation of time consumption and potentially misguided optimization efforts.

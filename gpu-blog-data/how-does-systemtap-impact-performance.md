@@ -1,9 +1,8 @@
 ---
 title: "How does SystemTap impact performance?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-systemtap-impact-performance"
 ---
-
 SystemTap, a dynamic tracing tool within the Linux kernel, inherently introduces performance overhead due to its on-demand instrumentation and data collection. My experience deploying SystemTap in high-throughput network environments has shown that this impact can range from negligible to significant, primarily contingent on the complexity of the probes and the volume of data being processed. Understanding and managing this overhead is crucial for effectively using SystemTap for performance analysis and debugging.
 
 The core mechanism of SystemTap involves inserting probes at various points within the kernel or user space code. These probes act as interception points; when execution reaches a probe, the SystemTap runtime environment gains control. It then executes the associated script instructions, typically gathering data about the execution context (e.g., function arguments, stack traces, variables). This process, while invaluable for debugging and tracing, inevitably adds processing cycles and can disrupt the normal flow of the targeted code. The level of disruption is directly tied to the following factors:

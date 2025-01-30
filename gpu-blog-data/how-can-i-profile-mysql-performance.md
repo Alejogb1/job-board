@@ -1,9 +1,8 @@
 ---
 title: "How can I profile MySQL performance?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-profile-mysql-performance"
 ---
-
 Profiling MySQL performance effectively necessitates a multi-faceted approach, extending beyond superficial observation to uncover the nuanced bottlenecks hindering optimal database operation. My experiences managing databases across various web applications have consistently shown that a singular metric is rarely the complete picture; thus, a combination of tools and techniques provides the most actionable insights.
 
 First, the cornerstone of effective profiling lies in understanding the query execution process. MySQL operates by receiving SQL queries, parsing them, optimizing them via the query optimizer, and executing them. Bottlenecks can occur at any of these stages. Initial analysis often involves reviewing the slow query log, a straightforward feature that records queries exceeding a user-defined time threshold. This log provides basic but crucial information: execution time, the initiating user, and the SQL query itself. By examining this log, I’ve repeatedly identified poorly performing queries that were previously unnoticed due to their infrequent execution or small dataset interactions. Such queries, while not always the most frequent, can significantly impact overall performance when they are run, particularly during high-load periods.

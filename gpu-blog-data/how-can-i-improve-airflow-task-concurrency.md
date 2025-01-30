@@ -1,9 +1,8 @@
 ---
 title: "How can I improve Airflow task concurrency?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-improve-airflow-task-concurrency"
 ---
-
 Achieving optimal task concurrency in Apache Airflow is crucial for minimizing pipeline execution time and maximizing resource utilization. Based on my experience managing complex data pipelines, the challenge often isn't simply about running more tasks, but about intelligently distributing workload across available resources, while simultaneously preventing resource saturation and deadlocks. Fundamentally, the scheduler and executor configurations are the primary areas to address when seeking concurrency improvements.
 
 A key aspect of effective Airflow concurrency management is understanding the interaction between the `max_active_runs` parameter of a DAG and the executor configuration. The `max_active_runs` parameter limits the number of concurrent DAG runs, irrespective of task parallelism within each run. Even with a highly scalable executor, a low `max_active_runs` value will bottleneck overall throughput by preventing multiple DAG executions from happening simultaneously.

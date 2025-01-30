@@ -1,9 +1,8 @@
 ---
 title: "How are structures declared within functions in C?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-are-structures-declared-within-functions-in-c"
 ---
-
 In C, the declaration of structures within functions exhibits a critical difference from global structure declarations: scope. Specifically, a structure declared inside a function possesses *local scope*, meaning its definition is only valid within that particular function. This limitation influences visibility and memory management, affecting how structures are utilized in a C program.
 
 Local scope dictates that the structure's name, as well as the template it defines, is unavailable outside of the function where it's declared. Consequently, different functions may declare structures with identical names, and these will be regarded as distinct and unrelated types. This contrasts with structures declared at the global level, where the structure definition and name have file scope (visible throughout the compilation unit). Using local structures can improve code modularity by isolating type definitions and avoiding namespace conflicts. However, this isolation requires careful design consideration when passing structured data between functions.

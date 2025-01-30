@@ -1,9 +1,8 @@
 ---
 title: "How does PyTorch Lightning's ModelCheckpoint callback work?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-pytorch-lightnings-modelcheckpoint-callback-work"
 ---
-
 ModelCheckpoint in PyTorch Lightning operates by monitoring a specified metric during training, validation, or testing phases and saving model checkpoints based on whether the metric has improved according to a defined condition. This capability is crucial for preserving optimal model states during long or complex training processes, ensuring that one can retrieve the best-performing model rather than the final, potentially sub-optimal, model at the end of training. Over the years, my projects have benefited substantially from its efficient checkpointing system.
 
 The core functionality of the `ModelCheckpoint` callback lies in its interaction with the `Trainer` instance. The `Trainer` is responsible for managing the training loop, and at each relevant step (e.g., end of an epoch), it triggers callbacks like `ModelCheckpoint`. The callback then assesses the current value of the monitored metric and, depending on the `mode` (e.g., `min`, `max`), determines if the current metric value represents an improvement. If so, it saves a checkpoint of the model’s state.

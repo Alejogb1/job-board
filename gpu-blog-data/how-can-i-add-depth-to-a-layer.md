@@ -1,9 +1,8 @@
 ---
 title: "How can I add depth to a layer?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-add-depth-to-a-layer"
 ---
-
 Adding depth to a layer, in the context of user interface or graphics programming, typically refers to creating a perception of three-dimensionality on a two-dimensional display. This isn’t about physically altering the geometry of a plane, but rather employing techniques that trick the human visual system into interpreting a flat surface as having depth. I've encountered this problem numerous times, particularly when building complex data visualizations and interactive dashboards. Simply stacking layers on top of one another isn’t sufficient; true depth requires a more sophisticated approach involving visual cues.
 
 The core principle relies on manipulating elements like shading, perspective, and the arrangement of objects to generate the illusion of a Z-axis. We, as visual processors, are accustomed to interpreting these cues from the physical world. The goal is to carefully replicate these cues within our UI design. There isn't a single "depth" function, but a collection of methods that are used in concert to achieve the desired effect. One of the most common methods I've seen, and used myself, is utilizing shadows. This can take multiple forms, from simple drop shadows to more complex ambient occlusion simulations.

@@ -1,9 +1,8 @@
 ---
 title: "How can code profiling be performed?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-code-profiling-be-performed"
 ---
-
 Code profiling, at its core, is the systematic examination of a program’s execution behavior to identify performance bottlenecks. It involves measuring various aspects of a program's runtime, such as execution time of functions, memory allocation patterns, and call frequencies. This analysis provides developers with concrete data on where the program spends the most resources, enabling targeted optimizations. Without such measurements, optimization efforts can be misguided, often leading to negligible improvements or even detrimental effects. In my experience over the last decade, working on everything from embedded systems to large distributed applications, the lack of proper profiling has invariably resulted in wasted effort and missed opportunities for genuine performance gains.
 
 Profiling can be broadly categorized into two approaches: **statistical profiling** and **deterministic profiling**. Statistical profiling relies on periodically sampling the program’s program counter to infer where the program is spending most of its time. This method has the advantage of being low-overhead and can be used with minimal changes to the existing codebase. Deterministic profiling, on the other hand, relies on instrumenting the code with timers or counters to measure specific regions of interest. It offers higher accuracy in the measured time spent in a given region but incurs a higher overhead. The choice between the two depends heavily on the specific application and the level of precision required. For the majority of cases, statistical profiling provides an excellent starting point. When a hot spot has been identified, more detailed deterministic analysis can be then be performed for a clearer picture.

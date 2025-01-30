@@ -1,9 +1,8 @@
 ---
 title: "How can GPU-based frustum culling be implemented efficiently?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-gpu-based-frustum-culling-be-implemented-efficiently"
 ---
-
 Implementing frustum culling efficiently on the GPU requires a careful understanding of the graphics pipeline and leveraging its parallel processing capabilities. I’ve spent considerable time optimizing real-time rendering engines, and I’ve found that relying primarily on the GPU’s architecture for this task, rather than pre-filtering on the CPU, leads to superior performance, especially with scenes exhibiting high complexity.
 
 The central idea behind frustum culling is identifying which objects, represented by their bounding volumes, are within the camera’s view frustum and discarding the rest. This process reduces the number of primitives that need to be processed by later pipeline stages, resulting in significant performance improvements. The challenge lies in performing this test quickly and concurrently across a vast number of objects. Moving this task to the GPU allows for massive parallelization since it can execute the same culling logic against each object simultaneously using thousands of processing cores.

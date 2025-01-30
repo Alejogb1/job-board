@@ -1,9 +1,8 @@
 ---
 title: "How accurate is my Federated Learning model?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-accurate-is-my-federated-learning-model"
 ---
-
 Federated Learning (FL) models, by their distributed nature, inherently pose unique challenges when assessing accuracy compared to traditional centralized machine learning. My experience across multiple projects implementing FL for client-side data privacy indicates that accuracy evaluation is not a singular, static value but rather a multi-faceted consideration. Simply reporting a global accuracy score derived from a centralized test set can be misleading. Several factors contribute to the perceived accuracy of an FL model, and a holistic analysis requires looking beyond a single metric.
 
 Firstly, understanding the inherent statistical heterogeneity of federated data is crucial. Unlike centralized datasets where data distributions often conform to a predictable pattern, federated data is typically *non-IID* (non-independent and identically distributed). Each client’s data may represent a distinct sub-population with its own unique characteristics and biases. The model’s accuracy on the global, aggregated dataset (if such a dataset is constructed for testing) may not reflect its performance on individual clients. A model achieving high aggregate accuracy might perform poorly on clients with data significantly different from the aggregate distribution.

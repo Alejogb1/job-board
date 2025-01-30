@@ -1,9 +1,8 @@
 ---
 title: "How do elliptical kernels enhance CNN performance?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-do-elliptical-kernels-enhance-cnn-performance"
 ---
-
 The core advantage of elliptical kernels in Convolutional Neural Networks (CNNs) stems from their capacity to capture anisotropic spatial relationships within image data, a capability lacking in the commonly used square or rectangular kernels. Having spent several years optimizing image recognition models for robotic vision, I've witnessed firsthand the limitations imposed by isotropic kernels, particularly when dealing with scenes containing objects with pronounced directional features or non-uniform textures. Elliptical kernels, by allowing for varying receptive field extents along different axes, provide a more nuanced analysis, leading to improved feature extraction and subsequent gains in model accuracy.
 
 **Explanation of the Mechanism**

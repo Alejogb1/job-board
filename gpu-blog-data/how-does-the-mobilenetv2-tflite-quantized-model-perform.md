@@ -1,9 +1,8 @@
 ---
 title: "How does the MobileNetV2 TFLite quantized model perform?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-the-mobilenetv2-tflite-quantized-model-perform"
 ---
-
 Quantization of a MobileNetV2 model for TensorFlow Lite (TFLite) deployment directly impacts both model size and inference speed, frequently at the cost of a small, acceptable decrease in accuracy. My experience with deploying computer vision models onto resource-constrained mobile devices has consistently highlighted this trade-off as critical in practical scenarios. A fully quantized MobileNetV2 TFLite model, specifically employing post-training integer quantization, offers a compelling balance between these often-conflicting requirements, making it an ideal choice for edge computing.
 
 The core principle of post-training integer quantization involves converting model weights and activations from floating-point representations (typically 32-bit floats) to lower-precision integer representations (typically 8-bit integers). This reduction in bit-width leads to a significant decrease in model size and faster computation as integer operations are natively supported by most modern processors, including those found in mobile devices. Floating-point operations are significantly slower, particularly on lower-end mobile CPUs and GPUs that lack dedicated floating-point hardware. During the quantization process, the floating-point weights and activations are mapped onto discrete integer values through a linear relationship, defined by a scale factor and a zero-point. This process requires a representative dataset to determine optimal scaling and zero-point values to minimize the information loss resulting from the change in data representation. The loss of information and thus potential loss of accuracy is an unavoidable consequence of this conversion. Therefore, model performance can be directly measured by comparing the accuracy of the original floating point model to the quantized model.

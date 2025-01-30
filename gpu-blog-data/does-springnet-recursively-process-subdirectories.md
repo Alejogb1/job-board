@@ -1,9 +1,8 @@
 ---
 title: "Does Spring.NET recursively process subdirectories?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "does-springnet-recursively-process-subdirectories"
 ---
-
 In my experience managing several legacy .NET applications using Spring.NET, a common misunderstanding involves the behavior of its configuration loading with respect to subdirectories. Specifically, the assertion that Spring.NET *recursively* processes subdirectories for configuration files is not entirely accurate. It’s more nuanced and depends heavily on how the configuration is initiated and how the file paths are specified within the application context definition. By default, Spring.NET, when using file system based resources, does *not* automatically traverse subdirectories. Instead, it relies on explicit path definitions or wildcards. This distinction is critical for structuring configuration files and understanding where beans are discovered.
 
 Let me elaborate. The primary mechanism through which Spring.NET loads configuration is the `ContextRegistry` or one of its associated `ApplicationContext` implementations. When a file path is provided, Spring.NET will look in that directory for XML configuration files, and only there. If the configuration files are nested within subdirectories, those subdirectories and their contents will not be considered unless explicitly specified within the `ContextRegistry` configuration. This means that for a standard application that has its configurations organized into logical directories, relying on automatic recursive directory traversal would lead to beans failing to be created or dependency injections failing to resolve.

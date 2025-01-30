@@ -1,9 +1,8 @@
 ---
 title: "How can Bayesian optimization improve hyperparameter tuning?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-bayesian-optimization-improve-hyperparameter-tuning"
 ---
-
 Hyperparameter tuning, particularly in complex machine learning models, often suffers from inefficient search strategies. Conventional techniques like grid search or random search explore the parameter space without learning from past evaluations. Bayesian optimization, however, addresses this by employing a probabilistic model to guide the search, making it a more targeted and resource-efficient method.
 
 My initial experience with hyperparameter tuning involved wrestling with deep learning architectures for image segmentation tasks. Early attempts using grid search were computationally expensive, often yielding suboptimal results even after extensive experimentation. This led me to investigate Bayesian optimization, which significantly improved both the efficacy and efficiency of my hyperparameter searches.

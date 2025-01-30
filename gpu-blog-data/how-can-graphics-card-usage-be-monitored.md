@@ -1,9 +1,8 @@
 ---
 title: "How can graphics card usage be monitored?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-graphics-card-usage-be-monitored"
 ---
-
 Efficient monitoring of graphics processing unit (GPU) utilization is crucial for optimizing application performance, diagnosing bottlenecks, and ensuring efficient resource management. Over my tenure working on high-performance computing clusters, I’ve encountered numerous scenarios where subtle shifts in GPU workload had profound impacts on application run times. Understanding the various metrics and tools available for GPU monitoring is, therefore, essential.
 
 The core of GPU monitoring lies in accessing hardware performance counters and exposing them through operating system interfaces. These counters provide granular details about various aspects of GPU operation, including utilization rates, memory usage, power consumption, and temperature.  These metrics are dynamic; they vary substantially depending on the computational intensity of the running workload and the design of the applications themselves. No single metric reveals the whole story; rather, a comprehensive analysis relies on several related measurements.

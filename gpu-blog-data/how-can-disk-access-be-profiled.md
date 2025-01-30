@@ -1,9 +1,8 @@
 ---
 title: "How can disk access be profiled?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-disk-access-be-profiled"
 ---
-
 Disk access profiling is crucial for identifying performance bottlenecks in applications reliant on persistent storage. Through detailed analysis, I've been able to pinpoint inefficiencies stemming from both coding choices and inherent limitations of the underlying storage subsystem. This involves not just measuring raw I/O throughput, but also understanding patterns of access – sequential versus random, read versus write ratios, and the impact of different caching strategies.
 
 The fundamental goal of disk access profiling is to uncover where I/O operations are slowing down an application. These slowdowns can manifest as high latency, low throughput, or excessive CPU utilization spent waiting on I/O. Profiling helps reveal whether these issues are due to poorly designed algorithms, suboptimal data access patterns, or the physical constraints of the storage hardware itself. The methodology hinges on intercepting or monitoring the communication channel between the application and the disk, often at the operating system level.

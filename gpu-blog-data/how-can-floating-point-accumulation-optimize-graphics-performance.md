@@ -1,9 +1,8 @@
 ---
 title: "How can floating-point accumulation optimize graphics performance?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-floating-point-accumulation-optimize-graphics-performance"
 ---
-
 The fundamental challenge in graphics rendering often lies in minimizing the number of computations performed, particularly during operations like blending or accumulation of pixel data. Floating-point accumulation, when strategically applied, can significantly reduce these per-pixel calculations by exploiting the associative and distributive properties of addition, albeit with careful consideration for precision limitations. In my experience developing real-time rendering pipelines for a particle-based simulation engine, I encountered scenarios where naively blending hundreds of overlapping transparent particles resulted in severe performance bottlenecks. The solution I implemented centered around pre-accumulating the contributions of multiple particles into a single intermediate floating-point buffer before final compositing, dramatically reducing the number of blending operations needed per frame.
 
 The core principle behind this optimization is to reduce the number of operations executed on a per-pixel basis. Consider the blending of several transparent fragments. Typically, each fragment undergoes blending calculations involving the existing framebuffer color and its alpha. If *n* transparent fragments overlap, blending is performed *n* times per pixel. Each blending operation often includes multiplications and additions, consuming computational resources. However, if the contributions of all overlapping fragments are first accumulated into a single floating-point buffer, the final blending only requires a single operation for all previously accumulated data. This reduces the cost from *n* blend operations to just one, and is where substantial performance gains lie. The trick is that the accumulation buffer operates in linear color space, and holds the intermediate values of the pixel contribution.

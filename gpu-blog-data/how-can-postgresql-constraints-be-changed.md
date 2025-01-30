@@ -1,9 +1,8 @@
 ---
 title: "How can PostgreSQL constraints be changed?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-postgresql-constraints-be-changed"
 ---
-
 In relational database management, specifically within PostgreSQL, altering constraints involves a degree of care, as incorrect modifications can compromise data integrity. Having encountered several situations requiring such adjustments over the years, I’ve developed a practical understanding of the available methods and potential pitfalls. Constraints, while designed to enforce rules and maintain database consistency, sometimes necessitate modification due to evolving business requirements or unforeseen design flaws. In PostgreSQL, constraint changes are handled primarily through the `ALTER TABLE` command, which provides the necessary functionality to add, drop, or modify constraints on a table. The critical aspect is performing these modifications in a controlled manner to avoid data loss or inconsistencies.
 
 The fundamental approach is to use `ALTER TABLE` in conjunction with specific subcommands targeted at constraints. For instance, adding a new constraint is straightforward. Consider a scenario where I initially created a `users` table with a primary key but later decided to enforce a unique constraint on the `email` column. I could achieve this using:

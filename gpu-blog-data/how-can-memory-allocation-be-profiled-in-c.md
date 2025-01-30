@@ -1,9 +1,8 @@
 ---
 title: "How can memory allocation be profiled in C++?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-memory-allocation-be-profiled-in-c"
 ---
-
 Memory allocation profiling in C++ is critical for identifying performance bottlenecks and memory leaks, especially in complex applications. I’ve spent considerable time optimizing a large-scale physics simulation engine, and understanding how memory is used at a granular level proved essential to achieving stable and performant execution. The process involves monitoring the allocation and deallocation of memory blocks during program execution. This monitoring allows you to observe patterns, identify hotspots, and pinpoint areas where memory usage can be optimized. Broadly, this falls into two approaches: instrumentation-based profiling and sampling-based profiling.
 
 Instrumentation-based profiling involves modifying the program itself or using a library to intercept calls to memory allocation functions, like `malloc`, `new`, `calloc`, `realloc`, and their corresponding deallocation counterparts. When one of these functions is called, profiling code is executed, recording information such as the allocation size, the call stack, and potentially a timestamp. This approach offers precise information about each memory event, but it can significantly impact the application’s performance due to the overhead incurred by the instrumentation. This impact is especially pronounced in applications with high allocation rates.

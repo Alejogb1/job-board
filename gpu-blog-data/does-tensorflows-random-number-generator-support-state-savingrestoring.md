@@ -1,9 +1,8 @@
 ---
 title: "Does TensorFlow's random number generator support state saving/restoring?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "does-tensorflows-random-number-generator-support-state-savingrestoring"
 ---
-
 TensorFlow's random number generation, implemented primarily through the `tf.random` module, does indeed offer robust mechanisms for both saving and restoring the state of its generators, a critical feature for reproducible research and consistent model behavior across training sessions. My experience developing distributed training pipelines for large language models has underscored the vital necessity of this capability. Without it, achieving truly identical results when resuming training or conducting A/B tests becomes exceptionally difficult, if not impossible, due to the stochastic nature of many deep learning processes.
 
 The core concept revolves around the `tf.random.Generator` object, the successor to legacy methods. This object encapsulates the state of a particular random number generation algorithm, be it the default Philox algorithm or others like ThreeFry. Unlike the previous reliance on a global seed, which was prone to implicit state changes in multi-threaded environments and was inherently problematic for large scale distributed settings, each `tf.random.Generator` operates independently, explicitly managing its internal state.

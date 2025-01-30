@@ -1,9 +1,8 @@
 ---
 title: "How can I profile misbehaving Emacs Lisp code?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-profile-misbehaving-emacs-lisp-code"
 ---
-
 Emacs Lisp, while often perceived as inherently fast due to its nature as an interpreted language, can still exhibit performance bottlenecks that significantly degrade responsiveness. Identifying these issues requires a methodical approach, leveraging built-in profiling tools and understanding common performance pitfalls. Based on my experience optimizing numerous Emacs configurations, effective profiling begins with the `profiler` package, which is included in standard Emacs installations.
 
 The primary profiling function, `profiler-start`, initiates the collection of execution statistics. Crucially, this function accepts arguments specifying which resources to track: `cpu`, `gc`, and `memory`. Each of these offers different insights. `cpu` profiling reveals time spent in function execution, useful for pinpointing computational bottlenecks. `gc` profiling tracks garbage collection activity, which can be a significant source of pauses. `memory` profiling monitors memory allocation, which can highlight resource leaks.

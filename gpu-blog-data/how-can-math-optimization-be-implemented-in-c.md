@@ -1,9 +1,8 @@
 ---
 title: "How can math optimization be implemented in C#?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-math-optimization-be-implemented-in-c"
 ---
-
 The practical application of mathematical optimization in C# hinges heavily on choosing appropriate libraries, understanding optimization algorithms, and crafting code that effectively translates mathematical models into executable instructions. In my experience, the journey often begins not with the code itself, but with a well-defined objective function and its constraints, reflecting the real-world problem one wishes to solve.
 
 Mathematical optimization, at its core, seeks to find the best solution within a set of possible options, where "best" is defined by an objective function which one wishes to either maximize or minimize. These solutions are frequently bound by constraints, be they equality constraints (e.g., a budget limitation) or inequality constraints (e.g., material availability). In C#, implementing optimization thus requires libraries capable of expressing these objective functions and constraints and then utilizing numerical methods to find the optimal solution. While a complete implementation from scratch is certainly possible, the complexity and potential for numerical instability make utilizing established libraries far more practical.

@@ -1,9 +1,8 @@
 ---
 title: "Are C constant expressions evaluated at compile time?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "are-c-constant-expressions-evaluated-at-compile-time"
 ---
-
 Based on my experience optimizing embedded systems code, the evaluation of constant expressions in C at compile time is not merely an optional optimization; it's a fundamental aspect of the language's design, enabling significant performance benefits and allowing for crucial compile-time error checking. Specifically, while C mandates that constant expressions, when used in contexts that require them, *must* be evaluable at compile time, the extent to which the compiler aggressively performs this evaluation is dependent on the compiler itself and its optimization level. This means that while C guarantees constant evaluation *when needed*, not all expressions which could be evaluated at compile-time necessarily will be by all compilers at all settings.
 
 The definition of a constant expression is crucial. These expressions consist of literal values (e.g., integers, floating-point numbers, characters, string literals), constant identifiers, and operators that, when combined, result in a value that is known at compile time. This contrasts sharply with run-time expressions, which involve variables, function calls, and other operations whose results are determined only during the execution of the program.  The requirement for compile-time evaluation for constant expressions stems from their use in contexts where the resulting value must be known during compilation, such as array sizes, `case` labels in `switch` statements, initializers for static or global variables, bit-field sizes, and preprocessor directives such as `#if` and `#elif`. Failure to evaluate such expressions during compilation would fundamentally break these language features.

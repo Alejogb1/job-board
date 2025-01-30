@@ -1,9 +1,8 @@
 ---
 title: "Have you successfully implemented GPGPU computations?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "have-you-successfully-implemented-gpgpu-computations"
 ---
-
 GPGPU (General-Purpose computation on Graphics Processing Units) represents a significant acceleration avenue for computationally intensive tasks, moving beyond the traditional CPU-centric paradigm. My experience in this domain stems from several projects, most notably a real-time image processing pipeline for a remote sensing application that required the parallel processing capabilities offered by GPUs. This project pushed my understanding of GPGPU programming beyond theoretical concepts into practical, production-ready solutions.
 
 The crux of GPGPU lies in its ability to execute the same kernel function across a massive dataset simultaneously, a methodology often termed Single Instruction, Multiple Data (SIMD). This contrasts with the CPU's sequential execution model and makes GPUs particularly well-suited for problems that can be broken down into independent sub-computations, such as pixel manipulation, matrix operations, and simulations. The programming model usually involves transferring the necessary data to the GPU's memory, launching the kernel, and then retrieving the processed data. This process introduces data transfer overhead, which often becomes a critical performance bottleneck if not managed efficiently. Careful data layout in memory, memory access patterns, and kernel design are thus pivotal to achieving significant speedups.

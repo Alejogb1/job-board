@@ -1,9 +1,8 @@
 ---
 title: "How can shell encryption be made faster?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-shell-encryption-be-made-faster"
 ---
-
 The primary performance bottleneck in shell-based encryption, particularly when using tools like `openssl` or `gpg`, often lies in the repeated invocation of external processes. This overhead, incurred for each encryption or decryption operation, significantly impacts overall speed, especially when handling numerous small files or continuous data streams. I’ve observed this firsthand when developing a real-time logging system where shell encryption was initially employed. We quickly identified the subprocess creation as the major contributor to latency.
 
 Fundamentally, the shell's nature is to act as a command interpreter, meaning each piped operation or direct execution of `openssl` or similar utilities necessitates a context switch between the shell process and the target executable. This context switching process consumes CPU cycles and introduces delays that are far from negligible when considering high-throughput scenarios. Furthermore, these encryption tools frequently load libraries and initialize their cryptographic engines at each invocation, adding to the cumulative delay. The challenge, therefore, is not necessarily in optimizing the underlying cryptographic algorithms themselves, which are already highly refined, but in reducing the overhead associated with their shell-level utilization.

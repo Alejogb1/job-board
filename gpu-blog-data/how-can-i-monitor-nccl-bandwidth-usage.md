@@ -1,9 +1,8 @@
 ---
 title: "How can I monitor NCCL bandwidth usage?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-monitor-nccl-bandwidth-usage"
 ---
-
 NCCL bandwidth monitoring requires a multifaceted approach due to its distributed nature and the hardware-specific performance characteristics it exhibits. My experience over the last five years optimizing large-scale deep learning models on multi-GPU clusters has demonstrated that no single tool offers complete visibility. Therefore, a combination of system-level tools, NCCL-specific environment variables, and custom profiling scripts provides the most effective monitoring strategy.
 
 The core challenge in monitoring NCCL bandwidth lies in understanding that NCCL operations are asynchronous and often intertwined with other communication and computation tasks. Bandwidth utilization isn't a constant; it varies based on data sizes, communication patterns (e.g., all-reduce, all-gather), and the specific interconnect hardware in use (e.g., NVLink, InfiniBand). Therefore, passive observation isn’t sufficient; active profiling and analysis are essential for identifying bottlenecks.

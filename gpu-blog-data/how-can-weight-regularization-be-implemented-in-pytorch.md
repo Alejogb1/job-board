@@ -1,9 +1,8 @@
 ---
 title: "How can weight regularization be implemented in PyTorch?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-weight-regularization-be-implemented-in-pytorch"
 ---
-
 The efficacy of neural network training frequently hinges on the mitigation of overfitting, and weight regularization, specifically L1 and L2 regularization, is a cornerstone technique for this. These methods impose penalties on the magnitude of the network’s weights, encouraging the learning of simpler models that generalize better to unseen data. I've personally observed this to be crucial while developing image classification models, where complex architectures can easily memorize training data instead of learning underlying patterns.
 
 Weight regularization, in the context of neural networks, introduces an additional term to the loss function during training. This term is based on the weights of the network and is scaled by a hyperparameter, often denoted as lambda (λ), or alpha (α). This parameter controls the strength of the regularization. In PyTorch, both L1 and L2 regularization can be implemented, although L2 is far more common due to its continuous, differentiable nature and the ease with which it can be combined with gradient descent. L2 regularization adds the squared sum of all weights to the loss, while L1 adds the absolute sum. The resulting effect is to push weights towards zero, creating a sparser network in the case of L1, and limiting the magnitude of all weights in the case of L2.

@@ -1,9 +1,8 @@
 ---
 title: "How can I interpret gprof output?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-interpret-gprof-output"
 ---
-
 The interpretation of `gprof` output requires understanding its sampling-based profiling approach and the resulting data presentation. This profile data, collected through periodic program counter samples, provides a statistical approximation of time spent within functions and their call relationships. I’ve found that relying solely on the raw numbers can be misleading without considering the statistical nature of the data.
 
 `gprof`, short for “GNU profiler”, operates by periodically interrupting program execution to record the current program counter value. These samples are then used to estimate the time spent in each function. It also tracks function call relationships, providing a call graph that reveals how the program's execution flow. The output is generally presented in two main sections: a flat profile and a call graph profile.

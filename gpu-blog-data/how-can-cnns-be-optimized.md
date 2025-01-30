@@ -1,9 +1,8 @@
 ---
 title: "How can CNNs be optimized?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-cnns-be-optimized"
 ---
-
 Convolutional Neural Networks (CNNs), while powerful, can become computationally expensive and slow to converge during training, necessitating careful optimization. I've observed this acutely while working on high-resolution image analysis projects for medical imaging, where processing speed and accuracy directly impact patient outcomes. Optimization strategies are crucial for deploying these models efficiently. The main areas I focus on when optimizing CNNs are model architecture, training process, and inference efficiency.
 
 First, let's consider architectural optimization. A deep CNN with numerous parameters can easily overfit and suffer from vanishing gradients. This can be mitigated by employing techniques like parameter sharing, which CNNs achieve via convolution and pooling layers, dramatically reducing the number of trainable weights compared to fully connected networks. However, careful layer design is still paramount. Instead of blindly stacking convolutional layers, I frequently employ "bottleneck" architectures, leveraging 1x1 convolutions to reduce dimensionality between larger convolutional layers, creating a more parameter-efficient network without a significant sacrifice in representational capacity. This is particularly helpful in deep networks, allowing me to build complex models without excessive memory consumption. Similarly, replacing dense layers with global average pooling before the output layer eliminates a large parameter count while improving robustness against spatial variations in the input. Furthermore, skipping connections, as seen in ResNet architectures, are essential for training extremely deep networks, providing an alternate path for gradient propagation and preventing degradation with increased depth.

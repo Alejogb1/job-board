@@ -1,9 +1,8 @@
 ---
 title: "Does DependencyAttribute in Unity's framework require public properties?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "does-dependencyattribute-in-unitys-framework-require-public-properties"
 ---
-
 `DependencyAttribute` within Unity’s framework does *not* mandate that properties it decorates be declared as `public`. My experience developing complex Unity projects, including systems relying heavily on dependency injection, has shown that the attribute’s functionality is tied to the backing field, not the property’s accessibility. It’s the field targeted by the attribute during Unity's reflection process that is of importance. Unity, at runtime, uses its reflection capabilities to locate fields marked with `DependencyAttribute` and then inject instances of the requested type, irrespective of the property's accessibility specifier.
 
 To clarify, a property in C# is essentially a syntactic wrapper around getter and setter methods, which manipulate a private backing field. Unity’s dependency injection mechanism, when using `DependencyAttribute`, is concerned with this backing field, and therefore, the access level of the *property* itself (public, private, protected, etc.) is irrelevant. The framework operates by resolving dependencies based on field type and the presence of the attribute. When I initially worked on a large simulation project, this distinction led to some confusion, believing that all properties intended for injection had to be visible in the inspector, hence `public`. I quickly learned this wasn’t the case. This allows for a much cleaner design where only properties meant for user configuration are exposed.

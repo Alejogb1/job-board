@@ -1,9 +1,8 @@
 ---
 title: "How do I extract self-signed certificate files?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-do-i-extract-self-signed-certificate-files"
 ---
-
 Extracting self-signed certificate files often involves different procedures depending on the environment where the certificate resides and the format in which it is stored. My experience developing secure microservices and managing internal infrastructure has led me through numerous scenarios requiring retrieval of these certificates, frequently in PEM or DER encoded formats. Typically, a self-signed certificate is generated for internal use, testing, or development environments where a Certificate Authority (CA)-signed certificate is not required or available. The process invariably involves identifying the tool or mechanism used to generate the certificate and employing the corresponding method for export.
 
 Fundamentally, the certificate itself, often containing the public key, is distinct from its private key counterpart. The public certificate is shareable and required for secure communication, whereas the private key remains confidential and is necessary for decryption and signing operations. The method for extracting a self-signed certificate typically varies depending on how and where it is stored: whether it's in a Java Keystore, a Windows Certificate Store, or simply encoded as a file on the filesystem. A critical understanding is that one often extracts the *public* part of a self-signed certificate; to move the *private* key also requires specific procedures.

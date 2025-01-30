@@ -1,9 +1,8 @@
 ---
 title: "How can GANs be used for anomaly detection?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-gans-be-used-for-anomaly-detection"
 ---
-
 Generative Adversarial Networks (GANs), primarily known for their image generation capabilities, can be effectively leveraged for anomaly detection by exploiting their underlying mechanisms of learning and reproducing data distributions. My experience in developing machine learning solutions for industrial automation has shown that GANs provide a nuanced approach to identifying deviations from normal system behavior, often surpassing the limitations of traditional statistical methods.
 
 At their core, GANs consist of two neural networks, a generator (G) and a discriminator (D), engaged in an adversarial game. The generator attempts to create synthetic data samples that mimic the real training data distribution, while the discriminator’s task is to distinguish between these synthetic samples and the real ones. Through iterative training, the generator becomes increasingly proficient at producing realistic outputs, and the discriminator becomes better at identifying fakes. This process implicitly captures the structure and patterns of the training data. In anomaly detection, this learned representation of “normal” data becomes the key to identifying “abnormal” data points.

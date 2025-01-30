@@ -1,9 +1,8 @@
 ---
 title: "Can .NET leverage GPUs for AES encryption?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-net-leverage-gpus-for-aes-encryption"
 ---
-
 I've frequently encountered performance bottlenecks in data-intensive applications, particularly those requiring bulk encryption. Leveraging GPUs for AES operations in .NET has been an effective strategy to overcome these limitations, although it’s not a simple drop-in replacement. The core challenge isn't whether it's *possible*, but rather navigating the intricate dance between managed .NET code and native GPU computing environments.
 
 The standard .NET cryptographic libraries, like `System.Security.Cryptography`, are primarily designed for CPU execution. They utilize optimized, but ultimately serial, algorithms. GPUs, on the other hand, are massively parallel processors, excelling at tasks that can be divided into many independent operations. AES encryption, while algorithmically serial in the sense that each block depends on the previous one in certain modes, lends itself well to GPU processing when we deal with a larger data stream. We can encrypt multiple blocks concurrently, vastly increasing throughput. This doesn’t mean every mode of operation is easily parallelizable, but many common modes, like ECB and CTR, allow for this.

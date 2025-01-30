@@ -1,9 +1,8 @@
 ---
 title: "How does Laplacian correction impact Bayes Naive implementation?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-laplacian-correction-impact-bayes-naive-implementation"
 ---
-
 Laplacian correction, also known as add-one smoothing, directly addresses the issue of zero probabilities in Naive Bayes classifiers, a problem I encountered frequently when building a text classification system for internal document categorization at my previous firm. Without this correction, the presence of a word unseen during training in a new document would result in a zero probability for that class, rendering the classifier useless, despite other evidence supporting that classification.
 
 The core principle behind Naive Bayes revolves around calculating the posterior probability of a class given a set of features (or words, in the case of text). This calculation relies on Bayes’ theorem: P(Class | Features) = [P(Features | Class) * P(Class)] / P(Features). The problematic term here is P(Features | Class), which, in the naive assumption, gets decomposed into the product of the conditional probabilities of each feature given the class. Specifically, for text, P(Features | Class) becomes P(word1 | Class) * P(word2 | Class) * ... * P(wordN | Class). These individual word probabilities are calculated from the training data, typically as a ratio of how many times a word appears within a specific class to the total number of words within that class. If a word never appeared in the training set for a particular class, its probability is zero. Multiplying any number by zero results in zero, thus, the whole posterior probability for the class becomes zero, regardless of the contribution of other words.

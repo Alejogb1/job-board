@@ -1,9 +1,8 @@
 ---
 title: "How do I select a table?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-do-i-select-a-table"
 ---
-
 The fundamental operation of selecting a specific table within a database requires a clear understanding of its context – the database system being used and the structural hierarchy of the data. My experience with various relational database management systems (RDBMS), specifically PostgreSQL, MySQL, and SQLite, indicates that the core concept revolves around using SQL's `SELECT` statement, albeit with minor variations in syntax and available features based on the specific database engine.
 
 The `SELECT` statement, at its most basic, is designed to retrieve data. However, its simplest form implicitly selects all columns and rows from a specified table. A selection targeted to a particular table is established through the `FROM` clause, which precisely identifies the target data structure within the current database context. Without explicitly mentioning the columns to be retrieved, as in `SELECT *`, the system fetches all available columns from the specified table. This practice, while straightforward, often leads to performance inefficiencies when dealing with larger databases, as retrieving unnecessary data consumes resources.

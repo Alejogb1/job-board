@@ -1,9 +1,8 @@
 ---
 title: "How does PyTorch perform inline replacement?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-pytorch-perform-inline-replacement"
 ---
-
 PyTorch’s in-place operations, while offering memory efficiency, necessitate careful understanding of their behavior to prevent subtle errors, particularly within computational graphs used for automatic differentiation. I’ve encountered this firsthand debugging complex reinforcement learning models where unintentional modifications during forward passes led to incorrect gradient computations, ultimately hindering convergence. The fundamental principle is that operations ending with an underscore (e.g., `add_`, `mul_`, `copy_`) directly alter the tensor on which they are called, rather than creating a new tensor. This contrasts sharply with their non-in-place counterparts (e.g., `add`, `mul`, `copy`), which return a new tensor with the modified values, leaving the original tensor unchanged.
 
 The crux of the issue lies in how PyTorch's autograd engine tracks operations. When a non-in-place operation is performed, PyTorch records the operation within the computational graph and retains a reference to the original tensor. During the backward pass, the gradients are calculated and propagated correctly through this dependency chain. However, in-place operations disrupt this chain. Since they modify the tensor directly, the history of operations leading to its original state is effectively lost. This becomes problematic when that original tensor is needed for gradient computation, leading to the potential for incorrect or undefined gradients.

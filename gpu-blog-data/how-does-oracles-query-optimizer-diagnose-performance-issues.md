@@ -1,9 +1,8 @@
 ---
 title: "How does Oracle's query optimizer diagnose performance issues?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-oracles-query-optimizer-diagnose-performance-issues"
 ---
-
 Oracle's query optimizer, at its core, relies on cost-based optimization. This means it doesn't merely execute queries based on the literal order provided; instead, it explores multiple execution plans, assigns a cost to each, and then chooses the plan with the lowest estimated cost. This cost is not wall-clock time; it is a theoretical representation of the resource consumption required to execute a plan. Understanding this principle is paramount to understanding how the optimizer diagnoses performance issues.
 
 The process starts with parsing the SQL statement, then generating a parse tree. From this, the optimizer creates various execution plans. These plans represent different ways the database can access the necessary data: full table scans, index range scans, nested loop joins, hash joins, sort-merge joins, and so on. The generation of these options is where the optimizer’s diagnostic capabilities begin to surface. It takes into account several vital factors: table statistics, index statistics, system statistics, data distribution, and available resources. These statistics are not static; they are captured by the `DBMS_STATS` package and need to be updated frequently, especially after significant data changes. Stale statistics are a leading cause of poor execution plans. I've personally encountered several cases where a seemingly innocuous data load crippled query performance simply due to outdated statistics.

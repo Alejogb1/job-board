@@ -1,9 +1,8 @@
 ---
 title: "How can multiple rounds be implemented using tff.learning.build_federated_evaluation?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-multiple-rounds-be-implemented-using-tfflearningbuildfederatedevaluation"
 ---
-
 Implementing multiple rounds of evaluation using `tff.learning.build_federated_evaluation` requires careful consideration of how to manage state across rounds and, crucially, how to properly feed data to the evaluation process. The core challenge is that `build_federated_evaluation` generates a *single* TensorFlow graph for a single round of evaluation, not a continuous process. We'll need to orchestrate the execution of this graph iteratively and aggregate results accordingly.
 
 I've encountered this exact scenario frequently when fine-tuning models in a federated learning setting, where I needed periodic insight into model performance without impacting the training loop unnecessarily. The key is to understand that `build_federated_evaluation` provides a function that returns a callable, the `federated_eval` function, which takes the model and client data as arguments. It’s this callable that we must execute repeatedly.

@@ -1,9 +1,8 @@
 ---
 title: "How can convolutional kernel gradients be calculated manually?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-convolutional-kernel-gradients-be-calculated-manually"
 ---
-
 The backpropagation algorithm relies on calculated gradients to adjust network weights, and understanding how these gradients are derived, particularly within convolutional layers, offers critical insight into network behavior. I've spent considerable time debugging custom CNN implementations, and manually calculating convolutional kernel gradients has proven invaluable in this process. I can demonstrate the method using the fundamental principles of calculus and linear algebra.
 
 **Fundamentals of Convolution and Gradient Calculation**

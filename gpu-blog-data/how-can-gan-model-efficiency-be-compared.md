@@ -1,9 +1,8 @@
 ---
 title: "How can GAN model efficiency be compared?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-gan-model-efficiency-be-compared"
 ---
-
 Generative Adversarial Networks (GANs), despite their remarkable ability to synthesize data, often present a computational challenge, particularly as model and output complexity increases. Comparing their efficiency isn’t a straightforward matter of a single metric; it’s a multifaceted assessment involving both training and generation aspects. My experience in developing GAN-based image generation models has underscored this: achieving quality output at reasonable computational cost is a balancing act requiring careful analysis of multiple indicators.
 
 Fundamentally, GAN efficiency comparison pivots around evaluating two primary phases: the training process and the generation phase. Training efficiency focuses on resource consumption and time investment to achieve a desired performance level, while generation efficiency measures the speed and resource cost of generating new samples using the trained model. No single metric captures both completely; consequently, a comprehensive analysis necessitates examining multiple metrics across both phases.

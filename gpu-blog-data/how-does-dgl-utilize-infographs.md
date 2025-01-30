@@ -1,9 +1,8 @@
 ---
 title: "How does DGL utilize infoGraphS?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-dgl-utilize-infographs"
 ---
-
 Let's delve into how Deep Graph Library (DGL) leverages the concept of information graphs, often referred to as infoGraphS, for enhanced graph representation and manipulation. My experience building several knowledge graph-based applications with DGL has shown me that the library doesn’t directly treat infoGraphS as a standalone data structure or method; instead, it absorbs the principles behind information enrichment into its core functionalities. The essence of infoGraphS – incorporating additional information beyond the bare structural graph – is achieved through techniques that DGL readily supports.
 
 At the fundamental level, an information graph extends a conventional graph by attaching extra attributes to nodes and edges. These attributes can encapsulate rich textual descriptions, numerical measurements, or any form of data that augments the inherent connectivity structure. DGL facilitates the incorporation of such information through its flexible node and edge feature handling. Instead of solely considering a graph as a set of nodes and edges with simple identifiers, DGL allows us to associate tensors or other custom data with each component. This is where the notion of an infoGraph converges with DGL's design. We're not creating a separate "infoGraphS" class, but rather utilizing the library’s ability to represent richly attributed graphs, thereby embodying the infoGraphS concept.

@@ -1,9 +1,8 @@
 ---
 title: "How does ATI Stream compare to Nvidia CUDA?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-ati-stream-compare-to-nvidia-cuda"
 ---
-
 AMD’s Accelerated Parallel Processing (APP), formerly known as ATI Stream, and Nvidia's Compute Unified Device Architecture (CUDA) represent competing parallel computing architectures primarily targeting GPUs. While both enable developers to leverage the substantial processing power of graphics cards for general-purpose computation, their underlying implementations, programming models, and ecosystems differ significantly, affecting performance, portability, and ease of use.
 
 I’ve spent considerable time, perhaps five years, working with both architectures on projects ranging from image processing pipelines to Monte Carlo simulations, and my experience highlights key distinctions. The fundamental difference lies in the architectural philosophy. CUDA, being a proprietary Nvidia offering, benefits from tight vertical integration. Nvidia controls both the hardware and the software stack, resulting in optimized performance and a generally more mature development environment, though it limits compatibility to Nvidia GPUs. In contrast, AMD’s APP, while attempting to maintain openness and compatibility across platforms, has historically faced fragmentation and less streamlined developer tooling.

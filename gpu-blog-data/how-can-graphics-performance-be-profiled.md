@@ -1,9 +1,8 @@
 ---
 title: "How can graphics performance be profiled?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-graphics-performance-be-profiled"
 ---
-
 Profiling graphics performance requires a systematic approach, given the inherent complexity of modern rendering pipelines. Bottlenecks can occur in diverse locations, from CPU-side preparation to GPU-side processing, and pinpointing the precise origin of performance issues demands a tool-assisted investigation. Specifically, real-time rendering relies heavily on parallel processing, which often obscures traditional code profiling approaches that work well for sequential CPU operations. I've found through experience on a real-time strategy title that granular performance data, especially on the GPU, is essential.
 
 A fundamental understanding of the rendering pipeline is critical before diving into profiling tools. The graphics pipeline is broadly divided into CPU and GPU stages. On the CPU, application logic, scene graph manipulation, and submission of rendering commands occur. The GPU, in turn, processes vertices, performs rasterization, calculates pixel colors, and ultimately displays the final image. Performance issues can manifest within any of these stages, and effective profiling needs to dissect the timing within these parts. This division is critical: high CPU load can starve the GPU of work, while high GPU load often indicates complex shading or excessive geometric detail.

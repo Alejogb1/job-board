@@ -1,9 +1,8 @@
 ---
 title: "How can MySQL MyISAM table performance be improved?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-mysql-myisam-table-performance-be-improved"
 ---
-
 MyISAM, while no longer the default storage engine for MySQL, still surfaces in legacy systems and specific use cases. I've often encountered it in older applications, requiring careful optimization to avoid performance bottlenecks. Its key characteristic – table-level locking – demands a different approach compared to InnoDB, the more common engine. Instead of row-level concurrency, MyISAM locks the entire table during write operations, thus maximizing throughput requires minimizing lock contention. This impacts read performance as well when writes are active.
 
 My initial consideration when evaluating performance optimization begins with table analysis. I've found that MyISAM’s performance can degrade significantly over time with heavy modification due to fragmentation. Periodically running `OPTIMIZE TABLE` is therefore crucial. This operation rewrites the table data and index files, eliminating gaps and ordering the data efficiently for faster lookups. Consider that this operation locks the table, so it should be done during off-peak hours. Frequency depends on how rapidly the table is being updated; I've set up weekly cron jobs for some tables that see significant insertions and deletions. I also always check the storage engine before performing any optimization.

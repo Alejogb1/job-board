@@ -1,9 +1,8 @@
 ---
 title: "Does node2vec depend on torch-cluster?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "does-node2vec-depend-on-torch-cluster"
 ---
-
 Node2vec, a popular graph embedding technique, inherently does not depend on the `torch-cluster` library, despite both being frequently employed in graph-related tasks. My experience working on large-scale network analysis projects has highlighted this crucial distinction. Node2vec focuses on generating node embeddings via biased random walks and subsequent Skip-Gram training, while `torch-cluster` primarily provides functionalities for graph clustering algorithms, operating on node indices and adjacency representations. While both can exist within the same project, their core functionalities are independent.
 
 The core of node2vec involves two primary phases. First, a biased random walk algorithm explores the graph, producing sequences of nodes. This walk's probabilistic structure is parameterized by return and in-out parameters, influencing the walk's exploration bias toward breadth-first or depth-first traversal of the network neighborhood. Second, these generated sequences are treated as sentence-like data and are fed into a Skip-Gram model (or similar word embedding technique). The Skip-Gram training process learns to predict context nodes given a center node within a sliding window. This representation of nodes in a low-dimensional space then becomes the desired node embedding.

@@ -1,9 +1,8 @@
 ---
 title: "How can C#/.NET applications be profiled?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-cnet-applications-be-profiled"
 ---
-
 Profiling C#/.NET applications is critical for identifying performance bottlenecks and optimizing resource usage, and in my experience across various projects, it often reveals unexpected areas of inefficiency. Essentially, profiling involves monitoring the application's behavior during execution, gathering data on resource consumption (CPU, memory, I/O), and presenting that information in a way that developers can interpret and act upon. This process allows us to pinpoint the precise code segments or operations that are contributing most significantly to poor performance. We can then focus our optimization efforts where they will have the greatest impact. The .NET ecosystem offers several tools and techniques for achieving this, ranging from built-in functionality to third-party solutions.
 
 **Understanding Profiling Methodologies**

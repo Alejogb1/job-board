@@ -1,9 +1,8 @@
 ---
 title: "Does dgl.nn.pytorch.GraphConv aggregate edge features?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "does-dglnnpytorchgraphconv-aggregate-edge-features"
 ---
-
 No, the `dgl.nn.pytorch.GraphConv` layer, as implemented in Deep Graph Library (DGL) for PyTorch, does not directly aggregate edge features during its message passing procedure. This is a crucial point of understanding when utilizing this foundational layer in graph neural networks (GNNs). I've personally encountered scenarios where assuming edge feature aggregation led to incorrect model behavior, reinforcing the importance of this distinction.
 
 The `GraphConv` layer’s core operation revolves around propagating node features across edges and then aggregating them at the destination nodes. Specifically, the process consists of two primary phases: message generation and aggregation. The message generation phase involves a linear transformation of the source node features using a learned weight matrix. This transformed feature is considered the message propagated along the edge. However, the original edge features are not involved in this transformation, nor are they combined with the node features at any stage within the default `GraphConv` implementation. The aggregation phase then combines these generated messages at the destination node, producing the updated node features.

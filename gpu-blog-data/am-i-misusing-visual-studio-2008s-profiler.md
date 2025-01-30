@@ -1,9 +1,8 @@
 ---
 title: "Am I misusing Visual Studio 2008's profiler?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "am-i-misusing-visual-studio-2008s-profiler"
 ---
-
 The performance data I've observed from Visual Studio 2008's profiler suggests a potential misinterpretation of its sampling-based approach, particularly when analyzing short-lived functions or code regions. I've encountered similar challenges across several projects, specifically where highly optimized, deeply nested logic appeared as significant bottlenecks in the profiler, which later turned out to be misrepresentations of the actual performance cost.
 
 Visual Studio 2008, unlike modern profilers, primarily uses a sampling profiler. This means that it periodically interrupts the execution of your application to record the current call stack. The more frequently a particular code path appears in these samples, the more time the profiler attributes to that code path. Consequently, functions that execute very rapidly but are called frequently may still have a higher sampling count, giving the illusion of being a major performance issue. This is distinct from instrumentation-based profilers, which measure precise execution times for individual functions, but in 2008, such granularity was often too expensive in terms of overhead for complex applications.

@@ -1,9 +1,8 @@
 ---
 title: "How do I import utility functions from keras_unet?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-do-i-import-utility-functions-from-kerasunet"
 ---
-
 Importing utility functions from the `keras_unet` library requires a nuanced approach due to its modular design and the lack of a single, top-level export for all utilities. My experience working on medical image segmentation projects over the past few years has involved a regular need to leverage the various helper functions provided within `keras_unet`, and I've found that understanding its internal structure is key to effective import. Specifically, utilities are often located within submodules of `keras_unet`, necessitating explicit imports. Directly attempting `from keras_unet import *` or similar blanket import strategies will invariably fail.
 
 The core concept to grasp is that `keras_unet` organizes its functionality into logical units, typically housed within separate Python files and accessed via dot notation. This approach promotes code clarity and avoids namespace pollution. Therefore, to utilize specific functions, you need to navigate to the relevant submodule, identify the function, and import it precisely. The lack of a central `__init__.py` file that re-exports all functionality from submodules makes this explicit import process necessary. For example, commonly used helper functions for metrics, image manipulation, or data loading are not directly available at the `keras_unet` root. Instead, these are located within modules like `metrics`, `utils`, or similar named directories.

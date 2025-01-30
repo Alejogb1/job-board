@@ -1,9 +1,8 @@
 ---
 title: "How does Grad-CAM work with hub.KerasLayer?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-grad-cam-work-with-hubkeraslayer"
 ---
-
 The essential function of Grad-CAM, specifically when interfaced with a hub.KerasLayer in TensorFlow, lies in its ability to visualize which parts of an input image most influence the prediction made by a pre-trained model. My experience integrating Grad-CAM with various image classification pipelines, especially those utilizing TensorFlow Hub models, has highlighted both its efficacy and certain nuances that require careful consideration. The core challenge is that hub.KerasLayer abstracts away internal layer details; Grad-CAM needs access to specific convolutional feature maps, which are not directly exposed.
 
 At its foundation, Grad-CAM (Gradient-weighted Class Activation Mapping) operates by leveraging the gradients of the predicted class score with respect to the feature maps of a chosen convolutional layer. This process allows us to create a heatmap that highlights the image regions contributing most to that specific prediction. Unlike CAM (Class Activation Mapping), Grad-CAM does not require any modifications to the model architecture itself, making it broadly applicable to diverse neural networks. The methodology follows a few key steps: First, we perform a forward pass, obtaining the final predicted class score and the activation maps of the target convolutional layer. Second, we calculate the gradient of the target class score with respect to these activation maps. These gradients are then globally averaged along their spatial dimensions, resulting in what we term the ‘importance weights’ for each feature map. Finally, the weighted feature maps are combined via a weighted sum followed by a ReLU operation and an upsampling step. This composite represents the heatmap, providing a visual representation of relevant image areas.

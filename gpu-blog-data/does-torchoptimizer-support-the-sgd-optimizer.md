@@ -1,9 +1,8 @@
 ---
 title: "Does torch_optimizer support the SGD optimizer?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "does-torchoptimizer-support-the-sgd-optimizer"
 ---
-
 In my experience, `torch_optimizer`, a library known for its collection of advanced optimization algorithms, does not directly support PyTorch's standard `torch.optim.SGD` optimizer as a distinct, re-implemented variant within its own module. Instead, it focuses on providing alternatives not available in the core PyTorch library, often stemming from research papers or specialized areas of optimization. When seeking SGD functionality, you should rely directly on PyTorch's built-in implementation rather than seeking it from `torch_optimizer`.
 
 Here's a breakdown of why this is the case and how to approach using SGD effectively:

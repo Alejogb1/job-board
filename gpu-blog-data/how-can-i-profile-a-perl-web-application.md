@@ -1,9 +1,8 @@
 ---
 title: "How can I profile a Perl web application?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-profile-a-perl-web-application"
 ---
-
 Profiling a Perl web application effectively requires a multi-faceted approach, as no single tool or method provides complete insight. My experience, gained through years of maintaining a high-traffic e-commerce platform written in Perl with CGI, indicates that pinpointing performance bottlenecks frequently involves combining runtime analysis, code-level instrumentation, and database query inspection.
 
 The first step is understanding what *kind* of profiling is needed. For web applications, this usually translates to identifying slow HTTP requests and pinpointing the responsible code segments. This can be broadly categorized into *runtime profiling*, which measures the time spent in different parts of the application, and *resource profiling*, which examines memory consumption and database interactions. A naive approach of just measuring wall clock time can be insufficient; one needs to drill down to individual subroutines and even specific lines of code. I typically begin with runtime profiling, using it to locate the worst performing requests before moving onto more granular analysis.

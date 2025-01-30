@@ -1,9 +1,8 @@
 ---
 title: "Can Gaussian processes interpolate functions between 512D points?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-gaussian-processes-interpolate-functions-between-512d-points"
 ---
-
 Gaussian processes (GPs), while theoretically applicable in arbitrarily high dimensions, encounter significant practical challenges when used for interpolation, particularly with the density implied by 512-dimensional points. This stems from the curse of dimensionality, a phenomenon that dramatically affects the computational cost and the model's efficacy as the number of dimensions increases. I’ve directly encountered this limitation during prior research involving high-dimensional environmental sensor data where naive application of GPs became computationally intractable.
 
 The core issue lies in the scaling of the covariance matrix required for GP inference. In a Gaussian process, we model the joint distribution over function values at a set of input points. Given *n* training data points, calculating this joint distribution requires forming an *n x n* covariance matrix. In cases with relatively low dimensions, say 2 or 3, this matrix is manageable. However, as we approach 512 dimensions, the number of points required to adequately sample the space increases exponentially, which directly impacts the size of this matrix, often rendering its computation infeasible.

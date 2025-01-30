@@ -1,9 +1,8 @@
 ---
 title: "How can Objective-C binary image size be profiled?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-objective-c-binary-image-size-be-profiled"
 ---
-
 Objective-C binary size directly impacts application startup time and resource usage, making profiling crucial, especially for resource-constrained devices. From my experience optimizing mobile applications, I’ve seen significant size variations stemming from seemingly minor code changes. This impact isn’t always intuitive, and understanding *where* the bulk lies requires targeted profiling methods.
 
 Binary size profiling for Objective-C typically involves inspecting the compiled application executable, not the source code directly. The final executable includes more than just the compiled Objective-C – it contains linked libraries, resources, symbol tables, and metadata – all of which contribute to the overall size. Profiling aims to break down this monolithic file to pinpoint which sections consume the most space. This process is not a 'one-size-fits-all' solution; different tools and techniques target specific components, allowing a more granular understanding.

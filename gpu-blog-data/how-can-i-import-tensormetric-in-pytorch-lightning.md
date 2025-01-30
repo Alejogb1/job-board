@@ -1,9 +1,8 @@
 ---
 title: "How can I import TensorMetric in PyTorch Lightning?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-import-tensormetric-in-pytorch-lightning"
 ---
-
 TensorMetric, while a useful tool for custom metric logging within PyTorch Lightning, is not a direct import. It’s a concept representing arbitrary scalar values you might wish to monitor throughout your training process, and it is integrated into PyTorch Lightning using its logging capabilities alongside user-defined computation logic. The framework itself does not provide a class or module named “TensorMetric.” I’ve encountered this frequently when building complex models with custom evaluation criteria. My workflow involves defining a metric, computing its value during training and validation steps, and using PyTorch Lightning’s logging mechanism to keep track of these metrics.
 
 To implement what you’re likely seeking—i.e., a method to track custom, scalar metrics—you need to approach it from two sides: defining the calculation and properly using PyTorch Lightning’s `log` function. The calculation is purely dependent on the model you’re training and the specific metric you’re after. This can range from a simple accuracy score to something more intricate like Intersection-over-Union (IoU) for segmentation tasks. Once you have the computation, the `log` method provides the bridge into Lightning’s visualization and monitoring capabilities (e.g., TensorBoard, WandB).

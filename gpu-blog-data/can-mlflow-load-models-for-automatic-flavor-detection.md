@@ -1,9 +1,8 @@
 ---
 title: "Can MLflow load models for automatic flavor detection?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-mlflow-load-models-for-automatic-flavor-detection"
 ---
-
 MLflow, while not inherently built for 'flavor' detection in the sense of culinary or sensory analysis, can indeed load models trained for this purpose and manage them effectively as part of a broader machine learning workflow. I've implemented systems that use MLflow to manage models trained on spectroscopic data for flavor profile prediction in a beverage production context. This requires a clear separation of the model training process and its subsequent deployment for prediction. The primary role of MLflow in this scenario is to manage the model artifact, its metadata, and its lifecycle, not to directly perform the flavor analysis itself.
 
 The challenge lies in how the flavor prediction model is trained. The ‘flavor’ needs to be converted into a numerical or categorical representation, often through a combination of human sensory analysis (like trained panelists rating samples on a defined scale) and instrument readings (e.g., mass spectrometry, electronic nose data). The resulting dataset then becomes the input for training a classification or regression model. These models aren't specific to MLflow – they could be any machine learning algorithm suitable for your data (e.g., support vector machines, neural networks, gradient boosting). MLflow doesn’t impose restrictions on the model architecture.

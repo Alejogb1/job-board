@@ -1,9 +1,8 @@
 ---
 title: "How does TensorFlow's `repeat` function affect forecasting accuracy?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-tensorflows-repeat-function-affect-forecasting-accuracy"
 ---
-
 The TensorFlow `tf.data.Dataset.repeat` function, specifically when used in time series forecasting pipelines, directly influences the training process by determining how often the model encounters the same data during an epoch, which can have varied and sometimes unpredictable effects on forecasting accuracy. It’s not simply a matter of more repetitions being better; the optimal number depends heavily on dataset size, complexity, and training algorithm.
 
 **Explanation:**

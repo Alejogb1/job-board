@@ -1,9 +1,8 @@
 ---
 title: "How can a CNN be trained using Keras?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-a-cnn-be-trained-using-keras"
 ---
-
 Training a Convolutional Neural Network (CNN) with Keras, particularly for image recognition tasks, often boils down to structuring the network’s layers, compiling it with an appropriate optimizer and loss function, and then feeding it training data. I’ve spent a considerable amount of time building and fine-tuning CNNs for various projects, including an automated defect detection system for a microchip fabrication line, where the specific architecture and training approach significantly impacted accuracy and speed. The process can be broken down into a few key steps: Defining the model, preparing the data, selecting the training parameters, executing training, and then evaluating and potentially iterating on the model.
 
 First, defining the model using Keras’s Sequential API or functional API involves specifying the architectural blueprint of the network. This generally includes convolutional layers, pooling layers, and fully connected layers, all arranged in a specific manner. Convolutional layers perform feature extraction using learnable filters; each filter slides across the input image, detecting patterns. The output, called a feature map, is then often downsampled by pooling layers (like max-pooling) reducing spatial dimensions. Finally, these feature maps are flattened and passed through fully connected layers, which perform the final classification. The number of convolutional layers, size of filters, pooling methods, and number of fully connected layers can vary based on the specific problem.

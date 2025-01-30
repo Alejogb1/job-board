@@ -1,9 +1,8 @@
 ---
 title: "How accurate is this LSTM model's prediction?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-accurate-is-this-lstm-models-prediction"
 ---
-
 Given the recurrent nature of Long Short-Term Memory (LSTM) networks, assessing the accuracy of their predictions requires careful consideration beyond simple classification metrics. I've spent several years working with LSTMs on time-series data, primarily in financial forecasting and predictive maintenance applications, and I've found that interpreting "accuracy" for these models is far more nuanced than, for instance, a static image classifier. An accuracy percentage alone can be misleading, obscuring critical issues like bias or inconsistent performance across time. Therefore, a rigorous evaluation requires a multi-faceted approach encompassing various statistical techniques, visual analyses, and domain-specific knowledge.
 
 Fundamentally, an LSTM model’s prediction accuracy hinges on its ability to capture the temporal dependencies inherent in the input sequence. The model ingests sequential data points, maintains an internal state that represents a summarized history of prior inputs, and then generates a prediction based on this state and the current input. Consequently, evaluating accuracy needs to account for how well this temporal dependency is learned, not simply whether the final prediction matched the subsequent true value.

@@ -1,9 +1,8 @@
 ---
 title: "How can tensors be partially stacked?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-tensors-be-partially-stacked"
 ---
-
 Partial stacking of tensors, specifically when the dimensions intended for stacking do not align across all input tensors, requires careful management of dimensions and often involves padding or masking to ensure consistent shapes for concatenation or other stack-like operations. Having grappled with mismatched sensor data in a multi-modal robotic perception project, I’ve encountered this issue frequently.
 
 The core challenge arises because standard tensor stacking functions like `torch.stack` or `tf.stack` insist on equal sizes along the non-stacking dimensions. This means if you have three tensors—one of shape `(10, 5)`, one of shape `(7, 5)`, and another of shape `(12, 5)`—you can't directly stack them along the first axis without adjustments. Partial stacking, in this context, addresses how to combine these disparate tensors into a meaningful aggregate. There are several approaches; the most common involve padding or truncation. Which method is most appropriate depends heavily on the application’s data semantics.

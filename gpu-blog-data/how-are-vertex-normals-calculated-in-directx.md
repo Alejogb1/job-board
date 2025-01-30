@@ -1,9 +1,8 @@
 ---
 title: "How are vertex normals calculated in DirectX?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-are-vertex-normals-calculated-in-directx"
 ---
-
 In DirectX, the accurate and efficient calculation of vertex normals is critical for realistic lighting and shading in 3D rendering. Unlike fragment (pixel) normals that can be calculated per-pixel, vertex normals are computed once per vertex and then interpolated across a polygon’s surface, directly impacting the final appearance of the rendered object.
 
 The fundamental method involves analyzing the surrounding geometry to estimate the normal vector at each vertex. I’ve found, over years of working on graphics applications, that a common and robust approach is the averaging of face normals. Here's how I typically approach this:

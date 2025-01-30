@@ -1,9 +1,8 @@
 ---
 title: "How can a multi-process program be profiled?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-a-multi-process-program-be-profiled"
 ---
-
 Profiling a multi-process program demands a nuanced approach due to the inherently distributed nature of its execution. Each process operates within its own address space and can exhibit distinct performance characteristics. Thus, employing a single profiling method is rarely sufficient; instead, we must combine process-level and system-wide analyses. Having wrestled with complex distributed systems for over a decade, I've found a blend of techniques is consistently the most effective path to performance optimization.
 
 **1. Understanding the Challenge: Process Isolation**

@@ -1,9 +1,8 @@
 ---
 title: "Does GCC perform tail-recursion optimization?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "does-gcc-perform-tail-recursion-optimization"
 ---
-
 GCC, as of recent versions, demonstrably performs tail-recursion optimization under specific conditions. This optimization transforms recursive function calls, when the recursive call is the very last operation in the function, into iterative loops, preventing stack overflow issues and improving performance. I've personally encountered scenarios where enabling even basic optimization flags (-O1) resulted in dramatic performance improvements precisely due to the compiler's ability to perform this optimization.
 
 The core principle behind tail-recursion optimization lies in the fact that a tail-recursive call does not require the function's current stack frame to be preserved. Since no further operations need to be executed in the current function scope after the recursive call, the compiler can effectively reuse the existing stack frame, essentially jumping back to the beginning of the function with modified arguments. This iterative-like behavior avoids the accumulation of stack frames, which is characteristic of non-tail-recursive functions. This distinction is critical, as stack overflows represent a significant vulnerability in programs using deep recursion.

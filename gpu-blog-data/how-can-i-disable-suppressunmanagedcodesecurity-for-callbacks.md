@@ -1,9 +1,8 @@
 ---
 title: "How can I disable SuppressUnmanagedCodeSecurity for callbacks?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-disable-suppressunmanagedcodesecurity-for-callbacks"
 ---
-
 The `SuppressUnmanagedCodeSecurityAttribute`, when applied to methods utilizing Platform Invoke (P/Invoke), prevents the runtime from performing a stack walk security check. This check, designed to ensure calling code has the necessary permissions to execute unmanaged code, can introduce performance overhead. However, attempting to disable it specifically for *callbacks* originating from unmanaged code presents a nuanced challenge because you don't directly invoke the callback from your managed code. The attribute applies at the point of the P/Invoke, not at the delegate definition or callback execution site. Consequently, you cannot selectively disable security checks *only* for the callback. The security check occurs at the unmanaged to managed code transition, driven by the P/Invoke that facilitates the initial connection with the unmanaged function. The crux is that the managed callback is not being directly P/Invoked from your code but invoked as a result of an event triggered in native code.
 
 I've encountered this situation in the past while developing a performance-critical module for an embedded system, where we needed to handle high-frequency sensor data via native libraries. The performance hit of constant stack walks severely impacted the real-time capabilities of the application. In that scenario, we were mistakenly focusing on the delegate declaration when the issue was at the initial P/Invoke that registered the callback with the native library.

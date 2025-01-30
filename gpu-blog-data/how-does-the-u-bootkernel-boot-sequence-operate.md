@@ -1,9 +1,8 @@
 ---
 title: "How does the u-Boot/Kernel boot sequence operate?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-the-u-bootkernel-boot-sequence-operate"
 ---
-
 The initial jump into the boot process typically originates from a small piece of read-only memory (ROM) containing a minimal initial program loader (IPL). This initial program is extremely rudimentary, often directly executing from a specific memory address upon power-on or reset. My experience in embedded system development, particularly with ARM-based microcontrollers, has highlighted that this phase is dedicated to setting up the essential hardware required to load a more sophisticated bootloader – often u-Boot.
 
 The IPL's primary responsibility involves initializing basic components like the memory controller, setting up the clock system to the correct speed, and configuring a small amount of RAM, often static RAM (SRAM), where the subsequent stage’s code will reside. Once the bare minimum infrastructure is prepared, the IPL copies the u-Boot binary from a non-volatile storage medium (typically NAND flash, NOR flash, or an SD card) into the initialized RAM. This transfer is handled through a hardware interface, like a serial peripheral interface (SPI) or a dedicated flash controller. After the u-Boot binary is copied, the IPL executes the u-Boot code. It's crucial to note that the address from which the IPL jumps to execute the u-Boot code is usually pre-configured or located at a well-defined location within the flash memory. Errors in this stage are difficult to debug as the system is not fully functional, requiring hardware debuggers.

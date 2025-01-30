@@ -1,9 +1,8 @@
 ---
 title: "How does BERT produce variable-length output?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-bert-produce-variable-length-output"
 ---
-
 BERT, despite being a transformer-based model with a fixed input length, achieves variable-length output primarily through its contextualized representations and downstream task-specific layers. I've worked extensively with BERT in various NLP projects, specifically around text summarization and question answering, and I’ve observed firsthand how this mechanism functions. The model itself doesn't "generate" variable-length sequences in the same way a recurrent neural network does; rather, it produces fixed-size vector representations for each token in the input, which are then interpreted differently depending on the target task.
 
 The core of BERT's architecture lies in the Transformer encoder, which processes input tokens simultaneously. This differs significantly from recurrent models that process sequences token-by-token. Input tokens are initially embedded into numerical vectors, and these embeddings are augmented with positional encodings to retain information about their location within the sequence. These embeddings are then fed through a series of Transformer layers, each comprised of multi-headed self-attention mechanisms and feed-forward networks. The crucial point here is that each Transformer layer transforms *every* token representation based on its relationship with *all other* tokens within the input sequence. This is the mechanism that creates the contextualized nature of the resulting vector embeddings. The output from the last encoder layer results in a sequence of these contextualized embeddings, each with a fixed length, equal to the hidden size of BERT (e.g., 768 for the base model).

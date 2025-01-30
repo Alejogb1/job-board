@@ -1,9 +1,8 @@
 ---
 title: "How can I run Concourse on Portainer?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-run-concourse-on-portainer"
 ---
-
 Concourse, a CI/CD system, and Portainer, a container management platform, can be effectively integrated to streamline deployment and management. The core challenge lies in orchestrating Concourse as a set of Docker containers within Portainer's environment, leveraging Portainer's visual interface for container lifecycle operations. Based on my experience migrating various internal build pipelines, this process demands careful configuration of Concourse's components and thoughtful resource allocation.
 
 First, understand that Concourse operates on a multi-container model. It requires at minimum a `web` server, a `worker` agent, and often utilizes a PostgreSQL database for persistence. We'll configure these containers as distinct services within Portainer. This separation allows for individual scaling and easier maintenance. The critical part is ensuring each component is interconnected correctly.

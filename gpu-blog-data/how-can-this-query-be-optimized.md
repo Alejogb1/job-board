@@ -1,98 +1,104 @@
 ---
 title: "How can this query be optimized?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-this-query-be-optimized"
 ---
-
-The submitted SQL query, which I've encountered variations of throughout my career working with large-scale data warehouses, exhibits a common performance bottleneck: excessive full table scans resulting from a poorly constructed `WHERE` clause. Specifically, filtering on columns that are not indexed, or are used with functions, severely hampers query execution time. My initial analysis indicates that the original query is likely performing a sequential scan across the entire dataset instead of utilizing the indices. I've observed this behavior even on moderately sized tables in the past, leading to unacceptable delays. Let's break down the problem and solutions.
-
-**Problem Analysis: The Impact of Non-Sargable Predicates**
-
-The core issue lies in what database professionals term "non-sargable" predicates within the `WHERE` clause. A sargable predicate allows the database engine to efficiently use an index to locate the rows that satisfy the condition. In contrast, a non-sargable predicate forces the database to evaluate the condition on every single row in the table, effectively negating the benefits of any existing index. This results in a complete table scan, an operation that scales poorly with table size.
-
-Several conditions contribute to non-sargability. Function calls on indexed columns, the use of the `NOT` operator or `!=` (inequality) comparisons, and implicit type conversions are common culprits. Consider this typical scenario which is representative of queries I’ve optimized before. The original query attempts to filter transaction data, likely for analysis or reporting:
+Here's the query we're considering:
 
 ```sql
-SELECT
-    transaction_id,
-    customer_id,
-    transaction_date,
-    amount
-FROM
-    transactions
-WHERE
-    EXTRACT(YEAR FROM transaction_date) = 2023
-    AND UPPER(customer_name) LIKE 'J%';
+SELECT p.product_name,
+       c.category_name,
+       COUNT(o.order_id) AS total_orders
+FROM products p
+JOIN categories c ON p.category_id = c.category_id
+LEFT JOIN order_items oi ON p.product_id = oi.product_id
+LEFT JOIN orders o ON oi.order_id = o.order_id
+WHERE o.order_date BETWEEN '2023-01-01' AND '2023-12-31'
+GROUP BY p.product_name, c.category_name
+ORDER BY total_orders DESC;
+
 ```
 
-This query, while conceptually straightforward, contains two significant optimization hurdles. First, `EXTRACT(YEAR FROM transaction_date)` prevents the use of any index defined on the `transaction_date` column because the function must be computed before the predicate can be evaluated. Similarly, `UPPER(customer_name)` in combination with the `LIKE` operator transforms the indexed `customer_name` column, preventing index use. These seemingly innocent operations force the database to process every row, which, for large tables containing millions or billions of rows, becomes incredibly time-consuming.
+The core inefficiency in this query lies in the unnecessary joining of the `orders` table when the aggregation only requires information from the `order_items` table and date filtering. The join pattern creates a cartesian product, potentially processing millions of rows, even for products with no orders in the specified date range, impacting performance and scalability. From prior experience optimizing similar e-commerce database schemas, the initial assessment often points to the join strategy as the primary bottleneck in these aggregation type queries.
 
-**Optimization Strategies: Index-Friendly Filtering**
+The fundamental problem is the `LEFT JOIN orders o` and the associated `WHERE o.order_date BETWEEN '2023-01-01' AND '2023-12-31'` clause. Because it's a `LEFT JOIN`, products without associated orders will still appear in the result set, but their order count will become NULL because of the join. The subsequent `WHERE` clause then filters these NULL values, as NULL can't satisfy a between condition. Essentially, the join to `orders` becomes a method to filter, and this forces the database to perform operations related to the `orders` table, even for products with no sales in the date range. Also, if a product has multiple orders within the date range, the date constraint filters them down for each `order_items` record, and counts all the entries, instead of a single order entry which is unnecessary. The optimal approach avoids involving the `orders` table directly, and aggregates counts from `order_items`.
 
-The most effective approach to optimize such queries involves restructuring the `WHERE` clause to enable index usage. This often entails transforming or rephrasing the conditions to be "sargable". This may involve a shift in how we logically express the requirement but yields drastically different performance. The goal is to allow the query planner to quickly retrieve matching rows via indexes rather than performing a full table scan. Here are the specific solutions based on the previously problematic query:
+**Optimization Strategy:**
 
-**Example 1: Optimized Date Filtering**
+The solution involves restructuring the query to directly aggregate order items within the date range without joining the `orders` table.  We can achieve this by using a subquery or CTE to pre-aggregate order item counts within the date range, then join this result with the `products` and `categories` tables.  This effectively pre-filters order items by date before joining and aggregating further up the chain, resulting in significant performance gains.
 
-To address the issue of date functions, the `EXTRACT(YEAR)` function should be replaced with a direct range comparison. This approach leverages indexes on date or timestamp columns. I've used variations of this pattern in many data migrations and data warehousing contexts. This technique improves query performance significantly because it's designed to directly leverage the capabilities of an index.
+**Code Example 1: Using a Subquery**
 
 ```sql
-SELECT
-    transaction_id,
-    customer_id,
-    transaction_date,
-    amount
-FROM
-    transactions
-WHERE
-    transaction_date >= '2023-01-01' AND transaction_date < '2024-01-01'
-    AND UPPER(customer_name) LIKE 'J%';
+SELECT p.product_name,
+       c.category_name,
+       COALESCE(oi_agg.total_orders, 0) AS total_orders
+FROM products p
+JOIN categories c ON p.category_id = c.category_id
+LEFT JOIN (
+    SELECT oi.product_id,
+           COUNT(oi.order_id) AS total_orders
+    FROM order_items oi
+    WHERE oi.order_id IN (SELECT order_id from orders where order_date BETWEEN '2023-01-01' AND '2023-12-31')
+    GROUP BY oi.product_id
+) AS oi_agg ON p.product_id = oi_agg.product_id
+ORDER BY total_orders DESC;
 ```
 
-**Commentary:** This rewrite eliminates the `EXTRACT(YEAR)` function call. Instead, it utilizes a date range comparison. The date predicate is now sargable, allowing the database to use an index defined on `transaction_date` (if one exists). The performance increase will be noticeable, especially when compared to the original, function-based approach, particularly with large tables.  This change fundamentally alters the query plan.
+In this first optimization, the subquery `oi_agg` calculates the total orders per product by filtering the order item entries based on order dates. Note how we added `COALESCE`, and this handles product that had no orders by converting `NULL` values to 0, meaning the product is included in the list with 0 orders. This approach minimizes unnecessary joins and pre-aggregates the order counts, ensuring performance gains, compared to the original query. This version filters the `order_items` records first, then groups them by `product_id` before joining the `products` table and `categories` table.
 
-**Example 2: Optimized String Searching**
-
-The `UPPER` function call on `customer_name` makes it non-sargable. While a function-based index could potentially help, they are not always readily available or the most efficient solution. In most cases, rewriting the condition to avoid the function call altogether is optimal. This can sometimes be done via `ILIKE` if the database supports case-insensitive `LIKE` operator. In instances where that is not an option, data standardization must occur before query time.
+**Code Example 2: Using a Common Table Expression (CTE)**
 
 ```sql
-SELECT
-    transaction_id,
-    customer_id,
-    transaction_date,
-    amount
-FROM
-    transactions
-WHERE
-    transaction_date >= '2023-01-01' AND transaction_date < '2024-01-01'
-    AND customer_name LIKE 'J%' -- Assuming case sensitivity, requires data consistency for correct filtering.
+WITH OrderItemsAgg AS (
+    SELECT oi.product_id,
+           COUNT(oi.order_id) AS total_orders
+    FROM order_items oi
+    WHERE oi.order_id IN (SELECT order_id from orders where order_date BETWEEN '2023-01-01' AND '2023-12-31')
+    GROUP BY oi.product_id
+)
+SELECT p.product_name,
+       c.category_name,
+       COALESCE(oa.total_orders, 0) AS total_orders
+FROM products p
+JOIN categories c ON p.category_id = c.category_id
+LEFT JOIN OrderItemsAgg oa ON p.product_id = oa.product_id
+ORDER BY total_orders DESC;
+
 ```
 
-**Commentary:**  In a case-sensitive scenario, this assumes that the customer names in the `transactions` table are consistently stored with the desired casing.  If case inconsistency is expected, a different strategy, like standardizing the case of customer names during data ingestion, is recommended, rather than modifying the query. In this simplified example, we assume the data is consistent. Data ingestion is the best time to apply these standards.
+This second example implements the same logic as the first example but utilizes a CTE (`OrderItemsAgg`) instead of a subquery. CTEs often improve readability, especially for more complex queries, and in certain database systems can lead to slightly better query plan generation due to the optimizer's ability to better reason about the temporary named result set. Again, `COALESCE` ensures products with no orders are included with a count of 0. This approach is functionally identical to the first example but offers a more organized structure.
 
-**Example 3: Partial Indexing and Data Organization**
-
-Sometimes the underlying problem lies with the data organization. Specifically, a table partitioned by year or an index built only on the year part of the date is appropriate when searching by the year is most common. In the following example, we assume that the `transactions` table has been partitioned by the year of `transaction_date`. A database partitioning strategy was implemented as a separate, previous step based on an analysis of the query workload.
+**Code Example 3: Leveraging an Indexed Approach for Filtering**
 
 ```sql
-SELECT
-    transaction_id,
-    customer_id,
-    transaction_date,
-    amount
-FROM
-    transactions_2023
-WHERE
-  customer_name LIKE 'J%';
-```
+CREATE INDEX idx_orders_date ON orders (order_date);
 
-**Commentary:** This third example leverages a different approach.  Instead of a range search or function optimization, the data itself has been organized to provide performance improvement through partitioning. The table name `transactions_2023` indicates a year-based partition. This limits the scan to only the 2023 partition, which dramatically reduces the amount of data searched. Additionally, a B-tree index on `customer_name` (if present) will be used by the engine, even with the `LIKE` operator. If the business rules support the simplification, this can often yield the best performance. I’ve seen this be a 10x-100x performance improvement in real-world datasets.
+WITH OrderItemsAgg AS (
+    SELECT oi.product_id,
+           COUNT(oi.order_id) AS total_orders
+    FROM order_items oi
+    WHERE EXISTS (
+       SELECT 1
+       FROM orders o
+       WHERE oi.order_id = o.order_id
+       AND o.order_date BETWEEN '2023-01-01' AND '2023-12-31'
+   )
+    GROUP BY oi.product_id
+)
+SELECT p.product_name,
+       c.category_name,
+       COALESCE(oa.total_orders, 0) AS total_orders
+FROM products p
+JOIN categories c ON p.category_id = c.category_id
+LEFT JOIN OrderItemsAgg oa ON p.product_id = oa.product_id
+ORDER BY total_orders DESC;
+
+```
+This third optimized query includes an index creation command, to speed up the filtering of the orders. It also replaces the `IN` clause, with `EXISTS` clause. The use of `EXISTS` with a correlated subquery allows the database to more efficiently filter order items based on the presence of matching order entries within the specified date range. The `idx_orders_date` index on the `order_date` column significantly accelerates the filtering of orders based on the date range. This can be advantageous in large datasets and reduce the time needed to find qualifying rows. The query still works the same as the other examples, but leverages indexes and correlated subqueries to further optimize performance.
 
 **Resource Recommendations**
 
-For a deeper understanding of query optimization, several resources have been invaluable to me throughout my career.  Consulting official database engine documentation is paramount. Each engine (PostgreSQL, MySQL, SQL Server, Oracle, etc.) will have specific features and nuances regarding index usage and query planning that are well documented.
+To deepen your understanding of database optimization, I recommend exploring resources related to query execution plans, indexing strategies, and database-specific performance tuning tools. Textbooks covering relational database design principles and SQL optimization practices, from various authors like C.J. Date, or the documentation for specific database systems (e.g., PostgreSQL, MySQL, SQL Server), can be beneficial for learning to analyze and optimize different queries. Additionally, look for courses focused on advanced SQL techniques and database performance, that teach and train on advanced optimization strategies.
 
-Second, resources on database indexing strategies, including different index types (B-tree, hash, etc.) and how they influence performance, are also necessary. Familiarity with query execution plans is essential. Analyzing these plans allows you to understand how the database engine interprets and executes your query.  They illuminate potential bottlenecks.
-
-Finally, general resources on relational database theory, including normalization, indexing, and query optimization principles, will give a broader understanding of underlying mechanics and best practices.  These resources often provide deeper insights into how and why particular techniques yield specific results.
-
-In conclusion, optimizing the provided query requires understanding the root causes of non-sargable predicates. By restructuring the `WHERE` clause to be index-friendly and by considering underlying data organization, significant performance improvements can be achieved. This approach emphasizes effective database design and utilization of existing indexing to enhance overall query performance.
+In my professional experience with data management and database systems, consistently analyzing query execution plans and adapting the query accordingly, especially in response to changing data volumes, proves to be the most effective method of ensuring good database performance. These examples, and a deeper understanding of the concepts, will ensure the database can scale with increased data size and user requests, which helps ensure the overall success of the applications.

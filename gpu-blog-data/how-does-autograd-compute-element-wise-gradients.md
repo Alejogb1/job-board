@@ -1,9 +1,8 @@
 ---
 title: "How does autograd compute element-wise gradients?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-autograd-compute-element-wise-gradients"
 ---
-
 Autograd, the core mechanism behind backpropagation in deep learning frameworks, fundamentally operates by constructing a computational graph that tracks operations performed on tensors. When calculating element-wise gradients, this graph structure enables a precise and efficient reverse pass, differentiating functions at their most granular level. My experience implementing custom layers in frameworks like PyTorch and TensorFlow has shown that understanding this mechanism is crucial for debugging and optimization.
 
 The process begins during the forward pass. As tensors undergo various mathematical operations, like addition, multiplication, or more complex functions, the framework not only computes the resulting tensor but also records each operation as a node within the computational graph. These nodes store references to their input tensors (operands) and the specific function that was applied. Crucially, each node also stores the derivative of the function with respect to each of its inputs. For instance, the node corresponding to an element-wise addition would store the derivative of the addition with respect to its two operands, which is simply 1 for both. This is local gradient information.

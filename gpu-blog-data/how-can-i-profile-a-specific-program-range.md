@@ -1,9 +1,8 @@
 ---
 title: "How can I profile a specific program range?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-profile-a-specific-program-range"
 ---
-
 The precise profiling of a specific program range, rather than an entire application, requires targeted instrumentation and analysis; blanket profilers often obscure the finer details within critical code sections. Based on my experience optimizing high-performance computing applications, I've found that a combination of manual instrumentation and specialized profiling tools provides the most effective approach.
 
 The core concept involves isolating the code segment of interest, then generating data during its execution to gauge its performance. This data typically includes metrics like execution time, call counts, and memory allocations. The challenge lies in minimizing the instrumentation's overhead so that the profiled data accurately reflects the performance of the original, unmodified code.

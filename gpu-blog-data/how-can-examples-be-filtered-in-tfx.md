@@ -1,9 +1,8 @@
 ---
 title: "How can examples be filtered in TFX?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-examples-be-filtered-in-tfx"
 ---
-
 In TensorFlow Extended (TFX), efficient and targeted example filtering is crucial for various stages of the machine learning pipeline, from data validation to model training and evaluation. TFX utilizes Apache Beam for its distributed data processing, and therefore leverages Beam's robust filtering capabilities. The core mechanism involves applying a Beam `Filter` transform, typically using a lambda function or a callable object defined using the `tf.train.Example` protocol buffer's field names as inputs, allowing for flexible and performant conditional selection of examples.
 
 The foundational element is the `beam.Filter` transform, which, when applied to a PCollection of `tf.train.Example` protocol buffers, returns a new PCollection containing only the examples that satisfy the specified filtering criteria. This filtering can be based on the values of features within the `Example`, presence or absence of features, or derived values computed during the filtering process. The filtering operations are carried out in a distributed manner by Apache Beam’s runners (e.g., DirectRunner, DataflowRunner), ensuring scalability for large datasets. In practice, I've frequently encountered scenarios requiring filters based on data quality checks, targeted training subsets, and specific experimental control conditions during modeling iterations.

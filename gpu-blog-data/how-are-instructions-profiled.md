@@ -1,9 +1,8 @@
 ---
 title: "How are instructions profiled?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-are-instructions-profiled"
 ---
-
 Profiling instructions is fundamental to optimizing software performance. My experience debugging bottlenecks in embedded systems and high-frequency trading platforms has repeatedly demonstrated the critical role accurate instruction profiling plays in achieving desired execution speed. I've encountered situations where seemingly innocuous code sequences, when profiled, revealed unexpected performance cliffs. The process, at its core, involves observing and quantifying the frequency and duration of instruction execution. This isn't merely about measuring how long a function takes, but rather pinpointing exactly *which* instructions are consuming the most resources within that function or across the entire application.
 
 Instruction profiling deviates from higher-level profiling (e.g., function-level profiling) in that it operates at the machine code level. This finer granularity reveals bottlenecks that might be masked by aggregated timing statistics of entire functions. For example, a seemingly fast function might actually hide a poorly optimized loop or an inefficient data access pattern that only instruction-level profiling can expose. This is particularly true in scenarios where the execution cost of individual instructions varies considerably, such as memory loads versus arithmetic operations, or different types of branch instructions.

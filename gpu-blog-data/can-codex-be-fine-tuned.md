@@ -1,9 +1,8 @@
 ---
 title: "Can Codex be fine-tuned?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-codex-be-fine-tuned"
 ---
-
 Fine-tuning large language models (LLMs) like Codex, while not a public-facing feature in the same vein as readily available APIs, is absolutely achievable through several techniques and specific contexts, each with trade-offs and nuances. Based on my experience developing custom code generation tools within a major software corporation, I’ve explored various approaches to adapt such pre-trained models to generate more effective, context-aware code. The core principle revolves around augmenting the model's existing knowledge base with targeted data to shift its output distribution toward a desired domain or coding style.
 
 My initial investigations focused on scenarios where the generic Codex, while proficient, struggled with our specific internal libraries and domain-specific language (DSL). In these instances, its generated code, while syntactically correct, often relied on suboptimal patterns or external dependencies that were not directly relevant. This highlighted the critical requirement for a fine-tuning strategy to inject specific domain knowledge. The methodology we adopted initially didn't involve direct retraining of the entire Codex model itself, primarily due to resource constraints and access limitations. We focused on techniques that operated at the data and prompting level. These techniques, while distinct, can be complementary and should be considered a multi-faceted approach.

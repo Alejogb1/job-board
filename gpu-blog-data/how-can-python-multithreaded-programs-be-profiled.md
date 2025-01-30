@@ -1,9 +1,8 @@
 ---
 title: "How can Python multithreaded programs be profiled?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-python-multithreaded-programs-be-profiled"
 ---
-
 Profiling Python multithreaded applications presents distinct challenges compared to single-threaded scenarios, primarily because traditional CPU-time-centric profilers may not accurately capture the nuances of thread contention, I/O waits, and inter-thread communication bottlenecks. Effective profiling requires tools capable of observing thread activity, resource utilization, and the interactions between threads.
 
 My experience with large-scale data processing pipelines has highlighted the importance of accurate multithreading profiling. We once faced performance degradation in an ETL process, and initial single-threaded profiling suggested ample CPU headroom. However, the actual issue lay in thread-locking contention, which only became apparent with specialized multithreading tools.

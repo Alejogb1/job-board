@@ -1,9 +1,8 @@
 ---
 title: "How can I profile a Silverlight application?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-profile-a-silverlight-application"
 ---
-
 Profiling a Silverlight application presents unique challenges compared to native .NET applications due to its sandboxed environment and reliance on the browser plugin. Effective performance analysis requires employing a combination of techniques, each with its strengths and limitations. I've personally navigated several complex Silverlight performance bottlenecks across various projects, leading me to rely heavily on two primary approaches: Visual Studio's built-in profiler when possible, and when that’s insufficient, employing runtime instrumentation and tracing.
 
 **Understanding the Profiling Landscape**

@@ -1,9 +1,8 @@
 ---
 title: "How do I install CLIP?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-do-i-install-clip"
 ---
-
 The core challenge in installing CLIP (Contrastive Language-Image Pre-training) stems from its reliance on a specific ecosystem of libraries and dependencies, particularly within the PyTorch framework and its interaction with large language models. This necessitates a precise and often multi-step installation process to ensure compatibility and functionality. Over my years developing vision-language models, I've repeatedly encountered the common pitfalls that arise from improper setup; a detailed approach, therefore, is paramount.
 
 The first crucial step involves setting up a suitable Python environment. It's ill-advised to install CLIP directly into a global Python environment, given the potential for version conflicts. I consistently use `conda` environments to isolate dependencies, fostering reproducible results across projects. This minimizes the likelihood of encountering "dependency hell" scenarios, which are all too familiar.

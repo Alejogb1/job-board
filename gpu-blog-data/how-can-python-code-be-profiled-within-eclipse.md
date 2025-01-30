@@ -1,9 +1,8 @@
 ---
 title: "How can Python code be profiled within Eclipse?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-python-code-be-profiled-within-eclipse"
 ---
-
 Profiling Python code effectively within Eclipse involves leveraging dedicated tools and techniques to identify performance bottlenecks. I've personally spent considerable time optimizing scientific simulations and data processing pipelines, and pinpointing where code spends the most time has always been crucial. Specifically, in Eclipse, you gain this insight through plugins and the integrated debugger, offering a range of granularity in analysis.
 
 **Understanding Profiling Methods**

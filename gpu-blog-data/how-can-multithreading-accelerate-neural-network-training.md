@@ -1,9 +1,8 @@
 ---
 title: "How can multithreading accelerate neural network training?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-multithreading-accelerate-neural-network-training"
 ---
-
 Neural network training, computationally intensive by nature, often becomes a bottleneck in deep learning projects. The inherent parallelism present in many stages of the training process makes multithreading a valuable approach to acceleration, especially when hardware limitations preclude the use of GPUs.  While GPUs excel at vector-based calculations, the careful use of threads can still yield significant speedups, particularly when handling CPU-bound pre-processing tasks or leveraging multi-core CPUs more effectively. My experience implementing multithreaded training loops in a resource-constrained embedded environment significantly improved the throughput of our model, even with a relatively simple architecture.
 
 The core concept behind using multithreading is to divide the workload of a single training epoch into parallelizable tasks, executing these tasks concurrently across multiple threads.  A typical training epoch involves several steps: data loading/augmentation, forward propagation, loss calculation, backpropagation, and parameter updates. While backpropagation involves dependencies, data loading, forward propagation on subsets of the batch, and the parameter update process across different layers are candidates for concurrent execution. The Global Interpreter Lock (GIL) in Python presents a challenge with true parallelism in Python, limiting the potential of multiple threads on the same processor core. However, by carefully crafting the workflow and leveraging the fact that Python libraries like TensorFlow and PyTorch release the GIL for computationally heavy operations, significant gains are still possible. The key is to identify the bottlenecks in your specific training procedure and see where time is wasted waiting for IO or other tasks to complete.

@@ -1,9 +1,8 @@
 ---
 title: "How can SLSQP be used with nonlinear constraints?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-slsqp-be-used-with-nonlinear-constraints"
 ---
-
 Sequential Least Squares Programming (SLSQP), despite its name, is not fundamentally a least-squares method when dealing with nonlinear constraints. Its core mechanism lies in iterative quadratic programming; each iteration refines a model of the objective function and constraints using Taylor expansions, then solves a quadratic subproblem. This contrasts with methods focusing directly on minimizing squared errors, and this distinction is critical for proper application. My experience across various optimization problems, including those in process control and financial modeling, has highlighted the nuanced process of effectively using SLSQP with nonlinear constraints.
 
 SLSQP tackles problems of the following form: minimize f(x) subject to g(x) <= 0, h(x) = 0, where f(x) is the objective function, g(x) represents inequality constraints, and h(x) represents equality constraints, all potentially nonlinear. Unlike methods relying on exact second derivatives (Hessian matrices), SLSQP utilizes a quasi-Newton update scheme, typically BFGS, to approximate the Hessian of the Lagrangian. This avoids computationally expensive full second-order calculations. The crucial element regarding nonlinear constraints is their incorporation within the quadratic programming subproblem solved at each iteration. The original problem is thus approximated by a quadratic objective and linearized versions of the constraints at each step. The solution to this subproblem determines the search direction for the next iterate.

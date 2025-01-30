@@ -1,9 +1,8 @@
 ---
 title: "Are Cohen's kappa results unreliable when using kernel_constraint?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "are-cohens-kappa-results-unreliable-when-using-kernelconstraint"
 ---
-
 Cohen’s kappa, a measure of inter-rater reliability, is particularly sensitive to marginal distributions. In my experience building several NLP annotation pipelines and evaluating agreement between human annotators on tasks like sentiment classification, I've encountered situations where the apparent agreement implied by kappa can be misleading, especially when coupled with constraints on kernel weights during model training. Therefore, the reliability of Cohen's kappa, when considered in conjunction with `kernel_constraint`, hinges on understanding *why* the kappa value changes. It is not inherently unreliable but becomes difficult to interpret without awareness of the underlying distribution shifts enforced by kernel constraints.
 
 Here’s the crux of the issue: `kernel_constraint` in a neural network, typically in layers like convolutional or dense ones, modifies the permissible range of weights during training. For instance, enforcing weight normalization (via `UnitNorm`) or non-negativity (`NonNeg`) will alter the distributions of predicted probabilities. If these constraints shift the model's output predictions into a distribution that favors a particular class, even subtly, the inter-rater agreement metrics, including kappa, can change significantly. This is *not* because kappa is flawed, but because the underlying predicted distributions being compared by kappa have changed.

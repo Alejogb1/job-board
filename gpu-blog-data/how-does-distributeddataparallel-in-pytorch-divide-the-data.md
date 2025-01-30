@@ -1,9 +1,8 @@
 ---
 title: "How does DistributedDataParallel in PyTorch divide the data?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-distributeddataparallel-in-pytorch-divide-the-data"
 ---
-
 DistributedDataParallel (DDP) in PyTorch leverages a specific strategy to distribute data across multiple processes or machines during model training. It does not perform explicit data partitioning before each iteration in the manner one might envision when thinking of datasets split by shard numbers. Instead, DDP operates on the principle of *replicating* the model across processes and then using a unique subset of the original dataset within each process during a training iteration. The key is that *each process independently loads and shuffles* its local subset of the dataset based on a seed determined by its rank in the distributed environment, and that global synchronization is used across processes.
 
 Let's delve into how this works, referencing my experience migrating large-scale image recognition models from single-GPU training to multi-node clusters. Initially, the misconception I encountered was that DDP requires preprocessing the entire dataset to create smaller, disjointed subsets. That is simply not the case. Rather, the core mechanism within PyTorch relies on `DistributedSampler` and, when the user does not specify a sampler for a Dataloader, DDP creates a default `DistributedSampler` internally.

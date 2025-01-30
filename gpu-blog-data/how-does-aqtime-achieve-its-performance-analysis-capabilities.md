@@ -1,9 +1,8 @@
 ---
 title: "How does AQTime achieve its performance analysis capabilities?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-aqtime-achieve-its-performance-analysis-capabilities"
 ---
-
 AQTime, a profiling tool from SmartBear, operates on the principle of *instrumentation* to analyze application performance, a technique I’ve extensively employed during my tenure as a performance engineer. Instrumentation, in this context, involves injecting code snippets into the target application to monitor its execution. These snippets, or “probes,” record information such as function call counts, execution times, and resource usage, without directly modifying the inherent program logic. This approach contrasts with sampling, where the application's state is periodically checked, and offers a much more precise and detailed picture of performance bottlenecks.
 
 AQTime employs multiple instrumentation methods, each with its unique advantages and drawbacks in terms of overhead and accuracy. The primary technique used is *direct function instrumentation*. Here, probes are inserted at the entry and exit points of functions within the target application’s code. This allows AQTime to accurately measure the time spent within each function and pinpoint performance-critical regions. During compile-time instrumentation, the compiler directly modifies the application’s binary to incorporate these probes. Post-compile, runtime instrumentation injects them by manipulating the binary, offering flexibility for existing applications. Regardless of injection timing, these probes, when triggered, communicate collected data to AQTime’s engine for aggregation and presentation.

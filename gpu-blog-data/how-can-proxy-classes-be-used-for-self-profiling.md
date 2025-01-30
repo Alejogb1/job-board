@@ -1,9 +1,8 @@
 ---
 title: "How can proxy classes be used for self-profiling?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-proxy-classes-be-used-for-self-profiling"
 ---
-
 When developing a complex system handling large volumes of real-time data, I discovered a need for fine-grained performance insights without heavily instrumenting the core application logic with intrusive profiling code. This need led me to implement proxy classes as a mechanism for self-profiling, enabling the collection of execution statistics with minimal impact on the primary code path.
 
 A proxy class, at its core, is a structural design pattern that provides a surrogate or placeholder for another object. It controls access to this underlying object, allowing the insertion of pre- or post-processing logic. In the context of self-profiling, the proxy class acts as an intermediary, intercepting method calls intended for the target object, and recording metrics like execution time, call frequency, and even passed arguments before delegating the actual work. The key advantage is that profiling is encapsulated within the proxy, leaving the underlying object (the one being profiled) entirely agnostic to this process. This separation of concerns makes the system maintainable and prevents performance profiling code from polluting the business logic.

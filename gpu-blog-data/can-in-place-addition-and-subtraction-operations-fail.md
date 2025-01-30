@@ -1,9 +1,8 @@
 ---
 title: "Can in-place addition and subtraction operations fail?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-in-place-addition-and-subtraction-operations-fail"
 ---
-
 In-place addition and subtraction operations, typically represented by operators like `+=` and `-=` in many programming languages, can indeed fail. The common misconception is that these operations are inherently atomic or guaranteed to succeed without issue. This, however, is far from the truth, especially when dealing with mutable objects or complex data structures. I've encountered multiple scenarios throughout my career where unexpected failures occurred, underscoring the importance of understanding the underlying mechanisms and potential pitfalls.
 
 The core issue stems from the fact that in-place modification, despite its name, is not always a simple, direct manipulation of memory. Instead, it often relies on object methods that might internally perform operations with their own possibilities for failure. The specific failure modes depend heavily on the type of object being modified, the underlying implementation of the language, and environmental factors like multithreading.

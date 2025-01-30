@@ -1,9 +1,8 @@
 ---
 title: "How can I grep for patterns excluding 'nn/nn'?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-grep-for-patterns-excluding-nnnn"
 ---
-
 Regular expressions, specifically their negative lookahead feature, are essential for excluding specific patterns while performing a search using `grep`. The challenge of excluding "nn/nn", where 'n' represents any digit, requires this more advanced functionality. Standard `grep` patterns primarily focus on inclusion, not exclusion. Without these mechanisms, one would need to process grep's output further using additional utilities.
 
 A straightforward pattern like `[0-9][0-9]/[0-9][0-9]` will *include* all occurrences of the "nn/nn" pattern. To achieve the opposite, I rely on a negative lookahead assertion within the regex, often written as `(?!...)`. This assertion checks if a given pattern *does not* match at the current position in the input.

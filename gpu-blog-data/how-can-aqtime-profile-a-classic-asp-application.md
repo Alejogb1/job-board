@@ -1,9 +1,8 @@
 ---
 title: "How can AQTime profile a classic ASP application?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-aqtime-profile-a-classic-asp-application"
 ---
-
 Profiling classic ASP applications using AQTime presents unique challenges compared to modern .NET or compiled executables. The interpretive nature of ASP and its reliance on COM objects introduces complexities in tracing execution flow and identifying performance bottlenecks. Based on my experience working with legacy systems, successfully profiling these applications demands a nuanced approach, leveraging AQTime's capabilities while adapting to the specific constraints of the classic ASP environment. I've found the most effective strategy involves focusing on the interaction between ASP scripts, COM components, and the underlying IIS server, meticulously dissecting the contribution of each element to overall performance.
 
 The core challenge stems from ASP's server-side scripting execution. Unlike compiled languages, ASP scripts are interpreted at runtime by the ASP engine. This means traditional instruction-level profiling tools are largely ineffective. Instead, AQTime's function call profiling and performance analysis capabilities become paramount. We must profile at the function or method level, carefully examining the time spent within ASP scripts and the external COM objects they invoke. Also, profiling at the server-side presents complications that client-side applications do not have, such as connection pool management and server-side resource utilization that can impact performance in unexpected ways.

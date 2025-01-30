@@ -1,9 +1,8 @@
 ---
 title: "Does using mediump increase rendering time?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "does-using-mediump-increase-rendering-time"
 ---
-
 In my experience optimizing rendering pipelines for embedded systems, I've consistently observed that the effect of `mediump` on rendering time is highly dependent on the target hardware's GPU architecture and the specific operations being performed. It's not a universal slowdown or speedup; the reality is far more nuanced. The choice between `highp`, `mediump`, and `lowp` precision qualifiers in GLSL primarily affects the precision of floating-point calculations within shaders. While a reduced precision like `mediump` can potentially offer benefits, such as decreased memory bandwidth usage and faster computation, this doesn't automatically translate to reduced rendering time.
 
 The primary factor is how the hardware handles different precisions. On some mobile GPUs, `mediump` might simply be a software simulation of lower precision using higher precision hardware, in which case it will add overhead and thus slow down rendering. On other GPUs that natively support medium precision floating-point units, using `mediump` where it’s sufficient can improve performance due to more efficient register usage, lower power consumption, and reduced data transfer costs.

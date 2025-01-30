@@ -1,9 +1,8 @@
 ---
 title: "Can GPU clock speeds be retrieved using SetupDiEnumDeviceInfo?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-gpu-clock-speeds-be-retrieved-using-setupdienumdeviceinfo"
 ---
-
 Within the Windows operating system, the Device Setup API (SetupDi), particularly the `SetupDiEnumDeviceInfo` function, provides a mechanism to enumerate devices installed on a system. However, it does not expose a direct method to obtain GPU clock speeds. My experience in low-level driver interaction and hardware monitoring confirms this; while `SetupDiEnumDeviceInfo` is powerful for discovering device information like vendor ID, product ID, and driver details, it operates at an abstraction layer too high to access real-time clock frequencies of specific components like GPUs. The data provided through `SetupDiEnumDeviceInfo` is largely static, reflecting device properties as stored in the registry or driver INF files, rather than dynamic operational characteristics.
 
 The core issue lies in the API’s purpose. `SetupDiEnumDeviceInfo` is designed for device enumeration, identification, and installation management. It is not geared toward performance monitoring or real-time hardware status reporting. Clock speeds are runtime parameters dependent on several factors including power management profiles, load, and thermal conditions. These values are maintained and exposed within the GPU’s driver itself, or through specific performance monitoring interfaces.

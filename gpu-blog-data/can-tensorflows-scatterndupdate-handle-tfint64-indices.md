@@ -1,9 +1,8 @@
 ---
 title: "Can TensorFlow's `scatter_nd_update` handle `tf.int64` indices?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-tensorflows-scatterndupdate-handle-tfint64-indices"
 ---
-
 `tf.scatter_nd_update`, contrary to some initial assumptions, *does* effectively handle `tf.int64` indices, provided the underlying hardware and TensorFlow installation support 64-bit integer operations. I've personally encountered and resolved situations where seemingly inexplicable errors were attributed to a perceived limitation with integer index types, when the real issues were elsewhere. A crucial aspect is that while `tf.int32` is often the default index type, and functions without error most of the time, explicit casting to `tf.int64` is sometimes necessary when dealing with especially large tensors, or when maintaining consistency in complex, multi-stage processing pipelines.
 
 The `tf.scatter_nd_update` operation is designed to update elements in a tensor at specific indices, effectively performing a form of selective assignment. It accepts three primary arguments: `tensor`, `indices`, and `updates`. The `tensor` is the base tensor being modified. `indices` represents the multidimensional indices to be updated and must be of an integer type, either `tf.int32` or `tf.int64`. `updates` provides the new values for these specified indices. The dimensions of `indices` and `updates` are inextricably linked; the last dimension of `indices` must match the rank of the base `tensor`, and the leading dimensions of `indices` and `updates` must conform to enable a valid scatter operation.

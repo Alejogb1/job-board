@@ -1,9 +1,8 @@
 ---
 title: "Are dynamically pluggable modules feasible in VHDL?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "are-dynamically-pluggable-modules-feasible-in-vhdl"
 ---
-
 Yes, dynamically pluggable modules are not directly feasible in standard VHDL as you might envision in software contexts. My experience working on reconfigurable hardware platforms has shown that VHDL, at its core, is a hardware description language focusing on static hardware structures. We define how connections and modules are wired before synthesis. The nature of VHDL implies that all interconnections and module instantiation are decided at compile/synthesis time. We are creating digital circuits, not software processes; we're dealing with physical wires and gates, not virtual addresses and dynamic linking. That’s the fundamental constraint.
 
 **1. Explanation of Limitations and Approaches**

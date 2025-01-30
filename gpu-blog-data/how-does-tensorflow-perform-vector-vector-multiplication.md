@@ -1,9 +1,8 @@
 ---
 title: "How does TensorFlow perform vector-vector multiplication?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-tensorflow-perform-vector-vector-multiplication"
 ---
-
 TensorFlow, at its core, leverages optimized lower-level libraries, primarily Eigen, to execute computationally intensive tasks such as vector-vector multiplication. Understanding this interaction is key to appreciating TensorFlow's performance characteristics. When I've debugged performance bottlenecks in custom models, I’ve often traced them back to how these underlying libraries manage memory and instruction-level parallelism. The apparent simplicity of a dot product masks a complex interplay of hardware acceleration and algorithmic choices. Specifically, the efficiency comes from avoiding Python overhead, pushing the calculation to compiled code, and employing techniques like SIMD (Single Instruction, Multiple Data) for concurrent operations.
 
 The process begins when a tensor, representing a vector in this context, is created within the TensorFlow graph. This tensor is not simply a Python list or NumPy array; it's a symbolic representation of a potentially large data structure managed by TensorFlow's execution engine. When a vector-vector multiplication operation, typically represented as a dot product using functions like `tf.tensordot` or `tf.matmul` with appropriate dimensions, is defined in the graph, TensorFlow doesn't immediately perform the calculation. Instead, it builds a computation graph, a directed acyclic graph where nodes represent operations and edges represent data dependencies. This allows the system to optimize the execution plan, scheduling operations across available hardware resources, be it CPUs or GPUs.

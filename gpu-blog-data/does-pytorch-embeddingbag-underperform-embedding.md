@@ -1,9 +1,8 @@
 ---
 title: "Does PyTorch EmbeddingBag underperform Embedding?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "does-pytorch-embeddingbag-underperform-embedding"
 ---
-
 EmbeddingBag in PyTorch does not inherently underperform `torch.nn.Embedding`; their performance characteristics differ based on the specific use case and data characteristics, particularly regarding memory consumption and computational speed during training and inference. Having extensively worked on large-scale natural language processing models involving sparse, variable-length sequence data, I've observed scenarios where each shines and where one might be preferred.
 
 `torch.nn.Embedding` maintains an embedding lookup table of size `(num_embeddings, embedding_dim)` for a fixed number of indices. When presented with a batch of indices, it outputs a corresponding batch of embeddings, requiring no further operations. In contrast, `torch.nn.EmbeddingBag` stores a similar embedding lookup table, but it additionally takes an offset tensor to operate on sequences of variable length. Instead of returning a matrix of embeddings, it aggregates embeddings within each sequence according to a specified mode (mean, sum, or max). Crucially, this aggregation step significantly alters memory usage and computational load.

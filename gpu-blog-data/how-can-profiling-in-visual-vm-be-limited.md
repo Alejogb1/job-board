@@ -1,9 +1,8 @@
 ---
 title: "How can profiling in Visual VM be limited?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-profiling-in-visual-vm-be-limited"
 ---
-
 Profiling Java applications with VisualVM can be resource-intensive, particularly with complex systems or when monitoring for extended periods. The overhead introduced by the profiler can skew performance measurements and, in extreme cases, destabilize the target application. Controlling the scope and duration of VisualVM's profiling activities is thus crucial for obtaining reliable data and minimizing disruption. My experience in diagnosing a memory leak in a high-throughput messaging service underscored the necessity of fine-grained profiling controls; I initially overwhelmed the test environment by attempting full-application, all-thread profiling, necessitating a more targeted approach.
 
 Limiting profiling in VisualVM centers primarily on two dimensions: limiting the data collected (scope) and limiting the duration of collection. The scope limitation involves narrowing the focus to specific areas of the application. This includes selecting particular threads, limiting the monitored method calls, and filtering the data presented. Duration limitation concerns controlling when and for how long profiling occurs, encompassing the overall profiling session duration and the specific time window for capturing samples. The combination of these two strategies provides the necessary control to make profiling a targeted, rather than a brute-force, technique.

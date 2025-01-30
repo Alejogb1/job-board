@@ -1,9 +1,8 @@
 ---
 title: "How can JBoss be monitored and profiled?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-jboss-be-monitored-and-profiled"
 ---
-
 JBoss Application Server, now primarily known as WildFly, demands meticulous monitoring and profiling to maintain optimal performance and diagnose issues effectively.  I've spent considerable time managing large-scale deployments, where even seemingly minor bottlenecks can have significant downstream impacts, and have learned that a multi-faceted approach is essential. Simple ‘up’ or ‘down’ checks are insufficient; true insight requires deep dives into resource utilization, application behavior, and JVM characteristics.
 
 Fundamentally, monitoring JBoss/WildFly involves collecting and analyzing data from various sources within the application server and the underlying operating system. Key areas include JVM metrics, subsystem performance (like the web container and database connectors), application-level metrics (transaction response times, error rates), and hardware resource consumption. Profiling, on the other hand, takes a more granular view, investigating method execution times and memory allocation to pinpoint specific code segments that contribute to performance issues. Effective monitoring reveals problems, while profiling helps in understanding the root causes.

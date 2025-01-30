@@ -1,9 +1,8 @@
 ---
 title: "How can PyTorch tensor indexing be vectorized?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-pytorch-tensor-indexing-be-vectorized"
 ---
-
 PyTorch tensor indexing, when implemented naively using explicit loops, presents a significant performance bottleneck, especially when dealing with large datasets. Vectorization, leveraging PyTorch's optimized tensor operations, offers a path to substantial speed improvements by performing computations on entire tensors at once rather than individual elements. I've personally witnessed speed-ups ranging from 10x to 100x when transitioning from looped indexing to vectorized alternatives, particularly in large-scale deep learning applications involving complex data manipulations.
 
 Vectorized indexing in PyTorch primarily involves replacing iterative indexing with tensor-based indexing mechanisms. These mechanisms exploit the underlying optimized routines that PyTorch provides for working with tensors, allowing for parallel computation and dramatically reducing overhead. Specifically, we aim to avoid traditional `for` loops that individually access and modify tensor elements, and instead leverage slicing, advanced indexing using integer and boolean tensors, and functions designed for vectorized operations.

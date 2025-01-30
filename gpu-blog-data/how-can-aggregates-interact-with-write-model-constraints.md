@@ -1,9 +1,8 @@
 ---
 title: "How can aggregates interact with write model constraints?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-aggregates-interact-with-write-model-constraints"
 ---
-
 Aggregates, in the context of Domain-Driven Design (DDD), represent transactional boundaries and consistency units, demanding that any interaction modifying their state adheres strictly to their defined invariants. This directly implies that write model constraints, the business rules dictating permissible state transitions, must be enforced at the aggregate level. Failing this introduces the possibility of data inconsistencies and breaks down the integrity of the domain model.
 
 The relationship between aggregates and write model constraints is primarily about managing concurrency and ensuring data integrity within those boundaries. An aggregate is responsible for maintaining its own consistency; it will not allow itself to be placed into an invalid state by outside forces. When a command is directed toward an aggregate, the first action undertaken is to validate if this command can be fulfilled based on current state and its internal constraints. If the validation fails, the write operation should be rejected, often resulting in an exception being returned to the calling service. Only when the proposed state transition is considered valid should the aggregate update its internal data structure. This entire process is, in essence, constraint enforcement at the aggregate level.

@@ -1,9 +1,8 @@
 ---
 title: "How does MobileNet utilize Grad-CAM for transfer learning?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-does-mobilenet-utilize-grad-cam-for-transfer-learning"
 ---
-
 MobileNet's integration with Grad-CAM for transfer learning hinges on leveraging the pre-trained convolutional base to identify crucial regions within an input image that contribute most significantly to the classification outcome, even when applied to a novel target domain. Grad-CAM, or Gradient-weighted Class Activation Mapping, provides a visual interpretation of a convolutional neural network's decision-making process, showing which areas of the input were most influential in predicting a specific class. I’ve utilized this method in several projects involving object localization in medical imaging and environmental monitoring; the ability to pinpoint areas of focus is invaluable, especially for debugging and understanding model behavior after transfer learning.
 
 The core process involves passing an input image through the MobileNet model, often pre-trained on ImageNet, up to a specified convolutional layer. This layer acts as a feature extractor, transforming the image into a series of feature maps. Instead of using the output from the fully connected layers (which are frequently discarded during transfer learning), the convolutional feature maps are targeted. The specific choice of layer is crucial; the earlier layers capture lower-level features, like edges and corners, while later layers encode more abstract concepts. Generally, targeting layers closer to the end of the convolutional base provides a better representation of features learned relevant to the classification task.

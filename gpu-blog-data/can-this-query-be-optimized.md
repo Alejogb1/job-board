@@ -1,9 +1,8 @@
 ---
 title: "Can this query be optimized?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-this-query-be-optimized"
 ---
-
 ```sql
 SELECT
     p.product_name,

@@ -1,9 +1,8 @@
 ---
 title: "Are PyTorch Lightning's trainable parameters incorrect?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "are-pytorch-lightnings-trainable-parameters-incorrect"
 ---
-
 PyTorch Lightning's handling of trainable parameters, specifically during its optimization phase, can appear misleading if one conflates the framework’s internal bookkeeping with the underlying PyTorch module's inherent structure. My experience building a complex multi-modal transformer network highlighted this. The perceived "incorrectness" stems not from a bug in Lightning, but rather from a difference in scope and abstraction. PyTorch Lightning abstracts the training loop, handling optimizers and gradient updates; its methods for accessing “trainable parameters” do not directly mirror those one would use with a raw PyTorch `nn.Module`.
 
 The core concept to understand is that PyTorch itself maintains a list of parameters registered with an `nn.Module` that require gradient computation; these are, in essence, the parameters involved in training. In contrast, PyTorch Lightning, in its `LightningModule`, offers several ways to define and interact with parameters. It manages optimization state (including gradients and updates), which might not be directly reflected in simple calls to `model.parameters()`. This difference, however, is intentional. PyTorch Lightning aims to provide more granular control over optimization steps, including advanced techniques like mixed precision and gradient accumulation. It needs its own internal management system, resulting in discrepancies in parameter availability at different phases.

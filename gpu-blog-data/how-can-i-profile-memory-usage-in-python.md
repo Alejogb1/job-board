@@ -1,9 +1,8 @@
 ---
 title: "How can I profile memory usage in Python?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-profile-memory-usage-in-python"
 ---
-
 Memory management in Python, while largely automated through garbage collection, can still become a performance bottleneck, especially in applications handling large datasets or complex computations. Profiling memory usage is crucial to identify these issues and optimize code for better efficiency. I've encountered situations where a seemingly innocuous script ballooned memory consumption over time, resulting in crashes or slowdowns. This is why understanding and applying memory profiling techniques becomes vital for robust application development.
 
 The fundamental approach involves monitoring the allocation and deallocation of memory blocks as the Python program executes. Unlike CPU profiling that focuses on execution time, memory profiling pinpoints objects consuming significant memory and helps track down leaks or inefficient data structures. Several tools are available for this purpose, and they provide varying degrees of granularity. I have relied on a combination of the `memory_profiler` library, built-in functionalities in `psutil`, and the core `sys` module for different profiling needs.

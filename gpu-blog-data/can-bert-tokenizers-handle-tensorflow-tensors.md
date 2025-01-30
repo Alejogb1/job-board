@@ -1,9 +1,8 @@
 ---
 title: "Can Bert tokenizers handle TensorFlow tensors?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-bert-tokenizers-handle-tensorflow-tensors"
 ---
-
 BERT tokenizers, when interacting with TensorFlow, do not directly operate on TensorFlow tensors for the tokenization process. Instead, they expect input in the form of strings or lists of strings, and produce tokenized output as numerical indices, which are then *convertible* to TensorFlow tensors for downstream model feeding. I've encountered this limitation frequently in my work on sequence classification, and its understanding is crucial for building efficient NLP pipelines.
 
 The fundamental process begins with transforming human-readable text into a sequence of integer IDs which represent each token. The BERT tokenizer accomplishes this transformation leveraging its pre-built vocabulary and rules. Once this tokenization is complete, these numerical representations are typically converted into TensorFlow tensors to be passed as input into a TensorFlow-based BERT model. While the tokenizer doesn't consume tensors, the *result* of its action is a form that can be readily and commonly used in tandem with TensorFlow. The core disconnect is that the tokenizer is an independent text preprocessing step from tensor creation itself.

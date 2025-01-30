@@ -1,9 +1,8 @@
 ---
 title: "How can I profile my Java program?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-profile-my-java-program"
 ---
-
 Profiling a Java application is crucial for identifying performance bottlenecks and optimizing resource consumption. Over my years developing high-throughput data processing systems, I've found that relying solely on intuition about performance is a recipe for disaster. Effective profiling provides concrete data, enabling informed decisions for targeted optimization.
 
 Fundamentally, profiling involves analyzing the runtime behavior of an application to determine where time is spent, how objects are allocated, and which methods are frequently executed. This information is vital for identifying areas that hinder performance and require attention. There are primarily two types of profiling: CPU profiling, which measures time spent in methods, and memory profiling, which tracks object allocation and garbage collection activity. I tend to begin with CPU profiling as hot spots there often impact memory usage indirectly.

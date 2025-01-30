@@ -1,9 +1,8 @@
 ---
 title: "How can I predict test batches using Keras/TensorFlow?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-i-predict-test-batches-using-kerastensorflow"
 ---
-
 Predicting test batch outcomes, rather than just overall test set accuracy, is a nuanced task crucial in industrial settings where individual batch quality is paramount. I've encountered this problem frequently in my work with manufacturing data, and while Keras and TensorFlow excel at aggregate prediction, isolating predictions to specific batches requires careful data structuring and model interpretation. The key lies in recognizing the batch identifier as a potentially informative feature rather than merely an organizational element.
 
 First, let’s clarify what we mean by “test batch.” Often, in machine learning, data is split into training, validation, and test sets. The test set serves to evaluate final model performance. When we refer to “test batches,” I assume we’re dealing with a scenario where the test data itself is further segmented into groups, or "batches," with the expectation that model predictions may vary across these batches due to some inherent within-batch characteristic. This variation could stem from changes in raw material suppliers, shift-specific settings on equipment, or any number of factors. Therefore, we're not merely interested in how the model performs on the entire test set, but rather, its performance on each of the test batches.

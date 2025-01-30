@@ -1,9 +1,8 @@
 ---
 title: "How do I create custom policies in tf_agents?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-do-i-create-custom-policies-in-tfagents"
 ---
-
 Custom policies within tf-agents offer the flexibility required for specialized reinforcement learning scenarios, moving beyond the pre-built options. I’ve frequently encountered situations where the standard policy structures simply weren't adequate, particularly when dealing with complex action spaces or incorporating domain-specific knowledge. The process necessitates a deep understanding of the core policy class and the various components it utilizes.
 
 Essentially, creating a custom policy in tf-agents involves subclassing the `tf_agents.policies.Policy` base class and implementing its abstract methods. The most critical of these methods is `_distribution`, which determines how actions are sampled or selected given an observation. This is where you introduce the custom logic defining your specific policy behavior. Additionally, you typically need to override methods like `_action`, used for deterministic action selection, and potentially `_variables`, to manage trainable parameters of the policy if needed.

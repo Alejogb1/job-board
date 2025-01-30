@@ -1,9 +1,8 @@
 ---
 title: "Can containerized applications run SystemTap user-space probes?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-containerized-applications-run-systemtap-user-space-probes"
 ---
-
 User-space probing with SystemTap within containerized environments presents specific challenges and requires careful configuration. The fundamental issue stems from the isolation mechanisms containers employ, particularly namespaces and cgroups, which restrict a process's ability to interact with the host kernel and other processes. The SystemTap tool relies on accessing kernel-level debugging interfaces, and the container's isolated environment often limits its reach into the necessary parts of the host operating system.
 
 To provide a concise explanation: User-space probes, by their nature, operate within the address space of a specific process. When that process is containerized, the address space, memory layout, and access permissions are governed by the container runtime and, ultimately, the underlying Linux kernel's namespace isolation. While SystemTap *can* technically instrument user-space applications within a container, this is not a straightforward 'out-of-the-box' experience, and there are critical requirements to enable successful probing.

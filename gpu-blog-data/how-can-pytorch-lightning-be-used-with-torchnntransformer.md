@@ -1,9 +1,8 @@
 ---
 title: "How can PyTorch Lightning be used with torch.nn.transformer?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-pytorch-lightning-be-used-with-torchnntransformer"
 ---
-
 PyTorch Lightning simplifies the training process for complex models, including those based on `torch.nn.Transformer`, by abstracting away boilerplate code concerning training loops, logging, and hardware management. Directly integrating a Transformer model with Lightning requires understanding how to structure the model as a `LightningModule` and leverage Lightning's Trainer for its inherent advantages. I've encountered this specifically when scaling up a sequence-to-sequence model for a proprietary document analysis task.
 
 The core principle lies in defining your Transformer model and all its components within a class that inherits from `pytorch_lightning.LightningModule`. This class then provides the crucial methods like `training_step`, `validation_step`, and `configure_optimizers`. This encapsulation contrasts with the standard PyTorch workflow, where you'd write explicit training loops and manage gradient updates manually.

@@ -1,9 +1,8 @@
 ---
 title: "How can a mex-function be profiled?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-a-mex-function-be-profiled"
 ---
-
 Profiling MEX-functions effectively necessitates a nuanced approach, deviating from the typical MATLAB profiling methodology. Standard MATLAB profiling tools primarily focus on m-files and do not provide granular insight into the execution characteristics of compiled C/C++ code within a MEX-function. Instead, we must employ system-level profiling utilities and integrate them into our development and testing cycle. My experience with optimizing high-throughput signal processing algorithms, relying heavily on custom MEX implementations, has reinforced this. The key is to treat the MEX-function as a black box from MATLAB’s perspective and profile it as an independent executable.
 
 The first step in profiling a MEX-function is to recognize that its performance is intimately tied to the underlying compiler and system libraries. The MATLAB runtime environment loads and executes the compiled binary, but it does not directly instrument or monitor the code's internal workings. Therefore, we cannot rely on the standard MATLAB profiler (e.g., `profile on`/`profile viewer`). We need tools capable of monitoring system-level execution. This requires a change in workflow: instead of directly invoking a MEX-function within MATLAB for performance assessment, we will often create a test harness (either as a separate C/C++ application or leveraging a small MATLAB wrapper) that calls the MEX-function repeatedly and then employ platform-specific performance analysis tools.

@@ -1,9 +1,8 @@
 ---
 title: "How can Keras's to_categorical handle multiple output classes?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "how-can-kerass-tocategorical-handle-multiple-output-classes"
 ---
-
 In my experience building multi-label classification systems for medical image analysis, I've frequently encountered scenarios demanding that a single input correspond to several simultaneously active output classes. Keras's `to_categorical` function, while primarily designed for one-hot encoding single-class labels, needs careful adaptation when extending it to handle multiple outputs. It doesn't, in its standard usage, natively generate multiple independent one-hot vectors for the same input. It performs one-hot encoding on a *single* vector of labels, turning it into a matrix. The core challenge lies in the data preprocessing required *before* even using `to_categorical` when dealing with multi-label data.
 
 The fundamental misunderstanding stems from the function's intended role. `to_categorical` assumes an exclusive class membership structure, where each input belongs to only one category. For multi-label scenarios, this assumption breaks down. Imagine, for instance, a medical image where a single scan can exhibit multiple pathologies—each a separate output class. We therefore must structure our target data differently. We cannot feed the function a single scalar representing multiple classes. Instead, we need to provide a binary matrix, often referred to as a “one-hot-encoded” multi-label matrix, which we must build ourselves. Each *row* in this matrix corresponds to a single input sample, and each *column* represents a specific output class. A '1' at a given row and column indicates that the input sample is associated with that specific class, and a '0' indicates its absence. We construct this matrix from original input labels ourselves, and then we don’t use `to_categorical` at all on these already one-hot encoded targets.

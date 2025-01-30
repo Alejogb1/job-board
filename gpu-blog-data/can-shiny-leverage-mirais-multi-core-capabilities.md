@@ -1,9 +1,8 @@
 ---
 title: "Can Shiny leverage Mirai's multi-core capabilities?"
-date: "2025-01-26"
+date: "2025-01-30"
 id: "can-shiny-leverage-mirais-multi-core-capabilities"
 ---
-
 The default R environment, upon which Shiny is built, executes single-threaded processes. This fundamentally limits its ability to fully utilize multi-core processors without additional measures. My experience developing complex Shiny applications for financial analysis has consistently highlighted this bottleneck, especially when handling large datasets or performing resource-intensive computations. However, the advent of packages like `future` and its parallel processing backend, `mirai`, offers a powerful solution to circumvent this inherent limitation, enabling parallel execution within Shiny apps.
 
 Fundamentally, Shiny operates within a single R session. This means that any R code executed within the Shiny server component will, by default, run sequentially. If your application involves computationally heavy functions, long-running queries, or complex data manipulations, the user interface becomes unresponsive as the main thread is blocked. This leads to a poor user experience and severely restricts the scalability of Shiny applications on modern multi-core hardware. The challenge, therefore, lies in offloading these computations to separate R processes running in parallel, effectively unlocking multi-core performance. This is where `mirai`, working in conjunction with the `future` package, proves indispensable.
